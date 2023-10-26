@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=3 uid="uid://m7raebsflnlm"]
+
+[ext_resource type="Material" uid="uid://o4lttwvxltjy" path="res://materials/blockout_grid.tres" id="1_wifcb"]
+[ext_resource type="Script" path="res://materials/Player.gd" id="2_l6ovf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ojlx4"]
+sky_top_color = Color(0.0196078, 0.776471, 0.894118, 1)
+sky_horizon_color = Color(0, 1, 0.6, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0.956863, 0.678431, 1)
+
+[sub_resource type="Sky" id="Sky_fcpig"]
+sky_material = SubResource("ProceduralSkyMaterial_ojlx4")
+
+[sub_resource type="Environment" id="Environment_2f7pq"]
+background_mode = 2
+sky = SubResource("Sky_fcpig")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2l4ng"]
+radius = 0.25
+height = 1.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ckb3d"]
+radius = 0.25
+height = 1.25
+
+[node name="Main" type="Node3D"]
+
+[node name="Level" type="Node3D" parent="."]
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Level"]
+transform = Transform3D(-2.1623e-07, 0, 2.57227, 0, 3.0974, 0, -4.94678, 0, -1.12437e-07, -6.18865, -1.12529, -2.20945)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1, 1, 0)
+material = ExtResource("1_wifcb")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Level"]
+transform = Transform3D(20, 0, 0, 0, 4, 0, 0, 0, 20, 0, 0, 0)
+use_collision = true
+material = ExtResource("1_wifcb")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Level/CSGBox3D"]
+transform = Transform3D(0.88024, 0, 0, 0, 0.93989, 0, 0, 0, 0.313931, 0, 0.258811, -0.266072)
+operation = 2
+use_collision = true
+material = ExtResource("1_wifcb")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Level/CSGBox3D"]
+transform = Transform3D(0.349024, 0, 0, 0, 0.592399, 0, 0, 0, 0.297687, 0.227793, 0.523896, 0.185267)
+operation = 2
+material = ExtResource("1_wifcb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.25, -0.433013, 0.378549, 0.237943, 0.894474, 0.326651, -0.938554, 0.111427, 0, 6.74904, 10.7558)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2f7pq")
+
+[node name="Player" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.65439, 0)
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+gravity_scale = 0.0
+script = ExtResource("2_l6ovf")
+ground_collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_2l4ng")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_ckb3d")
+
+[node name="CameraPivot" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraPivot"]
+
+[node name="JumpTimer" type="Timer" parent="Player"]
+wait_time = 0.2
+one_shot = true
