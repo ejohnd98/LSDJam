@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://cr25ba7cqrw1l"]
+
+[ext_resource type="Material" uid="uid://o4lttwvxltjy" path="res://materials/blockout_grid.tres" id="1_0bp01"]
+[ext_resource type="PackedScene" uid="uid://bxew2e2p6bqqc" path="res://scenes/interactables/scene_trigger.tscn" id="2_8it4w"]
+[ext_resource type="PackedScene" uid="uid://btdpwdomnb1he" path="res://scenes/scenes/test_scene1.tscn" id="3_r1ark"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r8o0x"]
+sky_top_color = Color(0, 0.886275, 0.996078, 1)
+sky_horizon_color = Color(0, 1, 0, 1)
+
+[sub_resource type="Sky" id="Sky_5yr86"]
+sky_material = SubResource("ProceduralSkyMaterial_r8o0x")
+
+[sub_resource type="Environment" id="Environment_nxjme"]
+background_mode = 2
+sky = SubResource("Sky_5yr86")
+
+[node name="DefaultScene" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.25, -0.433013, 0.378549, 0.237943, 0.894474, 0.326651, -0.938554, 0.111427, 0, 6.74904, 10.7558)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nxjme")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 2, 0, 0, 0, 20, 0, 0, 0)
+use_collision = true
+material = ExtResource("1_0bp01")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0.12082, 0)
+operation = 2
+material = ExtResource("1_0bp01")
+
+[node name="SceneTrigger" parent="." instance=ExtResource("2_8it4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.71332, 0, 0)
+transition_to = ExtResource("3_r1ark")

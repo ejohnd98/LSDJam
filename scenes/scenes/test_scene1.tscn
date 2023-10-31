@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://btdpwdomnb1he"]
+
+[ext_resource type="Material" uid="uid://o4lttwvxltjy" path="res://materials/blockout_grid.tres" id="1_2cuvx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ojlx4"]
+sky_top_color = Color(0.176471, 0.87451, 0.996078, 1)
+sky_horizon_color = Color(0.811765, 0.988235, 1, 1)
+ground_bottom_color = Color(0.0627451, 0.0431373, 0.0705882, 1)
+ground_horizon_color = Color(0.313726, 0.415686, 0.505882, 1)
+sun_curve = 0.643064
+
+[sub_resource type="Sky" id="Sky_fcpig"]
+sky_material = SubResource("ProceduralSkyMaterial_ojlx4")
+
+[sub_resource type="Environment" id="Environment_2f7pq"]
+background_mode = 2
+sky = SubResource("Sky_fcpig")
+fog_enabled = true
+fog_light_color = Color(0.0745098, 0.0627451, 0.129412, 1)
+fog_sun_scatter = 0.5
+fog_density = 0.4471
+
+[node name="DefaultScene" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.25, -0.433013, 0.378549, 0.237943, 0.894474, 0.326651, -0.938554, 0.111427, 0, 6.74904, 10.7558)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2f7pq")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(40, 0, 0, 0, 2, 0, 0, 0, 40, 0, -1.73738, 0)
+use_collision = true
+material = ExtResource("1_2cuvx")

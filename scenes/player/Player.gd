@@ -5,7 +5,6 @@ const WALK_SPEED = 2.0
 const JUMP_VELOCITY = 4.8
 const SENSITIVITY = 0.004
 
-@export var center_height =  0.625 + 0.25
 @export var ground_snap =  0.05
 @export_flags_3d_physics var ground_collision_mask
 
@@ -13,31 +12,39 @@ var is_grounded = false
 var vertical_velocity = 0
 var velocity = Vector3.ZERO
 
+var is_frozen = false
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
+	if is_frozen:
+		return
 	if event.is_action_pressed("Escape"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if event is InputEventMouseMotion:
 		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY)
 		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY)
-		$CameraPivot/Camera3D.rotation.x = clamp($CameraPivot/Camera3D.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		$CameraPivot/Camera3D.rotation.x = clamp($CameraPivot/Camera3D.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 
 func _physics_process(delta):
-	
+	if is_frozen:
+		return
 	# Perform ground raycast:
 	var space_state = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(position, position + Vector3.DOWN * RAY_LENGTH)
+	var query = PhysicsRayQueryParameters3D.create(position + Vector3.UP, position + Vector3.DOWN * RAY_LENGTH)
 	query.exclude= [self, $CollisionShape3D]
 	var result = space_state.intersect_ray(query)
 	
 	if result:
 		var is_flat_surface = result["normal"].dot(Vector3.UP) > 0.4
 		if is_flat_surface:
-			var ground_dist = position.y - center_height - result["position"].y
+			var ground_dist = position.y - result["position"].y
 			if ground_dist < ground_snap and $JumpTimer.is_stopped():
-				position = result["position"] + Vector3.UP * (center_height)
+				position = result["position"]
 				is_grounded = true
 				vertical_velocity = 0
 			else:
@@ -63,3 +70,7 @@ func _physics_process(delta):
 		velocity.z = lerp(velocity.z, direction.z * WALK_SPEED, delta * 7.0)
 	
 	position += velocity * delta
+
+func set_frozen (frozen):
+	$CollisionShape3D.disabled = frozen
+	is_frozen = frozen

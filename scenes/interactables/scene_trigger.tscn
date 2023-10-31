@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxew2e2p6bqqc"]
+
+[ext_resource type="Script" path="res://scenes/interactables/scene_trigger.gd" id="1_e4hu5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gkhko"]
+size = Vector3(0.25, 0.5, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xphe3"]
+albedo_color = Color(0, 0.47451, 0.356863, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cvwl0"]
+size = Vector3(0.25, 0.5, 0.25)
+
+[node name="SceneTrigger" type="Area3D"]
+script = ExtResource("1_e4hu5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gkhko")
+surface_material_override/0 = SubResource("StandardMaterial3D_xphe3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_cvwl0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
