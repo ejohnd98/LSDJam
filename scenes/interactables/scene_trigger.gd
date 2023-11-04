@@ -1,6 +1,6 @@
 extends Area3D
 
-@export var transition_to: PackedScene
+@export var transition_to: String = "default_scene"
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):

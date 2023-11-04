@@ -1,12 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkl7w62v1wrua"]
+[gd_scene load_steps=3 format=3 uid="uid://dkl7w62v1wrua"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_23n8w"]
-[ext_resource type="PackedScene" uid="uid://cr25ba7cqrw1l" path="res://scenes/scenes/default_scene.tscn" id="2_7u35w"]
 [ext_resource type="PackedScene" uid="uid://cb8ennhmak0c6" path="res://scenes/player/player.tscn" id="3_t1v70"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_23n8w")
-default_scene = ExtResource("2_7u35w")
 
 [node name="Player" parent="." instance=ExtResource("3_t1v70")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08847, 0)
+
+[node name="SceneChangeTimer" type="Timer" parent="."]
+wait_time = 0.01
+one_shot = true
+
+[connection signal="timeout" from="SceneChangeTimer" to="." method="_on_scene_change_timer"]
