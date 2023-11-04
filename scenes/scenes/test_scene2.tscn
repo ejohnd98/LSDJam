@@ -12,10 +12,10 @@ sky_material = SubResource("ProceduralSkyMaterial_80adn")
 background_mode = 2
 sky = SubResource("Sky_it6a7")
 fog_enabled = true
-fog_light_color = Color(1, 0.00784314, 0.431373, 1)
-fog_density = 0.21
-fog_height = -0.25
-fog_height_density = 2.6483
+fog_light_color = Color(1, 1, 1, 1)
+fog_density = 0.0689
+fog_height = -0.8
+fog_height_density = 16.0
 
 [node name="DefaultScene" type="Node3D"]
 
@@ -32,5 +32,5 @@ use_collision = true
 material = ExtResource("1_mqvjd")
 
 [node name="SceneTrigger" parent="." instance=ExtResource("2_d3jem")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00604486, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00604486, 0, 1.09881)
 transition_to = "test_scene1"

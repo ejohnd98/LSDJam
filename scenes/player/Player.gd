@@ -1,9 +1,9 @@
 extends RigidBody3D
 
 const RAY_LENGTH = 10
-const WALK_SPEED = 4.0
-const JUMP_VELOCITY = 4.8
-const SENSITIVITY = 0.004
+const WALK_SPEED = 1.8
+const JUMP_VELOCITY = 3.0
+const SENSITIVITY = 0.003
 
 @export var ground_snap =  0.05
 @export_flags_3d_physics var ground_collision_mask
@@ -56,7 +56,7 @@ func _physics_process(delta):
 		$JumpTimer.start()
 	
 	if not is_grounded:
-		vertical_velocity -= delta * 9.81
+		vertical_velocity -= delta * 9
 		position.y += vertical_velocity*delta
 	
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Back")

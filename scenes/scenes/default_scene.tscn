@@ -13,6 +13,10 @@ sky_material = SubResource("ProceduralSkyMaterial_r8o0x")
 [sub_resource type="Environment" id="Environment_nxjme"]
 background_mode = 2
 sky = SubResource("Sky_5yr86")
+fog_enabled = true
+fog_light_energy = 5.08
+fog_density = 0.0138
+fog_sky_affect = 0.0
 
 [node name="DefaultScene" type="Node3D"]
 
