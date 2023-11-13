@@ -29,7 +29,9 @@ func move_in_direction (direction: Vector2i):
 	for x in grid_size.x:
 		for y in grid_size.y:
 			grid[x][y].UpdateTexture(player_position == Vector2i(x,y))
-	
+
+func get_scene_from_position ():
+	return grid[player_position.x][player_position.y].scene_name
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

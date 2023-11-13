@@ -76,4 +76,24 @@ func _physics_process(delta):
 
 func set_frozen (frozen):
 	$CollisionShape3D.disabled = frozen
+	velocity = Vector3.ZERO
+	vertical_velocity = 0
 	is_frozen = frozen
+
+func set_spawn_position (new_position, new_rotation):
+	position = new_position
+	$CameraPivot.rotation.y = new_rotation.y + PI
+	
+	#Snap to ground
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(position + Vector3.UP, position + Vector3.DOWN * RAY_LENGTH)
+	query.exclude= [self, $CollisionShape3D]
+	var result = space_state.intersect_ray(query)
+	
+	if result:
+		var is_flat_surface = result["normal"].dot(Vector3.UP) > 0.4
+		if is_flat_surface:
+			position = result["position"]
+			is_grounded = true
+			vertical_velocity = 0
+	
