@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyndvm76up426"]
+
+[ext_resource type="Texture2D" uid="uid://c0umprwf2tnk0" path="res://textures/DreamGrid/dream_icon.png" id="1_3ft4y"]
+[ext_resource type="Script" path="res://scenes/dream_cell.gd" id="2_muwyj"]
+
+[node name="DreamCell" type="TextureRect"]
+texture = ExtResource("1_3ft4y")
+script = ExtResource("2_muwyj")
+
+[node name="Overlay" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -10,6 +10,10 @@ var next_scene_path = ""
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_new_scene(default_scene)
+	
+func move_in_direction(direction: Vector2i):
+	$"../../CanvasLayer/DreamGrid".move_in_direction(direction)
+	pass
 
 # todo: make this async
 func load_new_scene(new_scene_name: String):

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cr25ba7cqrw1l"]
 
 [ext_resource type="Material" uid="uid://o4lttwvxltjy" path="res://materials/blockout_grid.tres" id="1_0bp01"]
-[ext_resource type="PackedScene" uid="uid://bxew2e2p6bqqc" path="res://scenes/interactables/scene_trigger.tscn" id="2_8it4w"]
+[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="2_aadbs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r8o0x"]
 sky_top_color = Color(0, 0.886275, 0.996078, 1)
@@ -37,6 +37,17 @@ transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0.12082, 0)
 operation = 2
 material = ExtResource("1_0bp01")
 
-[node name="SceneTrigger" parent="." instance=ExtResource("2_8it4w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.71332, 0, 0)
-transition_to = "test_scene1"
+[node name="SceneTrigger2" parent="." instance=ExtResource("2_aadbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0479469, -0.428641, 1.96294)
+
+[node name="SceneTrigger5" parent="." instance=ExtResource("2_aadbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0479469, -0.428641, -2.03706)
+grid_direction = Vector2i(0, -1)
+
+[node name="SceneTrigger3" parent="." instance=ExtResource("2_aadbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.04795, -0.428641, -0.0370574)
+grid_direction = Vector2i(1, 0)
+
+[node name="SceneTrigger4" parent="." instance=ExtResource("2_aadbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.95205, -0.428641, -0.0370574)
+grid_direction = Vector2i(-1, 0)

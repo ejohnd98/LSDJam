@@ -16,6 +16,9 @@ var is_frozen = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+func get_player_rotation():
+	return $CameraPivot.rotation.y
 
 func _unhandled_input(event):
 	if is_frozen:

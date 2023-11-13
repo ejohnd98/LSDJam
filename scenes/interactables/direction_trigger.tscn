@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://bhs0hsqqfyrkg"]
+
+[ext_resource type="Script" path="res://scenes/interactables/direction_trigger.gd" id="1_nl4vh"]
+[ext_resource type="Shader" path="res://shaders/psxmodel.gdshader" id="2_5q8sh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gkhko"]
+size = Vector3(0.25, 0.5, 0.25)
+
+[sub_resource type="Gradient" id="Gradient_fbai2"]
+colors = PackedColorArray(2.31028e-06, 0.618021, 0.95532, 1, 1, 0.65098, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5ykml"]
+gradient = SubResource("Gradient_fbai2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pq8ve"]
+render_priority = 0
+shader = ExtResource("2_5q8sh")
+shader_parameter/affine_mapping = true
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)
+shader_parameter/albedo = SubResource("GradientTexture1D_5ykml")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cvwl0"]
+size = Vector3(0.25, 0.5, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ukmnd"]
+
+[sub_resource type="TextMesh" id="TextMesh_n7gq7"]
+material = SubResource("StandardMaterial3D_ukmnd")
+text = "→"
+font_size = 32
+
+[node name="SceneTrigger" type="Area3D"]
+script = ExtResource("1_nl4vh")
+grid_direction = Vector2i(0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gkhko")
+surface_material_override/0 = SubResource("ShaderMaterial_pq8ve")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_cvwl0")
+
+[node name="ArrowPivot" type="Node3D" parent="."]
+
+[node name="ArrowMesh" type="MeshInstance3D" parent="ArrowPivot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.460526, 0)
+mesh = SubResource("TextMesh_n7gq7")
+skeleton = NodePath("../..")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
