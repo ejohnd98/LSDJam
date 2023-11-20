@@ -1,11 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://dkl7w62v1wrua"]
+[gd_scene load_steps=11 format=3 uid="uid://dkl7w62v1wrua"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_23n8w"]
 [ext_resource type="Shader" path="res://shaders/psxpost.gdshader" id="1_nkerm"]
 [ext_resource type="PackedScene" uid="uid://cb8ennhmak0c6" path="res://scenes/player/player.tscn" id="3_t1v70"]
+[ext_resource type="PackedScene" uid="uid://di6ub474jflg8" path="res://scenes/dream_grid2.tscn" id="4_fixl2"]
 [ext_resource type="PackedScene" uid="uid://dusmamsayjyke" path="res://scenes/dream_grid.tscn" id="4_u0qry"]
 [ext_resource type="Script" path="res://scenes/CompassUI.gd" id="5_3dlvi"]
 [ext_resource type="Texture2D" uid="uid://8w62pgk0otf1" path="res://textures/DreamGrid/direction_icon.png" id="5_pdtja"]
+[ext_resource type="Texture2D" uid="uid://crqwr8hxcsn6s" path="res://textures/nightmareOverlay.png" id="6_wmihu"]
+[ext_resource type="Texture2D" uid="uid://dtcfswefrehyy" path="res://textures/win_screen.png" id="8_u2duw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6uqtb"]
 shader = ExtResource("1_nkerm")
@@ -30,6 +33,7 @@ render_target_update_mode = 4
 
 [node name="Game" type="Node3D" parent="SubViewport"]
 script = ExtResource("1_23n8w")
+dreams = Array[PackedScene]([ExtResource("4_u0qry"), ExtResource("4_fixl2")])
 
 [node name="Player" parent="SubViewport/Game" instance=ExtResource("3_t1v70")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08847, 0)
@@ -39,6 +43,17 @@ wait_time = 0.01
 one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="NightmareOverlay" type="TextureRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_wmihu")
+expand_mode = 2
 
 [node name="DreamGrid" parent="CanvasLayer" instance=ExtResource("4_u0qry")]
 offset_left = -300.0
@@ -72,5 +87,16 @@ grow_vertical = 2
 pivot_offset = Vector2(32, 32)
 size_flags_horizontal = 4
 texture = ExtResource("5_pdtja")
+
+[node name="WinScreen" type="TextureRect" parent="CanvasLayer"]
+visible = false
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_u2duw")
+expand_mode = 2
 
 [connection signal="timeout" from="SubViewport/Game/SceneChangeTimer" to="SubViewport/Game" method="_on_scene_change_timer"]

@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://di6ub474jflg8"]
+
+[ext_resource type="Script" path="res://scenes/DreamGrid.gd" id="1_ldaae"]
+[ext_resource type="PackedScene" uid="uid://cyndvm76up426" path="res://scenes/dream_cell.tscn" id="2_yieo4"]
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+script = ExtResource("1_ldaae")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 200.0
+grow_horizontal = 0
+columns = 4
+
+[node name="DreamCell" parent="GridContainer" instance=ExtResource("2_yieo4")]
+layout_mode = 2
+
+[node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_yieo4")]
+layout_mode = 2
+
+[node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_yieo4")]
+layout_mode = 2
+is_nightmare = true
+
+[node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_yieo4")]
+layout_mode = 2
+scene_name = "goal_scene"
+is_goal = true
+
+[node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_yieo4")]
+layout_mode = 2
+
+[node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_yieo4")]
+layout_mode = 2
+is_start = true
+
+[node name="DreamCell7" parent="GridContainer" instance=ExtResource("2_yieo4")]
+layout_mode = 2
+is_nightmare = true
+
+[node name="DreamCell8" parent="GridContainer" instance=ExtResource("2_yieo4")]
+layout_mode = 2
+is_nightmare = true

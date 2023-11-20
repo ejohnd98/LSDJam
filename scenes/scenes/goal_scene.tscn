@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://n4q3e48il8io"]
+
+[ext_resource type="Texture2D" uid="uid://keps8pn8wgob" path="res://textures/grid.png" id="1_3yq8v"]
+[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="2_plt1x"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r8o0x"]
+sky_top_color = Color(0, 0.886275, 0.996078, 1)
+sky_horizon_color = Color(0, 1, 0, 1)
+
+[sub_resource type="Sky" id="Sky_5yr86"]
+sky_material = SubResource("ProceduralSkyMaterial_r8o0x")
+
+[sub_resource type="Environment" id="Environment_nxjme"]
+background_mode = 2
+sky = SubResource("Sky_5yr86")
+fog_enabled = true
+fog_light_energy = 5.08
+fog_density = 0.0138
+fog_sky_affect = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2sub8"]
+albedo_color = Color(0, 0.694118, 0, 1)
+albedo_texture = ExtResource("1_3yq8v")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_scale = Vector3(0.5, 0.5, 0.5)
+uv2_triplanar = true
+uv2_world_triplanar = true
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4obx"]
+albedo_color = Color(0, 0.694118, 0, 1)
+albedo_texture = ExtResource("1_3yq8v")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_scale = Vector3(0.5, 0.5, 0.5)
+uv2_triplanar = true
+uv2_world_triplanar = true
+texture_filter = 2
+
+[node name="DefaultScene" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.25, -0.433013, 0.378549, 0.237943, 0.894474, 0.326651, -0.938554, 0.111427, 0, 6.74904, 10.7558)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nxjme")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 2, 0, 0, 0, 20, 0, 0, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_2sub8")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0.12082, 0)
+operation = 2
+material = SubResource("StandardMaterial3D_i4obx")
+
+[node name="SceneTrigger2" parent="." instance=ExtResource("2_plt1x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0479469, -0.428641, 1.96294)
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0)

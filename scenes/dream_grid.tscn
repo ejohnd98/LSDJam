@@ -27,6 +27,7 @@ layout_mode = 2
 
 [node name="DreamCell2" parent="GridContainer" instance=ExtResource("1_tp6mm")]
 layout_mode = 2
+scene_name = "goal_scene"
 is_goal = true
 
 [node name="DreamCell3" parent="GridContainer" instance=ExtResource("1_tp6mm")]

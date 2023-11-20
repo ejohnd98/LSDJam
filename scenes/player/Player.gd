@@ -21,13 +21,13 @@ func get_player_rotation():
 	return $CameraPivot.rotation.y
 
 func _unhandled_input(event):
-	if is_frozen:
-		return
 	if event.is_action_pressed("Escape"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if is_frozen:
+		return
 	if event is InputEventMouseMotion:
 		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY)
 		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY)

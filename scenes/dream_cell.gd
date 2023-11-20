@@ -8,6 +8,8 @@ extends Node
 @export var is_goal = false
 @export var is_start = false
 
+var grid_position : Vector2i
+
 func _ready():
 	UpdateTexture(is_start)
 
