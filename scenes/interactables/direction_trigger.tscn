@@ -31,7 +31,7 @@ material = SubResource("StandardMaterial3D_ukmnd")
 text = "→"
 font_size = 32
 
-[node name="SceneTrigger" type="Area3D"]
+[node name="SceneTrigger" type="Area3D" groups=["interactable"]]
 script = ExtResource("1_nl4vh")
 grid_direction = Vector2i(0, 1)
 
@@ -50,3 +50,5 @@ mesh = SubResource("TextMesh_n7gq7")
 skeleton = NodePath("../..")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

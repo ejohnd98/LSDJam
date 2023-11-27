@@ -28,6 +28,9 @@ func _unhandled_input(event):
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if is_frozen:
 		return
+	if event.is_action_pressed("Interact"):
+		try_interact()
+		
 	if event is InputEventMouseMotion:
 		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY)
 		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY)
@@ -96,4 +99,25 @@ func set_spawn_position (new_position, new_rotation):
 			position = result["position"]
 			is_grounded = true
 			vertical_velocity = 0
+	
+	# TODO: change this to be in physics process so that the current hovered over
+	# interactable can be highlighted, or a tooltip can be displayed.
+	# also change so that interactable is separate from direction_trigger
+func try_interact():
+	var space_state = get_world_3d().direct_space_state
+	var cam = $CameraPivot/Camera3D
+	var mousepos = get_viewport().get_mouse_position()
+
+	var origin = cam.project_ray_origin(mousepos)
+	var end = origin + cam.project_ray_normal(mousepos) * 1000
+	var query = PhysicsRayQueryParameters3D.create(origin, end)
+	query.collide_with_areas = true
+	query.exclude
+	var result = space_state.intersect_ray(query)
+	if (not result.is_empty()):
+		var hit_object = result["collider"]
+		print("Hit: " + hit_object.name)
+		if (hit_object.is_in_group("interactable")):
+			hit_object.trigger_direction()
+		
 	

@@ -9,5 +9,11 @@ func _ready():
 
 #TODO: make this "on click"
 func _on_body_entered(body):
-	if body.is_in_group("player"):
-		get_tree().get_root().get_node("SubViewportContainer/SubViewport/Game").move_in_direction(grid_direction)
+	pass
+	#trigger_direction()
+
+func _on_input_event(camera, event, position, normal, shape_idx):
+	trigger_direction()
+
+func trigger_direction():
+	get_tree().get_root().get_node("SubViewportContainer/SubViewport/Game").move_in_direction(grid_direction)
