@@ -102,7 +102,6 @@ func set_spawn_position (new_position, new_rotation):
 	
 	# TODO: change this to be in physics process so that the current hovered over
 	# interactable can be highlighted, or a tooltip can be displayed.
-	# also change so that interactable is separate from direction_trigger
 func try_interact():
 	var space_state = get_world_3d().direct_space_state
 	var cam = $CameraPivot/Camera3D
@@ -118,6 +117,6 @@ func try_interact():
 		var hit_object = result["collider"]
 		print("Hit: " + hit_object.name)
 		if (hit_object.is_in_group("interactable")):
-			hit_object.trigger_direction()
+			hit_object.interact(self)
 		
 	
