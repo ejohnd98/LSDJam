@@ -14,6 +14,16 @@ var dream_index = -1
 var current_scene_node = null
 var next_scene_path = ""
 
+var is_ui_shown = true
+func _unhandled_input(event):
+	if event.is_action_pressed("Hide UI"):
+		if is_ui_shown:
+			dream_grid.hide()
+			$"../../CanvasLayer/Compass".hide()
+		else:
+			dream_grid.show()
+			$"../../CanvasLayer/Compass".show()
+
 func _ready():
 	advance_dream()
 	

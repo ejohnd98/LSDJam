@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://caxab8g1g1hdd"]
+
+[ext_resource type="PackedScene" uid="uid://7tqlj4kc2fbg" path="res://sourceModels/galaxyCorridorEndDoor.glb" id="1_g6b4t"]
+[ext_resource type="Material" uid="uid://dwnwniuhvtw35" path="res://materials/psx_model.tres" id="2_17kgr"]
+
+[node name="galaxyCorridorEndDoor" instance=ExtResource("1_g6b4t")]
+
+[node name="EndWithDoor" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_17kgr")

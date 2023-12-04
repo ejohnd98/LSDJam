@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://dusmamsayjyke"]
+
+[ext_resource type="Script" path="res://scenes/scenes/DreamGrids/DreamGrid.gd" id="1_sbeb1"]
+[ext_resource type="PackedScene" uid="uid://cyndvm76up426" path="res://scenes/scenes/DreamGrids/dream_cell.tscn" id="2_4jmch"]
+
+[node name="DreamGrid" type="Control"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+script = ExtResource("1_sbeb1")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 200.0
+grow_horizontal = 0
+columns = 3
+
+[node name="DreamCell" parent="GridContainer" instance=ExtResource("2_4jmch")]
+layout_mode = 2
+
+[node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_4jmch")]
+layout_mode = 2
+scene_name = "goal_scene"
+is_goal = true
+
+[node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_4jmch")]
+layout_mode = 2
+
+[node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_4jmch")]
+layout_mode = 2
+is_nightmare = true
+
+[node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_4jmch")]
+layout_mode = 2
+
+[node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_4jmch")]
+layout_mode = 2
+is_nightmare = true
+
+[node name="DreamCell7" parent="GridContainer" instance=ExtResource("2_4jmch")]
+layout_mode = 2
+
+[node name="DreamCell8" parent="GridContainer" instance=ExtResource("2_4jmch")]
+layout_mode = 2
+scene_name = "GenericDreams/GalaxyCorridor01"
+is_start = true
+
+[node name="DreamCell9" parent="GridContainer" instance=ExtResource("2_4jmch")]
+layout_mode = 2

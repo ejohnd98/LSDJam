@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqyjcrfulm8ui"]
+
+[ext_resource type="PackedScene" uid="uid://coy6lieyxilh5" path="res://sourceModels/galaxyCorridor.glb" id="1_gerls"]
+[ext_resource type="Material" uid="uid://dwnwniuhvtw35" path="res://materials/psx_model.tres" id="2_l2uft"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t74sy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ne5sv"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[node name="galaxyCorridor" instance=ExtResource("1_gerls")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_l2uft")
+
+[node name="Light" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(0.387658, 0, 0, 0, 0.03, 0, 0, 0, 1.74089, 0, 2.83253, 0.0705367)
+mesh = SubResource("BoxMesh_t74sy")
+surface_material_override/0 = SubResource("StandardMaterial3D_ne5sv")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46283, 0.0705367)
+light_energy = 0.75
+omni_range = 3.0
