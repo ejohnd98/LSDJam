@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dqyjcrfulm8ui" path="res://models/galaxy_corridor.tscn" id="1_68pqd"]
 [ext_resource type="PackedScene" uid="uid://cvkxassvtxb7i" path="res://models/galaxy_corridor_end.tscn" id="2_fu6pv"]
-[ext_resource type="PackedScene" uid="uid://caxab8g1g1hdd" path="res://models/galaxy_corridor_end_door.tscn" id="3_f46jj"]
+[ext_resource type="PackedScene" uid="uid://cb2k6fym5cxi0" path="res://models/galaxy_corridor_end_door.tscn" id="3_f46jj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxgel"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -26,7 +26,7 @@ glow_enabled = true
 environment = SubResource("Environment_2r8tv")
 
 [node name="PlayerSpawn" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.099598, -0.63363)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.099598, 16.6349)
 
 [node name="galaxyCorridor" parent="." instance=ExtResource("1_68pqd")]
 

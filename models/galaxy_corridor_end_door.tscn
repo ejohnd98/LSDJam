@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://caxab8g1g1hdd"]
+[gd_scene load_steps=4 format=3 uid="uid://cb2k6fym5cxi0"]
 
-[ext_resource type="PackedScene" uid="uid://7tqlj4kc2fbg" path="res://sourceModels/galaxyCorridorEndDoor.glb" id="1_g6b4t"]
-[ext_resource type="Material" uid="uid://dwnwniuhvtw35" path="res://materials/psx_model.tres" id="2_17kgr"]
+[ext_resource type="PackedScene" uid="uid://7tqlj4kc2fbg" path="res://sourceModels/galaxyCorridorEndDoor.glb" id="1_vhg8r"]
+[ext_resource type="Material" uid="uid://dwnwniuhvtw35" path="res://materials/psx_model.tres" id="2_ytxnt"]
+[ext_resource type="PackedScene" uid="uid://dwdsyyxdgdfmc" path="res://models/galaxy_corridor_doors.tscn" id="3_c675a"]
 
-[node name="galaxyCorridorEndDoor" instance=ExtResource("1_g6b4t")]
+[node name="galaxyCorridorEndDoor" instance=ExtResource("1_vhg8r")]
 
 [node name="EndWithDoor" parent="." index="0"]
-surface_material_override/0 = ExtResource("2_17kgr")
+surface_material_override/0 = ExtResource("2_ytxnt")
+
+[node name="galaxyCorridorDoors" parent="EndWithDoor/DoorPivot" index="0" instance=ExtResource("3_c675a")]

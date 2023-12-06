@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://coy6lieyxilh5"
-path="res://.godot/imported/galaxyCorridor.glb-d274973ef8b6b1f765254fafb77e184e.scn"
+uid="uid://c63farigs75q4"
+path="res://.godot/imported/galaxyCorridorMiddle.glb-0729fcde115068fcb15be2d4583559ba.scn"
 
 [deps]
 
-source_file="res://sourceModels/galaxyCorridor.glb"
-dest_files=["res://.godot/imported/galaxyCorridor.glb-d274973ef8b6b1f765254fafb77e184e.scn"]
+source_file="res://sourceModels/galaxyCorridorMiddle.glb"
+dest_files=["res://.godot/imported/galaxyCorridorMiddle.glb-0729fcde115068fcb15be2d4583559ba.scn"]
 
 [params]
 
@@ -30,7 +30,7 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Corridor": {
+"PATH:CorridorMiddle": {
 "generate/physics": true,
 "physics/shape_type": 2
 }

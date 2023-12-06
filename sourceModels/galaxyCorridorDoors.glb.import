@@ -3,17 +3,17 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://coy6lieyxilh5"
-path="res://.godot/imported/galaxyCorridor.glb-d274973ef8b6b1f765254fafb77e184e.scn"
+uid="uid://1cqoib1l68x4"
+path="res://.godot/imported/galaxyCorridorDoors.glb-69de492124d7736bdcf935d6d18fb9cc.scn"
 
 [deps]
 
-source_file="res://sourceModels/galaxyCorridor.glb"
-dest_files=["res://.godot/imported/galaxyCorridor.glb-d274973ef8b6b1f765254fafb77e184e.scn"]
+source_file="res://sourceModels/galaxyCorridorDoors.glb"
+dest_files=["res://.godot/imported/galaxyCorridorDoors.glb-69de492124d7736bdcf935d6d18fb9cc.scn"]
 
 [params]
 
-nodes/root_type="Node3D"
+nodes/root_type="AnimatableBody3D"
 nodes/root_name="Scene Root"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
@@ -30,9 +30,13 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Corridor": {
+"PATH:Doors/DoorA": {
 "generate/physics": true,
-"physics/shape_type": 2
+"physics/shape_type": 1
+},
+"PATH:Doors/DoorB": {
+"generate/physics": true,
+"physics/shape_type": 1
 }
 }
 }
