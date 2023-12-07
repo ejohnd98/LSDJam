@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://03yeyf604ip3"]
+[gd_scene load_steps=10 format=3 uid="uid://03yeyf604ip3"]
 
 [ext_resource type="PackedScene" uid="uid://dqyjcrfulm8ui" path="res://models/galaxy_corridor.tscn" id="1_68pqd"]
+[ext_resource type="PackedScene" uid="uid://gy6thtlh8vc6" path="res://models/galaxy_corridor_4_way.tscn" id="1_rgnig"]
 [ext_resource type="PackedScene" uid="uid://cvkxassvtxb7i" path="res://models/galaxy_corridor_end.tscn" id="2_fu6pv"]
+[ext_resource type="PackedScene" uid="uid://c1r2bs0wnhu4e" path="res://models/galaxy_corridor_middle.tscn" id="2_rxkgm"]
 [ext_resource type="PackedScene" uid="uid://cb2k6fym5cxi0" path="res://models/galaxy_corridor_end_door.tscn" id="3_f46jj"]
+[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="6_ihqdw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxgel"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -26,60 +29,127 @@ glow_enabled = true
 environment = SubResource("Environment_2r8tv")
 
 [node name="PlayerSpawn" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.099598, 16.6349)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.099598, -0.365101)
 
-[node name="galaxyCorridor" parent="." instance=ExtResource("1_68pqd")]
+[node name="Corridors" type="Node3D" parent="."]
 
-[node name="galaxyCorridor2" parent="." instance=ExtResource("1_68pqd")]
+[node name="galaxyCorridor4Way" parent="Corridors" instance=ExtResource("1_rgnig")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+
+[node name="Corridor1" type="Node3D" parent="Corridors"]
+
+[node name="galaxyCorridor" parent="Corridors/Corridor1" instance=ExtResource("1_68pqd")]
+
+[node name="galaxyCorridor2" parent="Corridors/Corridor1" instance=ExtResource("1_68pqd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="galaxyCorridor3" parent="." instance=ExtResource("1_68pqd")]
+[node name="galaxyCorridor3" parent="Corridors/Corridor1" instance=ExtResource("1_68pqd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[node name="galaxyCorridor4" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+[node name="galaxyCorridor4" parent="Corridors/Corridor1" instance=ExtResource("1_68pqd")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -5.85783)
 
-[node name="galaxyCorridor5" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+[node name="galaxyCorridorMiddle" parent="Corridors/Corridor1" instance=ExtResource("2_rxkgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
-[node name="galaxyCorridor6" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+[node name="galaxyCorridorEndDoor" parent="Corridors/Corridor1" instance=ExtResource("3_f46jj")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, -4)
 
-[node name="galaxyCorridor7" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+[node name="galaxyCorridorMiddle2" parent="Corridors/Corridor1" instance=ExtResource("2_rxkgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="galaxyCorridor8" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14)
+[node name="galaxyCorridorEnd" parent="Corridors/Corridor1" instance=ExtResource("2_fu6pv")]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 0, 0, -5.8601)
 
-[node name="galaxyCorridor9" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
+[node name="Corridor2" type="Node3D" parent="Corridors"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7, 0, 7)
 
-[node name="galaxyCorridor10" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 18)
+[node name="galaxyCorridor" parent="Corridors/Corridor2" instance=ExtResource("1_68pqd")]
 
-[node name="galaxyCorridor11" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.1)
+[node name="galaxyCorridor2" parent="Corridors/Corridor2" instance=ExtResource("1_68pqd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="galaxyCorridor12" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22.1)
+[node name="galaxyCorridor3" parent="Corridors/Corridor2" instance=ExtResource("1_68pqd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[node name="galaxyCorridor13" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.1)
+[node name="galaxyCorridor4" parent="Corridors/Corridor2" instance=ExtResource("1_68pqd")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -5.85783)
 
-[node name="galaxyCorridor14" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 26.1)
+[node name="galaxyCorridorMiddle" parent="Corridors/Corridor2" instance=ExtResource("2_rxkgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
-[node name="galaxyCorridor15" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 28.1)
+[node name="galaxyCorridorEndDoor" parent="Corridors/Corridor2" instance=ExtResource("3_f46jj")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, -4)
 
-[node name="galaxyCorridor16" parent="." instance=ExtResource("1_68pqd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30.1)
+[node name="galaxyCorridorMiddle2" parent="Corridors/Corridor2" instance=ExtResource("2_rxkgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="galaxyCorridorEnd" parent="." instance=ExtResource("2_fu6pv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30.1)
+[node name="galaxyCorridorEnd" parent="Corridors/Corridor2" instance=ExtResource("2_fu6pv")]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 0, 0, -5.8601)
 
-[node name="galaxyCorridorEndDoor" parent="." instance=ExtResource("3_f46jj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 18)
+[node name="Corridor3" type="Node3D" parent="Corridors"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7, 0, 7)
 
-[node name="galaxyCorridorEnd2" parent="." instance=ExtResource("2_fu6pv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.1)
+[node name="galaxyCorridor" parent="Corridors/Corridor3" instance=ExtResource("1_68pqd")]
+
+[node name="galaxyCorridor2" parent="Corridors/Corridor3" instance=ExtResource("1_68pqd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="galaxyCorridor3" parent="Corridors/Corridor3" instance=ExtResource("1_68pqd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="galaxyCorridor4" parent="Corridors/Corridor3" instance=ExtResource("1_68pqd")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -5.85783)
+
+[node name="galaxyCorridorMiddle" parent="Corridors/Corridor3" instance=ExtResource("2_rxkgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="galaxyCorridorEndDoor" parent="Corridors/Corridor3" instance=ExtResource("3_f46jj")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, -4)
+
+[node name="galaxyCorridorMiddle2" parent="Corridors/Corridor3" instance=ExtResource("2_rxkgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="galaxyCorridorEnd" parent="Corridors/Corridor3" instance=ExtResource("2_fu6pv")]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 0, 0, -5.8601)
+
+[node name="Corridor4" type="Node3D" parent="Corridors"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 14)
+
+[node name="galaxyCorridor" parent="Corridors/Corridor4" instance=ExtResource("1_68pqd")]
+
+[node name="galaxyCorridor2" parent="Corridors/Corridor4" instance=ExtResource("1_68pqd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="galaxyCorridor3" parent="Corridors/Corridor4" instance=ExtResource("1_68pqd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="galaxyCorridor4" parent="Corridors/Corridor4" instance=ExtResource("1_68pqd")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -5.85783)
+
+[node name="galaxyCorridorMiddle" parent="Corridors/Corridor4" instance=ExtResource("2_rxkgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="galaxyCorridorEndDoor" parent="Corridors/Corridor4" instance=ExtResource("3_f46jj")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, -4)
+
+[node name="galaxyCorridorMiddle2" parent="Corridors/Corridor4" instance=ExtResource("2_rxkgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="galaxyCorridorEnd" parent="Corridors/Corridor4" instance=ExtResource("2_fu6pv")]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 0, 0, -5.8601)
+
+[node name="SceneTrigger" parent="." instance=ExtResource("6_ihqdw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 19.786)
+
+[node name="SceneTrigger2" parent="." instance=ExtResource("6_ihqdw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.922, 1, 7)
+grid_direction = Vector2i(1, 0)
+
+[node name="SceneTrigger3" parent="." instance=ExtResource("6_ihqdw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.922, 1, 7)
+grid_direction = Vector2i(-1, 0)
+
+[node name="SceneTrigger4" parent="." instance=ExtResource("6_ihqdw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -6)
+grid_direction = Vector2i(0, -1)

@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://gy6thtlh8vc6"]
+
+[ext_resource type="PackedScene" uid="uid://xx8pke8pkcjc" path="res://sourceModels/galaxyCorridor4Way.glb" id="1_jdpio"]
+[ext_resource type="Material" uid="uid://dwnwniuhvtw35" path="res://materials/psx_model.tres" id="2_1cvnc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_bspa1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x0qvf"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[node name="galaxyCorridor4Way" instance=ExtResource("1_jdpio")]
+
+[node name="Corridor4Way" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_1cvnc")
+
+[node name="Light" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(0.975338, 0, 0, 0, 0.03, 0, 0, 0, 0.963347, 0, 2.833, 0)
+mesh = SubResource("BoxMesh_bspa1")
+surface_material_override/0 = SubResource("StandardMaterial3D_x0qvf")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46283, 0.0705367)
+light_energy = 0.75
+omni_range = 3.0
