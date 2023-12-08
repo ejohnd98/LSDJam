@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://03yeyf604ip3"]
+[gd_scene load_steps=11 format=3 uid="uid://03yeyf604ip3"]
 
 [ext_resource type="PackedScene" uid="uid://dqyjcrfulm8ui" path="res://models/galaxy_corridor.tscn" id="1_68pqd"]
 [ext_resource type="PackedScene" uid="uid://gy6thtlh8vc6" path="res://models/galaxy_corridor_4_way.tscn" id="1_rgnig"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c1r2bs0wnhu4e" path="res://models/galaxy_corridor_middle.tscn" id="2_rxkgm"]
 [ext_resource type="PackedScene" uid="uid://cb2k6fym5cxi0" path="res://models/galaxy_corridor_end_door.tscn" id="3_f46jj"]
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="6_ihqdw"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="7_slnk5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxgel"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -153,3 +154,6 @@ grid_direction = Vector2i(-1, 0)
 [node name="SceneTrigger4" parent="." instance=ExtResource("6_ihqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -6)
 grid_direction = Vector2i(0, -1)
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("7_slnk5")]
+transform = Transform3D(0.565685, -0.0493027, 0.563533, 0, 0.796956, 0.0697246, -0.565685, -0.0493027, 0.563533, 1.53306, 1.82745, 8.53306)

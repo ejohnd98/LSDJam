@@ -93,4 +93,8 @@ func _on_scene_change_timer():
 	var current_cell = dream_grid.get_current_cell()
 	$"../../CanvasLayer/NightmareOverlay".visible = current_cell.is_nightmare
 	
+	var dream_grid_representation = current_scene_node.get_node("DreamGridRepresentation")
+	if (dream_grid_representation):
+		dream_grid_representation.create_representation(dream_grid)
+	
 	$Player.set_frozen(false)

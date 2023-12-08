@@ -1,7 +1,7 @@
 extends RigidBody3D
 
 const RAY_LENGTH = 10
-const WALK_SPEED = 1.8
+const WALK_SPEED = 4#1.8
 const JUMP_VELOCITY = 3.0
 const SENSITIVITY = 0.003
 

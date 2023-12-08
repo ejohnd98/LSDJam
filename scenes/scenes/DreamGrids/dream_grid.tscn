@@ -24,6 +24,7 @@ columns = 3
 
 [node name="DreamCell" parent="GridContainer" instance=ExtResource("2_4jmch")]
 layout_mode = 2
+scene_name = "GenericDreams/GalaxyCorridor01"
 
 [node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_4jmch")]
 layout_mode = 2
@@ -32,20 +33,25 @@ is_goal = true
 
 [node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_4jmch")]
 layout_mode = 2
+scene_name = "GenericDreams/GalaxyCorridor01"
 
 [node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_4jmch")]
 layout_mode = 2
+scene_name = "GenericDreams/GalaxyCorridor01"
 is_nightmare = true
 
 [node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_4jmch")]
 layout_mode = 2
+scene_name = "GenericDreams/GalaxyCorridor01"
 
 [node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_4jmch")]
 layout_mode = 2
+scene_name = "GenericDreams/GalaxyCorridor01"
 is_nightmare = true
 
 [node name="DreamCell7" parent="GridContainer" instance=ExtResource("2_4jmch")]
 layout_mode = 2
+scene_name = "GenericDreams/GalaxyCorridor01"
 
 [node name="DreamCell8" parent="GridContainer" instance=ExtResource("2_4jmch")]
 layout_mode = 2
@@ -54,3 +60,4 @@ is_start = true
 
 [node name="DreamCell9" parent="GridContainer" instance=ExtResource("2_4jmch")]
 layout_mode = 2
+scene_name = "GenericDreams/GalaxyCorridor01"
