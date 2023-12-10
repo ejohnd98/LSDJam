@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://cvkxassvtxb7i"]
 
 [ext_resource type="PackedScene" uid="uid://bl8ibx4nehbdf" path="res://sourceModels/galaxyCorridorEnd.glb" id="1_sdsv7"]
-[ext_resource type="Material" uid="uid://dwnwniuhvtw35" path="res://materials/psx_model.tres" id="2_to2ah"]
+[ext_resource type="Material" uid="uid://sht5w3wlcmes" path="res://models/galaxy_corridor.tres" id="2_nnsvi"]
 
 [node name="galaxyCorridorEnd" instance=ExtResource("1_sdsv7")]
 
 [node name="End" parent="." index="0"]
-surface_material_override/0 = ExtResource("2_to2ah")
+surface_material_override/0 = ExtResource("2_nnsvi")

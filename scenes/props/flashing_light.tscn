@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8s2ydnaygbex"]
+
+[ext_resource type="Script" path="res://models/flashing_light.gd" id="1_gr6ch"]
+
+[node name="OmniLight3D" type="OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64265, 0)
+light_color = Color(1, 0, 0, 1)
+omni_range = 3.0
+script = ExtResource("1_gr6ch")
+on_color = Color(1, 0, 0, 1)

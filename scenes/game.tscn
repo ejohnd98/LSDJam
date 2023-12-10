@@ -12,9 +12,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6uqtb"]
 shader = ExtResource("1_nkerm")
-shader_parameter/enabled = true
-shader_parameter/dithering = true
-shader_parameter/colors = 12
+shader_parameter/enabled = false
+shader_parameter/dithering = false
+shader_parameter/colors = 16
 shader_parameter/dither_size = 2
 
 [sub_resource type="LabelSettings" id="LabelSettings_q14lq"]

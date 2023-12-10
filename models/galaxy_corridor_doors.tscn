@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/interactables/door.gd" id="1_gqq2y"]
 [ext_resource type="PackedScene" uid="uid://t00ex1g7rigp" path="res://scenes/interactables/click_interaction.tscn" id="2_leu1g"]
 [ext_resource type="Script" path="res://scenes/interactables/door_lerp_anim.gd" id="2_lo6gr"]
-[ext_resource type="Material" uid="uid://dwnwniuhvtw35" path="res://materials/psx_model.tres" id="4_wlin6"]
+[ext_resource type="Material" uid="uid://sht5w3wlcmes" path="res://models/galaxy_corridor.tres" id="4_24dyl"]
 
 [sub_resource type="Curve" id="Curve_7lrru"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -99,7 +99,7 @@ lerp_curve = SubResource("Curve_7lrru")
 [node name="DoorA" type="MeshInstance3D" parent="Doors"]
 mesh = SubResource("ArrayMesh_7huhe")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("4_wlin6")
+surface_material_override/0 = ExtResource("4_24dyl")
 
 [node name="AnimatableBody3D" type="StaticBody3D" parent="Doors/DoorA"]
 
@@ -112,7 +112,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0, 0)
 [node name="DoorB" type="MeshInstance3D" parent="Doors"]
 mesh = SubResource("ArrayMesh_000ny")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("4_wlin6")
+surface_material_override/0 = ExtResource("4_24dyl")
 
 [node name="AnimatableBody3D" type="StaticBody3D" parent="Doors/DoorB"]
 
