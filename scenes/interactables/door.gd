@@ -1,20 +1,31 @@
 extends Node3D
 
 @export var autoOpen : bool = false
+@export var can_be_opened : bool = true
+@export var require_key = false
+@export var required_key = ""
 
 signal on_open_door
 signal on_close_door
 
 var is_open = false
 
+func set_openable (openable):
+	can_be_opened = openable
+
 func toggle_open():
-	is_open = not is_open
 	if (is_open):
-		on_open_door.emit()
+		close_door()
 	else:
-		on_close_door.emit()
+		open_door()
 
 func open_door():
+	if not can_be_opened:
+		return
+	
+	if require_key and not $KeyChecker.check_key(required_key):
+		return
+	
 	is_open = true
 	on_open_door.emit()
 	

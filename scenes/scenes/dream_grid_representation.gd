@@ -10,6 +10,9 @@ extends Node3D
 @export var pixel_size = 0.004
 var world_size : float = 1.0
 
+func _ready():
+	$MeshInstance3D.visible = false
+
 func create_representation(dream_grid : DreamGrid):
 	var grid_size = dream_grid.grid_size
 	var cell_separation_x : float = float(1) / float(grid_size.x-1)
@@ -20,7 +23,7 @@ func create_representation(dream_grid : DreamGrid):
 	for x in grid_size.x:
 		for y in grid_size.y:
 			var dream_cell : DreamCell = dream_grid.grid[x][y]
-			var chosen_texture = dream_texture
+			var chosen_texture = null
 			
 			if dream_cell.is_nightmare:
 				chosen_texture = nightmare_texture
@@ -31,6 +34,7 @@ func create_representation(dream_grid : DreamGrid):
 			if dream_grid.player_position == Vector2i(x,y):
 				chosen_texture = player_texture
 			
+			var cell_bg = Sprite3D.new()
 			var cell = Sprite3D.new()
 			
 			cell.position.x = offset_x + float(x) * cell_separation_x * grid_scale.x
@@ -39,7 +43,9 @@ func create_representation(dream_grid : DreamGrid):
 			cell.texture = chosen_texture
 			cell.pixel_size = pixel_size
 			
-			print("added cell at " + str(cell.position.x) + ", " + str(cell.position.y))
+			cell_bg.position = cell.position + Vector3.FORWARD*0.01
+			cell_bg.texture = dream_texture
+			cell_bg.pixel_size = pixel_size
 			
+			$GridParent.add_child(cell_bg)
 			$GridParent.add_child(cell)
-	pass

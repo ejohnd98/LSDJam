@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2mqrx7uewpjy"]
+
+[ext_resource type="Script" path="res://models/dream_key_checker.gd" id="1_2hx5a"]
+
+[node name="KeyChecker" type="Node"]
+script = ExtResource("1_2hx5a")

@@ -8,6 +8,7 @@ extends Node
 @export var is_goal = false
 @export var is_start = false
 
+@export var dream_info = {}
 var grid_position : Vector2i
 
 func _ready():

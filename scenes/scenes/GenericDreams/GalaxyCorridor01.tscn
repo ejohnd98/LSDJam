@@ -172,8 +172,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 [node name="galaxyCorridorEndDoor" parent="VoxelGI/Corridors/Corridor4" instance=ExtResource("3_f46jj")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, -4)
 
+[node name="galaxyCorridorDoors" parent="VoxelGI/Corridors/Corridor4/galaxyCorridorEndDoor/EndWithDoor/DoorPivot" index="0"]
+require_key = true
+required_key = "up_door"
+
 [node name="galaxyCorridorMiddle2" parent="VoxelGI/Corridors/Corridor4" instance=ExtResource("2_rxkgm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
 [node name="galaxyCorridorEnd" parent="VoxelGI/Corridors/Corridor4" instance=ExtResource("2_fu6pv")]
 transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 0, 0, -5.8601)
+
+[editable path="VoxelGI/Corridors/Corridor4/galaxyCorridorEndDoor"]

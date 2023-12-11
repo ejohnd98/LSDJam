@@ -9,6 +9,7 @@ var start_cell = null
 
 func initialize_grid():
 	populate_grid_array()
+	hide()
 			
 func populate_grid_array():
 	grid_size.x = $GridContainer.columns

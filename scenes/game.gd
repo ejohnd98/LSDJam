@@ -1,3 +1,4 @@
+class_name game_manager
 extends Node3D
 
 const SCENE_PATH = "res://scenes/scenes/"
@@ -13,6 +14,9 @@ var dream_index = -1
 
 var current_scene_node = null
 var next_scene_path = ""
+
+static func get_game(tree_node : SceneTree) -> game_manager:
+	return tree_node.get_root().get_node("SubViewportContainer/SubViewport/Game")
 
 var is_ui_shown = true
 func _unhandled_input(event):
@@ -98,3 +102,14 @@ func _on_scene_change_timer():
 		dream_grid_representation.create_representation(dream_grid)
 	
 	$Player.set_frozen(false)
+
+func does_key_exist(key : String):
+	return check_current_dream_for_key(key) != null
+
+func check_current_dream_for_key(key : String):
+	var current_cell : DreamCell = dream_grid.get_current_cell()
+	if current_cell.dream_info.has(key):
+		return current_cell.dream_info[key]
+	else:
+		return null
+	

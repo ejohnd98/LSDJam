@@ -10,4 +10,4 @@ func _ready():
 	connect("on_interact", trigger_direction) 
 
 func trigger_direction():
-	get_tree().get_root().get_node("SubViewportContainer/SubViewport/Game").move_in_direction(grid_direction)
+	game_manager.get_game(get_tree()).move_in_direction(grid_direction)
