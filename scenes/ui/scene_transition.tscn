@@ -1,6 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqdy1q5cvb1hm"]
+[gd_scene load_steps=7 format=3 uid="uid://bqdy1q5cvb1hm"]
 
 [ext_resource type="Script" path="res://scene_transition.gd" id="1_icpff"]
+
+[sub_resource type="Gradient" id="Gradient_0cy4u"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_clpxn"]
+gradient = SubResource("Gradient_0cy4u")
 
 [sub_resource type="Animation" id="Animation_414fh"]
 resource_name = "RESET"
@@ -31,7 +36,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 0, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lwsli"]
@@ -43,7 +48,7 @@ _data = {
 [node name="scene_transition" type="CanvasLayer"]
 script = ExtResource("1_icpff")
 
-[node name="dissolve_rect" type="ColorRect" parent="."]
+[node name="dissolve_rect" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,7 +56,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.517647, 0.686275, 0.509804, 1)
+texture = SubResource("GradientTexture1D_clpxn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bhs0hsqqfyrkg"]
+[gd_scene load_steps=11 format=3 uid="uid://bhs0hsqqfyrkg"]
 
 [ext_resource type="Script" path="res://scenes/interactables/direction_trigger.gd" id="1_nl4vh"]
 [ext_resource type="Shader" path="res://shaders/psxmodel.gdshader" id="2_5q8sh"]
@@ -31,6 +31,9 @@ material = SubResource("StandardMaterial3D_ukmnd")
 text = "→"
 font_size = 32
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_uoxg1"]
+radius = 5.0
+
 [node name="SceneTrigger" type="Area3D" groups=["interactable"]]
 script = ExtResource("1_nl4vh")
 grid_direction = Vector2i(0, 1)
@@ -48,3 +51,12 @@ shape = SubResource("BoxShape3D_cvwl0")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.460526, 0)
 mesh = SubResource("TextMesh_n7gq7")
 skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="."]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_uoxg1")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
