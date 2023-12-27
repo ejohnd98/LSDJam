@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=3 uid="uid://btkn6g45g27pt"]
+
+[ext_resource type="Script" path="res://scenes/scenes/DreamGrids/DreamGrid.gd" id="1_xvhdi"]
+[ext_resource type="PackedScene" uid="uid://cyndvm76up426" path="res://scenes/scenes/DreamGrids/dream_cell.tscn" id="2_x3wbk"]
+
+[node name="DreamGrid" type="Control"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+script = ExtResource("1_xvhdi")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 200.0
+grow_horizontal = 0
+columns = 3
+
+[node name="DreamCell" parent="GridContainer" instance=ExtResource("2_x3wbk")]
+layout_mode = 2
+scene_name = "TestScenes/PortalTest"
+
+[node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_x3wbk")]
+layout_mode = 2
+scene_name = "TestScenes/PortalTest"
+is_goal = true
+
+[node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_x3wbk")]
+layout_mode = 2
+scene_name = "TestScenes/PortalTest"
+
+[node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_x3wbk")]
+layout_mode = 2
+scene_name = "TestScenes/PortalTest"
+is_nightmare = true
+
+[node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_x3wbk")]
+layout_mode = 2
+scene_name = "TestScenes/PortalTest"
+
+[node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_x3wbk")]
+layout_mode = 2
+scene_name = "TestScenes/PortalTest"
+is_nightmare = true
+
+[node name="DreamCell7" parent="GridContainer" instance=ExtResource("2_x3wbk")]
+layout_mode = 2
+scene_name = "TestScenes/PortalTest"
+dream_info = {
+"up_door": true
+}
+
+[node name="DreamCell8" parent="GridContainer" instance=ExtResource("2_x3wbk")]
+layout_mode = 2
+scene_name = "TestScenes/PortalTest"
+is_start = true
+dream_info = {
+"up_door": true
+}
+
+[node name="DreamCell9" parent="GridContainer" instance=ExtResource("2_x3wbk")]
+layout_mode = 2
+scene_name = "TestScenes/PortalTest"
+dream_info = {
+"up_door": true
+}
