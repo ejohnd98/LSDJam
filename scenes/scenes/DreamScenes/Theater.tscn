@@ -1,0 +1,291 @@
+[gd_scene load_steps=10 format=3 uid="uid://ctf3xb7to4085"]
+
+[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_wi6lw"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_6ifvt"]
+[ext_resource type="Material" uid="uid://o4lttwvxltjy" path="res://materials/blockout_grid.tres" id="3_gcehk"]
+[ext_resource type="Texture2D" uid="uid://keps8pn8wgob" path="res://textures/grid.png" id="4_8u8x2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t5gl7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_2tymr"]
+sky_material = SubResource("ProceduralSkyMaterial_t5gl7")
+
+[sub_resource type="Environment" id="Environment_77ybp"]
+background_mode = 2
+sky = SubResource("Sky_2tymr")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jexyx"]
+albedo_color = Color(1, 0.627451, 0.572549, 1)
+albedo_texture = ExtResource("4_8u8x2")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_scale = Vector3(0.5, 0.5, 0.5)
+uv2_triplanar = true
+uv2_world_triplanar = true
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_28jb6"]
+albedo_color = Color(0.509804, 0.478431, 0.47451, 1)
+albedo_texture = ExtResource("4_8u8x2")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_scale = Vector3(0.5, 0.5, 0.5)
+uv2_triplanar = true
+uv2_world_triplanar = true
+texture_filter = 2
+
+[node name="GalaxyCorridor01" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_77ybp")
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -32.2338)
+
+[node name="SceneTrigger" parent="." instance=ExtResource("1_wi6lw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.3, 18.786)
+
+[node name="SceneTrigger2" parent="." instance=ExtResource("1_wi6lw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.178, 1.3, 20.1)
+grid_direction = Vector2i(-1, 0)
+
+[node name="SceneTrigger3" parent="." instance=ExtResource("1_wi6lw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.078, 1.3, -28)
+grid_direction = Vector2i(1, 0)
+
+[node name="SceneTrigger4" parent="." instance=ExtResource("1_wi6lw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -36)
+grid_direction = Vector2i(0, -1)
+proximity_trigger = true
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("2_6ifvt")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5.417, -3.667)
+
+[node name="Blockout" type="Node3D" parent="."]
+transform = Transform3D(-0.8, 0, -6.99382e-08, 0, 1, 0, 6.99382e-08, 0, -0.8, 0, 0, 0)
+
+[node name="Building" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+use_collision = true
+size = Vector3(60, 10, 80)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Blockout/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+operation = 2
+use_collision = true
+size = Vector3(59, 10, 79)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Blockout/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+use_collision = true
+size = Vector3(10, 10, 1)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Blockout/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+use_collision = true
+size = Vector3(10, 10, 1)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Blockout/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.54747e-13, -2, 44)
+use_collision = true
+size = Vector3(10, 6, 8)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Blockout/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27374e-13, -2, 42.8638)
+operation = 2
+use_collision = true
+size = Vector3(9, 4, 8)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Blockout/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -3.5, 9)
+use_collision = true
+size = Vector3(8, 1, 1)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Blockout/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.9, -4.4, 30)
+use_collision = true
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_jexyx")
+
+[node name="Roof" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5, 0)
+use_collision = true
+size = Vector3(60, 1, 80)
+material = ExtResource("3_gcehk")
+
+[node name="TheaterRoom" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, -26)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Blockout/TheaterRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+operation = 2
+use_collision = true
+size = Vector3(18, 10, 19)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Blockout/TheaterRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -2.8, 0)
+operation = 2
+use_collision = true
+size = Vector3(2.5, 2.5, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Blockout/TheaterRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.15114, 0.402946, 0)
+use_collision = true
+size = Vector3(1, 8, 16)
+material = SubResource("StandardMaterial3D_28jb6")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Blockout/TheaterRoom"]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -2.82891, -3.4738, 0)
+use_collision = true
+size = Vector3(14, 2.5, 19)
+material = ExtResource("3_gcehk")
+
+[node name="TheaterRoom2" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15, 5, -26)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Blockout/TheaterRoom2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+operation = 2
+use_collision = true
+size = Vector3(18, 10, 19)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Blockout/TheaterRoom2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -2.8, 0)
+operation = 2
+use_collision = true
+size = Vector3(2.5, 2.5, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Blockout/TheaterRoom2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.15114, 0.402946, 0)
+use_collision = true
+size = Vector3(1, 8, 16)
+material = SubResource("StandardMaterial3D_28jb6")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Blockout/TheaterRoom2"]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -2.82891, -3.4738, 0)
+use_collision = true
+size = Vector3(14, 2.5, 19)
+material = ExtResource("3_gcehk")
+
+[node name="TheaterRoom3" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 0)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Blockout/TheaterRoom3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+operation = 2
+use_collision = true
+size = Vector3(18, 10, 19)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Blockout/TheaterRoom3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -2.8, 0)
+operation = 2
+use_collision = true
+size = Vector3(2.5, 2.5, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Blockout/TheaterRoom3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.15114, 0.402946, 0)
+use_collision = true
+size = Vector3(1, 8, 16)
+material = SubResource("StandardMaterial3D_28jb6")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Blockout/TheaterRoom3"]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -2.82891, -3.4738, 0)
+use_collision = true
+size = Vector3(14, 2.5, 19)
+material = ExtResource("3_gcehk")
+
+[node name="TheaterRoom5" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 26)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Blockout/TheaterRoom5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+operation = 2
+use_collision = true
+size = Vector3(18, 10, 19)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Blockout/TheaterRoom5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -2.8, 0)
+operation = 2
+use_collision = true
+size = Vector3(2.5, 2.5, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Blockout/TheaterRoom5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.15114, 0.402946, 0)
+use_collision = true
+size = Vector3(1, 8, 16)
+material = SubResource("StandardMaterial3D_28jb6")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Blockout/TheaterRoom5"]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -2.82891, -3.4738, 0)
+use_collision = true
+size = Vector3(14, 2.5, 19)
+material = ExtResource("3_gcehk")
+
+[node name="TheaterRoom4" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15, 5, 0)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Blockout/TheaterRoom4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+operation = 2
+use_collision = true
+size = Vector3(18, 10, 19)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Blockout/TheaterRoom4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -2.8, 0)
+operation = 2
+use_collision = true
+size = Vector3(2.5, 2.5, 20)
+material = ExtResource("3_gcehk")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Blockout/TheaterRoom4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.15114, 0.402946, 0)
+use_collision = true
+size = Vector3(1, 8, 16)
+material = SubResource("StandardMaterial3D_28jb6")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Blockout/TheaterRoom4"]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -2.82891, -3.4738, 0)
+use_collision = true
+size = Vector3(14, 2.5, 19)
+material = ExtResource("3_gcehk")

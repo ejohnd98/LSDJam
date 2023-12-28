@@ -1,6 +1,7 @@
 extends click_interaction
 
 @export var grid_direction: Vector2i = Vector2i.ZERO
+@export var proximity_trigger : bool = false
 
 func _ready():
 	var angle = atan2(float(grid_direction.y), float(grid_direction.x))
@@ -10,10 +11,8 @@ func _ready():
 	connect("on_interact", trigger_direction)
 
 func _process(delta):
-	if not set_transition_amount or player_body == null:
+	if not proximity_trigger or not set_transition_amount or player_body == null:
 		return
-	
-	
 	
 	var dist = position.distance_to(player_body.position)
 	if (dist < 3):
@@ -31,12 +30,12 @@ var set_transition_amount = false
 var player_body
 
 func _on_area_3d_body_entered(body):
-	if body.is_in_group("player"):
+	if proximity_trigger and body.is_in_group("player"):
 		set_transition_amount = true;
 		player_body = body
 
 func _on_area_3d_body_exited(body):
-	if body.is_in_group("player"):
+	if proximity_trigger and body.is_in_group("player"):
 		player_body = null
 		set_transition_amount = false;
 		GameManager.set_transition_alpha(0.0)

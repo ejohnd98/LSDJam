@@ -49,8 +49,8 @@ func move_in_direction(direction: Vector2i):
 
 func advance_dream():
 	if dream_index + 1 == dreams.size():
-		get_tree().get_root().get_node("CanvasLayer/WinScreen").visible = true
-		get_tree().get_root().get_node("SubViewport/Player").set_frozen(true)
+		get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/WinScreen").visible = true
+		get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player").set_frozen(true)
 		return
 	dream_index += 1
 	

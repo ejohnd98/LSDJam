@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_o0mgw"]
 [ext_resource type="PackedScene" uid="uid://dusmamsayjyke" path="res://scenes/scenes/DreamGrids/dream_grid.tscn" id="2_qel8a"]
-[ext_resource type="PackedScene" uid="uid://di6ub474jflg8" path="res://scenes/scenes/DreamGrids/dream_grid2.tscn" id="3_2r68v"]
+[ext_resource type="PackedScene" uid="uid://btkn6g45g27pt" path="res://scenes/scenes/DreamGrids/dream_grid_theater.tscn" id="2_qpm1d"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_o0mgw")
-dreams = Array[PackedScene]([ExtResource("2_qel8a"), ExtResource("3_2r68v")])
+dreams = Array[PackedScene]([ExtResource("2_qpm1d"), ExtResource("2_qel8a")])
 
 [node name="SceneChangeTimer" type="Timer" parent="."]
 wait_time = 0.1
