@@ -10,7 +10,7 @@ func _ready():
 		check_key(key)
 	
 func check_key(key : String) -> bool:
-	var has_key = game_manager.get_game(get_tree()).check_current_dream_for_key(key)
+	var has_key = GameManager.check_current_dream_for_key(key)
 	if has_key != null:
 		on_key_exists.emit()
 		return true

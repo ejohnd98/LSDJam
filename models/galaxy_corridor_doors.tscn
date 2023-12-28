@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dwdsyyxdgdfmc"]
+[gd_scene load_steps=19 format=3 uid="uid://dwdsyyxdgdfmc"]
 
 [ext_resource type="Texture2D" uid="uid://d3iw6xcdruvst" path="res://sourceModels/galaxyCorridorDoors_galaxycorridor.png" id="1_4mqmk"]
 [ext_resource type="Script" path="res://scenes/interactables/door.gd" id="1_gqq2y"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://scenes/interactables/door_lerp_anim.gd" id="2_lo6gr"]
 [ext_resource type="Material" uid="uid://sht5w3wlcmes" path="res://models/galaxy_corridor.tres" id="4_24dyl"]
 [ext_resource type="PackedScene" uid="uid://c2mqrx7uewpjy" path="res://scenes/key_checker.tscn" id="6_dbtf8"]
+[ext_resource type="AudioStream" uid="uid://i2tn1kyno05g" path="res://sounds/door1.ogg" id="7_7aubq"]
+[ext_resource type="AudioStream" uid="uid://snoqv25f534" path="res://sounds/door2.ogg" id="7_up106"]
 
 [sub_resource type="Curve" id="Curve_7lrru"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -136,6 +138,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18315, 0)
 shape = SubResource("BoxShape3D_so2xl")
 
 [node name="KeyChecker" parent="." instance=ExtResource("6_dbtf8")]
+
+[node name="DoorOpenSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_up106")
+
+[node name="DoorCloseSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_7aubq")
 
 [connection signal="on_close_door" from="." to="Doors" method="set_closed"]
 [connection signal="on_open_door" from="." to="Doors" method="set_open"]

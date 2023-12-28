@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cb8ennhmak0c6"]
+[gd_scene load_steps=8 format=3 uid="uid://cb8ennhmak0c6"]
 
 [ext_resource type="Script" path="res://scenes/player/Player.gd" id="1_v6pu0"]
+[ext_resource type="AudioStream" uid="uid://bmr1qg0f2mye1" path="res://scenes/player/footstep_sounds.tres" id="2_scigr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2l4ng"]
 radius = 0.25
@@ -9,6 +10,58 @@ height = 1.25
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ckb3d"]
 radius = 0.25
 height = 1.25
+
+[sub_resource type="Animation" id="Animation_5o4s3"]
+resource_name = "bob"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.4, 0), Vector3(0, 1.445, 0), Vector3(0, 1.4, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_footstep"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_7udfn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.4, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_682er"]
+_data = {
+"RESET": SubResource("Animation_7udfn"),
+"bob": SubResource("Animation_5o4s3")
+}
 
 [node name="Player" type="RigidBody3D" groups=["player"]]
 axis_lock_angular_x = true
@@ -30,6 +83,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CameraPivot"]
+libraries = {
+"": SubResource("AnimationLibrary_682er")
+}
+
 [node name="JumpTimer" type="Timer" parent="."]
 wait_time = 0.2
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_scigr")
+volume_db = -35.0
+pitch_scale = 0.85
+bus = &"SFX"
+
+[node name="SoundCooldown" type="Timer" parent="AudioStreamPlayer"]
+wait_time = 0.15
 one_shot = true
