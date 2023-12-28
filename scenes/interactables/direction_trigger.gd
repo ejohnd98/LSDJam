@@ -14,12 +14,15 @@ func _process(delta):
 	if not proximity_trigger or not set_transition_amount or player_body == null:
 		return
 	
-	var dist = position.distance_to(player_body.position)
+	var player_pos = player_body.position
+	player_pos.y = position.y
+	
+	var dist = position.distance_to(player_pos)
 	if (dist < 3):
-		var alpha : float = clampf(1.0 - ((dist-1.0)/3.0), 0.0, 1.0)
+		var alpha : float = clampf(1.0 - (dist/3.0), 0.0, 1.0)
 		GameManager.set_transition_alpha(alpha)
 		
-		if (alpha >= 0.9):
+		if (alpha >= 0.8):
 			pass
 			trigger_direction()
 

@@ -16,8 +16,11 @@
 shader = ExtResource("1_nkerm")
 shader_parameter/enabled = true
 shader_parameter/dithering = true
-shader_parameter/colors = 12
-shader_parameter/dither_size = 2
+shader_parameter/colors = 16
+shader_parameter/dither_size = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_q14lq"]
+font_size = 32
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_u5bkn"]
 viewport_path = NodePath("SubViewport")
@@ -27,7 +30,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/transition:self_modulate")
+tracks/0/path = NodePath("SubViewport/CanvasLayer/transition/ColorRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -39,7 +42,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/transition/ColorRect:modulate")
+tracks/1/path = NodePath("SubViewport/CanvasLayer/transition:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -51,15 +54,15 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_7slkq"]
 resource_name = "dissolve"
-length = 0.5
+length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/transition:self_modulate")
+tracks/0/path = NodePath("SubViewport/CanvasLayer/transition/ColorRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.6),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -67,14 +70,14 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/transition/ColorRect:modulate")
+tracks/1/path = NodePath("SubViewport/CanvasLayer/transition:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(5.85634, 8.57422),
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.639216)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d0y7x"]
@@ -82,9 +85,6 @@ _data = {
 "RESET": SubResource("Animation_6jqkl"),
 "dissolve": SubResource("Animation_7slkq")
 }
-
-[sub_resource type="LabelSettings" id="LabelSettings_q14lq"]
-font_size = 32
 
 [node name="SubViewportContainer" type="SubViewportContainer"]
 material = SubResource("ShaderMaterial_6uqtb")
@@ -99,14 +99,14 @@ stretch = true
 handle_input_locally = false
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
-size = Vector2i(1152, 648)
+size = Vector2i(640, 480)
 render_target_update_mode = 4
 
 [node name="Player" parent="SubViewport" instance=ExtResource("3_t1v70")]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewport"]
 
-[node name="NightmareOverlay" type="TextureRect" parent="CanvasLayer"]
+[node name="NightmareOverlay" type="TextureRect" parent="SubViewport/CanvasLayer"]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -117,47 +117,7 @@ mouse_filter = 2
 texture = ExtResource("6_wmihu")
 expand_mode = 2
 
-[node name="transition" type="TextureRect" parent="CanvasLayer"]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = SubResource("ViewportTexture_u5bkn")
-expand_mode = 2
-script = ExtResource("9_r75nu")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/transition"]
-root_node = NodePath("../../..")
-libraries = {
-"": SubResource("AnimationLibrary_d0y7x")
-}
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/transition"]
-visible = false
-modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="TransitionSound" type="AudioStreamPlayer" parent="CanvasLayer/transition"]
-stream = ExtResource("5_gxd5w")
-bus = &"SFX"
-
-[node name="TransitionSoundAlt" type="AudioStreamPlayer" parent="CanvasLayer/transition"]
-stream = ExtResource("6_s487t")
-bus = &"SFX"
-
-[node name="DreamGrid" parent="CanvasLayer" instance=ExtResource("3_mtplc")]
-visible = false
-
-[node name="WinScreen" type="TextureRect" parent="CanvasLayer"]
+[node name="WinScreen" type="TextureRect" parent="SubViewport/CanvasLayer"]
 visible = false
 z_index = 1
 anchors_preset = 15
@@ -168,16 +128,16 @@ grow_vertical = 2
 texture = ExtResource("8_u2duw")
 expand_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="Label" type="Label" parent="SubViewport/CanvasLayer"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -0.5
-offset_top = -11.5
-offset_right = 0.5
-offset_bottom = 11.5
+offset_left = -9.0
+offset_top = -24.0
+offset_right = 9.0
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -186,22 +146,79 @@ label_settings = SubResource("LabelSettings_q14lq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="UIParent" type="Control" parent="SubViewport/CanvasLayer"]
 layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = -96.0
-offset_bottom = 96.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="SubViewport/CanvasLayer/UIParent"]
+layout_mode = 1
+anchor_left = 0.922
+anchor_right = 0.922
+offset_left = 0.919983
+offset_right = 0.919983
 grow_horizontal = 0
+scale = Vector2(0.75, 0.75)
+size_flags_horizontal = 8
+size_flags_vertical = 0
 script = ExtResource("5_3dlvi")
 
-[node name="Base" type="Sprite2D" parent="CanvasLayer/Control"]
+[node name="Base" type="Sprite2D" parent="SubViewport/CanvasLayer/UIParent/Control"]
 position = Vector2(0, 94)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_ujn72")
 
-[node name="Needle" type="Sprite2D" parent="CanvasLayer/Control"]
+[node name="Needle" type="Sprite2D" parent="SubViewport/CanvasLayer/UIParent/Control"]
 position = Vector2(0, 94)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_nte5w")
+
+[node name="transition" type="TextureRect" parent="SubViewport/CanvasLayer"]
+self_modulate = Color(1, 1, 1, 0)
+top_level = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("ViewportTexture_u5bkn")
+expand_mode = 2
+script = ExtResource("9_r75nu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport/CanvasLayer/transition"]
+root_node = NodePath("../../../..")
+libraries = {
+"": SubResource("AnimationLibrary_d0y7x")
+}
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport/CanvasLayer/transition"]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(0.509804, 0.419608, 0.823529, 0.282353)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TransitionSound" type="AudioStreamPlayer" parent="SubViewport/CanvasLayer/transition"]
+stream = ExtResource("5_gxd5w")
+bus = &"SFX"
+
+[node name="TransitionSoundAlt" type="AudioStreamPlayer" parent="SubViewport/CanvasLayer/transition"]
+stream = ExtResource("6_s487t")
+bus = &"SFX"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="DreamGrid" parent="CanvasLayer" instance=ExtResource("3_mtplc")]
+visible = false
+offset_left = -300.0
+offset_bottom = 300.0

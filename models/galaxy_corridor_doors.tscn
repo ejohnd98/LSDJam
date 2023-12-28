@@ -86,7 +86,7 @@ shadow_mesh = SubResource("ArrayMesh_mf8p7")
 points = PackedVector3Array(5.07743e-09, 0, -0.0301491, 5.07743e-09, 0, 0.0301419, 5.07743e-09, 2.28302, -0.0301491, 0.786891, 0, -0.0301491, 0.786891, 0, 0.030136, 5.07743e-09, 2.28302, 0.0301419, 0.786891, 2.28302, -0.0301491, 0.786891, 2.28302, 0.030136)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tbc1i"]
-size = Vector3(1.5, 2, 2.5)
+size = Vector3(1.5, 2, 3.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_so2xl"]
 size = Vector3(1.25, 2, 0.25)

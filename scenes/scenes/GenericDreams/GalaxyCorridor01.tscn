@@ -49,18 +49,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.099598, -7.3651)
 
 [node name="SceneTrigger" parent="." instance=ExtResource("6_ihqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 12.786)
+proximity_trigger = true
 
 [node name="SceneTrigger2" parent="." instance=ExtResource("6_ihqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.922, 1, 0)
 grid_direction = Vector2i(1, 0)
+proximity_trigger = true
 
 [node name="SceneTrigger3" parent="." instance=ExtResource("6_ihqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.922, 1, 0)
 grid_direction = Vector2i(-1, 0)
+proximity_trigger = true
 
 [node name="SceneTrigger4" parent="." instance=ExtResource("6_ihqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -13)
 grid_direction = Vector2i(0, -1)
+proximity_trigger = true
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("7_slnk5")]
 transform = Transform3D(0.565685, -0.0493027, 0.563533, 0, 0.796956, 0.0697246, -0.565685, -0.0493027, 0.563533, 1.53306, 1.82745, 1.53306)

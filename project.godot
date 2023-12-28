@@ -20,6 +20,13 @@ config/icon="res://icon.svg"
 SceneTransition="*res://scene_transition.gd"
 GameManager="*res://scenes/core/game_manager.tscn"
 
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=480
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
 [filesystem]
 
 import/blender/enabled=false

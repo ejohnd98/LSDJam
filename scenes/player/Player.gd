@@ -117,7 +117,7 @@ func on_footstep():
 func set_frozen (frozen):
 	$CollisionShape3D.disabled = frozen
 	velocity = Vector3.ZERO
-	$CameraPivot/AnimationPlayer.stop(true)
+	$CameraPivot/AnimationPlayer.stop()
 	vertical_velocity = 0
 	is_frozen = frozen
 

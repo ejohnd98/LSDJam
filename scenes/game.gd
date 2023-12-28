@@ -11,6 +11,8 @@ var current_dream : Control = null
 var dream_index = -1
 
 @onready var dream_grid : DreamGrid = get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/DreamGrid")
+@onready var canvas_layer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer")
+@onready var player = get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player")
 
 var current_scene_node = null
 var next_scene_path = ""
@@ -49,8 +51,8 @@ func move_in_direction(direction: Vector2i):
 
 func advance_dream():
 	if dream_index + 1 == dreams.size():
-		get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/WinScreen").visible = true
-		get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player").set_frozen(true)
+		canvas_layer.get_node("WinScreen").visible = true
+		player.set_frozen(true)
 		return
 	dream_index += 1
 	
@@ -74,13 +76,13 @@ func load_new_scene(new_scene_name: String):
 	if not $SceneChangeTimer.is_stopped():
 		return
 	
-	get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player").set_frozen(true)
+	player.set_frozen(true)
 	next_scene_path = SCENE_PATH+new_scene_name+".tscn"
 	ResourceLoader.load_threaded_request(next_scene_path)
 	
 	var current_cell = dream_grid.get_current_cell()
 	
-	var transition_obj : transition = get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/transition")
+	var transition_obj : transition = canvas_layer.get_node("transition")
 	transition_obj.transition(current_cell.is_nightmare)
 	await transition_obj.transition_mid_point
 
@@ -95,23 +97,21 @@ func load_new_scene(new_scene_name: String):
 	add_child(new_scene)
 	current_scene_node = new_scene
 	var new_spawn = current_scene_node.get_node("PlayerSpawn")
-	get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player").set_spawn_position(new_spawn.position, new_spawn.rotation)
+	player.set_spawn_position(new_spawn.position, new_spawn.rotation)
 	
-	get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/NightmareOverlay").visible = current_cell.is_nightmare
+	canvas_layer.get_node("NightmareOverlay").visible = current_cell.is_nightmare
 	
 	var dream_grid_representation = current_scene_node.get_node("DreamGridRepresentation")
 	if (dream_grid_representation):
 		dream_grid_representation.create_representation(dream_grid)
 		
-	$SceneChangeTimer.start()
-	await $SceneChangeTimer.timeout
-	
 	transition_obj.finish_transition()
 	await transition_obj.transition_end_point
-	get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player").set_frozen(false)
+	player.set_frozen(false)
+	
 
 func set_transition_alpha(alpha : float):
-	var transition_obj : transition = get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/transition")
+	var transition_obj : transition = canvas_layer.get_node("transition")
 	transition_obj.set_progress(alpha)
 
 func does_key_exist(key : String):
