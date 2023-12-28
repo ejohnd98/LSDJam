@@ -9,7 +9,7 @@ var viewport_texture : ViewportTexture = texture
 
 var transitioning = false
 
-func transition():
+func transition(to_nightmare : bool = false):
 	transitioning = true
 	# crossfade:
 	if (texture != null):
@@ -19,7 +19,10 @@ func transition():
 		transition_mid_point.emit()
 		return
 	$AnimationPlayer.play("dissolve")
-	print($AnimationPlayer.current_animation_position)
+	if to_nightmare:
+		$TransitionSoundAlt.play()
+	else:
+		$TransitionSound.play()
 	$AnimationPlayer.seek($AnimationPlayer.current_animation_position, true)
 	
 	await $AnimationPlayer.animation_finished

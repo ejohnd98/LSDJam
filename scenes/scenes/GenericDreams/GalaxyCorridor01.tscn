@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://03yeyf604ip3"]
+[gd_scene load_steps=13 format=3 uid="uid://03yeyf604ip3"]
 
 [ext_resource type="PackedScene" uid="uid://dqyjcrfulm8ui" path="res://models/galaxy_corridor.tscn" id="1_68pqd"]
 [ext_resource type="PackedScene" uid="uid://gy6thtlh8vc6" path="res://models/galaxy_corridor_4_way.tscn" id="1_rgnig"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cb2k6fym5cxi0" path="res://models/galaxy_corridor_end_door.tscn" id="3_f46jj"]
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="6_ihqdw"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="7_slnk5"]
+[ext_resource type="AudioStream" uid="uid://dr5nl104i3h2y" path="res://sounds/warpcore.ogg" id="8_l2y2e"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxgel"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -181,5 +182,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
 [node name="galaxyCorridorEnd" parent="VoxelGI/Corridors/Corridor4" instance=ExtResource("2_fu6pv")]
 transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 0, 0, -5.8601)
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("8_l2y2e")
+attenuation_model = 3
+volume_db = -6.0
+unit_size = 100.0
+autoplay = true
+panning_strength = 0.1
+bus = &"SFX"
 
 [editable path="VoxelGI/Corridors/Corridor4/galaxyCorridorEndDoor"]

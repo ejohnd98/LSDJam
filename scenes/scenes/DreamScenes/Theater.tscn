@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctf3xb7to4085"]
+[gd_scene load_steps=11 format=3 uid="uid://ctf3xb7to4085"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_wi6lw"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_6ifvt"]
 [ext_resource type="Material" uid="uid://o4lttwvxltjy" path="res://materials/blockout_grid.tres" id="3_gcehk"]
 [ext_resource type="Texture2D" uid="uid://keps8pn8wgob" path="res://textures/grid.png" id="4_8u8x2"]
+[ext_resource type="AudioStream" uid="uid://csj6bketpab6v" path="res://sounds/ambience.ogg" id="5_8ny74"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t5gl7"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -40,7 +41,7 @@ uv2_triplanar = true
 uv2_world_triplanar = true
 texture_filter = 2
 
-[node name="GalaxyCorridor01" type="Node3D"]
+[node name="Theater" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -289,3 +290,12 @@ transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, 
 use_collision = true
 size = Vector3(14, 2.5, 19)
 material = ExtResource("3_gcehk")
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("5_8ny74")
+attenuation_model = 3
+unit_size = 100.0
+autoplay = true
+panning_strength = 0.4
+bus = &"SFX"

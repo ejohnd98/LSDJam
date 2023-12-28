@@ -1,9 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://dkl7w62v1wrua"]
+[gd_scene load_steps=18 format=3 uid="uid://dkl7w62v1wrua"]
 
 [ext_resource type="Shader" path="res://shaders/psxpost.gdshader" id="1_nkerm"]
 [ext_resource type="PackedScene" uid="uid://dusmamsayjyke" path="res://scenes/scenes/DreamGrids/dream_grid.tscn" id="3_mtplc"]
 [ext_resource type="PackedScene" uid="uid://cb8ennhmak0c6" path="res://scenes/player/player.tscn" id="3_t1v70"]
 [ext_resource type="Script" path="res://scenes/CompassUI.gd" id="5_3dlvi"]
+[ext_resource type="AudioStream" uid="uid://cf622kyfdl0i6" path="res://sounds/level_change.ogg" id="5_gxd5w"]
+[ext_resource type="AudioStream" uid="uid://dwo670xr7lpp3" path="res://sounds/level_change_alt.ogg" id="6_s487t"]
 [ext_resource type="Texture2D" uid="uid://crqwr8hxcsn6s" path="res://textures/nightmareOverlay.png" id="6_wmihu"]
 [ext_resource type="Texture2D" uid="uid://dtcfswefrehyy" path="res://textures/win_screen.png" id="8_u2duw"]
 [ext_resource type="Texture2D" uid="uid://cug1cem1sp3sw" path="res://textures/UI/compass_base.png" id="8_ujn72"]
@@ -12,9 +14,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6uqtb"]
 shader = ExtResource("1_nkerm")
-shader_parameter/enabled = false
-shader_parameter/dithering = false
-shader_parameter/colors = 16
+shader_parameter/enabled = true
+shader_parameter/dithering = true
+shader_parameter/colors = 12
 shader_parameter/dither_size = 2
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_u5bkn"]
@@ -95,6 +97,8 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="."]
 handle_input_locally = false
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
@@ -141,6 +145,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="TransitionSound" type="AudioStreamPlayer" parent="CanvasLayer/transition"]
+stream = ExtResource("5_gxd5w")
+bus = &"SFX"
+
+[node name="TransitionSoundAlt" type="AudioStreamPlayer" parent="CanvasLayer/transition"]
+stream = ExtResource("6_s487t")
+bus = &"SFX"
 
 [node name="DreamGrid" parent="CanvasLayer" instance=ExtResource("3_mtplc")]
 visible = false

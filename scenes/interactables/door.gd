@@ -27,9 +27,12 @@ func open_door():
 		return
 	
 	is_open = true
+	$DoorOpenSound.play()
 	on_open_door.emit()
 	
 func close_door():
+	if (is_open):
+		$DoorCloseSound.play()
 	is_open = false
 	on_close_door.emit()
 

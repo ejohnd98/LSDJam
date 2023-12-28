@@ -78,8 +78,10 @@ func load_new_scene(new_scene_name: String):
 	next_scene_path = SCENE_PATH+new_scene_name+".tscn"
 	ResourceLoader.load_threaded_request(next_scene_path)
 	
+	var current_cell = dream_grid.get_current_cell()
+	
 	var transition_obj : transition = get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/transition")
-	transition_obj.transition()
+	transition_obj.transition(current_cell.is_nightmare)
 	await transition_obj.transition_mid_point
 
 	var new_scene_resource = ResourceLoader.load_threaded_get(next_scene_path)
@@ -95,7 +97,6 @@ func load_new_scene(new_scene_name: String):
 	var new_spawn = current_scene_node.get_node("PlayerSpawn")
 	get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player").set_spawn_position(new_spawn.position, new_spawn.rotation)
 	
-	var current_cell = dream_grid.get_current_cell()
 	get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/NightmareOverlay").visible = current_cell.is_nightmare
 	
 	var dream_grid_representation = current_scene_node.get_node("DreamGridRepresentation")
