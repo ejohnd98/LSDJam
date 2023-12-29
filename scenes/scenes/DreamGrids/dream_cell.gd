@@ -1,6 +1,7 @@
+@tool
 class_name DreamCell
 
-extends Node
+extends CanvasItem
 
 @export var scene_name: String = "default_scene"
 
@@ -8,8 +9,24 @@ extends Node
 @export var is_goal = false
 @export var is_start = false
 
-@export var dream_info = {}
+@export_group("Allowed Directions")
+@export var allow_up = false
+@export var allow_right = false
+@export var allow_down = false
+@export var allow_left = false
+
+@export_group("Keys")
+@export var dream_keys: Array[String] = []
+
 var grid_position : Vector2i
+
+func _process(delta):
+	if Engine.is_editor_hint():
+		UpdateTexture()
+		if dream_keys.size() > 0:
+			set_self_modulate(Color.AQUA)
+		else:
+			set_self_modulate(Color.WHITE)
 
 func _ready():
 	UpdateTexture(is_start)
@@ -21,9 +38,20 @@ func UpdateTexture(showPlayer: bool = false):
 	elif is_goal:
 		$Overlay.texture = load("res://textures/DreamGrid/goal_icon.png")
 		$Overlay.visible = true
+	elif is_start:
+		$Overlay.texture = load("res://textures/DreamGrid/starting_icon.png")
+		$Overlay.visible = true
 	elif is_nightmare:
 		$Overlay.texture = load("res://textures/DreamGrid/skull_icon.png")
 		$Overlay.visible = true
 	else:
 		$Overlay.visible = false
-		
+	
+	var allowed_directions = [allow_up, allow_right, allow_down, allow_left]
+	var direction_images = [$Up, $Right, $Down, $Left]
+	
+	for i in 4:
+		if allowed_directions[i]:
+			direction_images[i].show()
+		else:
+			direction_images[i].hide()

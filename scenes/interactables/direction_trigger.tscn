@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhs0hsqqfyrkg"]
+[gd_scene load_steps=14 format=3 uid="uid://bhs0hsqqfyrkg"]
 
 [ext_resource type="Script" path="res://scenes/interactables/direction_trigger.gd" id="1_nl4vh"]
 [ext_resource type="Shader" path="res://shaders/psxmodel.gdshader" id="2_5q8sh"]
+[ext_resource type="Script" path="res://scenes/interactables/HideOnStart.gd" id="3_trmbl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gkhko"]
 size = Vector3(0.25, 0.5, 0.25)
@@ -34,6 +35,14 @@ font_size = 32
 [sub_resource type="SphereShape3D" id="SphereShape3D_uoxg1"]
 radius = 5.0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ohpy7"]
+size = Vector3(6, 2, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vgmh"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0, 0.870588, 0, 0.431373)
+
 [node name="SceneTrigger" type="Area3D" groups=["interactable"]]
 script = ExtResource("1_nl4vh")
 grid_direction = Vector2i(0, 1)
@@ -46,6 +55,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_pq8ve")
 shape = SubResource("BoxShape3D_cvwl0")
 
 [node name="ArrowPivot" type="Node3D" parent="."]
+transform = Transform3D(0.000339143, 0.000436834, -1, -7.79123e-05, 1, 0.000436803, 1, 7.77425e-05, 0.000339182, 0, 0, 0)
 
 [node name="ArrowMesh" type="MeshInstance3D" parent="ArrowPivot"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.460526, 0)
@@ -58,5 +68,17 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_uoxg1")
 
+[node name="ProximityTrigger" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProximityTrigger"]
+shape = SubResource("BoxShape3D_ohpy7")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="ProximityTrigger"]
+transform = Transform3D(0.999993, 0.00267569, 0.00263579, -0.00266847, 0.999993, -0.0027324, -0.00264309, 0.00272534, 0.999993, 0, 0.7, 0)
+size = Vector3(6, 2, 0.5)
+material = SubResource("StandardMaterial3D_3vgmh")
+script = ExtResource("3_trmbl")
+
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="ProximityTrigger" to="." method="_on_proximity_trigger_body_entered"]

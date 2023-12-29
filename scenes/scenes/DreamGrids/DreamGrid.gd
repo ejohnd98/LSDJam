@@ -2,6 +2,9 @@ class_name DreamGrid
 
 extends Control
 
+@export_group("Keys")
+@export var dream_keys: Array[String] = []
+
 var grid_size = Vector2i.ZERO
 var grid = []
 var player_position = Vector2i.ZERO
@@ -26,7 +29,6 @@ func populate_grid_array():
 			if grid[x][y].is_start:
 				start_cell = grid[x][y]
 				player_position = Vector2i(x,y)
-	
 
 func move_in_direction (direction: Vector2i):
 	player_position.x = wrap(player_position.x + direction.x, 0, grid_size.x)

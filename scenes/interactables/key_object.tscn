@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://cm5srrepm42b4"]
+
+[ext_resource type="Script" path="res://scenes/interactables/key_object.gd" id="1_0wsko"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gkhko"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cagrm"]
+albedo_color = Color(0.513726, 0.513726, 1, 1)
+emission_enabled = true
+emission = Color(0, 0, 1, 1)
+emission_energy_multiplier = 0.25
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cvwl0"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_uoxg1"]
+
+[node name="KeyObject" type="Area3D" groups=["interactable"]]
+script = ExtResource("1_0wsko")
+one_shot = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+mesh = SubResource("BoxMesh_gkhko")
+surface_material_override/0 = SubResource("StandardMaterial3D_cagrm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+shape = SubResource("BoxShape3D_cvwl0")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_uoxg1")
+
+[connection signal="on_interact" from="." to="." method="_on_interact"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

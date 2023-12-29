@@ -2,7 +2,7 @@ extends RigidBody3D
 
 const RAY_LENGTH = 10
 const WALK_SPEED = 2
-const SPRINT_MOD = 1.5
+const SPRINT_MOD = 4#1.5
 const JUMP_VELOCITY = 3.0
 const SENSITIVITY = 0.003
 
@@ -27,6 +27,15 @@ func get_player_rotation():
 	return $CameraPivot.rotation.y
 
 func _unhandled_input(event):
+	if event.is_action_pressed("Debug_Up"):
+		GameManager.move_in_direction(Vector2i.UP)
+	if event.is_action_pressed("Debug_Right"):
+		GameManager.move_in_direction(Vector2i.RIGHT)
+	if event.is_action_pressed("Debug_Down"):
+		GameManager.move_in_direction(Vector2i.DOWN)
+	if event.is_action_pressed("Debug_Left"):
+		GameManager.move_in_direction(Vector2i.LEFT)
+		
 	if event.is_action_pressed("Escape"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

@@ -34,6 +34,9 @@ func _ready():
 	advance_dream()
 	
 func move_in_direction(direction: Vector2i):
+	if (not is_direction_allowed(direction)):
+		return
+		
 	var current_cell = dream_grid.get_current_cell()
 	if current_cell.is_goal:
 		advance_dream()
@@ -114,13 +117,24 @@ func set_transition_alpha(alpha : float):
 	var transition_obj : transition = canvas_layer.get_node("transition")
 	transition_obj.set_progress(alpha)
 
-func does_key_exist(key : String):
-	return check_current_dream_for_key(key) != null
-
-func check_current_dream_for_key(key : String):
+func does_key_exist(key : String) -> bool:
 	var current_cell : DreamCell = dream_grid.get_current_cell()
-	if current_cell.dream_info.has(key):
-		return current_cell.dream_info[key]
-	else:
-		return null
+	return current_cell.dream_keys.has(key) or dream_grid.dream_keys.has(key)
+
+func is_direction_allowed(direction : Vector2i) -> bool:
+	var current_cell : DreamCell = get_current_cell()
+	if direction == -Vector2i.UP:
+		return current_cell.allow_up
+	if direction == Vector2i.RIGHT:
+		return current_cell.allow_right
+	if direction == -Vector2i.DOWN:
+		return current_cell.allow_down
+	if direction == Vector2i.LEFT:
+		return current_cell.allow_left
+	return true
 	
+func get_dream_grid() -> DreamGrid:
+	return dream_grid
+
+func get_current_cell() -> DreamCell:
+	return dream_grid.get_current_cell()

@@ -1,16 +1,69 @@
-[gd_scene load_steps=3 format=3 uid="uid://cyndvm76up426"]
+[gd_scene load_steps=5 format=3 uid="uid://cyndvm76up426"]
 
 [ext_resource type="Texture2D" uid="uid://c0umprwf2tnk0" path="res://textures/DreamGrid/dream_icon.png" id="1_23f33"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamGrids/dream_cell.gd" id="2_yv0ij"]
+[ext_resource type="Texture2D" uid="uid://pc548j40i0vh" path="res://textures/DreamGrid/skull_icon.png" id="3_udbvj"]
+[ext_resource type="Texture2D" uid="uid://b2la8afmaanns" path="res://textures/DreamGrid/direction.png" id="4_mxba1"]
 
 [node name="DreamCell" type="TextureRect"]
 texture = ExtResource("1_23f33")
 script = ExtResource("2_yv0ij")
 
 [node name="Overlay" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("3_udbvj")
+
+[node name="Up" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5708
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("4_mxba1")
+
+[node name="Right" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("4_mxba1")
+
+[node name="Down" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("4_mxba1")
+
+[node name="Left" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.14159
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("4_mxba1")

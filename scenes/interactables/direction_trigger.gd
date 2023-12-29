@@ -3,10 +3,26 @@ extends click_interaction
 @export var grid_direction: Vector2i = Vector2i.ZERO
 @export var proximity_trigger : bool = false
 
+@export var show_mesh : bool = true
+@export var show_arrow : bool = true
+
 func _ready():
 	var angle = atan2(float(grid_direction.y), float(grid_direction.x))
 	var rot_matrix = Basis(Vector3.UP, angle).get_euler()
 	$ArrowPivot.rotation = rot_matrix
+	
+	if show_mesh:
+		$MeshInstance3D.show()
+	else:
+		$MeshInstance3D.hide()
+		
+	if show_arrow:
+		$ArrowPivot.show()
+	else:
+		$ArrowPivot.hide()
+	
+	if not proximity_trigger:
+		$ProximityTrigger/CollisionShape3D.disabled = true
 	
 	connect("on_interact", trigger_direction)
 
@@ -42,3 +58,10 @@ func _on_area_3d_body_exited(body):
 		player_body = null
 		set_transition_amount = false;
 		GameManager.set_transition_alpha(0.0)
+
+
+func _on_proximity_trigger_body_entered(body):
+	if proximity_trigger and body.is_in_group("player"):
+		set_transition_amount = true;
+		player_body = body
+		trigger_direction()

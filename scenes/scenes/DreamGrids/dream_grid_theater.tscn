@@ -25,48 +25,46 @@ columns = 3
 [node name="DreamCell" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2
 scene_name = "DreamScenes/Theater"
+allow_up = true
+allow_down = true
+allow_left = true
 
 [node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2
 scene_name = "DreamScenes/Theater"
 is_goal = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
 
 [node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2
 scene_name = "DreamScenes/Theater"
+allow_up = true
+allow_right = true
+allow_down = true
 
 [node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2
 scene_name = "DreamScenes/Theater"
-is_nightmare = true
+allow_up = true
+allow_right = true
+allow_down = true
 
 [node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2
 scene_name = "DreamScenes/Theater"
+is_start = true
+allow_up = true
+allow_right = true
+allow_left = true
 
 [node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2
 scene_name = "DreamScenes/Theater"
 is_nightmare = true
-
-[node name="DreamCell7" parent="GridContainer" instance=ExtResource("2_x3wbk")]
-layout_mode = 2
-scene_name = "DreamScenes/Theater"
-dream_info = {
-"up_door": true
-}
-
-[node name="DreamCell8" parent="GridContainer" instance=ExtResource("2_x3wbk")]
-layout_mode = 2
-scene_name = "DreamScenes/Theater"
-is_start = true
-dream_info = {
-"up_door": true
-}
-
-[node name="DreamCell9" parent="GridContainer" instance=ExtResource("2_x3wbk")]
-layout_mode = 2
-scene_name = "DreamScenes/Theater"
-dream_info = {
-"up_door": true
-}
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
