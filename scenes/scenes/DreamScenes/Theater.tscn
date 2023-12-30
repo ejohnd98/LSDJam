@@ -75,7 +75,7 @@ shadow_enabled = true
 environment = SubResource("Environment_77ybp")
 
 [node name="PlayerSpawn" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -31.0338)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25303, -31.0338)
 
 [node name="SceneTrigger" parent="." instance=ExtResource("1_wi6lw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.3, 18.786)
