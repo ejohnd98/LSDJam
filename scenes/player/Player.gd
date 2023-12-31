@@ -1,8 +1,8 @@
 extends RigidBody3D
 
 const RAY_LENGTH = 10
-const WALK_SPEED = 3
-const SPRINT_MOD = 1.75
+const WALK_SPEED = 2.5
+const SPRINT_MOD = 1.8
 const JUMP_VELOCITY = 3.0
 const SENSITIVITY = 0.003
 
@@ -105,7 +105,7 @@ func _physics_process(delta):
 		if (not head_bob_anim.is_playing()):
 			head_bob_anim.play("bob")
 			head_bob_anim.get_animation("bob").loop_mode = 1
-		head_bob_anim.speed_scale = move_speed / WALK_SPEED
+		head_bob_anim.speed_scale = 1.25 * move_speed / WALK_SPEED
 		var footstep_volume = default_footstep_volume
 		var footstep_pitch = default_footstep_pitch
 		if (is_sprinting):
