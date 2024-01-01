@@ -25,6 +25,7 @@ columns = 3
 [node name="DreamCell" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2
 scene_name = "DreamScenes/Theater"
+has_key = true
 allow_up = true
 allow_down = true
 allow_left = true
@@ -33,10 +34,6 @@ allow_left = true
 layout_mode = 2
 scene_name = "DreamScenes/Theater"
 is_goal = true
-allow_up = true
-allow_right = true
-allow_down = true
-allow_left = true
 
 [node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2

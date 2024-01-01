@@ -5,6 +5,7 @@ extends Node3D
 @export var player_texture : Texture2D
 @export var start_texture : Texture2D
 @export var goal_texture : Texture2D
+@export var key_texture : Texture2D
 
 @export var grid_scale : Vector2 = Vector2(0.75,0.75)
 @export var pixel_size = 0.004
@@ -31,6 +32,8 @@ func create_representation(dream_grid : DreamGrid):
 				chosen_texture = goal_texture
 			if dream_cell.is_start:
 				chosen_texture = start_texture
+			if dream_cell.has_key:
+				chosen_texture = key_texture
 			if dream_grid.player_position == Vector2i(x,y):
 				chosen_texture = player_texture
 			

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://u1oag7kvh8se"]
+[gd_scene load_steps=10 format=3 uid="uid://u1oag7kvh8se"]
 
 [ext_resource type="Script" path="res://scenes/scenes/dream_grid_representation.gd" id="1_qiind"]
 [ext_resource type="Texture2D" uid="uid://bmpm1p8n03oc6" path="res://textures/DreamGrid/empty_dream_icon.png" id="2_7n2rh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c2o3p7u3ca4vr" path="res://textures/DreamGrid/you_icon.png" id="4_kpwoq"]
 [ext_resource type="Texture2D" uid="uid://jngrgcbevtrx" path="res://textures/DreamGrid/goal_icon.png" id="5_8csc0"]
 [ext_resource type="Texture2D" uid="uid://ov3u6kw6cpsf" path="res://textures/DreamGrid/starting_icon.png" id="5_a61ky"]
+[ext_resource type="Texture2D" uid="uid://fa0q78lyvgi5" path="res://textures/DreamGrid/key_icon.png" id="7_snc3r"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_mnx3y"]
 size = Vector3(1, 1, 0.05)
@@ -26,6 +27,7 @@ nightmare_texture = ExtResource("2_xme2y")
 player_texture = ExtResource("4_kpwoq")
 start_texture = ExtResource("5_a61ky")
 goal_texture = ExtResource("5_8csc0")
+key_texture = ExtResource("7_snc3r")
 
 [node name="GridParent" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.5, -0.5, 0)

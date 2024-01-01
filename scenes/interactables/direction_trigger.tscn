@@ -55,10 +55,10 @@ surface_material_override/0 = SubResource("ShaderMaterial_pq8ve")
 shape = SubResource("BoxShape3D_cvwl0")
 
 [node name="ArrowPivot" type="Node3D" parent="."]
-transform = Transform3D(0.000339143, 0.000436834, -1, -7.79123e-05, 1, 0.000436803, 1, 7.77425e-05, 0.000339182, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="ArrowMesh" type="MeshInstance3D" parent="ArrowPivot"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.460526, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.460526, 0)
 mesh = SubResource("TextMesh_n7gq7")
 skeleton = NodePath("../..")
 

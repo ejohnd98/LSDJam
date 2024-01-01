@@ -7,8 +7,8 @@ extends click_interaction
 @export var show_arrow : bool = true
 
 func _ready():
-	var angle = atan2(float(grid_direction.y), float(grid_direction.x))
-	var rot_matrix = Basis(Vector3.UP, angle).get_euler()
+	var angle = atan2(float(grid_direction.x), float(grid_direction.y))
+	var rot_matrix = Basis(Vector3.UP, angle - rotation.y).get_euler()
 	$ArrowPivot.rotation = rot_matrix
 	
 	if show_mesh:

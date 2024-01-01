@@ -8,6 +8,8 @@
 [node name="DreamCell" type="TextureRect"]
 texture = ExtResource("1_23f33")
 script = ExtResource("2_yv0ij")
+has_key = null
+has_multiple_spawns = null
 
 [node name="Overlay" type="TextureRect" parent="."]
 visible = false

@@ -2,7 +2,7 @@ extends RigidBody3D
 
 const RAY_LENGTH = 10
 const WALK_SPEED = 2.5
-const SPRINT_MOD = 1.8
+const SPRINT_MOD = 5#1.8
 const JUMP_VELOCITY = 3.0
 const SENSITIVITY = 0.003
 
@@ -126,7 +126,8 @@ func on_footstep():
 func set_frozen (frozen):
 	$CollisionShape3D.disabled = frozen
 	velocity = Vector3.ZERO
-	$CameraPivot/AnimationPlayer.stop()
+	if (frozen):
+		$CameraPivot/AnimationPlayer.stop()
 	vertical_velocity = 0
 	is_frozen = frozen
 

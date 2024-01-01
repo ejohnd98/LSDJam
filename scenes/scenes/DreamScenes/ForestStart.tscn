@@ -1,12 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bvge3g0uemu4"]
+[gd_scene load_steps=12 format=3 uid="uid://cfso1g6lgm10u"]
 
-[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_fluer"]
-[ext_resource type="Material" uid="uid://c2m4epboidckj" path="res://materials/forest_dirt.tres" id="2_3gd4s"]
-[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_28p3k"]
-[ext_resource type="AudioStream" uid="uid://deqyihaddcvn7" path="res://sounds/forest_ambience.ogg" id="3_nkahr"]
-[ext_resource type="Texture2D" uid="uid://v36pa45uyma0" path="res://sourceModels/forestGroundDirt.png" id="3_rpefc"]
-[ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="6_7sc1d"]
-[ext_resource type="PackedScene" uid="uid://b7mchxkg680r0" path="res://sourceModels/ForestGeneric.glb" id="7_rtj3q"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="1_rrp8m"]
+[ext_resource type="Material" uid="uid://c2m4epboidckj" path="res://materials/forest_dirt.tres" id="2_w216a"]
+[ext_resource type="AudioStream" uid="uid://deqyihaddcvn7" path="res://sounds/forest_ambience.ogg" id="3_6ys0o"]
+[ext_resource type="Texture2D" uid="uid://v36pa45uyma0" path="res://sourceModels/forestGroundDirt.png" id="3_grrym"]
+[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="4_n23ac"]
+[ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="6_8rat4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t5gl7"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -28,7 +27,7 @@ adjustment_saturation = 2.08
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fse2b"]
 albedo_color = Color(0.709804, 0.709804, 0.709804, 1)
-albedo_texture = ExtResource("3_rpefc")
+albedo_texture = ExtResource("3_grrym")
 uv1_scale = Vector3(0.25, 0.25, 0.25)
 uv1_triplanar = true
 uv1_world_triplanar = true
@@ -39,7 +38,7 @@ texture_filter = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n10dk"]
 albedo_color = Color(0.709804, 0.709804, 0.709804, 1)
-albedo_texture = ExtResource("3_rpefc")
+albedo_texture = ExtResource("3_grrym")
 uv1_scale = Vector3(0.25, 0.25, 0.25)
 uv1_triplanar = true
 uv1_world_triplanar = true
@@ -57,38 +56,28 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_lp2w8")
 
-[node name="PlayerSpawnUp" type="Node3D" parent="."]
-transform = Transform3D(0.957047, 0, -0.289934, 0, 1, 0, 0.289934, 0, 0.957047, 24.0402, 1.1, -60.0386)
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -26.5797)
 
-[node name="PlayerSpawnDown" type="Node3D" parent="."]
-transform = Transform3D(-0.867375, 0, 0.497655, 0, 1, 0, -0.497655, 0, -0.867375, -20.5917, 1.1, 51.4509)
-
-[node name="PlayerSpawnRight" type="Node3D" parent="."]
-transform = Transform3D(0.782097, 0, -0.623156, 0, 1, 0, 0.623156, 0, 0.782097, 54.2139, 1.1, -2.62211)
-
-[node name="PlayerSpawnLeft" type="Node3D" parent="."]
-transform = Transform3D(-0.566536, 0, 0.824037, 0, 1, 0, -0.824037, 0, -0.566536, -54.4156, 1.1, 13.0078)
-
-[node name="DreamGridRepresentation" parent="." instance=ExtResource("2_28p3k")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 2.617, 0.269625)
-grid_scale = Vector2(1, 1)
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("1_rrp8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.417, 0.269625)
+visible = false
 
 [node name="Blockout" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -3.60132, 0)
-visible = false
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 
 [node name="Building" type="CSGBox3D" parent="Blockout"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 use_collision = true
 size = Vector3(80, 2, 80)
-material = ExtResource("2_3gd4s")
+material = ExtResource("2_w216a")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Blockout/Building"]
 transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0.2, 0)
 operation = 2
 use_collision = true
 size = Vector3(79, 2, 79)
-material = ExtResource("2_3gd4s")
+material = ExtResource("2_w216a")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Blockout/Building"]
 transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, -1.2, 0)
@@ -111,7 +100,7 @@ material = SubResource("StandardMaterial3D_n10dk")
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
-stream = ExtResource("3_nkahr")
+stream = ExtResource("3_6ys0o")
 attenuation_model = 3
 volume_db = -14.0
 unit_size = 100.0
@@ -119,36 +108,41 @@ autoplay = true
 panning_strength = 0.4
 bus = &"SFX"
 
-[node name="SceneTrigger" parent="." instance=ExtResource("1_fluer")]
-transform = Transform3D(0.947378, 0, -0.320117, 0, 1, 0, 0.320117, 0, 0.947378, -22.2353, 1, 56.9688)
-grid_direction = Vector2i(0, -1)
+[node name="SceneTrigger" parent="." instance=ExtResource("4_n23ac")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 34.4)
 proximity_trigger = true
+show_mesh = false
+show_arrow = false
 
-[node name="GradientBox" parent="SceneTrigger" instance=ExtResource("6_7sc1d")]
+[node name="GradientBox" parent="SceneTrigger" instance=ExtResource("6_8rat4")]
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
 
-[node name="SceneTrigger2" parent="." instance=ExtResource("1_fluer")]
-transform = Transform3D(-0.030556, 0, 0.999533, 0, 1, 0, -0.999533, 0, -0.030556, 60.4578, 1, -4.50077)
+[node name="SceneTrigger2" parent="." instance=ExtResource("4_n23ac")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 34.4, 1, 0)
 grid_direction = Vector2i(-1, 0)
 proximity_trigger = true
+show_mesh = false
+show_arrow = false
 
-[node name="GradientBox" parent="SceneTrigger2" instance=ExtResource("6_7sc1d")]
+[node name="GradientBox" parent="SceneTrigger2" instance=ExtResource("6_8rat4")]
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
 
-[node name="SceneTrigger3" parent="." instance=ExtResource("1_fluer")]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 25.5814, 1, -65.7687)
+[node name="SceneTrigger3" parent="." instance=ExtResource("4_n23ac")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, -34.4)
+grid_direction = Vector2i(0, -1)
 proximity_trigger = true
+show_mesh = false
+show_arrow = false
 
-[node name="GradientBox" parent="SceneTrigger3" instance=ExtResource("6_7sc1d")]
+[node name="GradientBox" parent="SceneTrigger3" instance=ExtResource("6_8rat4")]
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
 
-[node name="SceneTrigger4" parent="." instance=ExtResource("1_fluer")]
-transform = Transform3D(0.293456, 0, -0.955972, 0, 1, 0, 0.955972, 0, 0.293456, -59.7468, 1, 15.4846)
+[node name="SceneTrigger4" parent="." instance=ExtResource("4_n23ac")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -34.4, 1, 0)
 grid_direction = Vector2i(1, 0)
 proximity_trigger = true
+show_mesh = false
+show_arrow = false
 
-[node name="GradientBox" parent="SceneTrigger4" instance=ExtResource("6_7sc1d")]
+[node name="GradientBox" parent="SceneTrigger4" instance=ExtResource("6_8rat4")]
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
-
-[node name="ForestGeneric" parent="." instance=ExtResource("7_rtj3q")]
-transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0, 0)

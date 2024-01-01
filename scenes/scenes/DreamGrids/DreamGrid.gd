@@ -32,7 +32,7 @@ func populate_grid_array():
 
 func move_in_direction (direction: Vector2i):
 	player_position.x = wrap(player_position.x + direction.x, 0, grid_size.x)
-	player_position.y = wrap(player_position.y - direction.y, 0, grid_size.y)
+	player_position.y = wrap(player_position.y + direction.y, 0, grid_size.y)
 	update_player_icon()
 
 func update_player_icon():

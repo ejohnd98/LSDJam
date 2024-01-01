@@ -38,19 +38,21 @@ func move_in_direction(direction: Vector2i):
 		return
 		
 	var current_cell = dream_grid.get_current_cell()
-	if current_cell.is_goal:
-		advance_dream()
-		return
 	
 	if current_cell.is_nightmare:
 		var start_cell = dream_grid.get_start_cell()
 		dream_grid.player_position = start_cell.grid_position
 		dream_grid.update_player_icon()
-		load_new_scene(start_cell.scene_name)
+		load_new_scene(start_cell.scene_name, direction)
 		return
 	
 	dream_grid.move_in_direction(direction)
-	load_new_scene(dream_grid.get_scene_from_position())
+	var next_cell = dream_grid.get_current_cell()
+	if next_cell.is_goal:
+		advance_dream()
+		return
+		
+	load_new_scene(dream_grid.get_scene_from_position(), direction)
 
 func advance_dream():
 	if dream_index + 1 == dreams.size():
@@ -72,10 +74,9 @@ func advance_dream():
 	
 	#load starting scene
 	load_new_scene(dream_grid.get_start_cell().scene_name)
-	
 
-# todo: make this async
-func load_new_scene(new_scene_name: String):
+
+func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vector2i.UP):
 	if not $SceneChangeTimer.is_stopped():
 		return
 	
@@ -99,7 +100,26 @@ func load_new_scene(new_scene_name: String):
 	
 	add_child(new_scene)
 	current_scene_node = new_scene
-	var new_spawn = current_scene_node.get_node("PlayerSpawn")
+	
+	# get player spawn position
+	var new_spawn
+	if current_cell.has_multiple_spawns:
+		match incoming_direction:
+			Vector2i.DOWN:
+				new_spawn = current_scene_node.get_node("PlayerSpawnDown")
+			Vector2i.RIGHT:
+				new_spawn = current_scene_node.get_node("PlayerSpawnRight")
+			Vector2i.UP:
+				new_spawn = current_scene_node.get_node("PlayerSpawnUp")
+			Vector2i.LEFT:
+				new_spawn = current_scene_node.get_node("PlayerSpawnLeft")
+		if new_spawn == null:
+			push_warning("Could not get directional spawn point!")
+			new_spawn = current_scene_node.get_node("PlayerSpawn")
+				
+	else:
+		new_spawn = current_scene_node.get_node("PlayerSpawn")
+		
 	player.set_spawn_position(new_spawn.position, new_spawn.rotation)
 	
 	canvas_layer.get_node("NightmareOverlay").visible = current_cell.is_nightmare
@@ -107,7 +127,7 @@ func load_new_scene(new_scene_name: String):
 	var dream_grid_representation = current_scene_node.get_node("DreamGridRepresentation")
 	if (dream_grid_representation):
 		dream_grid_representation.create_representation(dream_grid)
-		
+	
 	transition_obj.finish_transition()
 	await transition_obj.transition_end_point
 	player.set_frozen(false)
@@ -123,11 +143,11 @@ func does_key_exist(key : String) -> bool:
 
 func is_direction_allowed(direction : Vector2i) -> bool:
 	var current_cell : DreamCell = get_current_cell()
-	if direction == -Vector2i.UP:
+	if direction == Vector2i.UP:
 		return current_cell.allow_up
 	if direction == Vector2i.RIGHT:
 		return current_cell.allow_right
-	if direction == -Vector2i.DOWN:
+	if direction == Vector2i.DOWN:
 		return current_cell.allow_down
 	if direction == Vector2i.LEFT:
 		return current_cell.allow_left

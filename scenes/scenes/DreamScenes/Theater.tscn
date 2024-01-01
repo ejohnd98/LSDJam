@@ -68,14 +68,13 @@ texture_filter = 2
 [node name="Theater" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-shadow_enabled = true
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_77ybp")
 
 [node name="PlayerSpawn" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25303, -31.0338)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.04448, -30.1663)
 
 [node name="SceneTrigger" parent="." instance=ExtResource("1_wi6lw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.3, 18.786)
@@ -99,7 +98,7 @@ show_arrow = false
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5.417, -3.667)
 
 [node name="Blockout" type="Node3D" parent="."]
-transform = Transform3D(-0.8, 0, -6.99382e-08, 0, 1, 0, 6.99382e-08, 0, -0.8, 0, 0, 0)
+transform = Transform3D(-0.8, 0, -1.20797e-07, 0, 1, 0, 1.20797e-07, 0, -0.8, 0, 0, 0)
 
 [node name="Building" type="CSGBox3D" parent="Blockout"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
@@ -152,7 +151,7 @@ size = Vector3(20, 1, 20)
 material = SubResource("StandardMaterial3D_jexyx")
 
 [node name="Roof" type="CSGBox3D" parent="Blockout"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5, 0)
+transform = Transform3D(0.999999, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 0.999999, 0, 10.5431, 0)
 use_collision = true
 size = Vector3(60, 1, 80)
 material = ExtResource("3_gcehk")
@@ -509,6 +508,12 @@ unit_size = 100.0
 autoplay = true
 panning_strength = 0.4
 bus = &"SFX"
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.8, 0, -1.20797e-07, 0, 1, 0, 1.20797e-07, 0, -0.8, 0, 0.5, 0)
+visible = false
+use_collision = true
+size = Vector3(70, 1, 100)
 
 [node name="KeyObject" parent="." instance=ExtResource("8_m5tpd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, -20)

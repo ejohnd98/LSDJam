@@ -9,6 +9,10 @@ extends CanvasItem
 @export var is_goal = false
 @export var is_start = false
 
+#TODO: set this false once key has been picked up
+@export var has_key = false
+@export var has_multiple_spawns = false
+
 @export_group("Allowed Directions")
 @export var allow_up = false
 @export var allow_right = false
@@ -43,6 +47,9 @@ func UpdateTexture(showPlayer: bool = false):
 		$Overlay.visible = true
 	elif is_nightmare:
 		$Overlay.texture = load("res://textures/DreamGrid/skull_icon.png")
+		$Overlay.visible = true
+	elif has_key:
+		$Overlay.texture = load("res://textures/DreamGrid/key_icon.png")
 		$Overlay.visible = true
 	else:
 		$Overlay.visible = false
