@@ -130,6 +130,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	
 	transition_obj.finish_transition()
 	await transition_obj.transition_end_point
+	canvas_layer.get_node("LevelText").type_out_text(dream_grid.get_current_cell_name())
 	player.set_frozen(false)
 	
 

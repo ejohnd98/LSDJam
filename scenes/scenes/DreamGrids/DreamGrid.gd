@@ -2,6 +2,8 @@ class_name DreamGrid
 
 extends Control
 
+@export var dream_name = "Dream"
+
 @export_group("Keys")
 @export var dream_keys: Array[String] = []
 
@@ -9,6 +11,8 @@ var grid_size = Vector2i.ZERO
 var grid = []
 var player_position = Vector2i.ZERO
 var start_cell = null
+
+var letter_array = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n","o","p", "q", "r", "s", "t", "u", "v", "w","x", "y", "z"]
 
 func initialize_grid():
 	populate_grid_array()
@@ -49,6 +53,10 @@ func get_start_cell() -> DreamCell:
 func get_scene_from_position ():
 	return grid[player_position.x][player_position.y].scene_name
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func get_current_cell_name () -> String:
+	var coord_string = ""
+	if (get_current_cell().is_nightmare):
+		coord_string = "???"
+	else:
+		coord_string = str(letter_array[player_position.x]).to_upper() + str(grid_size.y - player_position.y)
+	return dream_name + " " + coord_string

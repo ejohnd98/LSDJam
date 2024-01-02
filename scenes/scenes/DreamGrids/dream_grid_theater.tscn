@@ -11,6 +11,7 @@ anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
 script = ExtResource("1_xvhdi")
+dream_name = "Cinema"
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
