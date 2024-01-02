@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bvge3g0uemu4"]
+[gd_scene load_steps=20 format=3 uid="uid://bvge3g0uemu4"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_fluer"]
 [ext_resource type="Texture2D" uid="uid://bgrxkyvd3cqx0" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect.png" id="1_qc3ga"]
@@ -26,11 +26,32 @@ glow_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.261719, 0.675781, 0.972656, 1)
 fog_sun_scatter = 0.15
-fog_density = 0.012
 fog_aerial_perspective = 0.859
 adjustment_enabled = true
-adjustment_contrast = 1.2
+adjustment_brightness = 1.06
+adjustment_contrast = 1.31
 adjustment_saturation = 1.15
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ujr4y"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohmkj"]
+noise = SubResource("FastNoiseLite_ujr4y")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0d0y"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e7q65"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtsqx"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckpgi"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fse2b"]
 albedo_color = Color(0.709804, 0.709804, 0.709804, 1)
@@ -75,8 +96,29 @@ transform = Transform3D(0.782097, 0, -0.623156, 0, 1, 0, 0.623156, 0, 0.782097, 
 [node name="PlayerSpawnLeft" type="Node3D" parent="."]
 transform = Transform3D(-0.566536, 0, 0.824037, 0, 1, 0, -0.824037, 0, -0.566536, -54.4156, 2.92876, 13.0078)
 
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 1.617, 0.269625)
+size = Vector3(1.1, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_m0d0y")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+operation = 2
+size = Vector3(1, 1, 0.45)
+material = SubResource("StandardMaterial3D_e7q65")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_xtsqx")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_ckpgi")
+
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_28p3k")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 2.617, 0.269625)
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -2, 1.637, 0.269625)
 grid_scale = Vector2(1, 1)
 
 [node name="Blockout" type="Node3D" parent="."]
@@ -129,6 +171,8 @@ bus = &"SFX"
 transform = Transform3D(0.947378, 0, -0.320117, 0, 1, 0, 0.320117, 0, 0.947378, -22.2353, 0.781336, 56.9688)
 grid_direction = Vector2i(0, -1)
 proximity_trigger = true
+show_mesh = false
+show_arrow = false
 
 [node name="GradientBox" parent="SceneTrigger" instance=ExtResource("6_7sc1d")]
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
@@ -137,6 +181,8 @@ transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.
 transform = Transform3D(-0.030556, 0, 0.999533, 0, 1, 0, -0.999533, 0, -0.030556, 60.4578, -2.24864, -4.50077)
 grid_direction = Vector2i(-1, 0)
 proximity_trigger = true
+show_mesh = false
+show_arrow = false
 
 [node name="GradientBox" parent="SceneTrigger2" instance=ExtResource("6_7sc1d")]
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
@@ -144,6 +190,8 @@ transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.
 [node name="SceneTrigger3" parent="." instance=ExtResource("1_fluer")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 25.5814, 0.610639, -65.7687)
 proximity_trigger = true
+show_mesh = false
+show_arrow = false
 
 [node name="GradientBox" parent="SceneTrigger3" instance=ExtResource("6_7sc1d")]
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
@@ -152,6 +200,8 @@ transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.
 transform = Transform3D(0.293456, 0, -0.955972, 0, 1, 0, 0.955972, 0, 0.293456, -59.7468, 3.08117, 15.4846)
 grid_direction = Vector2i(1, 0)
 proximity_trigger = true
+show_mesh = false
+show_arrow = false
 
 [node name="GradientBox" parent="SceneTrigger4" instance=ExtResource("6_7sc1d")]
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)

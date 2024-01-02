@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dsha5ptrydh0r"]
+
+[ext_resource type="Shader" path="res://materials/golf_tree_material.gdshader" id="1_0tbgx"]
+[ext_resource type="Texture2D" uid="uid://dqjwetjrkfqa2" path="res://sourceModels/GolfTreeSplit_billboard_tree.png" id="2_7qfei"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_0tbgx")
+shader_parameter/transmission = Color(0.2, 0.223529, 0.305882, 1)
+shader_parameter/sway_speed = 1.0
+shader_parameter/sway_strength = 0.015
+shader_parameter/sway_phase_len = 15.0
+shader_parameter/texture_albedo = ExtResource("2_7qfei")
