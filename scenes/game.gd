@@ -43,7 +43,7 @@ func move_in_direction(direction: Vector2i):
 		var start_cell = dream_grid.get_start_cell()
 		dream_grid.player_position = start_cell.grid_position
 		dream_grid.update_player_icon()
-		load_new_scene(start_cell.scene_name, direction)
+		load_new_scene(start_cell.scene_name)
 		return
 	
 	dream_grid.move_in_direction(direction)
@@ -132,6 +132,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	await transition_obj.transition_end_point
 	canvas_layer.get_node("LevelText").type_out_text(dream_grid.get_current_cell_name())
 	player.set_frozen(false)
+	print("Player Grid Position: " + str(dream_grid.player_position))
 	
 
 func set_transition_alpha(alpha : float):

@@ -263,7 +263,7 @@ libraries = {
 
 [node name="TypewriterSound" type="AudioStreamPlayer" parent="SubViewport/CanvasLayer/LevelText"]
 stream = SubResource("AudioStreamRandomizer_1negh")
-volume_db = -5.0
+volume_db = -9.0
 pitch_scale = 0.95
 max_polyphony = 4
 

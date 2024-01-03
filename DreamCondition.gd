@@ -7,6 +7,7 @@ extends Node3D
 @export_group("Position")
 @export var required_position = -Vector2i.ONE
 @export var invert_position_condition = false
+@export var hide_if_not_at_position = false
 
 @export_group("Direction")
 @export var require_up = false
@@ -17,6 +18,7 @@ extends Node3D
 @export_group("Behaviour")
 @export var show_parent_on_fail = false
 @export var show_self_on_fail = false
+@export var destroy_self_if_passed = false
 
 signal on_condition_check(passed : bool)
 signal on_condition_passed
@@ -55,6 +57,9 @@ func check_condition():
 		on_condition_passed.emit()
 	else:
 		on_condition_failed.emit()
+	
+	if passed and destroy_self_if_passed:
+		queue_free()
 
 func passes_condition() -> bool:
 	var passed = true
@@ -71,6 +76,10 @@ func passes_condition() -> bool:
 		var is_position : bool = (GameManager.get_dream_grid().player_position == required_position)
 		if (invert_key_condition):
 			is_position = not is_position
+		if (hide_if_not_at_position && not is_position):
+			hide()
+			if destroy_self_if_passed:
+				queue_free()
 		passed = passed and is_position
 	
 	# Direction checks

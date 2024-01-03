@@ -3,20 +3,20 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b7mchxkg680r0"
-path="res://.godot/imported/ForestGeneric.glb-e356c68c01b004df1889c52d0b95408c.scn"
+uid="uid://b4hh1ubvx7adh"
+path="res://.godot/imported/firTreeTall.glb-992c544451bd9fbfa2b2aec886f1cdcb.scn"
 
 [deps]
 
-source_file="res://sourceModels/ForestGeneric.glb"
-dest_files=["res://.godot/imported/ForestGeneric.glb-e356c68c01b004df1889c52d0b95408c.scn"]
+source_file="res://sourceModels/firTreeTall.glb"
+dest_files=["res://.godot/imported/firTreeTall.glb-992c544451bd9fbfa2b2aec886f1cdcb.scn"]
 
 [params]
 
 nodes/root_type="Node3D"
 nodes/root_name="Scene Root"
 nodes/apply_root_scale=true
-nodes/root_scale=1.8
+nodes/root_scale=1.0
 meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true
@@ -30,9 +30,8 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Path_003": {
-"generate/physics": true,
-"physics/shape_type": 2
+"PATH:FirTreeTall": {
+"generate/physics": true
 }
 }
 }

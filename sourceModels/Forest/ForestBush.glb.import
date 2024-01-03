@@ -3,20 +3,20 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b7mchxkg680r0"
-path="res://.godot/imported/ForestGeneric.glb-e356c68c01b004df1889c52d0b95408c.scn"
+uid="uid://cscuu7x8vo5cr"
+path="res://.godot/imported/ForestBush.glb-b3deecc7b6bc5ed20ba8862ed072ad02.scn"
 
 [deps]
 
-source_file="res://sourceModels/ForestGeneric.glb"
-dest_files=["res://.godot/imported/ForestGeneric.glb-e356c68c01b004df1889c52d0b95408c.scn"]
+source_file="res://sourceModels/Forest/ForestBush.glb"
+dest_files=["res://.godot/imported/ForestBush.glb-b3deecc7b6bc5ed20ba8862ed072ad02.scn"]
 
 [params]
 
 nodes/root_type="Node3D"
 nodes/root_name="Scene Root"
 nodes/apply_root_scale=true
-nodes/root_scale=1.8
+nodes/root_scale=1.0
 meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true
@@ -30,9 +30,12 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Path_003": {
+"PATH:GolfTree": {
 "generate/physics": true,
-"physics/shape_type": 2
+"physics/shape_type": 5,
+"primitive/height": 1.8,
+"primitive/position": Vector3(0, 0.75, 0),
+"primitive/radius": 0.8
 }
 }
 }

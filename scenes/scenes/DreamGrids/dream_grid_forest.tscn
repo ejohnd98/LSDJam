@@ -162,7 +162,6 @@ scene_name = "DreamScenes/Forest"
 is_start = true
 has_multiple_spawns = true
 allow_up = true
-allow_right = true
 allow_down = true
 allow_left = true
 
@@ -173,4 +172,3 @@ has_multiple_spawns = true
 allow_up = true
 allow_right = true
 allow_down = true
-allow_left = true
