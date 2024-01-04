@@ -2,7 +2,7 @@
 
 shader_type spatial;
 
-render_mode unshaded, cull_disabled; //fog_disabled
+render_mode unshaded, cull_disabled, fog_disabled;
 
 // fragment uniforms
 uniform float distortionView : hint_range(0.0, 0.3, 0.005) = 0.03;

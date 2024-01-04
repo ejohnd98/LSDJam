@@ -6,9 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://evj2daakxbww" path="res://sounds/footstep09.ogg" id="10_rinfj"]
 
 [resource]
-streams_count = 4
 random_pitch = 1.2
 random_volume_offset_db = 2.0
+streams_count = 4
 stream_0/stream = ExtResource("5_w3idn")
 stream_0/weight = 1.0
 stream_1/stream = ExtResource("6_i3syy")

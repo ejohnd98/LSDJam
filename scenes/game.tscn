@@ -68,8 +68,8 @@ _data = {
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1negh"]
-streams_count = 1
 random_volume_offset_db = 4.0
+streams_count = 1
 stream_0/stream = ExtResource("10_kkilr")
 stream_0/weight = 1.0
 
