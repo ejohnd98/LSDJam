@@ -78,6 +78,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.04448, -30.1663)
 
 [node name="SceneTrigger" parent="." instance=ExtResource("1_wi6lw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.3, 18.786)
+grid_direction = Vector2i(0, -1)
 
 [node name="SceneTrigger2" parent="." instance=ExtResource("1_wi6lw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.178, 1.3, 0.1)
@@ -88,8 +89,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.078, 1.3, -28)
 grid_direction = Vector2i(1, 0)
 
 [node name="SceneTrigger4" parent="." instance=ExtResource("1_wi6lw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0779991, 1.3, -37)
-grid_direction = Vector2i(0, -1)
+transform = Transform3D(1.5, 0, 0, 0, 2, 0, 0, 0, 1, -0.0779991, 1.3, -37)
 proximity_trigger = true
 show_mesh = false
 show_arrow = false
@@ -459,6 +459,7 @@ material = SubResource("StandardMaterial3D_j5ydx")
 
 [node name="GradientBox" parent="Blockout" instance=ExtResource("6_05k7o")]
 transform = Transform3D(-1.61732e-07, 0, 4.5, 0, 2, 0, -3.7, 0, -1.96701e-07, 0.001, 1, 46.837)
+visible = false
 
 [node name="ArcadeWall" type="CSGBox3D" parent="Blockout"]
 transform = Transform3D(1.63917e-07, 0, 1.25, 0, 1, 0, -1.25, 0, 1.63917e-07, 9.99999, 1.1, 33.3749)

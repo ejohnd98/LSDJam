@@ -288,7 +288,7 @@ libraries = {
 
 [node name="ColorRect" type="ColorRect" parent="SubViewport/CanvasLayer/transition"]
 modulate = Color(1, 1, 1, 0)
-self_modulate = Color(0.509804, 0.419608, 0.823529, 0.282353)
+self_modulate = Color(0.470588, 0.431373, 0.701961, 0.309804)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

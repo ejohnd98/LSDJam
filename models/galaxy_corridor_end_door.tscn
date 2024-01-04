@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cb2k6fym5cxi0"]
+[gd_scene load_steps=5 format=3 uid="uid://cb2k6fym5cxi0"]
 
 [ext_resource type="PackedScene" uid="uid://7tqlj4kc2fbg" path="res://sourceModels/galaxyCorridorEndDoor.glb" id="1_vhg8r"]
 [ext_resource type="Material" uid="uid://sht5w3wlcmes" path="res://models/galaxy_corridor.tres" id="2_pwg5m"]
 [ext_resource type="PackedScene" uid="uid://dwdsyyxdgdfmc" path="res://models/galaxy_corridor_doors.tscn" id="3_c675a"]
+[ext_resource type="PackedScene" uid="uid://dv2mfrpn0x5md" path="res://scenes/dream_condition.tscn" id="4_53vna"]
 
 [node name="galaxyCorridorEndDoor" instance=ExtResource("1_vhg8r")]
 
@@ -10,3 +11,7 @@
 surface_material_override/0 = ExtResource("2_pwg5m")
 
 [node name="galaxyCorridorDoors" parent="EndWithDoor/DoorPivot" index="0" instance=ExtResource("3_c675a")]
+
+[node name="DreamCondition" parent="." index="1" instance=ExtResource("4_53vna")]
+
+[connection signal="on_condition_check" from="DreamCondition" to="EndWithDoor/DoorPivot/galaxyCorridorDoors" method="set_openable"]

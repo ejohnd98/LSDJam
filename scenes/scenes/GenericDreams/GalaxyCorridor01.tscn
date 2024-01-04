@@ -48,16 +48,16 @@ environment = SubResource("Environment_2r8tv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.099598, -7.3651)
 
 [node name="SceneTrigger" parent="." instance=ExtResource("6_ihqdw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 12.786)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 12.786)
 proximity_trigger = true
 
 [node name="SceneTrigger2" parent="." instance=ExtResource("6_ihqdw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.922, 1, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -12.922, 1, 0)
 grid_direction = Vector2i(1, 0)
 proximity_trigger = true
 
 [node name="SceneTrigger3" parent="." instance=ExtResource("6_ihqdw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.922, 1, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12.922, 1, 0)
 grid_direction = Vector2i(-1, 0)
 proximity_trigger = true
 
@@ -176,10 +176,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
 [node name="galaxyCorridorEndDoor" parent="VoxelGI/Corridors/Corridor4" instance=ExtResource("3_f46jj")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, -4)
-
-[node name="galaxyCorridorDoors" parent="VoxelGI/Corridors/Corridor4/galaxyCorridorEndDoor/EndWithDoor/DoorPivot" index="0"]
-require_key = true
-required_key = "up_door"
 
 [node name="galaxyCorridorMiddle2" parent="VoxelGI/Corridors/Corridor4" instance=ExtResource("2_rxkgm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)

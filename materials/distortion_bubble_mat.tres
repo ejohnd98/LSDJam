@@ -1,0 +1,25 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://c0qmxe2hvwyrh"]
+
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="1_3phof"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
+noise_type = 0
+frequency = 0.0072
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_iorx3")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_3phof")
+shader_parameter/distortionView = 0.02
+shader_parameter/speedView = 0.05
+shader_parameter/static_intensity = 0.0
+shader_parameter/tintColor = Color(1, 1, 1, 1)
+shader_parameter/fesnelAmount = 0.47
+shader_parameter/distortionVertex = 0.05
+shader_parameter/speedVertex = 0.06
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")

@@ -6,6 +6,8 @@ extends click_interaction
 @export var show_mesh : bool = true
 @export var show_arrow : bool = true
 
+@export var start_dist : float = 3.0
+
 func _ready():
 	var angle = atan2(float(grid_direction.x), float(grid_direction.y))
 	var rot_matrix = Basis(Vector3.UP, angle - rotation.y).get_euler()
@@ -23,6 +25,10 @@ func _ready():
 	
 	if not proximity_trigger:
 		$ProximityTrigger/CollisionShape3D.disabled = true
+		$DistortionBubble.hide()
+		$DistortionBubbleInteract.show()
+	else:
+		$DistortionBubbleInteract.hide()
 	
 	connect("on_interact", trigger_direction)
 
@@ -34,8 +40,8 @@ func _process(delta):
 	player_pos.y = position.y
 	
 	var dist = position.distance_to(player_pos)
-	if (dist < 3):
-		var alpha : float = clampf(1.0 - (dist/3.0), 0.0, 1.0)
+	if (dist < start_dist):
+		var alpha : float = clampf(1.0 - (dist/start_dist), 0.0, 1.0)
 		GameManager.set_transition_alpha(alpha)
 		
 		if (alpha >= 0.8):
