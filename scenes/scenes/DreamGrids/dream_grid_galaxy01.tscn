@@ -27,6 +27,7 @@ columns = 2
 layout_mode = 2
 scene_name = "DreamScenes/GalaxyCorridor01"
 is_nightmare = true
+is_dream_transition = true
 has_key = false
 has_multiple_spawns = true
 allow_up = true

@@ -17,6 +17,8 @@ var dream_index = -1
 var current_scene_node = null
 var next_scene_path = ""
 
+var rng = RandomNumberGenerator.new()
+
 static func get_game(tree_node : SceneTree) -> game_manager:
 	return tree_node.get_root().get_node("SubViewportContainer/SubViewport/Game")
 
@@ -49,17 +51,35 @@ func move_in_direction(direction: Vector2i):
 	dream_grid.move_in_direction(direction)
 	var next_cell = dream_grid.get_current_cell()
 	if next_cell.is_goal:
+		dreams.remove_at(dream_index)
 		advance_dream()
+		return
+	
+	if next_cell.is_dream_transition:
+		pick_random_dream()
 		return
 		
 	load_new_scene(dream_grid.get_scene_from_position(), direction)
 
 func advance_dream():
-	if dream_index + 1 == dreams.size():
+	var next_index = dream_index
+	if next_index + 1 == dreams.size():
 		canvas_layer.get_node("WinScreen").visible = true
 		player.set_frozen(true)
 		return
-	dream_index += 1
+	next_index += 1
+	change_dreams(next_index)
+
+func pick_random_dream():
+	var new_index = rng.randi_range (0, dreams.size()-1)
+	if new_index == dream_index:
+		new_index += 1
+	new_index = wrapi(new_index, 0, dreams.size())
+	
+	change_dreams(new_index)
+ 
+func change_dreams(index : int):
+	dream_index = index
 	
 	#remove old dream grid
 	if dream_grid:

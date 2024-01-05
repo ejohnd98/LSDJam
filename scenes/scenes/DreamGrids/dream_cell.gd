@@ -6,6 +6,7 @@ extends CanvasItem
 @export var scene_name: String = "default_scene"
 
 @export var is_nightmare = false
+@export var is_dream_transition = false
 @export var is_goal = false
 @export var is_start = false
 
@@ -33,6 +34,7 @@ func _process(delta):
 			set_self_modulate(Color.WHITE)
 
 func _ready():
+	is_dream_transition = is_nightmare
 	UpdateTexture(is_start)
 
 func UpdateTexture(showPlayer: bool = false):

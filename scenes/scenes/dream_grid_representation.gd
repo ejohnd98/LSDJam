@@ -40,6 +40,9 @@ func create_representation(dream_grid : DreamGrid):
 			var cell_bg = Sprite3D.new()
 			var cell = Sprite3D.new()
 			
+			cell_bg.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
+			cell.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
+			
 			cell.position.x = offset_x + float(x) * cell_separation_x * grid_scale.x
 			cell.position.y = offset_y + float(grid_size.y - 1 - y) * cell_separation_y * grid_scale.y
 			cell.position.z = -0.001
