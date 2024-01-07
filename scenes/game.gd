@@ -7,12 +7,14 @@ const SCENE_PATH = "res://scenes/scenes/"
 
 @export var dreams: Array[PackedScene] = []
 
+@export var dream_transition: PackedScene
+
 var current_dream : Control = null
 var dream_index = -1
 
 @onready var dream_grid : DreamGrid = get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/DreamGrid")
 @onready var canvas_layer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer")
-@onready var player = get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player")
+@onready var player : LSDPlayer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player")
 
 var current_scene_node = null
 var next_scene_path = ""
@@ -151,6 +153,13 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	transition_obj.finish_transition()
 	await transition_obj.transition_end_point
 	canvas_layer.get_node("LevelText").type_out_text(dream_grid.get_current_cell_name())
+	
+	var footstep_override : AudioStreamPlayer = current_scene_node.get_node("FootstepOverride")
+	if footstep_override != null:
+		player.set_footstep_sounds(footstep_override.stream)
+	else:
+		player.reset_footstep_sounds()
+	
 	player.set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
 	

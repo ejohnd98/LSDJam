@@ -1,4 +1,4 @@
-extends RigidBody3D
+class_name LSDPlayer extends RigidBody3D
 
 const RAY_LENGTH = 10
 const WALK_SPEED = 2.5
@@ -18,13 +18,22 @@ var is_frozen = false
 var default_footstep_volume
 var default_footstep_pitch
 
+var default_footstep_sounds : AudioStream
+
 func _ready():
+	default_footstep_sounds = $AudioStreamPlayer.stream
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	default_footstep_volume = $AudioStreamPlayer.volume_db
 	default_footstep_pitch = $AudioStreamPlayer.pitch_scale
 	
 func get_player_rotation():
 	return $CameraPivot.rotation.y
+
+func reset_footstep_sounds():
+	$AudioStreamPlayer.stream = default_footstep_sounds
+
+func set_footstep_sounds(footsteps : AudioStream):
+	$AudioStreamPlayer.stream = footsteps
 
 func _unhandled_input(event):
 	if event.is_action_pressed("Debug_Up"):

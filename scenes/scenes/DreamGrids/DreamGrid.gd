@@ -12,6 +12,7 @@ var grid = []
 var player_position = Vector2i.ZERO
 var start_cell = null
 
+# :^)
 var letter_array = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n","o","p", "q", "r", "s", "t", "u", "v", "w","x", "y", "z"]
 
 func initialize_grid():
