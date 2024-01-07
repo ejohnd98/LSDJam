@@ -206,7 +206,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Control" type="Control" parent="SubViewport/CanvasLayer/UIParent"]
+[node name="Compass" type="Control" parent="SubViewport/CanvasLayer/UIParent"]
 layout_mode = 1
 anchor_left = 0.922
 anchor_right = 0.922
@@ -218,12 +218,12 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 script = ExtResource("5_3dlvi")
 
-[node name="Base" type="Sprite2D" parent="SubViewport/CanvasLayer/UIParent/Control"]
+[node name="Base" type="Sprite2D" parent="SubViewport/CanvasLayer/UIParent/Compass"]
 position = Vector2(0, 94)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_ujn72")
 
-[node name="Needle" type="Sprite2D" parent="SubViewport/CanvasLayer/UIParent/Control"]
+[node name="Needle" type="Sprite2D" parent="SubViewport/CanvasLayer/UIParent/Compass"]
 position = Vector2(0, 94)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_nte5w")

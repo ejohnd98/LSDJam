@@ -43,18 +43,15 @@ func move_in_direction(direction: Vector2i):
 		
 	var current_cell = dream_grid.get_current_cell()
 	
-	if current_cell.is_nightmare:
-		var start_cell = dream_grid.get_start_cell()
-		dream_grid.player_position = start_cell.grid_position
-		dream_grid.update_player_icon()
-		load_new_scene(start_cell.scene_name)
+	if dream_index == -1:
+		pick_random_dream()
 		return
 	
 	dream_grid.move_in_direction(direction)
 	var next_cell = dream_grid.get_current_cell()
 	if next_cell.is_goal:
 		dreams.remove_at(dream_index)
-		advance_dream()
+		change_dreams(-1)
 		return
 	
 	if next_cell.is_dream_transition:
@@ -62,6 +59,7 @@ func move_in_direction(direction: Vector2i):
 		return
 		
 	load_new_scene(dream_grid.get_scene_from_position(), direction)
+
 
 func advance_dream():
 	var next_index = dream_index
@@ -88,8 +86,17 @@ func change_dreams(index : int):
 		dream_grid.queue_free()
 		dream_grid = null
 	
+	var new_dream
 	#add new dream grid
-	var new_dream = dreams[dream_index].instantiate()
+	if (dream_index == -1):
+		new_dream = dream_transition.instantiate()
+	elif dreams.size() > 0:
+		new_dream = dreams[dream_index].instantiate()
+	else:
+		player.set_frozen(true)
+		canvas_layer.get_node("WinScreen").visible = true
+		return
+		
 	get_tree().get_root().get_node("SubViewportContainer/CanvasLayer").add_child(new_dream)
 	dream_grid = new_dream
 	dream_grid.initialize_grid()
@@ -103,6 +110,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		return
 	
 	player.set_frozen(true)
+	canvas_layer.get_node("UIParent/Compass").set_frozen(true)
+	
 	next_scene_path = SCENE_PATH+new_scene_name+".tscn"
 	ResourceLoader.load_threaded_request(next_scene_path)
 	
@@ -161,6 +170,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		player.reset_footstep_sounds()
 	
 	player.set_frozen(false)
+	canvas_layer.get_node("UIParent/Compass").set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
 	
 
