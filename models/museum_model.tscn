@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dauk42gdvbn4x"]
+
+[ext_resource type="PackedScene" uid="uid://bfqn277vq22yd" path="res://sourceModels/MuseumBlockout.glb" id="1_gmp6p"]
+[ext_resource type="Material" uid="uid://o4lttwvxltjy" path="res://materials/blockout_grid.tres" id="2_lj7vg"]
+
+[node name="MuseumBlockout" instance=ExtResource("1_gmp6p")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_lj7vg")

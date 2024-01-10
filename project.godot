@@ -22,8 +22,8 @@ GameManager="*res://scenes/core/game_manager.tscn"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=480
+window/size/viewport_width=960
+window/size/viewport_height=540
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
@@ -103,3 +103,10 @@ Debug_Left={
 [layer_names]
 
 3d_physics/layer_2="Ground"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=3
+anti_aliasing/quality/msaa_2d=1
+anti_aliasing/quality/msaa_3d=1
+anti_aliasing/quality/screen_space_aa=1

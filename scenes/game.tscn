@@ -150,7 +150,7 @@ stretch = true
 handle_input_locally = false
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
-size = Vector2i(640, 480)
+size = Vector2i(960, 540)
 render_target_update_mode = 4
 
 [node name="Player" parent="SubViewport" instance=ExtResource("3_t1v70")]

@@ -2,7 +2,7 @@ shader_type spatial;
 
 render_mode depth_prepass_alpha, world_vertex_coords;
 
-uniform sampler2D texture_albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_nearest_mipmap;
 
 uniform float sway_speed = 1.0;
 uniform float sway_strength = 0.05;

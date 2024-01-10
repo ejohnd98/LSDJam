@@ -26,7 +26,7 @@ func create_representation(dream_grid : DreamGrid):
 			var dream_cell : DreamCell = dream_grid.grid[x][y]
 			var chosen_texture = null
 			
-			if dream_cell.is_nightmare:
+			if dream_cell.is_nightmare or dream_cell.is_dream_transition:
 				chosen_texture = nightmare_texture
 			if dream_cell.is_goal:
 				chosen_texture = goal_texture

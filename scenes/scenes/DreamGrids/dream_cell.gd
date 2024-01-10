@@ -47,7 +47,7 @@ func UpdateTexture(showPlayer: bool = false):
 	elif is_start:
 		$Overlay.texture = load("res://textures/DreamGrid/starting_icon.png")
 		$Overlay.visible = true
-	elif is_nightmare:
+	elif is_nightmare or is_dream_transition:
 		$Overlay.texture = load("res://textures/DreamGrid/skull_icon.png")
 		$Overlay.visible = true
 	elif has_key:
@@ -60,7 +60,7 @@ func UpdateTexture(showPlayer: bool = false):
 	var direction_images = [$Up, $Right, $Down, $Left]
 	
 	for i in 4:
-		if allowed_directions[i]:
+		if allowed_directions[i] and not is_dream_transition and not is_goal:
 			direction_images[i].show()
 		else:
 			direction_images[i].hide()
