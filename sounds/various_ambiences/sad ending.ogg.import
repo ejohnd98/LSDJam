@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://brg1nf0dfekdj"
+path="res://.godot/imported/sad ending.ogg-ea53dc6da0c4e5020bf7443077f2d403.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/various_ambiences/sad ending.ogg"
+dest_files=["res://.godot/imported/sad ending.ogg-ea53dc6da0c4e5020bf7443077f2d403.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

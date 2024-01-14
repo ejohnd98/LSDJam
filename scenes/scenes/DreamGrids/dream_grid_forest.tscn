@@ -21,21 +21,12 @@ anchor_right = 1.0
 offset_left = -200.0
 offset_bottom = 200.0
 grow_horizontal = 0
-columns = 4
-
-[node name="DreamCell" parent="GridContainer" instance=ExtResource("2_0x1k8")]
-layout_mode = 2
-scene_name = "DreamScenes/Forest"
-has_key = true
-has_multiple_spawns = true
-allow_up = true
-allow_right = true
-allow_down = true
-allow_left = true
+columns = 3
 
 [node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2
 scene_name = "DreamScenes/Forest"
+has_key = true
 has_multiple_spawns = true
 allow_up = true
 allow_right = true
@@ -54,15 +45,6 @@ allow_down = true
 allow_left = true
 
 [node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_0x1k8")]
-layout_mode = 2
-scene_name = "DreamScenes/Forest"
-has_multiple_spawns = true
-allow_up = true
-allow_right = true
-allow_down = true
-allow_left = true
-
-[node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2
 scene_name = "DreamScenes/Forest"
 has_multiple_spawns = true
@@ -103,15 +85,6 @@ allow_right = true
 allow_down = true
 allow_left = true
 
-[node name="DreamCell9" parent="GridContainer" instance=ExtResource("2_0x1k8")]
-layout_mode = 2
-scene_name = "DreamScenes/Forest"
-has_multiple_spawns = true
-allow_up = true
-allow_right = true
-allow_down = true
-allow_left = true
-
 [node name="DreamCell10" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2
 scene_name = "DreamScenes/Forest"
@@ -126,6 +99,7 @@ allow_left = true
 [node name="DreamCell11" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2
 scene_name = "DreamScenes/Forest"
+is_start = true
 has_multiple_spawns = true
 allow_up = true
 allow_right = true
@@ -140,40 +114,3 @@ allow_up = true
 allow_right = true
 allow_down = true
 allow_left = true
-
-[node name="DreamCell13" parent="GridContainer" instance=ExtResource("2_0x1k8")]
-layout_mode = 2
-scene_name = "DreamScenes/Forest"
-is_nightmare = true
-is_dream_transition = true
-has_multiple_spawns = true
-allow_up = true
-allow_right = true
-allow_down = true
-allow_left = true
-
-[node name="DreamCell14" parent="GridContainer" instance=ExtResource("2_0x1k8")]
-layout_mode = 2
-scene_name = "DreamScenes/Forest"
-has_multiple_spawns = true
-allow_up = true
-allow_right = true
-allow_down = true
-allow_left = true
-
-[node name="DreamCell15" parent="GridContainer" instance=ExtResource("2_0x1k8")]
-layout_mode = 2
-scene_name = "DreamScenes/Forest"
-is_start = true
-has_multiple_spawns = true
-allow_up = true
-allow_down = true
-allow_left = true
-
-[node name="DreamCell16" parent="GridContainer" instance=ExtResource("2_0x1k8")]
-layout_mode = 2
-scene_name = "DreamScenes/Forest"
-has_multiple_spawns = true
-allow_up = true
-allow_right = true
-allow_down = true

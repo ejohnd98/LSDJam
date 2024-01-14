@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b6i6o7ow3tt56"
+path="res://.godot/imported/lingering dread.ogg-bc73024fdacb557ce8858f3dfde24705.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/various_ambiences/lingering dread.ogg"
+dest_files=["res://.godot/imported/lingering dread.ogg-bc73024fdacb557ce8858f3dfde24705.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,6 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cm5srrepm42b4"]
+[gd_scene load_steps=18 format=3 uid="uid://cm5srrepm42b4"]
 
 [ext_resource type="Script" path="res://scenes/interactables/key_object.gd" id="1_0wsko"]
+[ext_resource type="PackedScene" uid="uid://bb5ipk8pk4lm5" path="res://scenes/fx/particle_effect_base.tscn" id="2_vc68w"]
+[ext_resource type="Texture2D" uid="uid://dtry0pd3cnsa0" path="res://textures/billboard_items/generic_key.png" id="2_vspbp"]
+[ext_resource type="Script" path="res://scenes/interactables/HoverItem.gd" id="3_5op32"]
+[ext_resource type="Texture2D" uid="uid://brtakal18hrgo" path="res://addons/kenney_particle_pack/star_08.png" id="5_vqve5"]
+[ext_resource type="AudioStream" uid="uid://cnymb70nfb7a8" path="res://sounds/generic/key_pickup.ogg" id="6_ac2xo"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gkhko"]
 size = Vector3(0.25, 0.25, 0.25)
@@ -16,12 +21,51 @@ size = Vector3(0.25, 0.25, 0.25)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uoxg1"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3cqah"]
+transparency = 1
+blend_mode = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.839216, 0.2, 1)
+albedo_texture = ExtResource("5_vqve5")
+
+[sub_resource type="Curve" id="Curve_x83x6"]
+_data = [Vector2(0, 1), 0.0, -0.254957, 0, 0, Vector2(1, 0), -3.22272, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_k71lw"]
+curve = SubResource("Curve_x83x6")
+
+[sub_resource type="Curve" id="Curve_cqjac"]
+_data = [Vector2(0, 0), 0.0, 5.38772, 0, 0, Vector2(1, 0.652844), 0.144315, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ehgb5"]
+curve = SubResource("Curve_cqjac")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pqjcu"]
+lifetime_randomness = 0.14
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 25.188
+initial_velocity_min = 0.2
+initial_velocity_max = 1.0
+orbit_velocity_min = -0.505
+gravity = Vector3(0, -1, 0)
+scale_min = 1.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_ehgb5")
+alpha_curve = SubResource("CurveTexture_k71lw")
+
+[sub_resource type="QuadMesh" id="QuadMesh_82ow3"]
+size = Vector2(0.1, 0.1)
+
 [node name="KeyObject" type="Area3D" groups=["interactable"]]
 script = ExtResource("1_0wsko")
 one_shot = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+visible = false
 mesh = SubResource("BoxMesh_gkhko")
 surface_material_override/0 = SubResource("StandardMaterial3D_cagrm")
 
@@ -35,6 +79,28 @@ monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_uoxg1")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+pixel_size = 0.0025
+billboard = 2
+shaded = true
+texture_filter = 4
+texture = ExtResource("2_vspbp")
+script = ExtResource("3_5op32")
+
+[node name="PickupEffect" parent="." instance=ExtResource("2_vc68w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.283359, 0)
+material_override = SubResource("StandardMaterial3D_3cqah")
+amount = 24
+lifetime = 1.0
+explosiveness = 0.91
+visibility_aabb = AABB(-2, -2, -2, 4, 4, 4)
+process_material = SubResource("ParticleProcessMaterial_pqjcu")
+draw_pass_1 = SubResource("QuadMesh_82ow3")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ac2xo")
 
 [connection signal="on_interact" from="." to="." method="_on_interact"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

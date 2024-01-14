@@ -4,9 +4,23 @@ extends click_interaction
 @export var interact_pickup = true
 @export var proximity_pickup = true
 
+var has_been_picked_up = false
+
 func pick_up():
+	if (has_been_picked_up):
+		return
+		
+	has_been_picked_up = true
 	GameManager.get_dream_grid().dream_keys.append(key)
-	queue_free()
+
+	$Sprite3D.hide()
+	$MeshInstance3D.hide()
+	$Area3D/CollisionShape3D.disabled = true
+	
+	$AudioStreamPlayer.playing = true
+	$PickupEffect.show()
+	$PickupEffect.emitting = true
+	#queue_free()
 
 func _on_area_3d_body_entered(body):
 	if proximity_pickup and body.is_in_group("player") and can_interact_internal():

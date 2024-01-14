@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bvge3g0uemu4"]
+[gd_scene load_steps=36 format=3 uid="uid://bvge3g0uemu4"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_fluer"]
 [ext_resource type="Texture2D" uid="uid://bgrxkyvd3cqx0" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect.png" id="1_qc3ga"]
@@ -14,7 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://c2tu4ks6lbr0u" path="res://sourceModels/Forest/FencePillar.glb" id="11_qmtik"]
 [ext_resource type="PackedScene" uid="uid://b2uisjwpcaqs8" path="res://sourceModels/Forest/FencePost.glb" id="12_t8p7v"]
 [ext_resource type="PackedScene" uid="uid://dwb8n4ceda6ug" path="res://sourceModels/Forest/FenceBars.glb" id="13_qjvvq"]
+[ext_resource type="Texture2D" uid="uid://6metdhui2wfa" path="res://textures/billboard_items/generic_lock.png" id="13_v11ca"]
 [ext_resource type="PackedScene" uid="uid://dv2mfrpn0x5md" path="res://scenes/dream_condition.tscn" id="14_l8kij"]
+[ext_resource type="Script" path="res://scenes/interactables/HoverItem.gd" id="14_p4xh5"]
 [ext_resource type="PackedScene" uid="uid://c88knq7ek0x5y" path="res://sourceModels/Forest/ForestBench.glb" id="15_1hf67"]
 [ext_resource type="PackedScene" uid="uid://cm5srrepm42b4" path="res://scenes/interactables/key_object.tscn" id="16_2vmno"]
 [ext_resource type="PackedScene" uid="uid://bh34qkxql6bh" path="res://sourceModels/Forest/ForestBench2.glb" id="17_lah5m"]
@@ -236,7 +238,7 @@ transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.
 visible = false
 
 [node name="DistortionBubble2" parent="SceneTrigger2" instance=ExtResource("18_ituke")]
-transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
+transform = Transform3D(7, 0, -1.49012e-08, 0, 7, 0, 0, 0, 6, 7.15256e-07, -0.240483, -5.76582)
 
 [node name="SceneTrigger3" parent="." instance=ExtResource("1_fluer")]
 transform = Transform3D(0.938932, 0, -0.344102, 0, 1, 0, 0.344102, 0, 0.938932, 22.8099, 0.3282, -55.169)
@@ -291,10 +293,20 @@ transform = Transform3D(0.994952, -0.102673, 2.82834, 0, 2.99803, 0.108832, -2.8
 required_key = "forestKey"
 require_up = true
 destroy_on_pass = true
-required_position = Vector2i(2, 2)
+required_position = Vector2i(1, 2)
 
 [node name="firTreeDowned" parent="DreamConditionGoal" instance=ExtResource("9_aqqpy")]
 transform = Transform3D(-0.995, 5.62932e-08, -0.0998761, -0.00362321, 0.99934, 0.036096, 0.0998099, 0.0362775, -0.994347, 0.236188, -0.0280414, 0.218784)
+
+[node name="Sprite3D" type="Sprite3D" parent="DreamConditionGoal"]
+transform = Transform3D(1, 1.86265e-09, -2.38419e-07, 0, 1, -8.84756e-09, 0, 3.25963e-09, 1, 0.215536, 0.642058, 0.17003)
+pixel_size = 0.0025
+billboard = 2
+shaded = true
+texture_filter = 4
+texture = ExtResource("13_v11ca")
+script = ExtResource("14_p4xh5")
+bob_amount = 0.01
 
 [node name="RightFences" type="Node3D" parent="."]
 
@@ -431,15 +443,18 @@ transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, 
 [node name="ForestBench2" parent="." instance=ExtResource("15_1hf67")]
 transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, -1.05308, -0.0747477, -2.85587)
 
+[node name="KeyObject2" parent="." instance=ExtResource("16_2vmno")]
+transform = Transform3D(0.992317, 0, -0.123723, 0, 1, 0, 0.123723, 0, 0.992317, 16.8533, 2.25897, -43.2918)
+key = "forestKey"
+
 [node name="DreamCondition3" parent="." instance=ExtResource("14_l8kij")]
 transform = Transform3D(0.992317, 0, -0.123723, 0, 1, 0, 0.123723, 0, 0.992317, -1.01359, 0.937529, -4.06933)
 required_key = "forestKey"
-pass_if_key_is_present = false
 destroy_on_pass = true
 required_position = Vector2i(0, 0)
 
 [node name="KeyObject" parent="DreamCondition3" instance=ExtResource("16_2vmno")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.20185, 0.155874)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
 key = "forestKey"
 
 [node name="ForestBench3" parent="." instance=ExtResource("17_lah5m")]
