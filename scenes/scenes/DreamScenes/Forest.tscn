@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bvge3g0uemu4"]
+[gd_scene load_steps=34 format=3 uid="uid://bvge3g0uemu4"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_fluer"]
 [ext_resource type="Texture2D" uid="uid://bgrxkyvd3cqx0" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect.png" id="1_qc3ga"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="6_7sc1d"]
 [ext_resource type="PackedScene" uid="uid://73jr560nuv86" path="res://models/forest_generic.tscn" id="7_nxmob"]
 [ext_resource type="PackedScene" uid="uid://1il5btkm7phy" path="res://sourceModels/firTreeDowned.glb" id="9_aqqpy"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="9_jgmw3"]
 [ext_resource type="PackedScene" uid="uid://cy2xa1bl7xp6i" path="res://sourceModels/Forest/FencePillarSign.glb" id="10_0t730"]
 [ext_resource type="PackedScene" uid="uid://c2tu4ks6lbr0u" path="res://sourceModels/Forest/FencePillar.glb" id="11_qmtik"]
 [ext_resource type="PackedScene" uid="uid://b2uisjwpcaqs8" path="res://sourceModels/Forest/FencePost.glb" id="12_t8p7v"]
@@ -17,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://c88knq7ek0x5y" path="res://sourceModels/Forest/ForestBench.glb" id="15_1hf67"]
 [ext_resource type="PackedScene" uid="uid://cm5srrepm42b4" path="res://scenes/interactables/key_object.tscn" id="16_2vmno"]
 [ext_resource type="PackedScene" uid="uid://bh34qkxql6bh" path="res://sourceModels/Forest/ForestBench2.glb" id="17_lah5m"]
+[ext_resource type="PackedScene" uid="uid://btmldfxcfpybj" path="res://scenes/props/distortion_bubble.tscn" id="18_ituke"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ho3ki"]
 panorama = ExtResource("1_qc3ga")
@@ -87,6 +89,30 @@ uv2_triplanar = true
 uv2_world_triplanar = true
 texture_filter = 2
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_iorx3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omxp6"]
+render_priority = 0
+shader = ExtResource("9_jgmw3")
+shader_parameter/distortionView = 0.03
+shader_parameter/speedView = 0.1
+shader_parameter/static_intensity = 0.3
+shader_parameter/tintColor = Color(0.827451, 0.764706, 0.968627, 1)
+shader_parameter/fesnelAmount = 1.2
+shader_parameter/fresnelTintOffset = 1.49012e-08
+shader_parameter/distortionVertex = 0.01
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
 [node name="Forest" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -97,16 +123,16 @@ shadow_enabled = true
 environment = SubResource("Environment_dp0tb")
 
 [node name="PlayerSpawnUp" type="Node3D" parent="."]
-transform = Transform3D(0.957047, 0, -0.289934, 0, 1, 0, 0.289934, 0, 0.957047, 24.6975, 0.116085, -59.8395)
+transform = Transform3D(0.957047, 0, -0.289934, 0, 1, 0, 0.289934, 0, 0.957047, 21.2701, 0.48868, -50.7565)
 
 [node name="PlayerSpawnDown" type="Node3D" parent="."]
-transform = Transform3D(-0.867375, 0, 0.497655, 0, 1, 0, -0.497655, 0, -0.867375, -20.5917, 0.381143, 51.4509)
+transform = Transform3D(-0.771036, 0, 0.636791, 0, 1, 0, -0.636791, 0, -0.771036, -19.7357, 0.381143, 49.2731)
 
 [node name="PlayerSpawnRight" type="Node3D" parent="."]
-transform = Transform3D(0.782097, 0, -0.623156, 0, 1, 0, 0.623156, 0, 0.782097, 54.2139, -2.43011, -2.62211)
+transform = Transform3D(0.782097, 0, -0.623156, 0, 1, 0, 0.623156, 0, 0.782097, 53.6623, -2.65048, -2.11364)
 
 [node name="PlayerSpawnLeft" type="Node3D" parent="."]
-transform = Transform3D(-0.566536, 0, 0.824037, 0, 1, 0, -0.824037, 0, -0.566536, -54.4156, 2.92876, 13.0078)
+transform = Transform3D(-0.566536, 0, 0.824037, 0, 1, 0, -0.824037, 0, -0.566536, -52.747, 2.92876, 12.0053)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1, 1.617, 5.26963)
@@ -180,7 +206,7 @@ panning_strength = 0.4
 bus = &"SFX"
 
 [node name="SceneTrigger" parent="." instance=ExtResource("1_fluer")]
-transform = Transform3D(-1.92464, 0, 0.543855, 0, 2, 0, -0.543855, 0, -1.92464, -24.7111, 0.781336, 65.7303)
+transform = Transform3D(-0.962318, 0, 0.271927, 0, 1, 0, -0.271927, 0, -0.962318, -21.1745, 0.180722, 51.9987)
 grid_direction = Vector2i(0, -1)
 proximity_trigger = true
 show_mesh = false
@@ -191,8 +217,14 @@ start_dist = 5.0
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
 visible = false
 
+[node name="DistortionBubble2" parent="SceneTrigger" instance=ExtResource("18_ituke")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
+
+[node name="MeshInstance3D" parent="SceneTrigger/DistortionBubble2" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_omxp6")
+
 [node name="SceneTrigger2" parent="." instance=ExtResource("1_fluer")]
-transform = Transform3D(0.0611122, 0, -1.99907, 0, 2, 0, 1.99907, 0, 0.0611122, 69.1558, -2.24864, -4.76667)
+transform = Transform3D(0.0305561, 0, -0.999533, 0, 1, 0, 0.999533, 0, 0.0305561, 58.0111, -2.8744, -4.22516)
 grid_direction = Vector2i(-1, 0)
 proximity_trigger = true
 show_mesh = false
@@ -203,8 +235,11 @@ start_dist = 5.0
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
 visible = false
 
+[node name="DistortionBubble2" parent="SceneTrigger2" instance=ExtResource("18_ituke")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
+
 [node name="SceneTrigger3" parent="." instance=ExtResource("1_fluer")]
-transform = Transform3D(2, 0, 4.76838e-07, 0, 2, 0, -4.76838e-07, 0, 2, 24.9814, 0.66885, -67.0679)
+transform = Transform3D(0.938932, 0, -0.344102, 0, 1, 0, 0.344102, 0, 0.938932, 22.8099, 0.3282, -55.169)
 proximity_trigger = true
 show_mesh = false
 show_arrow = false
@@ -214,8 +249,11 @@ start_dist = 5.0
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 3.41252)
 visible = false
 
+[node name="DistortionBubble2" parent="SceneTrigger3" instance=ExtResource("18_ituke")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
+
 [node name="SceneTrigger4" parent="." instance=ExtResource("1_fluer")]
-transform = Transform3D(-0.121121, 0, 1.99633, 0, 2, 0, -1.99633, 0, -0.121121, -69.188, 3.08117, 16.0574)
+transform = Transform3D(-0.293623, 0, 0.955921, 0, 1, 0, -0.955921, 0, -0.293623, -55.8748, 2.44003, 13.944)
 grid_direction = Vector2i(1, 0)
 proximity_trigger = true
 show_mesh = false
@@ -226,14 +264,16 @@ start_dist = 5.0
 transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
 visible = false
 
+[node name="DistortionBubble2" parent="SceneTrigger4" instance=ExtResource("18_ituke")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
+
 [node name="ForestGeneric" parent="." instance=ExtResource("7_nxmob")]
 transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0, 0)
 
 [node name="DreamCondition" parent="." instance=ExtResource("14_l8kij")]
 transform = Transform3D(0.994952, -0.102673, 2.82834, 0, 2.99803, 0.108832, -2.83021, -0.0360943, 0.994297, 1.2242, -0.0470739, -13.1966)
 require_down = true
-show_self_on_fail = true
-destroy_self_if_passed = true
+destroy_on_pass = true
 
 [node name="firTreeDowned2" parent="DreamCondition" instance=ExtResource("9_aqqpy")]
 transform = Transform3D(1, 9.31323e-10, -5.96046e-08, 0, 1, 9.31323e-10, 0, 3.25963e-09, 1, 0, 0, 0)
@@ -241,8 +281,7 @@ transform = Transform3D(1, 9.31323e-10, -5.96046e-08, 0, 1, 9.31323e-10, 0, 3.25
 [node name="DreamCondition2" parent="." instance=ExtResource("14_l8kij")]
 transform = Transform3D(0.994952, -0.102673, 2.82834, 0, 2.99803, 0.108832, -2.83021, -0.0360943, 0.994297, -7.07564, -0.0470739, 10.4129)
 require_up = true
-show_self_on_fail = true
-destroy_self_if_passed = true
+destroy_on_pass = true
 
 [node name="firTreeDowned" parent="DreamCondition2" instance=ExtResource("9_aqqpy")]
 transform = Transform3D(-0.995, 5.62932e-08, -0.0998761, -0.00362321, 0.99934, 0.036096, 0.0998099, 0.0362775, -0.994347, 0.236188, -0.0280414, 0.218784)
@@ -250,11 +289,9 @@ transform = Transform3D(-0.995, 5.62932e-08, -0.0998761, -0.00362321, 0.99934, 0
 [node name="DreamConditionGoal" parent="." instance=ExtResource("14_l8kij")]
 transform = Transform3D(0.994952, -0.102673, 2.82834, 0, 2.99803, 0.108832, -2.83021, -0.0360943, 0.994297, -7.07564, -0.0470739, 10.4129)
 required_key = "forestKey"
-required_position = Vector2i(2, 2)
-hide_if_not_at_position = true
 require_up = true
-show_self_on_fail = true
-destroy_self_if_passed = true
+destroy_on_pass = true
+required_position = Vector2i(2, 2)
 
 [node name="firTreeDowned" parent="DreamConditionGoal" instance=ExtResource("9_aqqpy")]
 transform = Transform3D(-0.995, 5.62932e-08, -0.0998761, -0.00362321, 0.99934, 0.036096, 0.0998099, 0.0362775, -0.994347, 0.236188, -0.0280414, 0.218784)
@@ -285,10 +322,10 @@ transform = Transform3D(-0.0272287, 0, -0.999239, 0, 1, 0, 0.69736, 0, -0.039015
 [node name="DreamCondition" parent="RightFences" instance=ExtResource("14_l8kij")]
 transform = Transform3D(-0.15284, 0, -0.992036, 0, 1, 0, 1.20377, 0, -0.125957, -10.6321, -0.143894, -0.590285)
 require_right = true
-show_self_on_fail = true
-destroy_self_if_passed = true
+destroy_on_pass = true
 
-[node name="FenceBars9" parent="RightFences/DreamCondition" instance=ExtResource("13_qjvvq")]
+[node name="DreamFence" parent="RightFences/DreamCondition" instance=ExtResource("13_qjvvq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="FenceBars4" parent="RightFences" instance=ExtResource("13_qjvvq")]
 transform = Transform3D(0.85406, 0, 0.520175, 0, 1, 0, -0.520175, 0, 0.85406, -10.3841, -0.143894, -3.00316)
@@ -350,10 +387,10 @@ transform = Transform3D(-0.0272287, 0, -0.999239, 0, 1, 0, 0.69736, 0, -0.039015
 [node name="DreamCondition" parent="LeftFences" instance=ExtResource("14_l8kij")]
 transform = Transform3D(-0.15284, 0, -0.992036, 0, 1, 0, 1.20377, 0, -0.125957, -10.6321, -0.143894, -0.590285)
 require_left = true
-show_self_on_fail = true
-destroy_self_if_passed = true
+destroy_on_pass = true
 
 [node name="FenceBars9" parent="LeftFences/DreamCondition" instance=ExtResource("13_qjvvq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="FenceBars4" parent="LeftFences" instance=ExtResource("13_qjvvq")]
 transform = Transform3D(0.85406, 0, 0.520175, 0, 1, 0, -0.520175, 0, 0.85406, -10.3841, -0.143894, -3.00316)
@@ -397,9 +434,9 @@ transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, 
 [node name="DreamCondition3" parent="." instance=ExtResource("14_l8kij")]
 transform = Transform3D(0.992317, 0, -0.123723, 0, 1, 0, 0.123723, 0, 0.992317, -1.01359, 0.937529, -4.06933)
 required_key = "forestKey"
+pass_if_key_is_present = false
+destroy_on_pass = true
 required_position = Vector2i(0, 0)
-hide_if_not_at_position = true
-destroy_self_if_passed = true
 
 [node name="KeyObject" parent="DreamCondition3" instance=ExtResource("16_2vmno")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.20185, 0.155874)
@@ -425,3 +462,9 @@ transform = Transform3D(0.175708, 0.0360858, -0.983781, 0.0749014, 0.995941, 0.0
 
 [node name="ForestBench8" parent="." instance=ExtResource("17_lah5m")]
 transform = Transform3D(0.994602, -0.00297752, 0.103724, 0.00376882, 0.999965, -0.0074336, -0.103699, 0.00778438, 0.994578, 23.3032, 1.58589, -38.8981)
+
+[node name="DistortionBubble" parent="." instance=ExtResource("18_ituke")]
+transform = Transform3D(7.64737, 0, -2.34899, 0, 8, 0, 2.34899, 0, 7.64737, 25.0532, -0.130844, -62.1122)
+visible = false
+
+[editable path="SceneTrigger/DistortionBubble2"]

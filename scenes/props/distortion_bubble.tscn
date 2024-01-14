@@ -5,7 +5,7 @@
 
 [sub_resource type="SphereMesh" id="SphereMesh_ddgug"]
 radius = 1.0
-height = 2.0
+is_hemisphere = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g5tff"]
 transparency = 1

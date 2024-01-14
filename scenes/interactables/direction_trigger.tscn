@@ -22,6 +22,7 @@ shader_parameter/speedView = 0.03
 shader_parameter/static_intensity = 0.0
 shader_parameter/tintColor = Color(1, 1, 1, 1)
 shader_parameter/fesnelAmount = 0.03
+shader_parameter/fresnelTintOffset = null
 shader_parameter/distortionVertex = 0.02
 shader_parameter/speedVertex = 0.03
 shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
@@ -72,7 +73,8 @@ script = ExtResource("1_nl4vh")
 grid_direction = Vector2i(0, 1)
 
 [node name="DistortionBubble" parent="." instance=ExtResource("2_bvxef")]
-transform = Transform3D(3.85213, 0, 0, 0, 3.42583, 0, 0, 0, 1.95902, 0, 0.7, -1.42775)
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
+visible = false
 
 [node name="DistortionBubbleInteract" parent="." instance=ExtResource("2_bvxef")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)

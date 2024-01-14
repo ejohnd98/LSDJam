@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dw4th3ctaebao"]
+[gd_scene load_steps=10 format=3 uid="uid://dw4th3ctaebao"]
 
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="1_behm0"]
 [ext_resource type="PackedScene" uid="uid://dauk42gdvbn4x" path="res://models/museum_model.tscn" id="4_2bn6x"]
 [ext_resource type="AudioStream" uid="uid://deqyihaddcvn7" path="res://sounds/forest_ambience.ogg" id="4_j83c0"]
+[ext_resource type="Material" uid="uid://c0qmxe2hvwyrh" path="res://materials/distortion_bubble_mat.tres" id="4_jf0qf"]
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="5_8dsuw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h14fs"]
@@ -17,6 +18,12 @@ background_mode = 2
 sky = SubResource("Sky_n6sph")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_qffpr"]
+lightmap_size_hint = Vector2i(14, 21)
+subdivide_width = 5
+subdivide_height = 5
+subdivide_depth = 5
 
 [node name="Theater" type="Node3D"]
 
@@ -50,12 +57,28 @@ proximity_trigger = true
 show_mesh = false
 show_arrow = false
 
+[node name="DistortionBubble2" type="Node3D" parent="SceneTrigger"]
+transform = Transform3D(4.86787, 0, 0, 0, 5.16398, 0, 0, 0, 6, -0.0811605, 2.0347, -0.12734)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SceneTrigger/DistortionBubble2"]
+transform = Transform3D(1.09002, 0, 8.88178e-16, 0, 0.707541, 0, 7.10543e-15, 0, 0.276267, 0, -0.161292, -0.105462)
+mesh = SubResource("BoxMesh_qffpr")
+surface_material_override/0 = ExtResource("4_jf0qf")
+
 [node name="SceneTrigger2" parent="." instance=ExtResource("5_8dsuw")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 30.3, 1.5, -8.6)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 28.7171, 1.07842, -8.6)
 grid_direction = Vector2i(-1, 0)
 proximity_trigger = true
 show_mesh = false
 show_arrow = false
+
+[node name="DistortionBubble2" type="Node3D" parent="SceneTrigger2"]
+transform = Transform3D(4.86787, 0, 0, 0, 5.16398, 0, 0, 0, 6, -0.0811605, 2.4502, -0.459143)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SceneTrigger2/DistortionBubble2"]
+transform = Transform3D(1.09002, 0, 8.88178e-16, 0, 0.707541, 0, 7.10543e-15, 0, 0.276267, 0, -0.161292, -0.105462)
+mesh = SubResource("BoxMesh_qffpr")
+surface_material_override/0 = ExtResource("4_jf0qf")
 
 [node name="SceneTrigger3" parent="." instance=ExtResource("5_8dsuw")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -7.5, 1.5, -9.3)
@@ -63,11 +86,27 @@ proximity_trigger = true
 show_mesh = false
 show_arrow = false
 
+[node name="DistortionBubble2" type="Node3D" parent="SceneTrigger3"]
+transform = Transform3D(4.86787, 0, 0, 0, 5.16398, 0, 0, 0, 6, -0.0811601, 1.7073, -0.142876)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SceneTrigger3/DistortionBubble2"]
+transform = Transform3D(1.09002, 0, 8.88178e-16, 0, 0.707541, 0, 7.10543e-15, 0, 0.276267, 0, -0.161292, -0.105462)
+mesh = SubResource("BoxMesh_qffpr")
+surface_material_override/0 = ExtResource("4_jf0qf")
+
 [node name="SceneTrigger4" parent="." instance=ExtResource("5_8dsuw")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.499999, 1.5, 15.9)
 grid_direction = Vector2i(1, 0)
 proximity_trigger = true
 show_mesh = false
 show_arrow = false
+
+[node name="DistortionBubble2" type="Node3D" parent="SceneTrigger4"]
+transform = Transform3D(5.44044, 0, 0, 0, 5.16398, 0, 0, 0, 6, -0.0811605, 1.62354, -0.0365863)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SceneTrigger4/DistortionBubble2"]
+transform = Transform3D(1.09002, 0, 8.88178e-16, 0, 0.707541, 0, 7.10543e-15, 0, 0.276267, 0, -0.161292, -0.105462)
+mesh = SubResource("BoxMesh_qffpr")
+surface_material_override/0 = ExtResource("4_jf0qf")
 
 [node name="MuseumBlockout" parent="." instance=ExtResource("4_2bn6x")]

@@ -100,6 +100,7 @@ visible = false
 
 [node name="Blockout" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
+visible = false
 script = ExtResource("2_0kado")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Blockout"]
@@ -135,7 +136,6 @@ show_arrow = false
 
 [node name="DistortionBubble" parent="SceneTrigger" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43591e-07, 0.7, -4.2141)
-visible = false
 
 [node name="MeshInstance3D" parent="SceneTrigger/DistortionBubble" index="0"]
 transform = Transform3D(1, -8.74228e-08, 8.74228e-08, 8.74227e-08, -4.37114e-08, -1, 8.74228e-08, 1, -4.37114e-08, -3.12123e-08, 0.271874, 0.532631)

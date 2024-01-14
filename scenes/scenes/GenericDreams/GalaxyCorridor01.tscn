@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://03yeyf604ip3"]
+[gd_scene load_steps=13 format=3 uid="uid://ck3yygqqeclm7"]
 
 [ext_resource type="PackedScene" uid="uid://dqyjcrfulm8ui" path="res://models/galaxy_corridor.tscn" id="1_68pqd"]
 [ext_resource type="PackedScene" uid="uid://gy6thtlh8vc6" path="res://models/galaxy_corridor_4_way.tscn" id="1_rgnig"]

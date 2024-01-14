@@ -2,7 +2,7 @@ class_name LSDPlayer extends RigidBody3D
 
 const RAY_LENGTH = 10
 const WALK_SPEED = 2.5
-const SPRINT_MOD = 2#1.8
+const SPRINT_MOD = 5#1.8
 const JUMP_VELOCITY = 3.0
 const SENSITIVITY = 0.003
 

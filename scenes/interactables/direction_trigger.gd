@@ -6,7 +6,7 @@ extends click_interaction
 @export var show_mesh : bool = true
 @export var show_arrow : bool = true
 
-@export var start_dist : float = 3.0
+@export var start_dist : float = 4.0
 
 func _ready():
 	var angle = atan2(float(grid_direction.x), float(grid_direction.y))
@@ -44,7 +44,7 @@ func _process(delta):
 		var alpha : float = clampf(1.0 - (dist/start_dist), 0.0, 1.0)
 		GameManager.set_transition_alpha(alpha)
 		
-		if (alpha >= 0.8):
+		if (alpha >= 0.9):
 			pass
 			trigger_direction()
 

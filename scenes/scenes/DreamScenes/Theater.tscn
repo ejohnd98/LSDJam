@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://ctf3xb7to4085"]
+[gd_scene load_steps=18 format=3 uid="uid://ctf3xb7to4085"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_wi6lw"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_6ifvt"]
+[ext_resource type="Material" uid="uid://c0qmxe2hvwyrh" path="res://materials/distortion_bubble_mat.tres" id="2_6xt0h"]
 [ext_resource type="Material" uid="uid://o4lttwvxltjy" path="res://materials/blockout_grid.tres" id="3_gcehk"]
 [ext_resource type="Texture2D" uid="uid://keps8pn8wgob" path="res://textures/grid.png" id="4_8u8x2"]
 [ext_resource type="AudioStream" uid="uid://csj6bketpab6v" path="res://sounds/ambience.ogg" id="5_8ny74"]
@@ -21,6 +22,12 @@ background_mode = 2
 sky = SubResource("Sky_2tymr")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_x6tlp"]
+lightmap_size_hint = Vector2i(14, 21)
+subdivide_width = 5
+subdivide_height = 5
+subdivide_depth = 5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jexyx"]
 albedo_color = Color(1, 0.627451, 0.572549, 1)
@@ -89,10 +96,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.078, 1.3, -28)
 grid_direction = Vector2i(1, 0)
 
 [node name="SceneTrigger4" parent="." instance=ExtResource("1_wi6lw")]
-transform = Transform3D(1.5, 0, 0, 0, 2, 0, 0, 0, 1, -0.0779991, 1.3, -37)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0779991, 1.3, -37)
 proximity_trigger = true
 show_mesh = false
 show_arrow = false
+
+[node name="DistortionBubble2" type="Node3D" parent="SceneTrigger4"]
+transform = Transform3D(6.71848, 0, 0, 0, 6.83386, 0, 0, 0, 6, -0.0811605, 2.4502, -0.18504)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SceneTrigger4/DistortionBubble2"]
+transform = Transform3D(1.09002, 0, 8.88178e-16, 0, 0.707541, 0, 7.10543e-15, 0, 0.276267, 0, -0.161292, -0.105462)
+mesh = SubResource("BoxMesh_x6tlp")
+surface_material_override/0 = ExtResource("2_6xt0h")
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_6ifvt")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5.417, -3.667)
@@ -202,8 +217,8 @@ font_size = 96
 
 [node name="DreamCondition" parent="Blockout/TheaterRoom1" instance=ExtResource("6_28od4")]
 transform = Transform3D(1.25, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, 1.25, 6, -3, -9.75)
+destroy_on_pass = true
 required_position = Vector2i(0, 0)
-show_self_on_fail = true
 
 [node name="TheaterDoor" type="CSGBox3D" parent="Blockout/TheaterRoom1/DreamCondition"]
 use_collision = true
@@ -263,7 +278,7 @@ font_size = 96
 [node name="DreamCondition" parent="Blockout/TheaterRoom2" instance=ExtResource("6_28od4")]
 transform = Transform3D(1.25, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, 1.25, 6, -3, -9.75)
 require_left = true
-show_self_on_fail = true
+destroy_on_pass = true
 
 [node name="TheaterDoor" type="CSGBox3D" parent="Blockout/TheaterRoom2/DreamCondition"]
 use_collision = true
@@ -322,7 +337,7 @@ font_size = 96
 
 [node name="DreamCondition" parent="Blockout/TheaterRoom3" instance=ExtResource("6_28od4")]
 transform = Transform3D(1.25, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, 1.25, 6, -3, -9.75)
-show_self_on_fail = true
+destroy_on_pass = true
 
 [node name="TheaterDoor" type="CSGBox3D" parent="Blockout/TheaterRoom3/DreamCondition"]
 use_collision = true
@@ -381,7 +396,7 @@ font_size = 96
 
 [node name="DreamCondition" parent="Blockout/TheaterRoom4" instance=ExtResource("6_28od4")]
 transform = Transform3D(1.25, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, 1.25, 6, -3, -9.75)
-show_self_on_fail = true
+destroy_on_pass = true
 
 [node name="TheaterDoor" type="CSGBox3D" parent="Blockout/TheaterRoom4/DreamCondition"]
 use_collision = true
@@ -444,7 +459,7 @@ font_size = 96
 transform = Transform3D(1.25, 0, -2.18557e-07, 0, 1, 0, 2.18557e-07, 0, 1.25, 6, -3, -9.75)
 required_key = "theater_5"
 require_up = true
-show_self_on_fail = true
+destroy_on_pass = true
 
 [node name="TheaterDoor" type="CSGBox3D" parent="Blockout/TheaterRoom5/DreamCondition"]
 use_collision = true
@@ -482,7 +497,7 @@ material = SubResource("StandardMaterial3D_4qy7p")
 [node name="DreamCondition" parent="Blockout" instance=ExtResource("6_28od4")]
 transform = Transform3D(1.63918e-07, 0, 1.25, 0, 1, 0, -1.25, 0, 1.63918e-07, 6.72771, 1.1, 25.25)
 require_right = true
-show_self_on_fail = true
+destroy_on_pass = true
 
 [node name="ArcadeDoor" type="CSGBox3D" parent="Blockout/DreamCondition"]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0, 0, 2.6)
@@ -493,7 +508,7 @@ material = SubResource("StandardMaterial3D_j5ydx")
 [node name="DreamCondition2" parent="Blockout" instance=ExtResource("6_28od4")]
 transform = Transform3D(1.25, 0, 0, 0, 1, 0, 0, 0, 1.25, -2.27374e-13, 1.1, 38.375)
 require_down = true
-show_self_on_fail = true
+destroy_on_pass = true
 
 [node name="ArcadeDoor" type="CSGBox3D" parent="Blockout/DreamCondition2"]
 transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 9.09495e-13, 1.9, 2.6)

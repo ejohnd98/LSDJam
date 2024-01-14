@@ -2,11 +2,11 @@
 
 shader_type spatial;
 
-render_mode unshaded, cull_disabled, fog_disabled;
+render_mode unshaded, cull_disabled, fog_disabled, depth_draw_always, sss_mode_skin, ensure_correct_normals;
 
 // fragment uniforms
 uniform float distortionView : hint_range(0.0, 0.3, 0.005) = 0.03;
-uniform float speedView : hint_range(0.0, 1.0, 0.005) = 0.5;
+uniform float speedView : hint_range(0.0, 1.0, 0.0001) = 0.5;
 uniform float static_intensity : hint_range(0.0, 1.0, 0.05) = 0.25;
 uniform sampler2D noiseViewX;
 uniform sampler2D noiseViewY;
@@ -15,11 +15,12 @@ uniform sampler2D depthTexture : hint_depth_texture;
 uniform vec3 tintColor : source_color;
 uniform float fesnelAmount : hint_range(0.0, 5.0, 0.01);
 
+uniform float fresnelTintOffset : hint_range(-1.0, 1.0, 0.1);
+
 // vertex uniforms
 uniform float distortionVertex : hint_range(0.0, 0.3, 0.005) = 0.03;
 uniform float speedVertex : hint_range(0.0, 1.0, 0.005) = 0.1;
 uniform sampler2D noiseVertex;
-
 
 float fresnel(float amount, vec3 normal, vec3 view)
 {
@@ -47,8 +48,10 @@ void fragment()
 	vec3 distortedScreenTexture = vec3(texture(screenTexture, SCREEN_UV + noiseDistort).rgb);
 	
 	
-	float noise = 1.0;//pow(rand(UV * TIME * 0.1), 3) * static_intensity;
+	float noise = 1.0 - (static_intensity) + (pow(rand(UV * TIME * 0.1), 3) * static_intensity);
 	
-	vec3 fesnelTint = (noise * tintColor * (fresnel(fesnelAmount, NORMAL, VIEW)));
-	ALBEDO = min (originalScreenTexture, distortedScreenTexture * fesnelTint);
+	float overall_scale = 1.0 - (fresnel(fesnelAmount, NORMAL, VIEW));
+	
+	vec3 fesnelTint = (noise * tintColor * (fresnel(fesnelAmount + fresnelTintOffset, NORMAL, VIEW)));
+	ALBEDO = (originalScreenTexture * (1.0 - overall_scale)) + (overall_scale * min(originalScreenTexture, distortedScreenTexture * fesnelTint));
 }
