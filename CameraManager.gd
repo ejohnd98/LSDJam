@@ -23,6 +23,13 @@ var counter = 0.0
 var is_lerping = false
 var backwards = false
 
+var use_lookat = false
+var lookat_target : Node3D
+var proxy_lookat = false
+var proxy_lookat_node : Node3D
+
+var look_at_offset_x = 0
+
 signal fixed_lerp_done
 
 func _process(delta):
@@ -43,7 +50,12 @@ func _process(delta):
 			if (counter >= 1.0):
 				fixed_lerp_done.emit()
 				is_lerping = false
-			
+		elif use_lookat:
+			if (proxy_lookat):
+				proxy_lookat_node.look_at(lookat_target.position, Vector3.UP)
+				cam.rotation.x = proxy_lookat_node.rotation.x + look_at_offset_x
+			else:
+				cam.look_at(lookat_target.position, Vector3.UP)
 
 func set_camera_override(target, fixed_position = true):
 	fixed_positions = fixed_position
@@ -65,6 +77,18 @@ func set_camera_override(target, fixed_position = true):
 		
 		rot_start = cam.global_rotation
 		rot_end = target.global_rotation
+
+func set_camera_lookat(target, use_proxy = false):
+	use_lookat = true
+	lookat_target = target
+	
+	proxy_lookat = use_proxy
+	if proxy_lookat:
+		proxy_lookat_node = Node3D.new()
+		cam.get_parent().add_child(proxy_lookat_node)
+		
+		proxy_lookat_node.look_at(lookat_target.position, Vector3.UP)
+		look_at_offset_x = cam.rotation.x - proxy_lookat_node.rotation.x
 	
 
 func lerp_back_to_player():
@@ -79,3 +103,5 @@ func reset_camera():
 	player.set_frozen(false)
 	override_active = false
 	current_target = null
+	use_lookat = false
+	proxy_lookat_node.queue_free()

@@ -10,6 +10,12 @@ var swing_power = 0.0
 var increasing = true
 @onready var power_bar : ProgressBar = $SubViewport/Control/PowerBarContainer/ProgressBar
 
+var golf_ball_start_pos : Vector3
+var golf_ball_dist = 100
+
+@export var power_bar_curve : Curve
+@export var power_bar_speed = 4.0
+
 func _unhandled_input(event):
 	if not is_active:
 		return
@@ -17,7 +23,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("Escape"):
 		end_golf()
 	
-	if event.is_action_pressed("Jump"):
+	if not has_swung and event.is_action_pressed("Jump") or event.is_action_pressed("Interact"):
 		swing_club()
 
 func _ready():
@@ -30,9 +36,9 @@ func _process(delta):
 	
 	if not has_swung:
 		if increasing:
-			swing_power += delta
+			swing_power += delta * power_bar_speed * power_bar_curve.sample(swing_power)
 		else:
-			swing_power -= delta
+			swing_power -= delta * power_bar_speed * power_bar_curve.sample(swing_power)
 		
 		if swing_power >= 1.0:
 			increasing = false
@@ -40,13 +46,20 @@ func _process(delta):
 			increasing = true
 		
 		power_bar.value = swing_power * power_bar.max_value
-		#$"GolfInteraction/Golf Club".rotation.x = deg_to_rad(swing_power * 80)
+	else:
+		if not $GolfInteraction/GolfBallArcTime.is_stopped():
+			animate_golf_ball(1.0 - ($GolfInteraction/GolfBallArcTime.time_left / $GolfInteraction/GolfBallArcTime.wait_time))
 
 func swing_club():
 	has_swung = true
+	$GolfInteraction/GolfBallArcTime.wait_time = 2 + (1 * swing_power)
+	golf_ball_dist = 50.0 + 150.0 * swing_power
+	$GolfInteraction/AnimationPlayer.speed_scale = 0.6 + (0.6 * swing_power)
 	$GolfInteraction/AnimationPlayer.play("swing")
 	
-	await $GolfInteraction/AnimationPlayer.animation_finished
+	CameraManagerObject.set_camera_lookat($GolfInteraction/GolfBall, true)
+
+	await $GolfInteraction/GolfBallArcTime.timeout
 	
 	var move_amount = 0
 	if swing_power < 0.333:
@@ -64,19 +77,30 @@ func swing_club():
 
 func start_golf():
 	$GolfInteraction/AlternateCamera.set_active()
+	GameManager.set_crosshair(false)
 	await CameraManagerObject.fixed_lerp_done
 	$"GolfInteraction/Golf Club".show()
 	$UI.show()
 	is_active = true
+	golf_ball_start_pos = $GolfInteraction/GolfBall.position
 
 func end_golf():
 	is_active = false
+	GameManager.set_crosshair(true)
 	$UI.hide()
 	$"GolfInteraction/Golf Club".hide()
 	
 	CameraManagerObject.lerp_back_to_player()
 	await CameraManagerObject.fixed_lerp_done 
 	CameraManagerObject.reset_camera()
+	$GolfInteraction/GolfBall.position = golf_ball_start_pos
 
 func _on_golf_interaction_on_interact():
 	start_golf()
+
+func animate_golf_ball (time : float):
+	var position_offset = Vector3.ZERO
+	position_offset.z = golf_ball_dist * time
+	position_offset.y = sin(time * PI) * golf_ball_dist / 4.0
+	
+	$GolfInteraction/GolfBall.position = golf_ball_start_pos + position_offset

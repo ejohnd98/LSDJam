@@ -1,16 +1,19 @@
-[gd_scene load_steps=24 format=3 uid="uid://d1iykkdd23cdh"]
+[gd_scene load_steps=28 format=3 uid="uid://d1iykkdd23cdh"]
 
 [ext_resource type="Texture2D" uid="uid://dbukkac0ovsvs" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect_MIRROR.png" id="1_ug24b"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_qaxwj"]
 [ext_resource type="AudioStream" uid="uid://deqyihaddcvn7" path="res://sounds/forest_ambience.ogg" id="5_nbho0"]
 [ext_resource type="PackedScene" uid="uid://cuprpq2hg8hml" path="res://models/golf_test.tscn" id="6_gg86n"]
-[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="6_xbcl1"]
 [ext_resource type="Texture2D" uid="uid://dtqxw5u0hov77" path="res://sourceModels/Golf/golf_water_normal.png" id="7_j8dal"]
-[ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="7_xllpo"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/ScrollingUV.gd" id="8_lv8rv"]
 [ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="9_umm3n"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="10_wrojx"]
 [ext_resource type="PackedScene" uid="uid://c8qqafyq522x" path="res://scenes/interactables/golf_spot.tscn" id="11_ifx6f"]
+[ext_resource type="AudioStream" uid="uid://cv8o3ta22dtff" path="res://sounds/golf/footstep_grass_01.ogg" id="12_cm1ie"]
+[ext_resource type="AudioStream" uid="uid://mxaga43iiwsv" path="res://sounds/golf/footstep_grass_02.ogg" id="13_2dlan"]
+[ext_resource type="AudioStream" uid="uid://doa6sytqwkdmb" path="res://sounds/golf/footstep_grass_03.ogg" id="14_xbwff"]
+[ext_resource type="AudioStream" uid="uid://dnab7ao2krlq5" path="res://sounds/golf/footstep_grass_04.ogg" id="15_cmjfm"]
+[ext_resource type="AudioStream" uid="uid://bjuac7bs5s228" path="res://sounds/golf/footstep_grass_05.ogg" id="16_sap7v"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ixst8"]
 panorama = ExtResource("1_ug24b")
@@ -83,6 +86,19 @@ disable_receive_shadows = true
 [sub_resource type="BoxShape3D" id="BoxShape3D_ycmwo"]
 size = Vector3(220, 5, 220)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7wcxv"]
+streams_count = 5
+stream_0/stream = ExtResource("12_cm1ie")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("13_2dlan")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("14_xbwff")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("15_cmjfm")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("16_sap7v")
+stream_4/weight = 1.0
+
 [node name="GolfTest" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -98,7 +114,7 @@ shadow_enabled = true
 environment = SubResource("Environment_s12vt")
 
 [node name="PlayerSpawn" type="Node3D" parent="."]
-transform = Transform3D(0.936727, 0, -0.35006, 0, 1, 0, 0.35006, 0, 0.936727, -46.04, 2.57224, -25.5438)
+transform = Transform3D(0.838442, 0, 0.54499, 0, 1, 0, -0.54499, 0, 0.838442, -49.5827, 2.57224, -30.994)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -51.2692, 3.39906, -10.8392)
@@ -135,37 +151,6 @@ autoplay = true
 panning_strength = 0.4
 bus = &"SFX"
 
-[node name="SceneTrigger" parent="." instance=ExtResource("6_xbcl1")]
-transform = Transform3D(-0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, -0.819152, -45.8186, 2.41328, -36.8087)
-
-[node name="GradientBox" parent="SceneTrigger" instance=ExtResource("7_xllpo")]
-transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
-visible = false
-
-[node name="SceneTrigger2" parent="." instance=ExtResource("6_xbcl1")]
-transform = Transform3D(0.573577, 0, -0.819152, 0, 1, 0, 0.819152, 0, 0.573577, 2.37938, 6.89318, 65.2154)
-grid_direction = Vector2i(1, 0)
-
-[node name="GradientBox" parent="SceneTrigger2" instance=ExtResource("7_xllpo")]
-transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
-visible = false
-
-[node name="SceneTrigger3" parent="." instance=ExtResource("6_xbcl1")]
-transform = Transform3D(0.819152, 0, 0.573577, 0, 1, 0, -0.573577, 0, 0.819152, 20.1497, 8.57977, 67.6563)
-grid_direction = Vector2i(0, -1)
-
-[node name="GradientBox" parent="SceneTrigger3" instance=ExtResource("7_xllpo")]
-transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
-visible = false
-
-[node name="SceneTrigger4" parent="." instance=ExtResource("6_xbcl1")]
-transform = Transform3D(-0.573576, 0, 0.819152, 0, 1, 0, -0.819152, 0, -0.573576, 84.1144, 3.08117, -0.32295)
-grid_direction = Vector2i(-1, 0)
-
-[node name="GradientBox" parent="SceneTrigger4" instance=ExtResource("7_xllpo")]
-transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
-visible = false
-
 [node name="GolfTest" parent="." instance=ExtResource("6_gg86n")]
 transform = Transform3D(-1.6383, 0, -1.14715, 0, 2, 0, 1.14715, 0, -1.6383, 49.74, 0, 7.21418)
 
@@ -194,3 +179,9 @@ script = ExtResource("10_wrojx")
 
 [node name="GolfSpot" parent="." instance=ExtResource("11_ifx6f")]
 transform = Transform3D(0.806455, 0, 0.591296, 0, 1, 0, -0.591296, 0, 0.806455, -46.2954, 1.74574, -22.9127)
+
+[node name="FootstepOverride" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_7wcxv")
+volume_db = -35.0
+pitch_scale = 0.85
+bus = &"SFX"

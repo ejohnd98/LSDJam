@@ -22,7 +22,7 @@ func can_interact_internal() -> bool:
 	if max_interacts > 0 and interact_count >= max_interacts:
 		return false
 	
-	if not $CooldownTimer.is_stopped():
+	if $CooldownTimer != null and not $CooldownTimer.is_stopped():
 		return false
 	
 	return true

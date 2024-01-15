@@ -171,6 +171,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		CameraManagerObject.reset_camera()
 	
 	transition_obj.finish_transition()
+	GameManager.set_crosshair(true)
 	await transition_obj.transition_end_point
 	canvas_layer.get_node("LevelText").type_out_text(dream_grid.get_current_cell_name())
 	
@@ -216,3 +217,9 @@ func get_dream_grid() -> DreamGrid:
 
 func get_current_cell() -> DreamCell:
 	return dream_grid.get_current_cell()
+
+func set_crosshair(visible : bool):
+	if visible:
+		canvas_layer.get_node("Crosshair").show()
+	else:
+		canvas_layer.get_node("Crosshair").hide()
