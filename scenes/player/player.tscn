@@ -76,6 +76,7 @@ shape = SubResource("CapsuleShape3D_2l4ng")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_ckb3d")
 
 [node name="CameraPivot" type="Node3D" parent="."]

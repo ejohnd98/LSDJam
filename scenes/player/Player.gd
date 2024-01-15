@@ -2,7 +2,8 @@ class_name LSDPlayer extends RigidBody3D
 
 const RAY_LENGTH = 10
 const WALK_SPEED = 2.5
-const SPRINT_MOD = 5#1.8
+const SPRINT_MOD = 1.8
+const DEBUG_SPRINT_MOD = 8
 const JUMP_VELOCITY = 3.0
 const SENSITIVITY = 0.003
 
@@ -19,6 +20,11 @@ var default_footstep_volume
 var default_footstep_pitch
 
 var default_footstep_sounds : AudioStream
+
+var override_camera_handling = false
+
+var current_interactable : Area3D = null
+signal interactable_changed(interactable)
 
 func _ready():
 	default_footstep_sounds = $AudioStreamPlayer.stream
@@ -45,7 +51,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("Debug_Left"):
 		GameManager.move_in_direction(Vector2i.LEFT)
 		
-	if event.is_action_pressed("Escape"):
+	if event.is_action_pressed("DebugEsc"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
@@ -55,7 +61,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("Interact"):
 		try_interact()
 		
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and not override_camera_handling:
 		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY)
 		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY)
 		$CameraPivot/Camera3D.rotation.x = clamp($CameraPivot/Camera3D.rotation.x, deg_to_rad(-80), deg_to_rad(80))
@@ -63,6 +69,9 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if is_frozen:
 		return
+	
+	update_current_interactable()
+	
 	# Perform ground raycast:
 	var space_state = get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(position + Vector3.UP, position + Vector3.DOWN * RAY_LENGTH)
@@ -101,6 +110,9 @@ func _physics_process(delta):
 	var is_sprinting = Input.is_action_pressed("Sprint")
 	if (is_sprinting):
 		move_speed *= SPRINT_MOD
+	
+	if (Input.is_action_pressed("DebugSprint")):
+		move_speed *= DEBUG_SPRINT_MOD
 		
 	if direction:
 		velocity.x = direction.x * move_speed
@@ -157,9 +169,7 @@ func set_spawn_position (new_position, new_rotation):
 			is_grounded = true
 			vertical_velocity = 0
 	
-	# TODO: change this to be in physics process so that the current hovered over
-	# interactable can be highlighted, or a tooltip can be displayed.
-func try_interact():
+func update_current_interactable():
 	var space_state = get_world_3d().direct_space_state
 	var cam = $CameraPivot/Camera3D
 	var mousepos = get_viewport().get_mouse_position()
@@ -168,12 +178,21 @@ func try_interact():
 	var end = origin + cam.project_ray_normal(mousepos) * 1000
 	var query = PhysicsRayQueryParameters3D.create(origin, end)
 	query.collide_with_areas = true
-	query.exclude
 	var result = space_state.intersect_ray(query)
-	if (not result.is_empty()):
+	if (not result.is_empty() and not override_camera_handling):
 		var hit_object = result["collider"]
-		print("Hit: " + hit_object.name)
-		if (hit_object.is_in_group("interactable")):
-			hit_object.interact(self)
-		
-	
+		if (hit_object.is_in_group("interactable") and hit_object.is_interactable(self)):
+			if (current_interactable != hit_object):
+				current_interactable = hit_object
+				interactable_changed.emit(current_interactable)
+			return
+	if (current_interactable != null):
+		current_interactable = null
+		interactable_changed.emit(null)
+
+func try_interact():
+	if current_interactable != null:
+		current_interactable.interact(self)
+
+func get_camera() -> Camera3D:
+	return $CameraPivot/Camera3D

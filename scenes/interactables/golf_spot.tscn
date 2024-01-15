@@ -1,0 +1,128 @@
+[gd_scene load_steps=15 format=3 uid="uid://c8qqafyq522x"]
+
+[ext_resource type="Script" path="res://scenes/interactables/golf_spot.gd" id="1_c7j2m"]
+[ext_resource type="PackedScene" uid="uid://dsik30if3a23x" path="res://scenes/interactables/interactable_object.tscn" id="1_wn171"]
+[ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="2_b8gvj"]
+[ext_resource type="Texture2D" uid="uid://cvq7ayl7q4es3" path="res://textures/billboard_items/golf_bag.png" id="3_mk2sr"]
+[ext_resource type="Texture2D" uid="uid://cxkyjp34cebv7" path="res://textures/billboard_items/golf_club.png" id="4_kp1g8"]
+[ext_resource type="Texture2D" uid="uid://6c7w3rw4trfi" path="res://textures/billboard_items/golf_ball.png" id="5_r1pjy"]
+[ext_resource type="Texture2D" uid="uid://dfqnokvpmg3t8" path="res://textures/billboard_items/golf_tee.png" id="6_rbxqe"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/AlternateCamera.gd" id="7_rcjga"]
+[ext_resource type="PackedScene" uid="uid://djmioxsjxgd0" path="res://scenes/interactables/golf_UI.tscn" id="8_36boj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lt0wf"]
+radius = 0.4
+height = 4.0
+
+[sub_resource type="Animation" id="Animation_u7d4f"]
+resource_name = "swing"
+length = 3.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Golf Club:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.3, -0.0450501, 1.45025, -0.8, -0.0465462, 0.1, -2.43204, 0.00731439, -1.1, -1.29166, 0.25, 0),
+"times": PackedFloat32Array(0, 1.3, 2.9)
+}
+
+[sub_resource type="Animation" id="Animation_fl0p3"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Golf Club:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l70su"]
+_data = {
+"RESET": SubResource("Animation_fl0p3"),
+"swing": SubResource("Animation_u7d4f")
+}
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nmu3q"]
+viewport_path = NodePath("SubViewport")
+
+[node name="GolfSpot" type="Node3D"]
+script = ExtResource("1_c7j2m")
+
+[node name="GolfInteraction" parent="." instance=ExtResource("1_wn171")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+interact_sound = ExtResource("2_b8gvj")
+
+[node name="BagColliders" type="CollisionShape3D" parent="GolfInteraction" groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8147e-05, 1.5, -4.00543e-05)
+shape = SubResource("CapsuleShape3D_lt0wf")
+
+[node name="GolfBag" type="Sprite3D" parent="GolfInteraction/BagColliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.838152, 0)
+pixel_size = 0.006
+billboard = 2
+shaded = true
+alpha_cut = 2
+texture_filter = 4
+texture = ExtResource("3_mk2sr")
+
+[node name="Golf Club" type="Sprite3D" parent="GolfInteraction"]
+transform = Transform3D(0.945001, 0.32706, -0.00239223, -0.327061, 0.945003, 0, 0.00226066, 0.000782404, 0.999997, 1.5128, 1.53371, 0.155487)
+offset = Vector2(0, -128)
+pixel_size = 0.006
+shaded = true
+alpha_cut = 2
+texture_filter = 4
+texture = ExtResource("4_kp1g8")
+
+[node name="GolfBall" type="Sprite3D" parent="GolfInteraction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.121, 0.209)
+pixel_size = 0.002
+billboard = 1
+shaded = true
+alpha_cut = 2
+texture_filter = 4
+texture = ExtResource("5_r1pjy")
+
+[node name="Tee" type="Sprite3D" parent="GolfInteraction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0.209)
+pixel_size = 0.002
+billboard = 2
+shaded = true
+alpha_cut = 2
+texture_filter = 4
+texture = ExtResource("6_rbxqe")
+
+[node name="AlternateCamera" type="Camera3D" parent="GolfInteraction"]
+transform = Transform3D(-1, 2.65549e-09, 8.93676e-08, 0, 0.999559, -0.0297012, -8.9407e-08, -0.0297012, -0.999559, 0.999797, 1.27743, -2.3821)
+script = ExtResource("7_rcjga")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GolfInteraction"]
+libraries = {
+"": SubResource("AnimationLibrary_l70su")
+}
+
+[node name="UI" type="Sprite3D" parent="."]
+transform = Transform3D(-0.279126, 0, 2.4402e-08, 0, 0.279126, 0, -2.4402e-08, 0, -0.279126, 1, 0.25, -0.7)
+gi_mode = 0
+double_sided = false
+texture_filter = 4
+texture = SubResource("ViewportTexture_nmu3q")
+region_rect = Rect2(11.8881, 12.1333, 37.8365, 40.2689)
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(800, 256)
+render_target_update_mode = 4
+
+[node name="Control" parent="SubViewport" instance=ExtResource("8_36boj")]
+
+[connection signal="on_interact" from="GolfInteraction" to="." method="_on_golf_interaction_on_interact"]
+
+[editable path="SubViewport/Control"]

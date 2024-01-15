@@ -1,6 +1,7 @@
 extends click_interaction
 
 @export var grid_direction: Vector2i = Vector2i.ZERO
+@export var force_new_dream = false
 @export var proximity_trigger : bool = false
 
 @export var show_mesh : bool = true
@@ -49,7 +50,10 @@ func _process(delta):
 			trigger_direction()
 
 func trigger_direction():
-	GameManager.move_in_direction(grid_direction)
+	if force_new_dream:
+		GameManager.pick_random_dream()
+	else:
+		GameManager.move_in_direction(grid_direction)
 
 var set_transition_amount = false
 var player_body

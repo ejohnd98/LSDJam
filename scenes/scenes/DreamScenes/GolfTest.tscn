@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d1iykkdd23cdh"]
+[gd_scene load_steps=24 format=3 uid="uid://d1iykkdd23cdh"]
 
 [ext_resource type="Texture2D" uid="uid://dbukkac0ovsvs" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect_MIRROR.png" id="1_ug24b"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_qaxwj"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://dtqxw5u0hov77" path="res://sourceModels/Golf/golf_water_normal.png" id="7_j8dal"]
 [ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="7_xllpo"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/ScrollingUV.gd" id="8_lv8rv"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="9_umm3n"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="10_wrojx"]
+[ext_resource type="PackedScene" uid="uid://c8qqafyq522x" path="res://scenes/interactables/golf_spot.tscn" id="11_ifx6f"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ixst8"]
 panorama = ExtResource("1_ug24b")
@@ -76,6 +79,9 @@ refraction_scale = 0.02
 detail_blend_mode = 2
 uv1_scale = Vector3(30, 30, 30)
 disable_receive_shadows = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ycmwo"]
+size = Vector3(220, 5, 220)
 
 [node name="GolfTest" type="Node3D"]
 
@@ -177,3 +183,14 @@ transform = Transform3D(-0.988486, 0, -0.151313, 0, 1, 0, 0.151313, 0, -0.988486
 mesh = SubResource("PlaneMesh_76w5y")
 surface_material_override/0 = SubResource("StandardMaterial3D_cxpgf")
 script = ExtResource("8_lv8rv")
+
+[node name="ForcedTransitionArea" type="Area3D" parent="."]
+script = ExtResource("9_umm3n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3166, -2.50071, 11.7142)
+shape = SubResource("BoxShape3D_ycmwo")
+script = ExtResource("10_wrojx")
+
+[node name="GolfSpot" parent="." instance=ExtResource("11_ifx6f")]
+transform = Transform3D(0.806455, 0, 0.591296, 0, 1, 0, -0.591296, 0, 0.806455, -46.2954, 1.74574, -22.9127)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dkl7w62v1wrua"]
+[gd_scene load_steps=27 format=3 uid="uid://dkl7w62v1wrua"]
 
 [ext_resource type="Shader" path="res://shaders/psxpost.gdshader" id="1_nkerm"]
 [ext_resource type="PackedScene" uid="uid://dusmamsayjyke" path="res://scenes/scenes/DreamGrids/dream_grid.tscn" id="3_mtplc"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://c641augbvbxss" path="res://textures/UI/compass_needle.png" id="9_nte5w"]
 [ext_resource type="Script" path="res://scenes/transition.gd" id="9_r75nu"]
 [ext_resource type="AudioStream" uid="uid://b3snnvg4debm" path="res://sounds/typewriter.ogg" id="10_kkilr"]
+[ext_resource type="Script" path="res://scenes/InteractText.gd" id="11_pqwvv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6uqtb"]
 shader = ExtResource("1_nkerm")
@@ -266,6 +267,35 @@ stream = SubResource("AudioStreamRandomizer_1negh")
 volume_db = -9.0
 pitch_scale = 0.95
 max_polyphony = 4
+
+[node name="InteractText" type="Control" parent="SubViewport/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("11_pqwvv")
+
+[node name="Label" type="Label" parent="SubViewport/CanvasLayer/InteractText"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -90.0
+offset_right = 32.0
+offset_bottom = -69.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("8_g7nr7")
+theme_override_font_sizes/font_size = 30
+text = "Interact"
+label_settings = SubResource("LabelSettings_56chh")
+horizontal_alignment = 1
 
 [node name="transition" type="TextureRect" parent="SubViewport/CanvasLayer"]
 self_modulate = Color(1, 1, 1, 0)

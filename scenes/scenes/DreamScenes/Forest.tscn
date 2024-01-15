@@ -1,11 +1,9 @@
-[gd_scene load_steps=36 format=3 uid="uid://bvge3g0uemu4"]
+[gd_scene load_steps=35 format=3 uid="uid://bvge3g0uemu4"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_fluer"]
 [ext_resource type="Texture2D" uid="uid://bgrxkyvd3cqx0" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect.png" id="1_qc3ga"]
-[ext_resource type="Material" uid="uid://c2m4epboidckj" path="res://materials/forest_dirt.tres" id="2_3gd4s"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_28p3k"]
 [ext_resource type="AudioStream" uid="uid://deqyihaddcvn7" path="res://sounds/forest_ambience.ogg" id="3_nkahr"]
-[ext_resource type="Texture2D" uid="uid://v36pa45uyma0" path="res://sourceModels/forestGroundDirt.png" id="3_rpefc"]
 [ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="6_7sc1d"]
 [ext_resource type="PackedScene" uid="uid://73jr560nuv86" path="res://models/forest_generic.tscn" id="7_nxmob"]
 [ext_resource type="PackedScene" uid="uid://1il5btkm7phy" path="res://sourceModels/firTreeDowned.glb" id="9_aqqpy"]
@@ -21,6 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://cm5srrepm42b4" path="res://scenes/interactables/key_object.tscn" id="16_2vmno"]
 [ext_resource type="PackedScene" uid="uid://bh34qkxql6bh" path="res://sourceModels/Forest/ForestBench2.glb" id="17_lah5m"]
 [ext_resource type="PackedScene" uid="uid://btmldfxcfpybj" path="res://scenes/props/distortion_bubble.tscn" id="18_ituke"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="20_5mdem"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="21_ia11n"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ho3ki"]
 panorama = ExtResource("1_qc3ga")
@@ -69,28 +69,6 @@ albedo_texture = SubResource("NoiseTexture2D_ohmkj")
 albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
 albedo_texture = SubResource("NoiseTexture2D_ohmkj")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fse2b"]
-albedo_color = Color(0.709804, 0.709804, 0.709804, 1)
-albedo_texture = ExtResource("3_rpefc")
-uv1_scale = Vector3(0.25, 0.25, 0.25)
-uv1_triplanar = true
-uv1_world_triplanar = true
-uv2_scale = Vector3(0.5, 0.5, 0.5)
-uv2_triplanar = true
-uv2_world_triplanar = true
-texture_filter = 2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n10dk"]
-albedo_color = Color(0.709804, 0.709804, 0.709804, 1)
-albedo_texture = ExtResource("3_rpefc")
-uv1_scale = Vector3(0.25, 0.25, 0.25)
-uv1_triplanar = true
-uv1_world_triplanar = true
-uv2_scale = Vector3(0.5, 0.5, 0.5)
-uv2_triplanar = true
-uv2_world_triplanar = true
-texture_filter = 2
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
 noise_type = 3
 frequency = 0.0072
@@ -114,6 +92,9 @@ shader_parameter/speedVertex = 0.1
 shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_snghy"]
+size = Vector3(100, 30, 4)
 
 [node name="Forest" type="Node3D"]
 
@@ -160,42 +141,6 @@ material = SubResource("StandardMaterial3D_ckpgi")
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_28p3k")]
 transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 1, 1.637, 5.26963)
 grid_scale = Vector2(1, 1)
-
-[node name="Blockout" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -3.60132, 0)
-visible = false
-
-[node name="Building" type="CSGBox3D" parent="Blockout"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-use_collision = true
-size = Vector3(80, 2, 80)
-material = ExtResource("2_3gd4s")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="Blockout/Building"]
-transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0.2, 0)
-operation = 2
-use_collision = true
-size = Vector3(79, 2, 79)
-material = ExtResource("2_3gd4s")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Blockout/Building"]
-transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, -1.2, 0)
-use_collision = true
-size = Vector3(3, 1, 79)
-material = SubResource("StandardMaterial3D_fse2b")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="Blockout/Building"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -1.2, 0)
-use_collision = true
-size = Vector3(3, 1, 79)
-material = SubResource("StandardMaterial3D_fse2b")
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Blockout/Building"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
-radius = 8.0
-height = 1.0
-sides = 16
-material = SubResource("StandardMaterial3D_n10dk")
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
@@ -337,7 +282,6 @@ require_right = true
 destroy_on_pass = true
 
 [node name="DreamFence" parent="RightFences/DreamCondition" instance=ExtResource("13_qjvvq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="FenceBars4" parent="RightFences" instance=ExtResource("13_qjvvq")]
 transform = Transform3D(0.85406, 0, 0.520175, 0, 1, 0, -0.520175, 0, 0.85406, -10.3841, -0.143894, -3.00316)
@@ -402,7 +346,6 @@ require_left = true
 destroy_on_pass = true
 
 [node name="FenceBars9" parent="LeftFences/DreamCondition" instance=ExtResource("13_qjvvq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="FenceBars4" parent="LeftFences" instance=ExtResource("13_qjvvq")]
 transform = Transform3D(0.85406, 0, 0.520175, 0, 1, 0, -0.520175, 0, 0.85406, -10.3841, -0.143894, -3.00316)
@@ -443,10 +386,6 @@ transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, 
 [node name="ForestBench2" parent="." instance=ExtResource("15_1hf67")]
 transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, -1.05308, -0.0747477, -2.85587)
 
-[node name="KeyObject2" parent="." instance=ExtResource("16_2vmno")]
-transform = Transform3D(0.992317, 0, -0.123723, 0, 1, 0, 0.123723, 0, 0.992317, 16.8533, 2.25897, -43.2918)
-key = "forestKey"
-
 [node name="DreamCondition3" parent="." instance=ExtResource("14_l8kij")]
 transform = Transform3D(0.992317, 0, -0.123723, 0, 1, 0, 0.123723, 0, 0.992317, -1.01359, 0.937529, -4.06933)
 required_key = "forestKey"
@@ -481,5 +420,46 @@ transform = Transform3D(0.994602, -0.00297752, 0.103724, 0.00376882, 0.999965, -
 [node name="DistortionBubble" parent="." instance=ExtResource("18_ituke")]
 transform = Transform3D(7.64737, 0, -2.34899, 0, 8, 0, 2.34899, 0, 7.64737, 25.0532, -0.130844, -62.1122)
 visible = false
+
+[node name="ForcedTriggers" type="Node3D" parent="."]
+
+[node name="ForcedTransitionArea" type="Area3D" parent="ForcedTriggers"]
+script = ExtResource("20_5mdem")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTriggers/ForcedTransitionArea"]
+transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -50.8046, 9.11387, -43.8603)
+shape = SubResource("BoxShape3D_snghy")
+script = ExtResource("21_ia11n")
+enable_visuals = true
+
+[node name="ForcedTransitionArea2" type="Area3D" parent="ForcedTriggers"]
+transform = Transform3D(-0.29132, 0, -0.956626, 0, 1, 0, 0.956626, 0, -0.29132, 0, 0, 0)
+script = ExtResource("20_5mdem")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTriggers/ForcedTransitionArea2"]
+transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -50.8046, 9.11387, -43.8603)
+shape = SubResource("BoxShape3D_snghy")
+script = ExtResource("21_ia11n")
+enable_visuals = true
+
+[node name="ForcedTransitionArea3" type="Area3D" parent="ForcedTriggers"]
+transform = Transform3D(-0.992593, 0, 0.121488, 0, 1, 0, -0.121488, 0, -0.992593, 0, 0, 0)
+script = ExtResource("20_5mdem")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTriggers/ForcedTransitionArea3"]
+transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -45.2815, 9.11387, -43.9371)
+shape = SubResource("BoxShape3D_snghy")
+script = ExtResource("21_ia11n")
+enable_visuals = true
+
+[node name="ForcedTransitionArea4" type="Area3D" parent="ForcedTriggers"]
+transform = Transform3D(0.0715844, 0, 0.997434, 0, 1, 0, -0.997434, 0, 0.0715844, 0, 0, 0)
+script = ExtResource("20_5mdem")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTriggers/ForcedTransitionArea4"]
+transform = Transform3D(0.767255, 0, -0.641343, 0, 1, 0, 0.641343, 0, 0.767255, -48.0087, 9.11387, -46.6977)
+shape = SubResource("BoxShape3D_snghy")
+script = ExtResource("21_ia11n")
+enable_visuals = true
 
 [editable path="SceneTrigger/DistortionBubble2"]

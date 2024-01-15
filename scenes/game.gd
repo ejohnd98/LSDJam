@@ -35,7 +35,14 @@ func _unhandled_input(event):
 			$"../../CanvasLayer/Compass".show()
 
 func _ready():
+	player.interactable_changed.connect(on_interactable_change)
 	advance_dream()
+
+func on_interactable_change(interactable):
+	if interactable != null and interactable is click_interaction:
+		set_interact_text(interactable.interact_prompt)
+	else:
+		hide_interact_text()
 	
 func move_in_direction(direction: Vector2i):
 	if (not is_direction_allowed(direction)):
@@ -159,6 +166,10 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	if (dream_grid_representation):
 		dream_grid_representation.create_representation(dream_grid)
 	
+	#undo any camera stuff:
+	if CameraManagerObject.override_active:
+		CameraManagerObject.reset_camera()
+	
 	transition_obj.finish_transition()
 	await transition_obj.transition_end_point
 	canvas_layer.get_node("LevelText").type_out_text(dream_grid.get_current_cell_name())
@@ -177,6 +188,12 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 func set_transition_alpha(alpha : float):
 	var transition_obj : transition = canvas_layer.get_node("transition")
 	transition_obj.set_progress(alpha)
+
+func set_interact_text(interact_text : String):
+	canvas_layer.get_node("InteractText").set_text(interact_text)
+
+func hide_interact_text():
+	canvas_layer.get_node("InteractText").hide_text()
 
 func does_key_exist(key : String) -> bool:
 	var current_cell : DreamCell = dream_grid.get_current_cell()
