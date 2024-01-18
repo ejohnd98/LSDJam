@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dkl7w62v1wrua"]
+[gd_scene load_steps=28 format=3 uid="uid://dkl7w62v1wrua"]
 
 [ext_resource type="Shader" path="res://shaders/psxpost.gdshader" id="1_nkerm"]
 [ext_resource type="PackedScene" uid="uid://dusmamsayjyke" path="res://scenes/scenes/DreamGrids/dream_grid.tscn" id="3_mtplc"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scenes/transition.gd" id="9_r75nu"]
 [ext_resource type="AudioStream" uid="uid://b3snnvg4debm" path="res://sounds/typewriter.ogg" id="10_kkilr"]
 [ext_resource type="Script" path="res://scenes/InteractText.gd" id="11_pqwvv"]
+[ext_resource type="PackedScene" uid="uid://bhbcjyp88n1q0" path="res://scenes/ui/main_menu.tscn" id="15_l01qt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6uqtb"]
 shader = ExtResource("1_nkerm")
@@ -334,6 +335,8 @@ bus = &"SFX"
 [node name="TransitionSoundAlt" type="AudioStreamPlayer" parent="SubViewport/CanvasLayer/transition"]
 stream = ExtResource("6_s487t")
 bus = &"SFX"
+
+[node name="MainMenu" parent="SubViewport/CanvasLayer" instance=ExtResource("15_l01qt")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false

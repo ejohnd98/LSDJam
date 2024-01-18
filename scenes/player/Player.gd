@@ -28,7 +28,6 @@ signal interactable_changed(interactable)
 
 func _ready():
 	default_footstep_sounds = $AudioStreamPlayer.stream
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	default_footstep_volume = $AudioStreamPlayer.volume_db
 	default_footstep_pitch = $AudioStreamPlayer.pitch_scale
 	
@@ -42,6 +41,9 @@ func set_footstep_sounds(footsteps : AudioStream):
 	$AudioStreamPlayer.stream = footsteps
 
 func _unhandled_input(event):
+	if is_frozen:
+		return
+	
 	if event.is_action_pressed("Debug_Up"):
 		GameManager.move_in_direction(Vector2i.UP)
 	if event.is_action_pressed("Debug_Right"):
@@ -51,13 +53,6 @@ func _unhandled_input(event):
 	if event.is_action_pressed("Debug_Left"):
 		GameManager.move_in_direction(Vector2i.LEFT)
 		
-	if event.is_action_pressed("DebugEsc"):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	if is_frozen:
-		return
 	if event.is_action_pressed("Interact"):
 		try_interact()
 		

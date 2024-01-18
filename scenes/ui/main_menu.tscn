@@ -1,0 +1,108 @@
+[gd_scene load_steps=10 format=3 uid="uid://bhbcjyp88n1q0"]
+
+[ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_fu1d6"]
+[ext_resource type="Texture2D" uid="uid://ba2dveqpuegd3" path="res://textures/UI/logo placeholder.png" id="1_y8w4d"]
+[ext_resource type="FontFile" uid="uid://vd80c5wwb0pb" path="res://textures/fonts/atwriter.ttf" id="2_0idkb"]
+
+[sub_resource type="Theme" id="Theme_8t71l"]
+default_font = ExtResource("2_0idkb")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xhrvv"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hslef"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.866667, 0.866667, 0.866667, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtwfb"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 0.776471)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uy0rs"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.227451, 0.227451, 0.227451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgcuk"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fu1d6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 44.0
+offset_top = 117.0
+offset_right = 309.0
+offset_bottom = 423.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_y8w4d")
+expand_mode = 5
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtwfb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mgcuk")
+action_mode = 0
+text = "Start Game
+"
+alignment = 0
+
+[node name="Settings" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xhrvv")
+disabled = true
+action_mode = 0
+text = "Settings"
+alignment = 0
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtwfb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mgcuk")
+action_mode = 0
+text = "Exit Game
+"
+alignment = 0
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]

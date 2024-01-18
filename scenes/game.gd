@@ -24,19 +24,34 @@ var rng = RandomNumberGenerator.new()
 static func get_game(tree_node : SceneTree) -> game_manager:
 	return tree_node.get_root().get_node("SubViewportContainer/SubViewport/Game")
 
-var is_ui_shown = true
 func _unhandled_input(event):
-	if event.is_action_pressed("Hide UI"):
-		if is_ui_shown:
-			dream_grid.hide()
-			$"../../CanvasLayer/Compass".hide()
+	if event.is_action_pressed("DebugEsc"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			set_cursor_state(false)
 		else:
-			dream_grid.show()
-			$"../../CanvasLayer/Compass".show()
+			set_cursor_state(true)
+
+func set_cursor_state(is_captured : bool):
+	if is_captured:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _ready():
+	set_cursor_state(false)
+	canvas_layer.get_node("UIParent/Compass").hide()
+	canvas_layer.get_node("Crosshair").hide()
+	player.set_frozen(true)
+
+func start_game():
+	set_cursor_state(true)
 	player.interactable_changed.connect(on_interactable_change)
+	canvas_layer.get_node("UIParent/Compass").show()
+	canvas_layer.get_node("Crosshair").show()
 	advance_dream()
+
+func exit_game():
+	get_tree().quit()
 
 func on_interactable_change(interactable):
 	if interactable != null and interactable is click_interaction:

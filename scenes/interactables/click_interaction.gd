@@ -37,5 +37,6 @@ func is_interactable(player) -> bool:
 func interact(player):
 	if can_interact_internal() && can_interact(player):
 		on_interact.emit()
-		$CooldownTimer.start()
+		if $CooldownTimer != null:
+			$CooldownTimer.start()
 		$InteractSound.playing = true

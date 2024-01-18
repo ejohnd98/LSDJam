@@ -7,9 +7,8 @@ signal transition_end_point
 
 func transition():
 	var img = get_viewport().get_texture().get_image()
-	#img.flip_y()
 	var screenshot = ImageTexture.create_from_image(img)
-	#screenshot.create_from_image(img)
+	screenshot.create_from_image(img)
 	$dissolve_rect.texture = screenshot
 	$AnimationPlayer.play(animation)
 	await $AnimationPlayer.animation_finished
