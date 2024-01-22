@@ -102,3 +102,10 @@ bus = &"SFX"
 [node name="SoundCooldown" type="Timer" parent="AudioStreamPlayer"]
 wait_time = 0.15
 one_shot = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41984, 0)
+light_energy = 2.0
+light_bake_mode = 0
+omni_range = 10.0
+omni_attenuation = 1.1487

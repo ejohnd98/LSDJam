@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d1iykkdd23cdh"]
+[gd_scene load_steps=35 format=3 uid="uid://d1iykkdd23cdh"]
 
 [ext_resource type="Texture2D" uid="uid://dbukkac0ovsvs" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect_MIRROR.png" id="1_ug24b"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_qaxwj"]
@@ -12,8 +12,13 @@
 [ext_resource type="AudioStream" uid="uid://cv8o3ta22dtff" path="res://sounds/golf/footstep_grass_01.ogg" id="12_cm1ie"]
 [ext_resource type="AudioStream" uid="uid://mxaga43iiwsv" path="res://sounds/golf/footstep_grass_02.ogg" id="13_2dlan"]
 [ext_resource type="AudioStream" uid="uid://doa6sytqwkdmb" path="res://sounds/golf/footstep_grass_03.ogg" id="14_xbwff"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/NightmareSpot.gd" id="15_8uray"]
+[ext_resource type="Texture2D" uid="uid://b7efira1k2rsk" path="res://textures/vignette.png" id="15_0832a"]
 [ext_resource type="AudioStream" uid="uid://dnab7ao2krlq5" path="res://sounds/golf/footstep_grass_04.ogg" id="15_cmjfm"]
 [ext_resource type="AudioStream" uid="uid://bjuac7bs5s228" path="res://sounds/golf/footstep_grass_05.ogg" id="16_sap7v"]
+[ext_resource type="AudioStream" uid="uid://o2bsyxai1ex3" path="res://sounds/generic/fright01.ogg" id="17_4613t"]
+[ext_resource type="AudioStream" uid="uid://1cpkft60wfff" path="res://sounds/generic/fright02.ogg" id="18_11dty"]
+[ext_resource type="AudioStream" uid="uid://bteqg14d8yf0u" path="res://sounds/generic/fright03.ogg" id="19_3w8k2"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ixst8"]
 panorama = ExtResource("1_ug24b")
@@ -98,6 +103,18 @@ stream_3/stream = ExtResource("15_cmjfm")
 stream_3/weight = 1.0
 stream_4/stream = ExtResource("16_sap7v")
 stream_4/weight = 1.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yoob8"]
+radius = 10.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6pbrp"]
+streams_count = 3
+stream_0/stream = ExtResource("17_4613t")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("18_11dty")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("19_3w8k2")
+stream_2/weight = 1.0
 
 [node name="GolfTest" type="Node3D"]
 
@@ -185,3 +202,30 @@ stream = SubResource("AudioStreamRandomizer_7wcxv")
 volume_db = -35.0
 pitch_scale = 0.85
 bus = &"SFX"
+
+[node name="NightmareSpot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.7594, 2.51855, -42.64)
+script = ExtResource("15_8uray")
+
+[node name="Sprite3D" type="Sprite3D" parent="NightmareSpot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.271671, 0)
+modulate = Color(1, 0, 0, 1)
+pixel_size = 0.02
+billboard = 1
+texture = ExtResource("15_0832a")
+
+[node name="Area3D" type="Area3D" parent="NightmareSpot"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NightmareSpot/Area3D"]
+shape = SubResource("SphereShape3D_yoob8")
+
+[node name="ScareSound" type="AudioStreamPlayer" parent="NightmareSpot"]
+stream = SubResource("AudioStreamRandomizer_6pbrp")
+volume_db = 6.83
+
+[node name="ScareCooldown" type="Timer" parent="NightmareSpot"]
+wait_time = 6.0
+one_shot = true
+
+[connection signal="body_entered" from="NightmareSpot/Area3D" to="NightmareSpot" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="NightmareSpot/Area3D" to="NightmareSpot" method="_on_area_3d_body_exited"]

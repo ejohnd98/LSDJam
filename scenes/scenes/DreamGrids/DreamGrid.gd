@@ -4,6 +4,8 @@ extends Control
 
 @export var dream_name = "Dream"
 
+@export var is_nightmare = false
+
 @export_group("Keys")
 @export var dream_keys: Array[String] = []
 

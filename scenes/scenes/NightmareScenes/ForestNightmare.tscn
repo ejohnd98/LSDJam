@@ -1,0 +1,376 @@
+[gd_scene load_steps=29 format=3 uid="uid://b0bj0pjbr8s5l"]
+
+[ext_resource type="Texture2D" uid="uid://bm2iusbsw8k8e" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_MoonBurst_Equirect.png" id="1_etvu2"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_vav22"]
+[ext_resource type="AudioStream" uid="uid://deqyihaddcvn7" path="res://sounds/forest_ambience.ogg" id="3_7qun0"]
+[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="4_fp4wh"]
+[ext_resource type="AudioStream" uid="uid://c0oymka702fdk" path="res://sounds/various_ambiences/presence.ogg" id="4_lunoj"]
+[ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="5_uhv8b"]
+[ext_resource type="PackedScene" uid="uid://btmldfxcfpybj" path="res://scenes/props/distortion_bubble.tscn" id="6_wkjik"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="7_m7u4b"]
+[ext_resource type="PackedScene" uid="uid://73jr560nuv86" path="res://models/forest_generic.tscn" id="8_coew8"]
+[ext_resource type="PackedScene" uid="uid://dv2mfrpn0x5md" path="res://scenes/dream_condition.tscn" id="9_wa7ag"]
+[ext_resource type="PackedScene" uid="uid://cy2xa1bl7xp6i" path="res://sourceModels/Forest/FencePillarSign.glb" id="13_u6bka"]
+[ext_resource type="PackedScene" uid="uid://c2tu4ks6lbr0u" path="res://sourceModels/Forest/FencePillar.glb" id="14_txfq8"]
+[ext_resource type="PackedScene" uid="uid://b2uisjwpcaqs8" path="res://sourceModels/Forest/FencePost.glb" id="15_68doo"]
+[ext_resource type="PackedScene" uid="uid://dwb8n4ceda6ug" path="res://sourceModels/Forest/FenceBars.glb" id="16_lgqt7"]
+[ext_resource type="PackedScene" uid="uid://c88knq7ek0x5y" path="res://sourceModels/Forest/ForestBench.glb" id="17_qjkvn"]
+[ext_resource type="PackedScene" uid="uid://bh34qkxql6bh" path="res://sourceModels/Forest/ForestBench2.glb" id="19_whrx3"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mjkut"]
+panorama = ExtResource("1_etvu2")
+
+[sub_resource type="Sky" id="Sky_2tymr"]
+sky_material = SubResource("PanoramaSkyMaterial_mjkut")
+
+[sub_resource type="Environment" id="Environment_q0gpw"]
+background_mode = 2
+sky = SubResource("Sky_2tymr")
+ambient_light_source = 2
+ambient_light_color = Color(0, 0.243137, 0.490196, 1)
+tonemap_white = 0.25
+sdfgi_enabled = true
+glow_enabled = true
+glow_bloom = 0.21
+fog_enabled = true
+fog_light_color = Color(0.2, 0.180392, 0.294118, 1)
+fog_light_energy = 2.18
+fog_sun_scatter = 0.15
+fog_density = 0.0392
+fog_aerial_perspective = 0.765
+adjustment_enabled = true
+adjustment_contrast = 1.1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ujr4y"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohmkj"]
+noise = SubResource("FastNoiseLite_ujr4y")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0d0y"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e7q65"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtsqx"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckpgi"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_iorx3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omxp6"]
+render_priority = 0
+shader = ExtResource("7_m7u4b")
+shader_parameter/distortionView = 0.03
+shader_parameter/speedView = 0.1
+shader_parameter/static_intensity = 0.3
+shader_parameter/tintColor = Color(0.827451, 0.764706, 0.968627, 1)
+shader_parameter/fesnelAmount = 1.2
+shader_parameter/fresnelTintOffset = 1.49012e-08
+shader_parameter/distortionVertex = 0.01
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[node name="Forest" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(0.819608, 1, 1, 1)
+light_energy = 0.1
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q0gpw")
+
+[node name="PlayerSpawnUp" type="Node3D" parent="."]
+transform = Transform3D(0.957047, 0, -0.289934, 0, 1, 0, 0.289934, 0, 0.957047, 21.2701, 0.48868, -50.7565)
+
+[node name="PlayerSpawnDown" type="Node3D" parent="."]
+transform = Transform3D(-0.771036, 0, 0.636791, 0, 1, 0, -0.636791, 0, -0.771036, -19.7357, 0.381143, 49.2731)
+
+[node name="PlayerSpawnRight" type="Node3D" parent="."]
+transform = Transform3D(0.782097, 0, -0.623156, 0, 1, 0, 0.623156, 0, 0.782097, 53.6623, -2.65048, -2.11364)
+
+[node name="PlayerSpawnLeft" type="Node3D" parent="."]
+transform = Transform3D(-0.566536, 0, 0.824037, 0, 1, 0, -0.824037, 0, -0.566536, -52.747, 2.92876, 12.0053)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1, 1.617, 5.26963)
+visible = false
+size = Vector3(1.1, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_m0d0y")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+operation = 2
+size = Vector3(1, 1, 0.45)
+material = SubResource("StandardMaterial3D_e7q65")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_xtsqx")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_ckpgi")
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("2_vav22")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 1, 1.637, 5.26963)
+visible = false
+grid_scale = Vector2(1, 1)
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("3_7qun0")
+attenuation_model = 3
+volume_db = -14.0
+unit_size = 100.0
+pitch_scale = 0.7
+autoplay = true
+panning_strength = 0.4
+bus = &"SFX"
+
+[node name="AmbientSound2" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("4_lunoj")
+attenuation_model = 3
+volume_db = -14.0
+unit_size = 100.0
+autoplay = true
+panning_strength = 0.4
+bus = &"SFX"
+
+[node name="SceneTrigger" parent="." instance=ExtResource("4_fp4wh")]
+transform = Transform3D(-0.962318, 0, 0.271927, 0, 1, 0, -0.271927, 0, -0.962318, -21.1745, 0.180722, 51.9987)
+grid_direction = Vector2i(0, -1)
+proximity_trigger = true
+show_mesh = false
+show_arrow = false
+start_dist = 5.0
+
+[node name="GradientBox" parent="SceneTrigger" instance=ExtResource("5_uhv8b")]
+transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
+visible = false
+
+[node name="DistortionBubble2" parent="SceneTrigger" instance=ExtResource("6_wkjik")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
+
+[node name="MeshInstance3D" parent="SceneTrigger/DistortionBubble2" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_omxp6")
+
+[node name="SceneTrigger2" parent="." instance=ExtResource("4_fp4wh")]
+transform = Transform3D(0.0305561, 0, -0.999533, 0, 1, 0, 0.999533, 0, 0.0305561, 58.0111, -2.8744, -4.22516)
+grid_direction = Vector2i(-1, 0)
+proximity_trigger = true
+show_mesh = false
+show_arrow = false
+start_dist = 5.0
+
+[node name="GradientBox" parent="SceneTrigger2" instance=ExtResource("5_uhv8b")]
+transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
+visible = false
+
+[node name="DistortionBubble2" parent="SceneTrigger2" instance=ExtResource("6_wkjik")]
+transform = Transform3D(7, 0, -1.49012e-08, 0, 7, 0, 0, 0, 6, 7.15256e-07, -0.240483, -5.76582)
+
+[node name="SceneTrigger3" parent="." instance=ExtResource("4_fp4wh")]
+transform = Transform3D(0.938932, 0, -0.344102, 0, 1, 0, 0.344102, 0, 0.938932, 22.8099, 0.3282, -55.169)
+proximity_trigger = true
+show_mesh = false
+show_arrow = false
+start_dist = 5.0
+
+[node name="GradientBox" parent="SceneTrigger3" instance=ExtResource("5_uhv8b")]
+transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 3.41252)
+visible = false
+
+[node name="DistortionBubble2" parent="SceneTrigger3" instance=ExtResource("6_wkjik")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
+
+[node name="SceneTrigger4" parent="." instance=ExtResource("4_fp4wh")]
+transform = Transform3D(-0.293623, 0, 0.955921, 0, 1, 0, -0.955921, 0, -0.293623, -55.8748, 2.44003, 13.944)
+grid_direction = Vector2i(1, 0)
+proximity_trigger = true
+show_mesh = false
+show_arrow = false
+start_dist = 5.0
+
+[node name="GradientBox" parent="SceneTrigger4" instance=ExtResource("5_uhv8b")]
+transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
+visible = false
+
+[node name="DistortionBubble2" parent="SceneTrigger4" instance=ExtResource("6_wkjik")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
+
+[node name="ForestGeneric" parent="." instance=ExtResource("8_coew8")]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0, 0)
+
+[node name="RightFences" type="Node3D" parent="."]
+
+[node name="FencePillarSign" parent="RightFences" instance=ExtResource("13_u6bka")]
+transform = Transform3D(0.0791724, 0, 0.996861, 0, 1, 0, -0.996861, 0, 0.0791724, -10.5968, -0.28909, -0.530688)
+
+[node name="FencePillar" parent="RightFences" instance=ExtResource("14_txfq8")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -10.6169, -0.311409, 0.985122)
+
+[node name="FencePost" parent="RightFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -8.93479, -0.254571, 5.0367)
+
+[node name="FencePost8" parent="RightFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -10.0348, -0.254571, 3.13145)
+
+[node name="FencePost2" parent="RightFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, -8.5465, -0.255, 7.06181)
+
+[node name="FenceBars" parent="RightFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, -10.0711, -0.143894, 3.01616)
+
+[node name="FenceBars8" parent="RightFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(-0.0272287, 0, -0.999239, 0, 1, 0, 0.69736, 0, -0.0390157, -10.6414, -0.143894, 0.887574)
+
+[node name="DreamCondition" parent="RightFences" instance=ExtResource("9_wa7ag")]
+transform = Transform3D(-0.15284, 0, -0.992036, 0, 1, 0, 1.20377, 0, -0.125957, -10.6321, -0.143894, -0.590285)
+require_right = true
+destroy_on_pass = true
+
+[node name="DreamFence" parent="RightFences/DreamCondition" instance=ExtResource("16_lgqt7")]
+
+[node name="FenceBars4" parent="RightFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(0.85406, 0, 0.520175, 0, 1, 0, -0.520175, 0, 0.85406, -10.3841, -0.143894, -3.00316)
+
+[node name="FenceBars2" parent="RightFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -10.0104, -0.143894, 3.24251)
+
+[node name="FenceBars3" parent="RightFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(-0.173648, 0, 0.984808, 0, 1, 0, -0.984808, 0, -0.173648, -8.89459, -0.143894, 5.05568)
+
+[node name="FencePost3" parent="RightFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.768306, 0, -0.640083, 0, 1, 0, 0.640083, 0, 0.768306, -8.59811, -0.254571, -4.08518)
+
+[node name="FencePost5" parent="RightFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.645484, 0, -0.763774, 0, 1, 0, 0.763774, 0, 0.645484, -6.97537, -0.254571, -5.5033)
+
+[node name="FencePost6" parent="RightFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.709595, 0, -0.704609, 0, 1, 0, 0.704609, 0, 0.709595, -5.35799, -0.254571, -7.07502)
+
+[node name="FencePost4" parent="RightFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.50305, 0, -0.864257, 0, 1, 0, 0.864257, 0, 0.50305, -10.3645, -0.255, -3.02145)
+
+[node name="FencePost7" parent="RightFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.50305, 0, -0.864257, 0, 1, 0, 0.864257, 0, 0.50305, -12.0932, -0.255, -1.9629)
+
+[node name="FenceBars5" parent="RightFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(0.763773, 0, 0.645484, 0, 1, 0, -0.645484, 0, 0.763773, -7.04259, -0.143894, -5.42653)
+
+[node name="FenceBars7" parent="RightFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(-0.704609, 0, -0.709596, 0, 1, 0, 0.709596, 0, -0.704609, -6.81345, -0.143894, -5.62017)
+
+[node name="FenceBars6" parent="RightFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(0.864257, 0, 0.50305, 0, 1, 0, -0.50305, 0, 0.864257, -8.60204, -0.143894, -4.04091)
+
+[node name="LeftFences" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.06851, 0, 0.278233)
+
+[node name="FencePillarSign" parent="LeftFences" instance=ExtResource("13_u6bka")]
+transform = Transform3D(0.0791724, 0, 0.996861, 0, 1, 0, -0.996861, 0, 0.0791724, -10.5968, -0.28909, -0.530688)
+
+[node name="FencePillar" parent="LeftFences" instance=ExtResource("14_txfq8")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -10.6169, -0.311409, 0.985122)
+
+[node name="FencePost" parent="LeftFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.967718, 0, 0.252036, 0, 1, 0, -0.252036, 0, 0.967718, -8.93479, -0.254571, 5.0367)
+
+[node name="FencePost8" parent="LeftFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -9.39484, -0.254571, 2.89852)
+
+[node name="FencePost2" parent="LeftFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, -8.5465, -0.255, 7.06181)
+
+[node name="FenceBars" parent="LeftFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(0.616555, 0, -0.828109, 0, 1, 0, 0.91082, 0, 0.560567, -9.39871, -0.143894, 2.83599)
+
+[node name="FenceBars8" parent="LeftFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(-0.0272287, 0, -0.999239, 0, 1, 0, 0.69736, 0, -0.0390157, -10.6414, -0.143894, 0.887574)
+
+[node name="FenceBars4" parent="LeftFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(0.85406, 0, 0.520175, 0, 1, 0, -0.520175, 0, 0.85406, -10.3841, -0.143894, -3.00316)
+
+[node name="FenceBars2" parent="LeftFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(-0.233286, 0, 0.976216, 0, 1, 0, -1.05046, 0, -0.216798, -9.38157, -0.143894, 2.87945)
+
+[node name="FenceBars3" parent="LeftFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(-0.173648, 0, 0.984808, 0, 1, 0, -0.984808, 0, -0.173648, -8.89459, -0.143894, 5.05568)
+
+[node name="FencePost3" parent="LeftFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.768306, 0, -0.640083, 0, 1, 0, 0.640083, 0, 0.768306, -8.59811, -0.254571, -4.08518)
+
+[node name="FencePost5" parent="LeftFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.744777, 0, -0.667313, 0, 1, 0, 0.667313, 0, 0.744777, -7.19834, -0.254571, -5.67308)
+
+[node name="FencePost6" parent="LeftFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.625365, 0, -0.780332, 0, 1, 0, 0.780332, 0, 0.625365, -5.62778, -0.254571, -7.09114)
+
+[node name="FencePost4" parent="LeftFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.50305, 0, -0.864257, 0, 1, 0, 0.864257, 0, 0.50305, -10.3645, -0.255, -3.02145)
+
+[node name="FencePost7" parent="LeftFences" instance=ExtResource("15_68doo")]
+transform = Transform3D(0.50305, 0, -0.864257, 0, 1, 0, 0.864257, 0, 0.50305, -12.0932, -0.255, -1.9629)
+
+[node name="FenceBars5" parent="LeftFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(0.667312, 0, 0.744777, 0, 1, 0, -0.744777, 0, 0.667312, -7.23177, -0.143894, -5.64004)
+
+[node name="FenceBars7" parent="LeftFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(-0.745557, 0, -0.666442, 0, 1, 0, 0.666442, 0, -0.745557, -7.16916, -0.143894, -5.71514)
+
+[node name="FenceBars6" parent="LeftFences" instance=ExtResource("16_lgqt7")]
+transform = Transform3D(0.864257, 0, 0.50305, 0, 1, 0, -0.50305, 0, 0.864257, -8.60204, -0.143894, -4.04091)
+
+[node name="ForestBench" parent="." instance=ExtResource("17_qjkvn")]
+transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, -4.22825, -0.0747477, -3.38152)
+
+[node name="ForestBench2" parent="." instance=ExtResource("17_qjkvn")]
+transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, -1.05308, -0.0747477, -2.85587)
+
+[node name="ForestBench3" parent="." instance=ExtResource("19_whrx3")]
+transform = Transform3D(-0.154572, 0, -0.987981, 0, 1, 0, 0.987981, 0, -0.154572, 30.8149, -0.0990523, 6.42006)
+
+[node name="ForestBench4" parent="." instance=ExtResource("19_whrx3")]
+transform = Transform3D(0.862593, 0, -0.505898, 0, 1, 0, 0.505898, 0, 0.862593, -47.4351, 1.52444, 8.28543)
+
+[node name="ForestBench5" parent="." instance=ExtResource("19_whrx3")]
+transform = Transform3D(0.991216, 0, -0.132256, 0, 1, 0, 0.132256, 0, 0.991216, -7.42476, -0.0244879, 33.3555)
+
+[node name="ForestBench6" parent="." instance=ExtResource("19_whrx3")]
+transform = Transform3D(0.998687, 0, -0.0512204, 0, 1, 0, 0.0512204, 0, 0.998687, -7.70565, -0.0244881, 36.4067)
+
+[node name="ForestBench7" parent="." instance=ExtResource("17_qjkvn")]
+transform = Transform3D(0.175708, -0.00692914, -0.984418, 0.0749014, 0.997171, 0.00635021, 0.981589, -0.0748501, 0.17573, 16.1346, 1.58575, -41.0029)
+
+[node name="ForestBench9" parent="." instance=ExtResource("17_qjkvn")]
+transform = Transform3D(0.175708, 0.0360858, -0.983781, 0.0749014, 0.995941, 0.0499097, 0.981589, -0.0824562, 0.172292, 15.6425, 1.32339, -43.196)
+
+[node name="ForestBench8" parent="." instance=ExtResource("19_whrx3")]
+transform = Transform3D(0.994602, -0.00297752, 0.103724, 0.00376882, 0.999965, -0.0074336, -0.103699, 0.00778438, 0.994578, 23.3032, 1.58589, -38.8981)
+
+[node name="DistortionBubble" parent="." instance=ExtResource("6_wkjik")]
+transform = Transform3D(7.64737, 0, -2.34899, 0, 8, 0, 2.34899, 0, 7.64737, 25.0532, -0.130844, -62.1122)
+visible = false
+
+[editable path="SceneTrigger/DistortionBubble2"]

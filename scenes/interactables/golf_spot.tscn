@@ -107,7 +107,7 @@ texture_filter = 4
 texture = ExtResource("3_mk2sr")
 
 [node name="Golf Club" type="Sprite3D" parent="GolfInteraction"]
-transform = Transform3D(0.945001, 0.32706, -0.00239222, -0.327061, 0.945003, 0, 0.00226066, 0.000782403, 0.999997, 1.5128, 1.53371, 0.155487)
+transform = Transform3D(0.945001, 0.32706, -0.00239222, -0.327061, 0.945003, 0, 0.00226066, 0.000782402, 0.999997, 1.5128, 1.53371, 0.155487)
 offset = Vector2(0, -128)
 pixel_size = 0.006
 shaded = true

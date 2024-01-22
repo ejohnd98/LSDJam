@@ -7,10 +7,13 @@ const SCENE_PATH = "res://scenes/scenes/"
 
 @export var dreams: Array[PackedScene] = []
 
+@export var nightmares: Array[PackedScene] = []
+
 @export var dream_transition: PackedScene
 
 var current_dream : Control = null
 var dream_index = -1
+var nightmare_index = -1
 
 @onready var dream_grid : DreamGrid = get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/DreamGrid")
 @onready var canvas_layer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer")
@@ -20,6 +23,10 @@ var current_scene_node = null
 var next_scene_path = ""
 
 var rng = RandomNumberGenerator.new()
+
+@export var nightmare_recovery_speed = 0.01
+var nightmare_progress = 0.0
+var in_nightmare = false
 
 static func get_game(tree_node : SceneTree) -> game_manager:
 	return tree_node.get_root().get_node("SubViewportContainer/SubViewport/Game")
@@ -39,8 +46,10 @@ func set_cursor_state(is_captured : bool):
 
 func _ready():
 	set_cursor_state(false)
+	#TODO: separate game and menu UI into two different scenes and hide/show those
 	canvas_layer.get_node("UIParent/Compass").hide()
 	canvas_layer.get_node("Crosshair").hide()
+	canvas_layer.get_node("NightmareBar").hide()
 	player.set_frozen(true)
 
 func start_game():
@@ -48,10 +57,21 @@ func start_game():
 	player.interactable_changed.connect(on_interactable_change)
 	canvas_layer.get_node("UIParent/Compass").show()
 	canvas_layer.get_node("Crosshair").show()
+	canvas_layer.get_node("NightmareBar").show()
 	advance_dream()
 
 func exit_game():
 	get_tree().quit()
+
+func on_entered_nightmare():
+	canvas_layer.get_node("NightmareOverlay").show()
+	canvas_layer.get_node("UIParent/Compass").hide()
+	in_nightmare = true
+
+func on_left_nightmare():
+	canvas_layer.get_node("NightmareOverlay").hide()
+	canvas_layer.get_node("UIParent/Compass").show()
+	in_nightmare = false
 
 func on_interactable_change(interactable):
 	if interactable != null and interactable is click_interaction:
@@ -72,8 +92,11 @@ func move_in_direction(direction: Vector2i):
 	dream_grid.move_in_direction(direction)
 	var next_cell = dream_grid.get_current_cell()
 	if next_cell.is_goal:
-		dreams.remove_at(dream_index)
-		change_dreams(-1)
+		if not dream_grid.is_nightmare:
+			dreams.remove_at(dream_index)
+			change_dreams(-1)
+		else:
+			pick_random_dream()
 		return
 	
 	if next_cell.is_dream_transition:
@@ -81,7 +104,6 @@ func move_in_direction(direction: Vector2i):
 		return
 		
 	load_new_scene(dream_grid.get_scene_from_position(), direction)
-
 
 func advance_dream():
 	var next_index = dream_index
@@ -99,8 +121,12 @@ func pick_random_dream():
 	new_index = wrapi(new_index, 0, dreams.size())
 	
 	change_dreams(new_index)
+
+func pick_nightmare():
+	nightmare_index = wrapi(nightmare_index + 1, 0, nightmares.size())
+	change_dreams(nightmare_index, true)
  
-func change_dreams(index : int):
+func change_dreams(index : int, is_nightmare : bool = false):
 	dream_index = index
 	
 	#remove old dream grid
@@ -112,6 +138,8 @@ func change_dreams(index : int):
 	#add new dream grid
 	if (dream_index == -1):
 		new_dream = dream_transition.instantiate()
+	elif is_nightmare and nightmares.size() > 0:
+		new_dream = nightmares[dream_index].instantiate()
 	elif dreams.size() > 0:
 		new_dream = dreams[dream_index].instantiate()
 	else:
@@ -175,7 +203,10 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		
 	player.set_spawn_position(new_spawn.position, new_spawn.rotation)
 	
-	canvas_layer.get_node("NightmareOverlay").visible = current_cell.is_nightmare
+	if dream_grid.is_nightmare and not in_nightmare:
+		on_entered_nightmare()
+	elif not dream_grid.is_nightmare and in_nightmare:
+		on_left_nightmare()
 	
 	var dream_grid_representation = current_scene_node.get_node("DreamGridRepresentation")
 	if (dream_grid_representation):
@@ -238,3 +269,20 @@ func set_crosshair(visible : bool):
 		canvas_layer.get_node("Crosshair").show()
 	else:
 		canvas_layer.get_node("Crosshair").hide()
+
+func _process(delta):
+	adjust_nightmare_progress(-delta*nightmare_recovery_speed)
+
+func adjust_nightmare_progress(delta : float):
+	nightmare_progress += delta
+	
+	if nightmare_progress < 0:
+		nightmare_progress = 0.0
+	
+	if nightmare_progress > 1.0:
+		nightmare_progress = 0.0
+		canvas_layer.get_node("NightmareBar/ProgressBar").value = nightmare_progress * 100
+		pick_nightmare()
+		return
+	
+	canvas_layer.get_node("NightmareBar/ProgressBar").value = nightmare_progress * 100

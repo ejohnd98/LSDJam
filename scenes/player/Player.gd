@@ -30,7 +30,10 @@ func _ready():
 	default_footstep_sounds = $AudioStreamPlayer.stream
 	default_footstep_volume = $AudioStreamPlayer.volume_db
 	default_footstep_pitch = $AudioStreamPlayer.pitch_scale
-	
+
+func get_forward_vector():
+	return -$CameraPivot.global_transform.basis.z
+
 func get_player_rotation():
 	return $CameraPivot.rotation.y
 

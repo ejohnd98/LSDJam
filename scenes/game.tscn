@@ -161,6 +161,7 @@ render_target_update_mode = 4
 
 [node name="NightmareOverlay" type="TextureRect" parent="SubViewport/CanvasLayer"]
 visible = false
+self_modulate = Color(1, 1, 1, 0.490196)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -297,6 +298,18 @@ theme_override_font_sizes/font_size = 30
 text = "Interact"
 label_settings = SubResource("LabelSettings_56chh")
 horizontal_alignment = 1
+
+[node name="NightmareBar" type="Control" parent="SubViewport/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport/CanvasLayer/NightmareBar"]
+layout_mode = 1
+offset_left = 48.0
+offset_top = 32.0
+offset_right = 304.0
+offset_bottom = 64.0
 
 [node name="transition" type="TextureRect" parent="SubViewport/CanvasLayer"]
 self_modulate = Color(1, 1, 1, 0)

@@ -1,5 +1,10 @@
 extends Control
 
+func _ready():
+	#debug
+	#_on_start_pressed()
+	pass
+
 func _on_start_pressed():
 	hide()
 	
