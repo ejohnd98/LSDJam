@@ -64,6 +64,12 @@ func _unhandled_input(event):
 		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY)
 		$CameraPivot/Camera3D.rotation.x = clamp($CameraPivot/Camera3D.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 
+var held_item_offset
+
+func _process(delta):
+	$HeldItemPivot.global_rotation = $CameraPivot/Camera3D.global_rotation
+	pass
+
 func _physics_process(delta):
 	if is_frozen:
 		return
@@ -124,7 +130,7 @@ func _physics_process(delta):
 		if (not head_bob_anim.is_playing()):
 			head_bob_anim.play("bob")
 			head_bob_anim.get_animation("bob").loop_mode = 1
-		head_bob_anim.speed_scale = 1.25 * move_speed / WALK_SPEED
+		head_bob_anim.speed_scale = (1.1 * move_speed / WALK_SPEED) + 0.1
 		var footstep_volume = default_footstep_volume
 		var footstep_pitch = default_footstep_pitch
 		if (is_sprinting):
@@ -134,6 +140,8 @@ func _physics_process(delta):
 		$AudioStreamPlayer.pitch_scale = footstep_pitch
 	elif head_bob_anim.is_playing():
 		head_bob_anim.get_animation("bob").loop_mode = 0
+		if abs(head_bob_anim.current_animation_position - (head_bob_anim.current_animation_length * 0.5)) < 0.01:
+			head_bob_anim.stop()
 
 	position += velocity * delta
 

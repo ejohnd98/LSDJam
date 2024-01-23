@@ -25,21 +25,26 @@ sky_material = SubResource("PanoramaSkyMaterial_mjkut")
 
 [sub_resource type="Environment" id="Environment_q0gpw"]
 background_mode = 2
+background_energy_multiplier = 0.6
 sky = SubResource("Sky_2tymr")
 ambient_light_source = 2
 ambient_light_color = Color(0, 0.243137, 0.490196, 1)
+reflected_light_source = 1
 tonemap_white = 0.25
 sdfgi_enabled = true
+sdfgi_bounce_feedback = 0.4
 glow_enabled = true
+glow_intensity = 0.3
 glow_bloom = 0.21
 fog_enabled = true
 fog_light_color = Color(0.2, 0.180392, 0.294118, 1)
-fog_light_energy = 2.18
+fog_light_energy = 1.5
 fog_sun_scatter = 0.15
 fog_density = 0.0392
 fog_aerial_perspective = 0.765
 adjustment_enabled = true
-adjustment_contrast = 1.1
+adjustment_brightness = 0.74
+adjustment_contrast = 1.02
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ujr4y"]
 
@@ -91,7 +96,7 @@ shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 light_color = Color(0.819608, 1, 1, 1)
-light_energy = 0.1
+light_energy = 0.04
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -140,7 +145,7 @@ grid_scale = Vector2(1, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
 stream = ExtResource("3_7qun0")
 attenuation_model = 3
-volume_db = -14.0
+volume_db = -24.985
 unit_size = 100.0
 pitch_scale = 0.7
 autoplay = true
@@ -151,7 +156,7 @@ bus = &"SFX"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
 stream = ExtResource("4_lunoj")
 attenuation_model = 3
-volume_db = -14.0
+volume_db = -12.0
 unit_size = 100.0
 autoplay = true
 panning_strength = 0.4
