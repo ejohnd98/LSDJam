@@ -18,13 +18,15 @@ var nightmare_index = -1
 @onready var dream_grid : DreamGrid = get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/DreamGrid")
 @onready var canvas_layer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer")
 @onready var player : LSDPlayer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player")
+@onready var main_menu : MainMenu = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/MainMenu")
 
 var current_scene_node = null
 var next_scene_path = ""
+var can_pause = false
 
 var rng = RandomNumberGenerator.new()
 
-@export var nightmare_recovery_speed = 0.01
+var nightmare_recovery_speed = 0.01
 var nightmare_progress = 0.0
 var in_nightmare = false
 
@@ -37,12 +39,17 @@ func _unhandled_input(event):
 			set_cursor_state(false)
 		else:
 			set_cursor_state(true)
+	if event.is_action_pressed("DebugNightmare"):
+		pick_nightmare()
 
 func set_cursor_state(is_captured : bool):
 	if is_captured:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func set_game_focus(on_player : bool):
+	set_cursor_state(on_player)
 
 func _ready():
 	set_cursor_state(false)
@@ -152,14 +159,15 @@ func change_dreams(index : int, is_nightmare : bool = false):
 	dream_grid.initialize_grid()
 	
 	#load starting scene
-	load_new_scene(dream_grid.get_start_cell().scene_name)
+	load_new_scene(dream_grid.get_start_cell().scene_name, Vector2i.UP, true)
 
 
-func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vector2i.UP):
+func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vector2i.UP, changing_dreams = false):
 	if not $SceneChangeTimer.is_stopped():
 		return
 	
 	player.set_frozen(true)
+	can_pause = false
 	canvas_layer.get_node("UIParent/Compass").set_frozen(true)
 	
 	next_scene_path = SCENE_PATH+new_scene_name+".tscn"
@@ -216,6 +224,10 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	if CameraManagerObject.override_active:
 		CameraManagerObject.reset_camera()
 	
+	if changing_dreams:
+		if player.equipped_item != null and not player.equipped_item.keep_between_dreams:
+			player.unequip_item()
+	
 	transition_obj.finish_transition()
 	GameManager.set_crosshair(true)
 	await transition_obj.transition_end_point
@@ -228,6 +240,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		player.reset_footstep_sounds()
 	
 	player.set_frozen(false)
+	can_pause = true
 	canvas_layer.get_node("UIParent/Compass").set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
 	
@@ -245,6 +258,11 @@ func hide_interact_text():
 func does_key_exist(key : String) -> bool:
 	var current_cell : DreamCell = dream_grid.get_current_cell()
 	return current_cell.dream_keys.has(key) or dream_grid.dream_keys.has(key)
+
+func is_item_equipped(key : String) -> bool:
+	if player.equipped_item != null:
+		return key == player.equipped_item.item_key
+	return false
 
 func is_direction_allowed(direction : Vector2i) -> bool:
 	var current_cell : DreamCell = get_current_cell()

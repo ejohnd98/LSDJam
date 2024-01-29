@@ -140,6 +140,7 @@ _data = {
 }
 
 [node name="SubViewportContainer" type="SubViewportContainer"]
+process_mode = 3
 material = SubResource("ShaderMaterial_6uqtb")
 anchors_preset = 15
 anchor_right = 1.0
@@ -149,6 +150,7 @@ grow_vertical = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="."]
+process_mode = 3
 handle_input_locally = false
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
@@ -156,8 +158,10 @@ size = Vector2i(960, 540)
 render_target_update_mode = 4
 
 [node name="Player" parent="SubViewport" instance=ExtResource("3_t1v70")]
+process_mode = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="SubViewport"]
+process_mode = 3
 
 [node name="NightmareOverlay" type="TextureRect" parent="SubViewport/CanvasLayer"]
 visible = false
@@ -232,6 +236,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_nte5w")
 
 [node name="LevelText" type="Control" parent="SubViewport/CanvasLayer"]
+process_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -300,6 +305,7 @@ label_settings = SubResource("LabelSettings_56chh")
 horizontal_alignment = 1
 
 [node name="NightmareBar" type="Control" parent="SubViewport/CanvasLayer"]
+process_mode = 1
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2

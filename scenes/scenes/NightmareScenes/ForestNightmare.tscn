@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b0bj0pjbr8s5l"]
+[gd_scene load_steps=30 format=3 uid="uid://b0bj0pjbr8s5l"]
 
 [ext_resource type="Texture2D" uid="uid://bm2iusbsw8k8e" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_MoonBurst_Equirect.png" id="1_etvu2"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_vav22"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://c2tu4ks6lbr0u" path="res://sourceModels/Forest/FencePillar.glb" id="14_txfq8"]
 [ext_resource type="PackedScene" uid="uid://b2uisjwpcaqs8" path="res://sourceModels/Forest/FencePost.glb" id="15_68doo"]
 [ext_resource type="PackedScene" uid="uid://dwb8n4ceda6ug" path="res://sourceModels/Forest/FenceBars.glb" id="16_lgqt7"]
+[ext_resource type="PackedScene" uid="uid://dc2p4pd1upg3i" path="res://scenes/items/flashlight.tscn" id="17_iqjfg"]
 [ext_resource type="PackedScene" uid="uid://c88knq7ek0x5y" path="res://sourceModels/Forest/ForestBench.glb" id="17_qjkvn"]
 [ext_resource type="PackedScene" uid="uid://bh34qkxql6bh" path="res://sourceModels/Forest/ForestBench2.glb" id="19_whrx3"]
 
@@ -377,5 +378,8 @@ transform = Transform3D(0.994602, -0.00297752, 0.103724, 0.00376882, 0.999965, -
 [node name="DistortionBubble" parent="." instance=ExtResource("6_wkjik")]
 transform = Transform3D(7.64737, 0, -2.34899, 0, 8, 0, 2.34899, 0, 7.64737, 25.0532, -0.130844, -62.1122)
 visible = false
+
+[node name="PlayerItem" parent="." instance=ExtResource("17_iqjfg")]
+transform = Transform3D(-0.990509, 0, 0.137444, 0, 1, 0, -0.137444, 0, -0.990509, 16.5627, 2.30228, -43.6237)
 
 [editable path="SceneTrigger/DistortionBubble2"]

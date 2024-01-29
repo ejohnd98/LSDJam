@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc06vydyxrumr"]
+
+[ext_resource type="Script" path="res://scenes/ui/ModulateFade.gd" id="1_fk1vq"]
+
+[sub_resource type="Curve" id="Curve_oivag"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="ModulateFade" type="Node"]
+script = ExtResource("1_fk1vq")
+fade_curve = SubResource("Curve_oivag")

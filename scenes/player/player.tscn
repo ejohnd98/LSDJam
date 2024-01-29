@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cb8ennhmak0c6"]
+[gd_scene load_steps=8 format=3 uid="uid://cb8ennhmak0c6"]
 
 [ext_resource type="Script" path="res://scenes/player/Player.gd" id="1_v6pu0"]
 [ext_resource type="AudioStream" uid="uid://bmr1qg0f2mye1" path="res://scenes/player/footstep_sounds.tres" id="2_scigr"]
@@ -90,9 +90,6 @@ _data = {
 "bob": SubResource("Animation_5o4s3")
 }
 
-[sub_resource type="BoxMesh" id="BoxMesh_s1qkr"]
-size = Vector3(0.1, 0.1, 0.35)
-
 [node name="Player" type="RigidBody3D" groups=["player"]]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
@@ -123,16 +120,7 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.385, 0)
 
 [node name="HeldItem" type="Node3D" parent="HeldItemPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.358748, -0.262858, -0.277654)
-
-[node name="Flashlight" type="MeshInstance3D" parent="HeldItemPivot/HeldItem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
-mesh = SubResource("BoxMesh_s1qkr")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="HeldItemPivot/HeldItem/Flashlight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.180296)
-light_energy = 4.5
-spot_range = 11.0
+transform = Transform3D(0.999639, 0, 0.0268748, 0.00159151, 0.998245, -0.0591979, -0.0268277, 0.0592193, 0.997884, 0.360696, -0.290567, -0.416431)
 
 [node name="JumpTimer" type="Timer" parent="."]
 wait_time = 0.2

@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dc2p4pd1upg3i"]
+
+[ext_resource type="Script" path="res://scripts/PlayerItem.gd" id="1_taw5w"]
+[ext_resource type="Texture2D" uid="uid://y5mapwqofa5p" path="res://textures/flashlight_light.png" id="2_ncrgw"]
+[ext_resource type="PackedScene" uid="uid://dsik30if3a23x" path="res://scenes/interactables/interactable_object.tscn" id="2_v6ch3"]
+[ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="2_yijkd"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_evhs4"]
+top_radius = 0.045
+bottom_radius = 0.045
+height = 0.4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ogg3o"]
+top_radius = 0.07
+bottom_radius = 0.03
+height = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_uuft1"]
+radius = 0.4
+
+[node name="PlayerItem" type="Node3D"]
+script = ExtResource("1_taw5w")
+item_key = "flashlight"
+
+[node name="Flashlight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_evhs4")
+
+[node name="Flashlight2" type="MeshInstance3D" parent="Flashlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.151749, 6.63316e-09)
+mesh = SubResource("CylinderMesh_ogg3o")
+skeleton = NodePath("../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Flashlight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.206933, 9.04534e-09)
+light_energy = 6.0
+light_projector = ExtResource("2_ncrgw")
+shadow_enabled = true
+spot_range = 19.0
+spot_angle = 60.0
+
+[node name="InteractableObject" parent="." instance=ExtResource("2_v6ch3")]
+one_shot = true
+interact_prompt = "Pick Up Flashlight"
+interact_sound = ExtResource("2_yijkd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableObject"]
+shape = SubResource("SphereShape3D_uuft1")
+
+[connection signal="on_equip" from="." to="." method="_on_on_equip"]
+[connection signal="on_unequip" from="." to="." method="_on_on_unequip"]
+[connection signal="on_interact" from="InteractableObject" to="." method="_on_interactable_object_interact"]

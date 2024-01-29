@@ -1,8 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://bhbcjyp88n1q0"]
+[gd_scene load_steps=14 format=3 uid="uid://bhbcjyp88n1q0"]
 
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_fu1d6"]
 [ext_resource type="Texture2D" uid="uid://ba2dveqpuegd3" path="res://textures/UI/logo placeholder.png" id="1_y8w4d"]
 [ext_resource type="FontFile" uid="uid://vd80c5wwb0pb" path="res://textures/fonts/atwriter.ttf" id="2_0idkb"]
+[ext_resource type="Script" path="res://scenes/ui/MenuButtonHelper.gd" id="4_pb48p"]
+[ext_resource type="Script" path="res://scenes/ui/SettingsMenu.gd" id="5_1iy0v"]
+[ext_resource type="PackedScene" uid="uid://cc06vydyxrumr" path="res://scenes/ui/modulate_fade.tscn" id="5_5q8g0"]
+[ext_resource type="AudioStream" uid="uid://brg1nf0dfekdj" path="res://sounds/various_ambiences/sad ending.ogg" id="6_4ly21"]
 
 [sub_resource type="Theme" id="Theme_8t71l"]
 default_font = ExtResource("2_0idkb")
@@ -41,6 +45,7 @@ content_margin_right = 10.0
 content_margin_bottom = 10.0
 
 [node name="MainMenu" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,7 +54,25 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fu1d6")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseTint" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.666667)
+script = ExtResource("4_pb48p")
+
+[node name="MainMenuButtons" type="VBoxContainer" parent="."]
 layout_mode = 1
 offset_left = 44.0
 offset_top = 117.0
@@ -57,12 +80,44 @@ offset_right = 309.0
 offset_bottom = 423.0
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MainMenuButtons"]
+visible = false
 layout_mode = 2
 texture = ExtResource("1_y8w4d")
 expand_mode = 5
 
-[node name="Start" type="Button" parent="VBoxContainer"]
+[node name="Resume" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtwfb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mgcuk")
+action_mode = 0
+text = "Resume"
+alignment = 0
+script = ExtResource("4_pb48p")
+on_main_menu = false
+
+[node name="Main Menu" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xhrvv")
+disabled = true
+action_mode = 0
+text = "Main Menu"
+alignment = 0
+script = ExtResource("4_pb48p")
+on_main_menu = false
+
+[node name="Start" type="Button" parent="MainMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
 theme = SubResource("Theme_8t71l")
@@ -75,8 +130,10 @@ action_mode = 0
 text = "Start Game
 "
 alignment = 0
+script = ExtResource("4_pb48p")
+on_pause_menu = false
 
-[node name="Settings" type="Button" parent="VBoxContainer"]
+[node name="Settings" type="Button" parent="MainMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
 theme = SubResource("Theme_8t71l")
@@ -85,12 +142,12 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_xhrvv")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_xhrvv")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_xhrvv")
-disabled = true
 action_mode = 0
 text = "Settings"
 alignment = 0
+script = ExtResource("4_pb48p")
 
-[node name="Exit" type="Button" parent="VBoxContainer"]
+[node name="Exit" type="Button" parent="MainMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
 theme = SubResource("Theme_8t71l")
@@ -103,6 +160,104 @@ action_mode = 0
 text = "Exit Game
 "
 alignment = 0
+script = ExtResource("4_pb48p")
 
-[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[node name="ModulateFade" parent="MainMenuButtons" instance=ExtResource("5_5q8g0")]
+length = 0.25
+
+[node name="Settings" type="VBoxContainer" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+offset_left = 44.0
+offset_top = 117.0
+offset_right = 913.0
+offset_bottom = 423.0
+alignment = 1
+script = ExtResource("5_1iy0v")
+
+[node name="Label" type="Label" parent="Settings"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Settings"
+
+[node name="Back" type="Button" parent="Settings"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtwfb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mgcuk")
+action_mode = 0
+text = "Back"
+alignment = 0
+
+[node name="Mouse Sensitivity" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+
+[node name="Label" type="Label" parent="Settings/Mouse Sensitivity"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.25
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Mouse Sensitivity"
+
+[node name="MouseSensitivity" type="HSlider" parent="Settings/Mouse Sensitivity"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 2.0
+step = 0.2
+value = 0.8
+tick_count = 11
+ticks_on_borders = true
+
+[node name="Volume" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+
+[node name="Label" type="Label" parent="Settings/Volume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.25
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Volume"
+
+[node name="Volume" type="HSlider" parent="Settings/Volume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.0
+value = 0.8
+tick_count = 21
+ticks_on_borders = true
+
+[node name="ModulateFade" parent="Settings" instance=ExtResource("5_5q8g0")]
+length = 0.25
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_4ly21")
+
+[node name="ModulateFade" parent="." instance=ExtResource("5_5q8g0")]
+
+[connection signal="pressed" from="MainMenuButtons/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="MainMenuButtons/Main Menu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="MainMenuButtons/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MainMenuButtons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MainMenuButtons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Settings/Back" to="." method="_on_settings_pressed"]

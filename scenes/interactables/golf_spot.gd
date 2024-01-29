@@ -20,8 +20,9 @@ func _unhandled_input(event):
 	if not is_active:
 		return
 	
-	if event.is_action_pressed("Escape"):
-		end_golf()
+	#todo, do something else here
+	#if event.is_action_pressed("Escape"):
+		#end_golf()
 	
 	if not has_swung and event.is_action_pressed("Jump") or event.is_action_pressed("Interact"):
 		swing_club()

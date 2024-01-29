@@ -26,6 +26,8 @@ var override_camera_handling = false
 var current_interactable : Area3D = null
 signal interactable_changed(interactable)
 
+var equipped_item : PlayerItem = null
+
 func _ready():
 	default_footstep_sounds = $AudioStreamPlayer.stream
 	default_footstep_volume = $AudioStreamPlayer.volume_db
@@ -60,8 +62,8 @@ func _unhandled_input(event):
 		try_interact()
 		
 	if event is InputEventMouseMotion and not override_camera_handling:
-		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY)
-		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY)
+		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY * (0.2 + PlayerSettings.mouse_sensitivity * 2.0))
+		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY * (0.2 + PlayerSettings.mouse_sensitivity * 2.0))
 		$CameraPivot/Camera3D.rotation.x = clamp($CameraPivot/Camera3D.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 
 var held_item_offset
@@ -149,6 +151,26 @@ func on_footstep():
 	if ($AudioStreamPlayer/SoundCooldown.is_stopped() and is_grounded):
 		$AudioStreamPlayer.play()
 		$AudioStreamPlayer/SoundCooldown.start()
+
+func equip_item(item_to_equip : PlayerItem):
+	if equipped_item != null:
+		#for now, delete item
+		equipped_item.on_unequip.emit()
+		equipped_item.queue_free()
+	
+	item_to_equip.reparent($HeldItemPivot/HeldItem)
+	item_to_equip.position = Vector3.ZERO
+	item_to_equip.rotation = Vector3.ZERO
+	item_to_equip.on_equip.emit()
+	equipped_item = item_to_equip
+
+func unequip_item():
+	if equipped_item == null:
+		return
+	
+	equipped_item.on_unequip.emit()
+	equipped_item.queue_free()
+	equipped_item = null
 
 func set_frozen (frozen):
 	$CollisionShape3D.disabled = frozen
