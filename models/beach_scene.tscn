@@ -1,0 +1,137 @@
+[gd_scene load_steps=12 format=3 uid="uid://7tve255gynel"]
+
+[ext_resource type="PackedScene" uid="uid://d2qbiurmvm6x0" path="res://sourceModels/beach/Beach.glb" id="1_q7xby"]
+[ext_resource type="Texture2D" uid="uid://dtqxw5u0hov77" path="res://sourceModels/Golf/golf_water_normal.png" id="2_1xo5k"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/ScrollingUV.gd" id="3_utaar"]
+[ext_resource type="PackedScene" uid="uid://dnetq8wdqajsf" path="res://sourceModels/beach/BeachBar.glb" id="4_ddne6"]
+[ext_resource type="AudioStream" uid="uid://bqd47qlakf5ci" path="res://sounds/music/tiki_radio.ogg" id="5_s0sxo"]
+[ext_resource type="PackedScene" uid="uid://36q0bb1gffqg" path="res://sourceModels/beach/BeachDock.glb" id="6_jek7j"]
+[ext_resource type="PackedScene" uid="uid://c3pl77hj45q5i" path="res://sourceModels/beach/Palm3.glb" id="7_mikh0"]
+[ext_resource type="PackedScene" uid="uid://dp6b7k1u56154" path="res://sourceModels/beach/Palm2.glb" id="8_76bbb"]
+[ext_resource type="PackedScene" uid="uid://cbd8rl0oxgs1r" path="res://sourceModels/beach/Palm1.glb" id="9_gci6p"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gyk1b"]
+size = Vector2(800, 800)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pl0gy"]
+transparency = 1
+albedo_color = Color(0.121569, 0.172549, 0.301961, 0.239216)
+roughness = 0.2
+normal_enabled = true
+normal_texture = ExtResource("2_1xo5k")
+clearcoat = 0.32
+clearcoat_roughness = 0.1
+subsurf_scatter_strength = 0.52
+subsurf_scatter_skin_mode = true
+refraction_scale = 0.02
+detail_blend_mode = 2
+uv1_scale = Vector3(30, 30, 30)
+disable_receive_shadows = true
+
+[node name="Beach2" instance=ExtResource("1_q7xby")]
+
+[node name="Water" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(-0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 49.74, 0.121316, 7.21418)
+mesh = SubResource("PlaneMesh_gyk1b")
+surface_material_override/0 = SubResource("StandardMaterial3D_pl0gy")
+script = ExtResource("3_utaar")
+
+[node name="Water2" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(-0.988486, 0, -0.151313, 0, 1, 0, 0.151313, 0, -0.988486, 49.74, 0.0616182, 7.21418)
+mesh = SubResource("PlaneMesh_gyk1b")
+surface_material_override/0 = SubResource("StandardMaterial3D_pl0gy")
+script = ExtResource("3_utaar")
+
+[node name="BeachBar" parent="." index="4" instance=ExtResource("4_ddne6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.42811, 0.0755346, 38.6826)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="BeachBar" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16558, 1.75662, -1.14761)
+stream = ExtResource("5_s0sxo")
+volume_db = -10.0
+autoplay = true
+panning_strength = 0.75
+
+[node name="BeachDock" parent="." index="5" instance=ExtResource("6_jek7j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9761, 0.319543, 9.0832)
+
+[node name="Palm32" parent="." index="6" instance=ExtResource("7_mikh0")]
+transform = Transform3D(-0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, -0.258819, -49.1812, 0.189816, 30.2769)
+
+[node name="Palm33" parent="." index="7" instance=ExtResource("7_mikh0")]
+transform = Transform3D(0.00556757, 0, -0.999985, 0, 1, 0, 0.999985, 0, 0.00556757, -61.0616, 0.189816, 19.5049)
+
+[node name="Palm22" parent="." index="8" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.0364867, 0, -0.999334, 0, 1, 0, 0.999334, 0, 0.0364867, -4.20626, 0.189816, 29.8411)
+
+[node name="Palm23" parent="." index="9" instance=ExtResource("8_76bbb")]
+transform = Transform3D(-0.350404, 0, -0.936599, 0, 1, 0, 0.936599, 0, -0.350404, -19.5171, 0.189816, 14.774)
+
+[node name="Palm24" parent="." index="10" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.361283, 0, -0.932456, 0, 1, 0, 0.932456, 0, 0.361283, 41.991, 0.189816, 13.0427)
+
+[node name="Palm25" parent="." index="11" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.360081, -0.0294396, -0.932456, 0.0814862, 0.996674, -1.86265e-09, 0.929355, -0.0759824, 0.361283, 63.4772, 0.189816, 19.7785)
+
+[node name="Palm26" parent="." index="12" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.360081, -0.0294396, -0.932456, 0.0814862, 0.996674, -1.86265e-09, 0.929355, -0.0759824, 0.361283, 40.9621, 1.29265, 42.9682)
+
+[node name="Palm34" parent="." index="13" instance=ExtResource("7_mikh0")]
+transform = Transform3D(0.385326, 0, -0.92278, 0, 1, 0, 0.92278, 0, 0.385326, 60.9726, -1.28882, 47.0408)
+
+[node name="Palm12" parent="." index="14" instance=ExtResource("9_gci6p")]
+transform = Transform3D(0.583405, 0.181789, 0.791576, -0.297491, 0.954724, 0, -0.755737, -0.235487, 0.611071, 44.4877, 0.186612, 11.9303)
+
+[node name="Palm13" parent="." index="15" instance=ExtResource("9_gci6p")]
+transform = Transform3D(-0.132291, 0, -0.991211, 0, 1, 0, 0.991211, 0, -0.132291, -23.2183, 0.189815, 14.53)
+
+[node name="Palm27" parent="." index="16" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.0182725, 0, -0.999833, 0, 1, 0, 0.999833, 0, 0.0182725, -62.448, 0.189816, 19.2964)
+
+[node name="Palm28" parent="." index="17" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.171486, -0.037017, -0.984491, 0.211001, 0.977486, 0, 0.962326, -0.207728, 0.175435, -43.098, -0.302333, 34.3034)
+
+[node name="Palm14" parent="." index="18" instance=ExtResource("9_gci6p")]
+transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, 2.85587, -0.548826, 53.6255)
+
+[node name="Palm15" parent="." index="19" instance=ExtResource("9_gci6p")]
+transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, -28.3177, -0.548826, 55.8379)
+
+[node name="Palm16" parent="." index="20" instance=ExtResource("9_gci6p")]
+transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, -58.7953, -0.548826, 54.6051)
+
+[node name="Palm17" parent="." index="21" instance=ExtResource("9_gci6p")]
+transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, -39.5152, 1.21305, 52.6942)
+
+[node name="Palm18" parent="." index="22" instance=ExtResource("9_gci6p")]
+transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, -13.6303, -1.7466, 56.1502)
+
+[node name="Palm19" parent="." index="23" instance=ExtResource("9_gci6p")]
+transform = Transform3D(0.0982776, 0, -0.995159, 0, 1, 0, 0.995159, 0, 0.0982776, 19.6644, 0.338629, 53.343)
+
+[node name="Palm20" parent="." index="24" instance=ExtResource("9_gci6p")]
+transform = Transform3D(0.0982776, 0, -0.995159, 0, 1, 0, 0.995159, 0, 0.0982776, 42.9442, 1.06114, 54.5003)
+
+[node name="Palm21" parent="." index="25" instance=ExtResource("9_gci6p")]
+transform = Transform3D(0.0982776, 0, -0.995159, 0, 1, 0, 0.995159, 0, 0.0982776, 60.0601, -0.548826, 52.81)
+
+[node name="Palm29" parent="." index="26" instance=ExtResource("8_76bbb")]
+transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, -18.6274, -3.04933, 51.6172)
+
+[node name="Palm37" parent="." index="27" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.161346, 0, -0.986898, 0, 1, 0, 0.986898, 0, 0.161346, -5.0981, -0.397859, 51.6172)
+
+[node name="Palm30" parent="." index="28" instance=ExtResource("8_76bbb")]
+transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, -49.549, -0.892813, 51.6172)
+
+[node name="Palm31" parent="." index="29" instance=ExtResource("8_76bbb")]
+transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, -67.816, -0.892813, 51.6172)
+
+[node name="Palm35" parent="." index="30" instance=ExtResource("8_76bbb")]
+transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, 33.4257, -0.892813, 51.6172)
+
+[node name="Palm36" parent="." index="31" instance=ExtResource("8_76bbb")]
+transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, 53.6414, -2.49333, 51.6172)
+
+[node name="Palm38" parent="." index="32" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.0767887, 0, -0.997047, 0, 1, 0, 0.997047, 0, 0.0767887, 10.7582, -0.130416, 10.7477)

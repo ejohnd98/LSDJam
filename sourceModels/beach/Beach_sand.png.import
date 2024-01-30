@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmbvhkwa5c4i1"
-path.s3tc="res://.godot/imported/AllSkyFree_Sky_ClearBlueSky_Equirect.png-fa44261b10d87cd53360ef82fd0767ad.s3tc.ctex"
+uid="uid://82b3krtireo4"
+path.s3tc="res://.godot/imported/Beach_sand.png-32220ea6baa68b7ab2ddf8f16f397186.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ClearBlueSky_Equirect.png"
-dest_files=["res://.godot/imported/AllSkyFree_Sky_ClearBlueSky_Equirect.png-fa44261b10d87cd53360ef82fd0767ad.s3tc.ctex"]
+source_file="res://sourceModels/beach/Beach_sand.png"
+dest_files=["res://.godot/imported/Beach_sand.png-32220ea6baa68b7ab2ddf8f16f397186.s3tc.ctex"]
 
 [params]
 

@@ -1,0 +1,90 @@
+[gd_scene load_steps=3 format=3 uid="uid://cryhc7oytigkb"]
+
+[ext_resource type="Script" path="res://scenes/scenes/DreamGrids/DreamGrid.gd" id="1_pdtv1"]
+[ext_resource type="PackedScene" uid="uid://cyndvm76up426" path="res://scenes/scenes/DreamGrids/dream_cell.tscn" id="2_fcki6"]
+
+[node name="DreamGrid" type="Control"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+script = ExtResource("1_pdtv1")
+dream_name = "Beach"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 200.0
+grow_horizontal = 0
+columns = 3
+
+[node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_fcki6")]
+layout_mode = 2
+scene_name = "DreamScenes/Beach"
+is_goal = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_fcki6")]
+layout_mode = 2
+scene_name = "DreamScenes/Beach"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_fcki6")]
+layout_mode = 2
+scene_name = "DreamScenes/Beach"
+is_nightmare = true
+is_dream_transition = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_fcki6")]
+layout_mode = 2
+scene_name = "DreamScenes/Beach"
+is_nightmare = true
+is_dream_transition = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell7" parent="GridContainer" instance=ExtResource("2_fcki6")]
+layout_mode = 2
+scene_name = "DreamScenes/Beach"
+is_start = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell8" parent="GridContainer" instance=ExtResource("2_fcki6")]
+layout_mode = 2
+scene_name = "DreamScenes/Beach"
+has_key = true
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true

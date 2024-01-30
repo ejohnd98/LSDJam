@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3cji1mbgackj"]
+[gd_scene load_steps=10 format=3 uid="uid://b3cji1mbgackj"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_o0mgw"]
 [ext_resource type="PackedScene" uid="uid://cvg57vh1pq5pu" path="res://scenes/scenes/DreamGrids/dream_grid_forest.tscn" id="2_5j5jn"]
 [ext_resource type="PackedScene" uid="uid://h7gtys67scvy" path="res://scenes/scenes/DreamGrids/dream_grid_golf.tscn" id="2_7cvka"]
 [ext_resource type="PackedScene" uid="uid://bre61jmijpbpb" path="res://scenes/scenes/DreamGrids/dream_grid_museum.tscn" id="2_12uwn"]
+[ext_resource type="PackedScene" uid="uid://cryhc7oytigkb" path="res://scenes/scenes/DreamGrids/dream_grid_beach.tscn" id="2_17qwh"]
 [ext_resource type="PackedScene" uid="uid://ci5k25a46k7ss" path="res://scenes/scenes/DreamGrids/dream_grid_goal_transition.tscn" id="2_m3dlw"]
 [ext_resource type="PackedScene" uid="uid://sbpohi7ioxm5" path="res://scenes/scenes/DreamGrids/dream_grid_galaxy01.tscn" id="2_nbwkb"]
 [ext_resource type="PackedScene" uid="uid://btkn6g45g27pt" path="res://scenes/scenes/DreamGrids/dream_grid_theater.tscn" id="2_qpm1d"]
@@ -11,7 +12,7 @@
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_o0mgw")
-dreams = Array[PackedScene]([ExtResource("2_5j5jn"), ExtResource("2_7cvka"), ExtResource("2_12uwn"), ExtResource("2_nbwkb"), ExtResource("2_qpm1d")])
+dreams = Array[PackedScene]([ExtResource("2_17qwh"), ExtResource("2_5j5jn"), ExtResource("2_7cvka"), ExtResource("2_12uwn"), ExtResource("2_nbwkb"), ExtResource("2_qpm1d")])
 nightmares = Array[PackedScene]([ExtResource("7_t8n6k")])
 dream_transition = ExtResource("2_m3dlw")
 

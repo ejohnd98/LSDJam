@@ -1,0 +1,212 @@
+[gd_scene load_steps=21 format=3 uid="uid://c4dovvdxb8nlw"]
+
+[ext_resource type="Texture2D" uid="uid://dmbvhkwa5c4i1" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ClearBlueSky_Equirect.png" id="1_dkn17"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_s85f1"]
+[ext_resource type="AudioStream" uid="uid://ch7i2uabfi4o6" path="res://sounds/various_ambiences/beach.ogg" id="3_k2gho"]
+[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="4_p7rqk"]
+[ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="5_so53f"]
+[ext_resource type="PackedScene" uid="uid://btmldfxcfpybj" path="res://scenes/props/distortion_bubble.tscn" id="6_bb3hg"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="7_1cfl6"]
+[ext_resource type="PackedScene" uid="uid://7tve255gynel" path="res://models/beach_scene.tscn" id="8_s6ehm"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ho3ki"]
+panorama = ExtResource("1_dkn17")
+
+[sub_resource type="Sky" id="Sky_2tymr"]
+sky_material = SubResource("PanoramaSkyMaterial_ho3ki")
+
+[sub_resource type="Environment" id="Environment_u80vi"]
+background_mode = 2
+sky = SubResource("Sky_2tymr")
+ambient_light_source = 2
+reflected_light_source = 2
+tonemap_white = 0.25
+sdfgi_enabled = true
+glow_enabled = true
+glow_strength = 0.88
+glow_bloom = 0.31
+fog_enabled = true
+fog_light_color = Color(0.545098, 0.729412, 1, 1)
+fog_light_energy = 3.9
+fog_density = 0.004
+fog_aerial_perspective = 1.0
+fog_height_density = 1.1319
+adjustment_enabled = true
+adjustment_brightness = 0.82
+adjustment_contrast = 1.49
+adjustment_saturation = 1.13
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ujr4y"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohmkj"]
+noise = SubResource("FastNoiseLite_ujr4y")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0d0y"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e7q65"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtsqx"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckpgi"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_iorx3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omxp6"]
+render_priority = 0
+shader = ExtResource("7_1cfl6")
+shader_parameter/distortionView = 0.03
+shader_parameter/speedView = 0.1
+shader_parameter/static_intensity = 0.3
+shader_parameter/tintColor = Color(0.827451, 0.764706, 0.968627, 1)
+shader_parameter/fesnelAmount = 1.2
+shader_parameter/fresnelTintOffset = 1.49012e-08
+shader_parameter/distortionVertex = 0.01
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[node name="Beach" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_u80vi")
+
+[node name="PlayerSpawnUp" type="Node3D" parent="."]
+transform = Transform3D(0.999837, 0, 0.0180807, 0, 1, 0, -0.0180807, 0, 0.999837, 19.3114, 1.41266, -40.8126)
+
+[node name="PlayerSpawnDown" type="Node3D" parent="."]
+transform = Transform3D(-0.99278, 0, 0.119946, 0, 1, 0, -0.119946, 0, -0.99278, 17.6537, 0.46253, 38.5751)
+
+[node name="PlayerSpawnRight" type="Node3D" parent="."]
+transform = Transform3D(0.0463046, 0, -0.998927, 0, 1, 0, 0.998927, 0, 0.0463046, 41.8516, 0.238019, -10.2101)
+
+[node name="PlayerSpawnLeft" type="Node3D" parent="."]
+transform = Transform3D(0.024554, 0, 0.999699, 0, 1, 0, -0.999699, 0, 0.024554, -7.23877, 0.824788, -15.1598)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 18.3417, 1.617, 3.90147)
+size = Vector3(1.1, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_m0d0y")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+operation = 2
+size = Vector3(1, 1, 0.45)
+material = SubResource("StandardMaterial3D_e7q65")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_xtsqx")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_ckpgi")
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("2_s85f1")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 18.3417, 1.637, 3.87379)
+grid_scale = Vector2(1, 1)
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1.13373)
+stream = ExtResource("3_k2gho")
+attenuation_model = 3
+volume_db = -6.0
+unit_size = 100.0
+autoplay = true
+panning_strength = 0.4
+bus = &"SFX"
+
+[node name="SceneTrigger" parent="." instance=ExtResource("4_p7rqk")]
+transform = Transform3D(-0.999533, 0, 0.0305728, 0, 1, 0, -0.0305728, 0, -0.999533, 17.2993, 0.520702, 44.8224)
+grid_direction = Vector2i(0, -1)
+proximity_trigger = true
+show_mesh = false
+show_arrow = false
+start_dist = 5.0
+
+[node name="GradientBox" parent="SceneTrigger" instance=ExtResource("5_so53f")]
+transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
+visible = false
+
+[node name="DistortionBubble2" parent="SceneTrigger" instance=ExtResource("6_bb3hg")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, -0.240483, -5.76582)
+
+[node name="MeshInstance3D" parent="SceneTrigger/DistortionBubble2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0128136, 0, 0.418964)
+surface_material_override/0 = SubResource("ShaderMaterial_omxp6")
+
+[node name="SceneTrigger2" parent="." instance=ExtResource("4_p7rqk")]
+transform = Transform3D(0.0305561, 0, -0.999533, 0, 1, 0, 0.999533, 0, 0.0305561, 44.4631, 0.496823, -10.2609)
+grid_direction = Vector2i(-1, 0)
+proximity_trigger = true
+show_mesh = false
+show_arrow = false
+start_dist = 5.0
+
+[node name="GradientBox" parent="SceneTrigger2" instance=ExtResource("5_so53f")]
+transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
+visible = false
+
+[node name="DistortionBubble2" parent="SceneTrigger2" instance=ExtResource("6_bb3hg")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.0549889, -0.240483, -3.96695)
+
+[node name="SceneTrigger3" parent="." instance=ExtResource("4_p7rqk")]
+transform = Transform3D(0.999724, 0, 0.0234727, 0, 1, 0, -0.0234727, 0, 0.999724, 19.3592, 0.464749, -47.9846)
+proximity_trigger = true
+show_mesh = false
+show_arrow = false
+start_dist = 5.0
+
+[node name="GradientBox" parent="SceneTrigger3" instance=ExtResource("5_so53f")]
+transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 3.41252)
+visible = false
+
+[node name="DistortionBubble2" parent="SceneTrigger3" instance=ExtResource("6_bb3hg")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.0365238, -0.240483, -4.21023)
+
+[node name="SceneTrigger4" parent="." instance=ExtResource("4_p7rqk")]
+transform = Transform3D(-0.0247461, 0, 0.999693, 0, 1, 0, -0.999693, 0, -0.0247461, -11.2837, 0.827267, -15.0418)
+grid_direction = Vector2i(1, 0)
+proximity_trigger = true
+show_mesh = false
+show_arrow = false
+start_dist = 5.0
+
+[node name="GradientBox" parent="SceneTrigger4" instance=ExtResource("5_so53f")]
+transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
+visible = false
+
+[node name="DistortionBubble2" parent="SceneTrigger4" instance=ExtResource("6_bb3hg")]
+transform = Transform3D(1, 0, -5.58794e-09, 0, 2, 0, 5.58794e-09, 0, 1, -0.117889, -0.320428, -1.00335)
+
+[node name="DistortionBubble" parent="." instance=ExtResource("6_bb3hg")]
+transform = Transform3D(7.64737, 0, -2.34899, 0, 8, 0, 2.34899, 0, 7.64737, 25.0532, -0.130844, -62.1122)
+visible = false
+
+[node name="ForcedTriggers" type="Node3D" parent="."]
+
+[node name="Beach2" parent="." instance=ExtResource("8_s6ehm")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[editable path="SceneTrigger/DistortionBubble2"]
