@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c4dovvdxb8nlw"]
+[gd_scene load_steps=24 format=3 uid="uid://c4dovvdxb8nlw"]
 
 [ext_resource type="Texture2D" uid="uid://dmbvhkwa5c4i1" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ClearBlueSky_Equirect.png" id="1_dkn17"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_s85f1"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://btmldfxcfpybj" path="res://scenes/props/distortion_bubble.tscn" id="6_bb3hg"]
 [ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="7_1cfl6"]
 [ext_resource type="PackedScene" uid="uid://7tve255gynel" path="res://models/beach_scene.tscn" id="8_s6ehm"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="9_0cnfh"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="10_f1rag"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ho3ki"]
 panorama = ExtResource("1_dkn17")
@@ -17,8 +19,8 @@ sky_material = SubResource("PanoramaSkyMaterial_ho3ki")
 
 [sub_resource type="Environment" id="Environment_u80vi"]
 background_mode = 2
+background_energy_multiplier = 1.1
 sky = SubResource("Sky_2tymr")
-ambient_light_source = 2
 reflected_light_source = 2
 tonemap_white = 0.25
 sdfgi_enabled = true
@@ -32,9 +34,9 @@ fog_density = 0.004
 fog_aerial_perspective = 1.0
 fog_height_density = 1.1319
 adjustment_enabled = true
-adjustment_brightness = 0.82
-adjustment_contrast = 1.49
-adjustment_saturation = 1.13
+adjustment_brightness = 0.9
+adjustment_contrast = 1.25
+adjustment_saturation = 1.64
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ujr4y"]
 
@@ -81,10 +83,14 @@ shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ee70u"]
+size = Vector3(220, 5, 220)
+
 [node name="Beach" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_energy = 1.2
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -97,13 +103,13 @@ transform = Transform3D(0.999837, 0, 0.0180807, 0, 1, 0, -0.0180807, 0, 0.999837
 transform = Transform3D(-0.99278, 0, 0.119946, 0, 1, 0, -0.119946, 0, -0.99278, 17.6537, 0.46253, 38.5751)
 
 [node name="PlayerSpawnRight" type="Node3D" parent="."]
-transform = Transform3D(0.0463046, 0, -0.998927, 0, 1, 0, 0.998927, 0, 0.0463046, 41.8516, 0.238019, -10.2101)
+transform = Transform3D(-0.0463045, 0, 0.998927, 0, 1, 0, -0.998927, 0, -0.0463045, -4.68594, 0.760589, -15.0586)
 
 [node name="PlayerSpawnLeft" type="Node3D" parent="."]
 transform = Transform3D(0.024554, 0, 0.999699, 0, 1, 0, -0.999699, 0, 0.024554, -7.23877, 0.824788, -15.1598)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 18.3417, 1.617, 3.90147)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 15.7301, 1.617, -11.7602)
 size = Vector3(1.1, 1.1, 0.15)
 material = SubResource("StandardMaterial3D_m0d0y")
 
@@ -124,7 +130,7 @@ size = Vector3(0.05, 1.1, 0.15)
 material = SubResource("StandardMaterial3D_ckpgi")
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_s85f1")]
-transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 18.3417, 1.637, 3.87379)
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 15.7301, 1.637, -11.7879)
 grid_scale = Vector2(1, 1)
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
@@ -151,6 +157,7 @@ visible = false
 
 [node name="DistortionBubble2" parent="SceneTrigger" instance=ExtResource("6_bb3hg")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, -0.240483, -5.76582)
+visible = false
 
 [node name="MeshInstance3D" parent="SceneTrigger/DistortionBubble2" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0128136, 0, 0.418964)
@@ -170,6 +177,7 @@ visible = false
 
 [node name="DistortionBubble2" parent="SceneTrigger2" instance=ExtResource("6_bb3hg")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.0549889, -0.240483, -3.96695)
+visible = false
 
 [node name="SceneTrigger3" parent="." instance=ExtResource("4_p7rqk")]
 transform = Transform3D(0.999724, 0, 0.0234727, 0, 1, 0, -0.0234727, 0, 0.999724, 19.3592, 0.464749, -47.9846)
@@ -184,9 +192,10 @@ visible = false
 
 [node name="DistortionBubble2" parent="SceneTrigger3" instance=ExtResource("6_bb3hg")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.0365238, -0.240483, -4.21023)
+visible = false
 
 [node name="SceneTrigger4" parent="." instance=ExtResource("4_p7rqk")]
-transform = Transform3D(-0.0247461, 0, 0.999693, 0, 1, 0, -0.999693, 0, -0.0247461, -11.2837, 0.827267, -15.0418)
+transform = Transform3D(-0.0247461, 0, 0.999693, 0, 1, 0, -0.999693, 0, -0.0247461, -7.88735, 0.827267, -15.1259)
 grid_direction = Vector2i(1, 0)
 proximity_trigger = true
 show_mesh = false
@@ -199,6 +208,7 @@ visible = false
 
 [node name="DistortionBubble2" parent="SceneTrigger4" instance=ExtResource("6_bb3hg")]
 transform = Transform3D(1, 0, -5.58794e-09, 0, 2, 0, 5.58794e-09, 0, 1, -0.117889, -0.320428, -1.00335)
+visible = false
 
 [node name="DistortionBubble" parent="." instance=ExtResource("6_bb3hg")]
 transform = Transform3D(7.64737, 0, -2.34899, 0, 8, 0, 2.34899, 0, 7.64737, 25.0532, -0.130844, -62.1122)
@@ -208,5 +218,15 @@ visible = false
 
 [node name="Beach2" parent="." instance=ExtResource("8_s6ehm")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="ForcedTransitionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.242188, 0)
+script = ExtResource("9_0cnfh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3166, -3.25865, 11.7142)
+shape = SubResource("BoxShape3D_ee70u")
+script = ExtResource("10_f1rag")
+enable_visuals = true
 
 [editable path="SceneTrigger/DistortionBubble2"]

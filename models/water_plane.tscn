@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://d27k6ytplbw5k"]
+
+[ext_resource type="Material" uid="uid://dsih5l35wh5i2" path="res://models/water_plane.tres" id="1_08jxr"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_gxxy5"]
+subdivide_width = 600
+orientation = 1
+
+[node name="WaterPlane" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("QuadMesh_gxxy5")
+surface_material_override/0 = ExtResource("1_08jxr")

@@ -81,7 +81,6 @@ offset_bottom = 423.0
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MainMenuButtons"]
-visible = false
 layout_mode = 2
 texture = ExtResource("1_y8w4d")
 expand_mode = 5

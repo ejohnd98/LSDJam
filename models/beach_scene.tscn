@@ -1,48 +1,55 @@
-[gd_scene load_steps=12 format=3 uid="uid://7tve255gynel"]
+[gd_scene load_steps=19 format=3 uid="uid://7tve255gynel"]
 
 [ext_resource type="PackedScene" uid="uid://d2qbiurmvm6x0" path="res://sourceModels/beach/Beach.glb" id="1_q7xby"]
-[ext_resource type="Texture2D" uid="uid://dtqxw5u0hov77" path="res://sourceModels/Golf/golf_water_normal.png" id="2_1xo5k"]
-[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/ScrollingUV.gd" id="3_utaar"]
 [ext_resource type="PackedScene" uid="uid://dnetq8wdqajsf" path="res://sourceModels/beach/BeachBar.glb" id="4_ddne6"]
 [ext_resource type="AudioStream" uid="uid://bqd47qlakf5ci" path="res://sounds/music/tiki_radio.ogg" id="5_s0sxo"]
 [ext_resource type="PackedScene" uid="uid://36q0bb1gffqg" path="res://sourceModels/beach/BeachDock.glb" id="6_jek7j"]
 [ext_resource type="PackedScene" uid="uid://c3pl77hj45q5i" path="res://sourceModels/beach/Palm3.glb" id="7_mikh0"]
 [ext_resource type="PackedScene" uid="uid://dp6b7k1u56154" path="res://sourceModels/beach/Palm2.glb" id="8_76bbb"]
+[ext_resource type="PackedScene" uid="uid://d27k6ytplbw5k" path="res://models/water_plane.tscn" id="8_ytfha"]
+[ext_resource type="Shader" path="res://models/Water.gdshader" id="9_5qy7d"]
 [ext_resource type="PackedScene" uid="uid://cbd8rl0oxgs1r" path="res://sourceModels/beach/Palm1.glb" id="9_gci6p"]
+[ext_resource type="Texture2D" uid="uid://3vtrtk78peyv" path="res://models/WaterPlaneNormal.tres" id="10_xw0cl"]
+[ext_resource type="Texture2D" uid="uid://bwwkf8s1vbk0x" path="res://sourceModels/beach/palm_billboard1.png" id="11_lsf26"]
+[ext_resource type="Texture2D" uid="uid://dbfq15f807mxv" path="res://sourceModels/beach/palm_billboard2.png" id="12_8mjmu"]
+[ext_resource type="Texture2D" uid="uid://d1u6scyfpdtco" path="res://sourceModels/beach/beach skyline.png" id="13_kil5w"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_gyk1b"]
-size = Vector2(800, 800)
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l6f0k"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pl0gy"]
-transparency = 1
-albedo_color = Color(0.121569, 0.172549, 0.301961, 0.239216)
-roughness = 0.2
-normal_enabled = true
-normal_texture = ExtResource("2_1xo5k")
-clearcoat = 0.32
-clearcoat_roughness = 0.1
-subsurf_scatter_strength = 0.52
-subsurf_scatter_skin_mode = true
-refraction_scale = 0.02
-detail_blend_mode = 2
-uv1_scale = Vector3(30, 30, 30)
-disable_receive_shadows = true
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ywl01"]
+noise = SubResource("FastNoiseLite_l6f0k")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_osbt4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_33ry0"]
+seamless = true
+noise = SubResource("FastNoiseLite_osbt4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yoemd"]
+render_priority = 0
+shader = ExtResource("9_5qy7d")
+shader_parameter/depth_fade_distance = 1.465
+shader_parameter/absorbance = 1.677
+shader_parameter/shallow_color = Color(0, 0.74902, 0.509804, 1)
+shader_parameter/deep_color = Color(0, 0.552941, 0.619608, 1)
+shader_parameter/foam_amount = 0.724
+shader_parameter/foam_color = Color(0, 1, 0, 1)
+shader_parameter/roughness = 0.04
+shader_parameter/wave_scale = 8.0
+shader_parameter/height_scale = 0.15
+shader_parameter/global_wave_height = 0.3
+shader_parameter/global_wave_speed = 0.6
+shader_parameter/wave_dir1 = Vector2(1, 0.1)
+shader_parameter/wave_dir2 = Vector2(0.1, 1)
+shader_parameter/wave_speed = 0.04
+shader_parameter/foam_noise = SubResource("NoiseTexture2D_ywl01")
+shader_parameter/wave_texture = SubResource("NoiseTexture2D_33ry0")
+shader_parameter/normal1 = ExtResource("10_xw0cl")
+shader_parameter/normal2 = ExtResource("10_xw0cl")
 
 [node name="Beach2" instance=ExtResource("1_q7xby")]
 
-[node name="Water" type="MeshInstance3D" parent="." index="2"]
-transform = Transform3D(-0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 49.74, 0.121316, 7.21418)
-mesh = SubResource("PlaneMesh_gyk1b")
-surface_material_override/0 = SubResource("StandardMaterial3D_pl0gy")
-script = ExtResource("3_utaar")
-
-[node name="Water2" type="MeshInstance3D" parent="." index="3"]
-transform = Transform3D(-0.988486, 0, -0.151313, 0, 1, 0, 0.151313, 0, -0.988486, 49.74, 0.0616182, 7.21418)
-mesh = SubResource("PlaneMesh_gyk1b")
-surface_material_override/0 = SubResource("StandardMaterial3D_pl0gy")
-script = ExtResource("3_utaar")
-
-[node name="BeachBar" parent="." index="4" instance=ExtResource("4_ddne6")]
+[node name="BeachBar" parent="." index="2" instance=ExtResource("4_ddne6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.42811, 0.0755346, 38.6826)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="BeachBar" index="1"]
@@ -52,86 +59,1419 @@ volume_db = -10.0
 autoplay = true
 panning_strength = 0.75
 
-[node name="BeachDock" parent="." index="5" instance=ExtResource("6_jek7j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9761, 0.319543, 9.0832)
+[node name="BeachDock" parent="." index="3" instance=ExtResource("6_jek7j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9761, 0.319543, 11.8606)
 
-[node name="Palm32" parent="." index="6" instance=ExtResource("7_mikh0")]
+[node name="WaterPlane" parent="." index="4" instance=ExtResource("8_ytfha")]
+transform = Transform3D(-1.65965e-05, 0, -1044.43, 0, 1, 0, 379.684, 0, -4.56534e-05, 0, -0.235209, -108.082)
+
+[node name="WaterPlane2" parent="." index="5" instance=ExtResource("8_ytfha")]
+transform = Transform3D(-1.65965e-05, 0, -1044.43, 0, 1, 0, 379.684, 0, -4.56534e-05, 0, -0.235209, -108.082)
+surface_material_override/0 = SubResource("ShaderMaterial_yoemd")
+
+[node name="3d Palms" type="Node3D" parent="." index="6"]
+
+[node name="Palm32" parent="3d Palms" index="0" instance=ExtResource("7_mikh0")]
 transform = Transform3D(-0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, -0.258819, -49.1812, 0.189816, 30.2769)
 
-[node name="Palm33" parent="." index="7" instance=ExtResource("7_mikh0")]
+[node name="Palm33" parent="3d Palms" index="1" instance=ExtResource("7_mikh0")]
 transform = Transform3D(0.00556757, 0, -0.999985, 0, 1, 0, 0.999985, 0, 0.00556757, -61.0616, 0.189816, 19.5049)
 
-[node name="Palm22" parent="." index="8" instance=ExtResource("8_76bbb")]
+[node name="Palm22" parent="3d Palms" index="2" instance=ExtResource("8_76bbb")]
 transform = Transform3D(0.0364867, 0, -0.999334, 0, 1, 0, 0.999334, 0, 0.0364867, -4.20626, 0.189816, 29.8411)
 
-[node name="Palm23" parent="." index="9" instance=ExtResource("8_76bbb")]
-transform = Transform3D(-0.350404, 0, -0.936599, 0, 1, 0, 0.936599, 0, -0.350404, -19.5171, 0.189816, 14.774)
+[node name="Palm23" parent="3d Palms" index="3" instance=ExtResource("8_76bbb")]
+transform = Transform3D(-0.350404, 0, -0.936599, 0, 1, 0, 0.936599, 0, -0.350404, -19.5171, 0.0666585, 14.774)
 
-[node name="Palm24" parent="." index="10" instance=ExtResource("8_76bbb")]
-transform = Transform3D(0.361283, 0, -0.932456, 0, 1, 0, 0.932456, 0, 0.361283, 41.991, 0.189816, 13.0427)
+[node name="Palm24" parent="3d Palms" index="4" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.361283, 0, -0.932456, 0, 1, 0, 0.932456, 0, 0.361283, 41.991, 0.00991225, 13.0427)
 
-[node name="Palm25" parent="." index="11" instance=ExtResource("8_76bbb")]
+[node name="Palm25" parent="3d Palms" index="5" instance=ExtResource("8_76bbb")]
 transform = Transform3D(0.360081, -0.0294396, -0.932456, 0.0814862, 0.996674, -1.86265e-09, 0.929355, -0.0759824, 0.361283, 63.4772, 0.189816, 19.7785)
 
-[node name="Palm26" parent="." index="12" instance=ExtResource("8_76bbb")]
-transform = Transform3D(0.360081, -0.0294396, -0.932456, 0.0814862, 0.996674, -1.86265e-09, 0.929355, -0.0759824, 0.361283, 40.9621, 1.29265, 42.9682)
+[node name="Palm26" parent="3d Palms" index="6" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.360081, -0.0294396, -0.932456, 0.0814862, 0.996674, -1.86265e-09, 0.929355, -0.0759824, 0.361283, 40.9621, 0.363062, 42.9682)
 
-[node name="Palm34" parent="." index="13" instance=ExtResource("7_mikh0")]
+[node name="Palm34" parent="3d Palms" index="7" instance=ExtResource("7_mikh0")]
 transform = Transform3D(0.385326, 0, -0.92278, 0, 1, 0, 0.92278, 0, 0.385326, 60.9726, -1.28882, 47.0408)
 
-[node name="Palm12" parent="." index="14" instance=ExtResource("9_gci6p")]
-transform = Transform3D(0.583405, 0.181789, 0.791576, -0.297491, 0.954724, 0, -0.755737, -0.235487, 0.611071, 44.4877, 0.186612, 11.9303)
+[node name="Palm12" parent="3d Palms" index="8" instance=ExtResource("9_gci6p")]
+transform = Transform3D(0.583405, 0.181789, 0.791576, -0.297491, 0.954724, 0, -0.755737, -0.235487, 0.611071, 44.4821, 0.122484, 11.9576)
 
-[node name="Palm13" parent="." index="15" instance=ExtResource("9_gci6p")]
+[node name="Palm13" parent="3d Palms" index="9" instance=ExtResource("9_gci6p")]
 transform = Transform3D(-0.132291, 0, -0.991211, 0, 1, 0, 0.991211, 0, -0.132291, -23.2183, 0.189815, 14.53)
 
-[node name="Palm27" parent="." index="16" instance=ExtResource("8_76bbb")]
-transform = Transform3D(0.0182725, 0, -0.999833, 0, 1, 0, 0.999833, 0, 0.0182725, -62.448, 0.189816, 19.2964)
+[node name="Palm27" parent="3d Palms" index="10" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.0182725, 0, -0.999833, 0, 1, 0, 0.999833, 0, 0.0182725, -62.448, 0.163567, 19.2964)
 
-[node name="Palm28" parent="." index="17" instance=ExtResource("8_76bbb")]
+[node name="Palm28" parent="3d Palms" index="11" instance=ExtResource("8_76bbb")]
 transform = Transform3D(0.171486, -0.037017, -0.984491, 0.211001, 0.977486, 0, 0.962326, -0.207728, 0.175435, -43.098, -0.302333, 34.3034)
 
-[node name="Palm14" parent="." index="18" instance=ExtResource("9_gci6p")]
+[node name="Palm14" parent="3d Palms" index="12" instance=ExtResource("9_gci6p")]
 transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, 2.85587, -0.548826, 53.6255)
 
-[node name="Palm15" parent="." index="19" instance=ExtResource("9_gci6p")]
+[node name="Palm15" parent="3d Palms" index="13" instance=ExtResource("9_gci6p")]
 transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, -28.3177, -0.548826, 55.8379)
 
-[node name="Palm16" parent="." index="20" instance=ExtResource("9_gci6p")]
+[node name="Palm16" parent="3d Palms" index="14" instance=ExtResource("9_gci6p")]
 transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, -58.7953, -0.548826, 54.6051)
 
-[node name="Palm17" parent="." index="21" instance=ExtResource("9_gci6p")]
+[node name="Palm17" parent="3d Palms" index="15" instance=ExtResource("9_gci6p")]
 transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, -39.5152, 1.21305, 52.6942)
 
-[node name="Palm18" parent="." index="22" instance=ExtResource("9_gci6p")]
+[node name="Palm18" parent="3d Palms" index="16" instance=ExtResource("9_gci6p")]
 transform = Transform3D(-0.132343, 0, -0.991204, 0, 1, 0, 0.991204, 0, -0.132343, -13.6303, -1.7466, 56.1502)
 
-[node name="Palm19" parent="." index="23" instance=ExtResource("9_gci6p")]
+[node name="Palm19" parent="3d Palms" index="17" instance=ExtResource("9_gci6p")]
 transform = Transform3D(0.0982776, 0, -0.995159, 0, 1, 0, 0.995159, 0, 0.0982776, 19.6644, 0.338629, 53.343)
 
-[node name="Palm20" parent="." index="24" instance=ExtResource("9_gci6p")]
+[node name="Palm20" parent="3d Palms" index="18" instance=ExtResource("9_gci6p")]
 transform = Transform3D(0.0982776, 0, -0.995159, 0, 1, 0, 0.995159, 0, 0.0982776, 42.9442, 1.06114, 54.5003)
 
-[node name="Palm21" parent="." index="25" instance=ExtResource("9_gci6p")]
+[node name="Palm21" parent="3d Palms" index="19" instance=ExtResource("9_gci6p")]
 transform = Transform3D(0.0982776, 0, -0.995159, 0, 1, 0, 0.995159, 0, 0.0982776, 60.0601, -0.548826, 52.81)
 
-[node name="Palm29" parent="." index="26" instance=ExtResource("8_76bbb")]
+[node name="Palm29" parent="3d Palms" index="20" instance=ExtResource("8_76bbb")]
 transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, -18.6274, -3.04933, 51.6172)
 
-[node name="Palm37" parent="." index="27" instance=ExtResource("8_76bbb")]
+[node name="Palm37" parent="3d Palms" index="21" instance=ExtResource("8_76bbb")]
 transform = Transform3D(0.161346, 0, -0.986898, 0, 1, 0, 0.986898, 0, 0.161346, -5.0981, -0.397859, 51.6172)
 
-[node name="Palm30" parent="." index="28" instance=ExtResource("8_76bbb")]
+[node name="Palm30" parent="3d Palms" index="22" instance=ExtResource("8_76bbb")]
 transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, -49.549, -0.892813, 51.6172)
 
-[node name="Palm31" parent="." index="29" instance=ExtResource("8_76bbb")]
+[node name="Palm31" parent="3d Palms" index="23" instance=ExtResource("8_76bbb")]
 transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, -67.816, -0.892813, 51.6172)
 
-[node name="Palm35" parent="." index="30" instance=ExtResource("8_76bbb")]
+[node name="Palm35" parent="3d Palms" index="24" instance=ExtResource("8_76bbb")]
 transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, 33.4257, -0.892813, 51.6172)
 
-[node name="Palm36" parent="." index="31" instance=ExtResource("8_76bbb")]
+[node name="Palm36" parent="3d Palms" index="25" instance=ExtResource("8_76bbb")]
 transform = Transform3D(-0.25065, 0, -0.968078, 0, 1, 0, 0.968078, 0, -0.25065, 53.6414, -2.49333, 51.6172)
 
-[node name="Palm38" parent="." index="32" instance=ExtResource("8_76bbb")]
-transform = Transform3D(0.0767887, 0, -0.997047, 0, 1, 0, 0.997047, 0, 0.0767887, 10.7582, -0.130416, 10.7477)
+[node name="Palm38" parent="3d Palms" index="26" instance=ExtResource("8_76bbb")]
+transform = Transform3D(0.0767887, 0, -0.997047, 0, 1, 0, 0.997047, 0, 0.0767887, 10.7582, -0.299344, 15.8566)
+
+[node name="2d Palms" type="Node3D" parent="." index="7"]
+
+[node name="Sprite3D" type="Sprite3D" parent="2d Palms" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -84.4194, -0.217547, 21.5269)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D2" type="Sprite3D" parent="2d Palms" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -78.5831, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D3" type="Sprite3D" parent="2d Palms" index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D4" type="Sprite3D" parent="2d Palms" index="3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 14.2297)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D5" type="Sprite3D" parent="2d Palms" index="4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -115.757, -0.217547, 5.93941)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D6" type="Sprite3D" parent="2d Palms" index="5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 8.93494)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D7" type="Sprite3D" parent="2d Palms" index="6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 28.6829)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D8" type="Sprite3D" parent="2d Palms" index="7"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D9" type="Sprite3D" parent="2d Palms" index="8"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D10" type="Sprite3D" parent="2d Palms" index="9"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 20.2679)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D11" type="Sprite3D" parent="2d Palms" index="10"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -125.972, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D12" type="Sprite3D" parent="2d Palms" index="11"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D13" type="Sprite3D" parent="2d Palms" index="12"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 51.688)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D14" type="Sprite3D" parent="2d Palms" index="13"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -172.753, -0.217547, 41.0056)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D15" type="Sprite3D" parent="2d Palms" index="14"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -191.007, -0.217547, 49.1054)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D16" type="Sprite3D" parent="2d Palms" index="15"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -178.375, -0.217547, 59.168)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D17" type="Sprite3D" parent="2d Palms" index="16"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -166.459, -0.217547, 44.2754)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D18" type="Sprite3D" parent="2d Palms" index="17"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -143.677, -0.217547, 34.0145)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D19" type="Sprite3D" parent="2d Palms" index="18"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 39.7715)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D20" type="Sprite3D" parent="2d Palms" index="19"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D21" type="Sprite3D" parent="2d Palms" index="20"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -107.593, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D22" type="Sprite3D" parent="2d Palms" index="21"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -104.827, -0.217547, 34.6246)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D23" type="Sprite3D" parent="2d Palms" index="22"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96.7607, -0.217547, 45.0764)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="2d Palms3" type="Node3D" parent="." index="8"]
+transform = Transform3D(-0.0584343, 0, 1.07365, 0, 1, 0, -0.822446, 0, -0.0762823, 9.98991, 0, 14.5131)
+
+[node name="Sprite3D" type="Sprite3D" parent="2d Palms3" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -84.4194, -0.217547, 21.5269)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D2" type="Sprite3D" parent="2d Palms3" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -78.5831, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D3" type="Sprite3D" parent="2d Palms3" index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D4" type="Sprite3D" parent="2d Palms3" index="3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 14.2297)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D5" type="Sprite3D" parent="2d Palms3" index="4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -115.757, -0.217547, 5.93941)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D6" type="Sprite3D" parent="2d Palms3" index="5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 8.93494)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D7" type="Sprite3D" parent="2d Palms3" index="6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 28.6829)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D8" type="Sprite3D" parent="2d Palms3" index="7"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D9" type="Sprite3D" parent="2d Palms3" index="8"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D10" type="Sprite3D" parent="2d Palms3" index="9"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 20.2679)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D11" type="Sprite3D" parent="2d Palms3" index="10"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -125.972, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D12" type="Sprite3D" parent="2d Palms3" index="11"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D13" type="Sprite3D" parent="2d Palms3" index="12"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 51.688)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D14" type="Sprite3D" parent="2d Palms3" index="13"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -172.753, -0.217547, 41.0056)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D15" type="Sprite3D" parent="2d Palms3" index="14"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -191.007, -0.217547, 49.1054)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D16" type="Sprite3D" parent="2d Palms3" index="15"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -178.375, -0.217547, 59.168)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D17" type="Sprite3D" parent="2d Palms3" index="16"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -166.459, -0.217547, 44.2754)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D18" type="Sprite3D" parent="2d Palms3" index="17"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -143.677, -0.217547, 34.0145)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D19" type="Sprite3D" parent="2d Palms3" index="18"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 39.7715)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D20" type="Sprite3D" parent="2d Palms3" index="19"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D21" type="Sprite3D" parent="2d Palms3" index="20"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -107.593, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D22" type="Sprite3D" parent="2d Palms3" index="21"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -104.827, -0.217547, 34.6246)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D23" type="Sprite3D" parent="2d Palms3" index="22"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96.7607, -0.217547, 45.0764)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="2d Palms4" type="Node3D" parent="." index="9"]
+transform = Transform3D(-0.0541165, 0, 1.06531, 0, 1, 0, -0.761675, 0, -0.0756894, -35.2586, 0, 14.5131)
+
+[node name="Sprite3D" type="Sprite3D" parent="2d Palms4" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -84.4194, -0.217547, 21.5269)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D2" type="Sprite3D" parent="2d Palms4" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -78.5831, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D3" type="Sprite3D" parent="2d Palms4" index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D4" type="Sprite3D" parent="2d Palms4" index="3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 14.2297)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D5" type="Sprite3D" parent="2d Palms4" index="4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -115.757, -0.217547, 5.93941)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D6" type="Sprite3D" parent="2d Palms4" index="5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 8.93494)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D7" type="Sprite3D" parent="2d Palms4" index="6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 28.6829)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D8" type="Sprite3D" parent="2d Palms4" index="7"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D9" type="Sprite3D" parent="2d Palms4" index="8"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D10" type="Sprite3D" parent="2d Palms4" index="9"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 20.2679)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D11" type="Sprite3D" parent="2d Palms4" index="10"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -125.972, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D12" type="Sprite3D" parent="2d Palms4" index="11"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D13" type="Sprite3D" parent="2d Palms4" index="12"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 51.688)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D14" type="Sprite3D" parent="2d Palms4" index="13"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -172.753, -0.217547, 41.0056)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D15" type="Sprite3D" parent="2d Palms4" index="14"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -191.007, -0.217547, 49.1054)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D16" type="Sprite3D" parent="2d Palms4" index="15"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -178.375, -0.217547, 59.168)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D17" type="Sprite3D" parent="2d Palms4" index="16"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -166.459, -0.217547, 44.2754)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D18" type="Sprite3D" parent="2d Palms4" index="17"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -143.677, -0.217547, 34.0145)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D19" type="Sprite3D" parent="2d Palms4" index="18"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 39.7715)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D20" type="Sprite3D" parent="2d Palms4" index="19"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D21" type="Sprite3D" parent="2d Palms4" index="20"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -107.593, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D22" type="Sprite3D" parent="2d Palms4" index="21"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -104.827, -0.217547, 34.6246)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D23" type="Sprite3D" parent="2d Palms4" index="22"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96.7607, -0.217547, 45.0764)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="2d Palms5" type="Node3D" parent="." index="10"]
+transform = Transform3D(-0.0569151, 0, 1.07072, 0, 1, 0, -0.801065, 0, -0.0760737, -83.6754, 0, 14.5131)
+
+[node name="Sprite3D" type="Sprite3D" parent="2d Palms5" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -84.4194, -0.217547, 21.5269)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D2" type="Sprite3D" parent="2d Palms5" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -78.5831, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D3" type="Sprite3D" parent="2d Palms5" index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D4" type="Sprite3D" parent="2d Palms5" index="3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 14.2297)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D5" type="Sprite3D" parent="2d Palms5" index="4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -115.757, -0.217547, 5.93941)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D6" type="Sprite3D" parent="2d Palms5" index="5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 8.93494)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D7" type="Sprite3D" parent="2d Palms5" index="6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 28.6829)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D8" type="Sprite3D" parent="2d Palms5" index="7"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D9" type="Sprite3D" parent="2d Palms5" index="8"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D10" type="Sprite3D" parent="2d Palms5" index="9"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 20.2679)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D11" type="Sprite3D" parent="2d Palms5" index="10"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -125.972, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D12" type="Sprite3D" parent="2d Palms5" index="11"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D13" type="Sprite3D" parent="2d Palms5" index="12"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 51.688)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D14" type="Sprite3D" parent="2d Palms5" index="13"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -172.753, -0.217547, 41.0056)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D15" type="Sprite3D" parent="2d Palms5" index="14"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -191.007, -0.217547, 49.1054)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D16" type="Sprite3D" parent="2d Palms5" index="15"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -178.375, -0.217547, 59.168)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D17" type="Sprite3D" parent="2d Palms5" index="16"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -166.459, -0.217547, 44.2754)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D18" type="Sprite3D" parent="2d Palms5" index="17"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -143.677, -0.217547, 34.0145)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D19" type="Sprite3D" parent="2d Palms5" index="18"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 39.7715)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D20" type="Sprite3D" parent="2d Palms5" index="19"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D21" type="Sprite3D" parent="2d Palms5" index="20"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -107.593, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D22" type="Sprite3D" parent="2d Palms5" index="21"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -104.827, -0.217547, 34.6246)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D23" type="Sprite3D" parent="2d Palms5" index="22"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96.7607, -0.217547, 45.0764)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="2d Palms6" type="Node3D" parent="." index="11"]
+transform = Transform3D(0.274569, 0, 0.815641, 0, 1, 0, -0.729127, 0, 0.307148, -107.644, 0, 8.4999)
+
+[node name="Sprite3D" type="Sprite3D" parent="2d Palms6" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -84.4194, -0.217547, 21.5269)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D2" type="Sprite3D" parent="2d Palms6" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -78.5831, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D3" type="Sprite3D" parent="2d Palms6" index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D4" type="Sprite3D" parent="2d Palms6" index="3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 14.2297)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D5" type="Sprite3D" parent="2d Palms6" index="4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -115.757, -0.217547, 5.93941)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D6" type="Sprite3D" parent="2d Palms6" index="5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 8.93494)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D7" type="Sprite3D" parent="2d Palms6" index="6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 28.6829)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D8" type="Sprite3D" parent="2d Palms6" index="7"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D9" type="Sprite3D" parent="2d Palms6" index="8"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D10" type="Sprite3D" parent="2d Palms6" index="9"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 20.2679)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D11" type="Sprite3D" parent="2d Palms6" index="10"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -125.972, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D12" type="Sprite3D" parent="2d Palms6" index="11"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D13" type="Sprite3D" parent="2d Palms6" index="12"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 51.688)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D14" type="Sprite3D" parent="2d Palms6" index="13"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -172.753, -0.217547, 41.0056)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D15" type="Sprite3D" parent="2d Palms6" index="14"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -191.007, -0.217547, 49.1054)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D16" type="Sprite3D" parent="2d Palms6" index="15"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -178.375, -0.217547, 59.168)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D17" type="Sprite3D" parent="2d Palms6" index="16"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -166.459, -0.217547, 44.2754)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D18" type="Sprite3D" parent="2d Palms6" index="17"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -143.677, -0.217547, 34.0145)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D19" type="Sprite3D" parent="2d Palms6" index="18"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 39.7715)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D20" type="Sprite3D" parent="2d Palms6" index="19"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D21" type="Sprite3D" parent="2d Palms6" index="20"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -107.593, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D22" type="Sprite3D" parent="2d Palms6" index="21"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -104.827, -0.217547, 34.6246)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D23" type="Sprite3D" parent="2d Palms6" index="22"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96.7607, -0.217547, 45.0764)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="2d Palms7" type="Node3D" parent="." index="12"]
+transform = Transform3D(-0.214921, 0, 1.06209, 0, 1, 0, -0.630281, 0, -0.362166, 56.6046, 0, 35.9082)
+
+[node name="Sprite3D" type="Sprite3D" parent="2d Palms7" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -84.4194, -0.217547, 21.5269)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D2" type="Sprite3D" parent="2d Palms7" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -78.5831, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D3" type="Sprite3D" parent="2d Palms7" index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D4" type="Sprite3D" parent="2d Palms7" index="3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 14.2297)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D5" type="Sprite3D" parent="2d Palms7" index="4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -115.757, -0.217547, 5.93941)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D6" type="Sprite3D" parent="2d Palms7" index="5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 8.93494)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D7" type="Sprite3D" parent="2d Palms7" index="6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 28.6829)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D8" type="Sprite3D" parent="2d Palms7" index="7"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D9" type="Sprite3D" parent="2d Palms7" index="8"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D10" type="Sprite3D" parent="2d Palms7" index="9"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 20.2679)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D11" type="Sprite3D" parent="2d Palms7" index="10"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -125.972, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D12" type="Sprite3D" parent="2d Palms7" index="11"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D13" type="Sprite3D" parent="2d Palms7" index="12"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 51.688)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D14" type="Sprite3D" parent="2d Palms7" index="13"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -172.753, -0.217547, 41.0056)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D15" type="Sprite3D" parent="2d Palms7" index="14"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -191.007, -0.217547, 49.1054)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D16" type="Sprite3D" parent="2d Palms7" index="15"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -178.375, -0.217547, 59.168)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D17" type="Sprite3D" parent="2d Palms7" index="16"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -166.459, -0.217547, 44.2754)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D18" type="Sprite3D" parent="2d Palms7" index="17"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -143.677, -0.217547, 34.0145)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D19" type="Sprite3D" parent="2d Palms7" index="18"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 39.7715)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D20" type="Sprite3D" parent="2d Palms7" index="19"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D21" type="Sprite3D" parent="2d Palms7" index="20"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -107.593, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D22" type="Sprite3D" parent="2d Palms7" index="21"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -104.827, -0.217547, 34.6246)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D23" type="Sprite3D" parent="2d Palms7" index="22"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96.7607, -0.217547, 45.0764)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="2d Palms2" type="Node3D" parent="." index="13"]
+transform = Transform3D(-0.989455, 0, -0.14484, 0, 1, 0, -0.14484, 0, 0.989455, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="2d Palms2" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -84.4194, -0.217547, 21.5269)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D2" type="Sprite3D" parent="2d Palms2" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -78.5831, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D3" type="Sprite3D" parent="2d Palms2" index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 37.7516)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D4" type="Sprite3D" parent="2d Palms2" index="3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -98.5491, -0.217547, 14.2297)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D5" type="Sprite3D" parent="2d Palms2" index="4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -115.757, -0.217547, 5.93941)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D6" type="Sprite3D" parent="2d Palms2" index="5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 8.93494)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D7" type="Sprite3D" parent="2d Palms2" index="6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 28.6829)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D8" type="Sprite3D" parent="2d Palms2" index="7"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -111.089, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D9" type="Sprite3D" parent="2d Palms2" index="8"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 46.1746)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D10" type="Sprite3D" parent="2d Palms2" index="9"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -136.87, -0.217547, 20.2679)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D11" type="Sprite3D" parent="2d Palms2" index="10"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -125.972, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D12" type="Sprite3D" parent="2d Palms2" index="11"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 30.6541)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D13" type="Sprite3D" parent="2d Palms2" index="12"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -152.521, -0.217547, 51.688)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D14" type="Sprite3D" parent="2d Palms2" index="13"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -172.753, -0.217547, 41.0056)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D15" type="Sprite3D" parent="2d Palms2" index="14"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -191.007, -0.217547, 49.1054)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D16" type="Sprite3D" parent="2d Palms2" index="15"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -178.375, -0.217547, 59.168)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("11_lsf26")
+
+[node name="Sprite3D17" type="Sprite3D" parent="2d Palms2" index="16"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -166.459, -0.217547, 44.2754)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D18" type="Sprite3D" parent="2d Palms2" index="17"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -143.677, -0.217547, 34.0145)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D19" type="Sprite3D" parent="2d Palms2" index="18"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 39.7715)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D20" type="Sprite3D" parent="2d Palms2" index="19"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -121.907, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D21" type="Sprite3D" parent="2d Palms2" index="20"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -107.593, -0.217547, 20.1592)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D22" type="Sprite3D" parent="2d Palms2" index="21"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -104.827, -0.217547, 34.6246)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="Sprite3D23" type="Sprite3D" parent="2d Palms2" index="22"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96.7607, -0.217547, 45.0764)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.025
+alpha_cut = 1
+texture = ExtResource("12_8mjmu")
+
+[node name="skyline" type="Sprite3D" parent="." index="14"]
+transform = Transform3D(1.41929, 0, 0, 0, 0.910965, -0.412484, 0, 0.412484, 0.910965, -66.0499, 0, 259.766)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.5
+alpha_cut = 1
+texture = ExtResource("13_kil5w")
+
+[node name="skyline2" type="Sprite3D" parent="." index="15"]
+transform = Transform3D(-0.94558, 0, -0.0803559, 0.0295394, 0.926509, -0.364184, -0.0727358, 0.376273, 0.896742, -66.0499, -25.1098, 228.167)
+centered = false
+offset = Vector2(-256, 0)
+pixel_size = 0.5
+alpha_cut = 1
+texture = ExtResource("13_kil5w")

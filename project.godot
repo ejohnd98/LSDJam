@@ -13,6 +13,7 @@ config_version=5
 config/name="LSDJam"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+run/max_fps=90
 config/icon="res://icon.svg"
 
 [autoload]
@@ -20,6 +21,7 @@ config/icon="res://icon.svg"
 GameManager="*res://scenes/core/game_manager.tscn"
 CameraManagerObject="*res://scenes/core/camera_manager.tscn"
 PlayerSettings="*res://scenes/core/player_settings.tscn"
+DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 
 [display]
 
@@ -27,10 +29,11 @@ window/size/viewport_width=960
 window/size/viewport_height=540
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg")
+enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg", "res://addons/debug_menu/plugin.cfg")
 
 [filesystem]
 
