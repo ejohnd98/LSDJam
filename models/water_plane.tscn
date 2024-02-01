@@ -4,6 +4,7 @@
 
 [sub_resource type="QuadMesh" id="QuadMesh_gxxy5"]
 subdivide_width = 600
+subdivide_depth = 600
 orientation = 1
 
 [node name="WaterPlane" type="MeshInstance3D"]

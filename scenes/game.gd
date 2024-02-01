@@ -9,11 +9,16 @@ const SCENE_PATH = "res://scenes/scenes/"
 
 @export var nightmares: Array[PackedScene] = []
 
-@export var dream_transition: PackedScene
+@export var transitions: Array[PackedScene] = []
+
+@export var dream_transition: PackedScene #goal transition
 
 var current_dream : Control = null
 var dream_index = -1
+
+#TODO: make these more random than just a linear wrap around
 var nightmare_index = -1
+var transition_index = -1
 
 @onready var dream_grid : DreamGrid = get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/DreamGrid")
 @onready var canvas_layer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer")
@@ -29,6 +34,8 @@ var rng = RandomNumberGenerator.new()
 var nightmare_recovery_speed = 0.01
 var nightmare_progress = 0.0
 var in_nightmare = false
+
+var in_transition_dream = false
 
 static func get_game(tree_node : SceneTree) -> game_manager:
 	return tree_node.get_root().get_node("SubViewportContainer/SubViewport/Game")
@@ -92,8 +99,8 @@ func move_in_direction(direction: Vector2i):
 		
 	var current_cell = dream_grid.get_current_cell()
 	
-	if dream_index == -1:
-		pick_random_dream()
+	if dream_index == -1: #in dream goal transition
+		pick_random_dream(false)
 		return
 	
 	dream_grid.move_in_direction(direction)
@@ -106,7 +113,7 @@ func move_in_direction(direction: Vector2i):
 			pick_random_dream()
 		return
 	
-	if next_cell.is_dream_transition:
+	if next_cell.is_dream_transition: #spiral symbol on map
 		pick_random_dream()
 		return
 		
@@ -121,17 +128,25 @@ func advance_dream():
 	next_index += 1
 	change_dreams(next_index)
 
-func pick_random_dream():
-	var new_index = rng.randi_range (0, dreams.size()-1)
-	if new_index == dream_index:
-		new_index += 1
+func pick_random_dream(allow_transition_dreams : bool = true):
+	var new_index = dream_index + rng.randi_range (1, dreams.size()-1) #pick random dream 	
 	new_index = wrapi(new_index, 0, dreams.size())
+	
+	if (not in_transition_dream and allow_transition_dreams and randf() > 0.6):
+		in_transition_dream = true
+	else:
+		in_transition_dream = false
 	
 	change_dreams(new_index)
 
 func pick_nightmare():
 	nightmare_index = wrapi(nightmare_index + 1, 0, nightmares.size())
 	change_dreams(nightmare_index, true)
+
+func get_next_transition_dream() -> PackedScene:
+	transition_index = wrapi(transition_index + 1, 0, transitions.size())
+	return transitions[transition_index]
+	
  
 func change_dreams(index : int, is_nightmare : bool = false):
 	dream_index = index
@@ -147,6 +162,8 @@ func change_dreams(index : int, is_nightmare : bool = false):
 		new_dream = dream_transition.instantiate()
 	elif is_nightmare and nightmares.size() > 0:
 		new_dream = nightmares[dream_index].instantiate()
+	elif in_transition_dream:
+		new_dream = get_next_transition_dream().instantiate()
 	elif dreams.size() > 0:
 		new_dream = dreams[dream_index].instantiate()
 	else:
@@ -231,7 +248,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	transition_obj.finish_transition()
 	GameManager.set_crosshair(true)
 	await transition_obj.transition_end_point
-	canvas_layer.get_node("LevelText").type_out_text(dream_grid.get_current_cell_name())
+	canvas_layer.get_node("LevelText").type_out_text(dream_grid.get_current_cell_name(not in_transition_dream))
 	
 	var footstep_override : AudioStreamPlayer = current_scene_node.get_node("FootstepOverride")
 	if footstep_override != null:

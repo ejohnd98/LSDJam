@@ -99,6 +99,8 @@ func _physics_process(delta):
 				vertical_velocity = 0
 			else:
 				is_grounded = false
+	else:
+		is_grounded = false
 	
 	if Input.is_action_pressed("Jump") and is_grounded and $JumpTimer.is_stopped():
 		is_grounded = false

@@ -56,10 +56,8 @@ func get_start_cell() -> DreamCell:
 func get_scene_from_position ():
 	return grid[player_position.x][player_position.y].scene_name
 
-func get_current_cell_name () -> String:
+func get_current_cell_name (include_coordinate : bool = true) -> String:
 	var coord_string = ""
-	if (get_current_cell().is_nightmare):
-		coord_string = "???"
-	else:
+	if (include_coordinate and not is_nightmare):
 		coord_string = str(letter_array[player_position.x]).to_upper() + str(grid_size.y - player_position.y)
 	return dream_name + " " + coord_string

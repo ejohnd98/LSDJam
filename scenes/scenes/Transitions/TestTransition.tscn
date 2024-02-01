@@ -1,0 +1,195 @@
+[gd_scene load_steps=23 format=3 uid="uid://ds7yevp3762kl"]
+
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="1_bocch"]
+[ext_resource type="Texture2D" uid="uid://cb6u528xt4ix6" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_DeepDusk_Equirect.png" id="1_xglxs"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="2_1ogoo"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="3_6jljp"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="4_jm6is"]
+[ext_resource type="Texture2D" uid="uid://keps8pn8wgob" path="res://textures/grid.png" id="6_7f0il"]
+[ext_resource type="AudioStream" uid="uid://7htj1chxmfp7" path="res://sounds/various_ambiences/Gravity.ogg" id="7_3yr1q"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mod42"]
+panorama = ExtResource("1_xglxs")
+
+[sub_resource type="Sky" id="Sky_2tymr"]
+sky_material = SubResource("PanoramaSkyMaterial_mod42")
+
+[sub_resource type="Environment" id="Environment_2nqa1"]
+background_mode = 2
+sky = SubResource("Sky_2tymr")
+glow_enabled = true
+glow_intensity = 3.19
+glow_strength = 1.86
+glow_bloom = 0.3
+fog_light_color = Color(0.00392157, 0.631373, 0.635294, 1)
+fog_light_energy = 5.04
+fog_density = 0.0
+fog_aerial_perspective = 0.915
+fog_height = 7.5
+fog_height_density = -0.8205
+adjustment_enabled = true
+adjustment_brightness = 1.52
+adjustment_contrast = 4.22
+adjustment_saturation = 0.37
+
+[sub_resource type="SphereMesh" id="SphereMesh_oi5rx"]
+flip_faces = true
+radius = 200.0
+height = 200.0
+radial_segments = 128
+rings = 128
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_iorx3")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8oso0"]
+noise_type = 0
+offset = Vector3(240, 0, 0)
+fractal_type = 3
+fractal_octaves = 1
+fractal_ping_pong_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pio0u"]
+seamless = true
+noise = SubResource("FastNoiseLite_8oso0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pw6v5"]
+render_priority = 0
+shader = ExtResource("2_1ogoo")
+shader_parameter/distortionView = 0.025
+shader_parameter/speedView = 0.0413
+shader_parameter/static_intensity = 0.0
+shader_parameter/tintColor = Color(0.313726, 0.411765, 1, 1)
+shader_parameter/fesnelAmount = 0.78
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.0
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_pio0u")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7wqi8"]
+size = Vector3(220, 5, 220)
+
+[sub_resource type="QuadMesh" id="QuadMesh_tomye"]
+size = Vector2(0.1, 400)
+orientation = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_apio4"]
+albedo_color = Color(0.141176, 0.121569, 0.329412, 1)
+albedo_texture = ExtResource("6_7f0il")
+uv1_scale = Vector3(0.02, 0.02, 0.02)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_scale = Vector3(0.5, 0.5, 0.5)
+uv2_triplanar = true
+uv2_world_triplanar = true
+texture_filter = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_tfnjc"]
+size = Vector2(2, 400)
+subdivide_width = 10
+subdivide_depth = 100
+orientation = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hl2hr"]
+render_priority = 0
+shader = ExtResource("2_1ogoo")
+shader_parameter/distortionView = 0.155
+shader_parameter/speedView = 0.0494
+shader_parameter/static_intensity = 1.0
+shader_parameter/tintColor = Color(0, 0, 0, 1)
+shader_parameter/fesnelAmount = 0.91
+shader_parameter/fresnelTintOffset = -0.8
+shader_parameter/distortionVertex = 0.03
+shader_parameter/speedVertex = 0.03
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nocs6"]
+size = Vector3(2, 0.1, 400)
+
+[node name="TransitionTemp" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2nqa1")
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("7_3yr1q")
+attenuation_model = 3
+volume_db = -16.0
+unit_size = 800.0
+autoplay = true
+panning_strength = 0.2
+bus = &"SFX"
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.626359, -17.1101)
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("1_bocch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.417, 0.269625)
+visible = false
+
+[node name="Distortion" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_oi5rx")
+surface_material_override/0 = SubResource("ShaderMaterial_pw6v5")
+
+[node name="ForcedTransitionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0329895, -11.2676, 0.00255775)
+script = ExtResource("3_6jljp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3166, -70.1944, 11.7142)
+shape = SubResource("BoxShape3D_7wqi8")
+script = ExtResource("4_jm6is")
+
+[node name="ForcedTransitionArea2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.0329895, -11.2676, 197.139)
+script = ExtResource("3_6jljp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3166, -5.17094, 11.7142)
+shape = SubResource("BoxShape3D_7wqi8")
+script = ExtResource("4_jm6is")
+
+[node name="ForcedTransitionArea3" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.033, -11.268, -197.139)
+script = ExtResource("3_6jljp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3166, -5.21576, 11.7142)
+shape = SubResource("BoxShape3D_7wqi8")
+script = ExtResource("4_jm6is")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.796638, 0, 0, 0, 1, 0, 0, 0, 1, 0.796638, -0.415829, 0)
+mesh = SubResource("QuadMesh_tomye")
+surface_material_override/0 = SubResource("StandardMaterial3D_apio4")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.796638, 0, 0, 0, 1, 0, 0, 0, 1, -0.796638, -0.415829, 0)
+mesh = SubResource("QuadMesh_tomye")
+surface_material_override/0 = SubResource("StandardMaterial3D_apio4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("QuadMesh_tfnjc")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_hl2hr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_nocs6")
