@@ -195,7 +195,7 @@ func set_spawn_position (new_position, new_rotation):
 	if result:
 		var is_flat_surface = result["normal"].dot(Vector3.UP) > 0.4
 		if is_flat_surface:
-			position = result["position"]
+			position = result["position"] + Vector3.UP
 			is_grounded = true
 			vertical_velocity = 0
 	

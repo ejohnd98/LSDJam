@@ -72,6 +72,12 @@ func start_game():
 	canvas_layer.get_node("UIParent/Compass").show()
 	canvas_layer.get_node("Crosshair").show()
 	canvas_layer.get_node("NightmareBar").show()
+	
+	if PlayerSettings.current_dream_array != null:
+		dreams = PlayerSettings.current_dream_array
+	
+	#todo: possibly make this random, but keep like this for development
+	# alternatively keep this if there will be an intro level
 	advance_dream()
 
 func exit_game():
@@ -108,6 +114,7 @@ func move_in_direction(direction: Vector2i):
 	if next_cell.is_goal:
 		if not dream_grid.is_nightmare:
 			dreams.remove_at(dream_index)
+			PlayerSettings.add_completed_dream(dream_grid.dream_name)
 			change_dreams(-1)
 		else:
 			pick_random_dream()
@@ -129,13 +136,17 @@ func advance_dream():
 	change_dreams(next_index)
 
 func pick_random_dream(allow_transition_dreams : bool = true):
-	var new_index = dream_index + rng.randi_range (1, dreams.size()-1) #pick random dream 	
-	new_index = wrapi(new_index, 0, dreams.size())
+	var new_index = dream_index
 	
 	if (not in_transition_dream and allow_transition_dreams and randf() > 0.6):
 		in_transition_dream = true
 	else:
 		in_transition_dream = false
+		
+	# this (hopefully) ensures when going to a transition, we don't return to the same dream afterwards
+	if not in_transition_dream:
+		new_index = dream_index + rng.randi_range (1, dreams.size()-1) #pick random dream 	
+		new_index = wrapi(new_index, 0, dreams.size())
 	
 	change_dreams(new_index)
 
@@ -209,7 +220,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	
 	# get player spawn position
 	var new_spawn
-	if current_cell.has_multiple_spawns:
+	if current_cell != null and current_cell.has_multiple_spawns:
 		match incoming_direction:
 			Vector2i.DOWN:
 				new_spawn = current_scene_node.get_node("PlayerSpawnDown")

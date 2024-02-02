@@ -92,7 +92,7 @@ shadow_enabled = true
 environment = SubResource("Environment_1v75x")
 
 [node name="PlayerSpawn" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 10.5183)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.17152, 10.5183)
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("1_nbm7e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.417, 0.269625)
@@ -100,7 +100,6 @@ visible = false
 
 [node name="Blockout" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
-visible = false
 script = ExtResource("2_0kado")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Blockout"]
