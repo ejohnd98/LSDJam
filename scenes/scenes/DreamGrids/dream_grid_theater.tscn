@@ -62,6 +62,7 @@ allow_left = true
 layout_mode = 2
 scene_name = "DreamScenes/Theater"
 is_nightmare = true
+is_dream_transition = true
 allow_up = true
 allow_right = true
 allow_down = true

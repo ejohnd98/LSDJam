@@ -1,7 +1,7 @@
 extends Sprite3D
 
 @export var bob_amount = 0.05
-@export var bob_speed = 2
+@export var bob_speed : float = 2
 
 var init_pos
 var counter = 0.0

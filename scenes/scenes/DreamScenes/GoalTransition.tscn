@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://d6dqhk750gmt"]
+[gd_scene load_steps=31 format=3 uid="uid://d6dqhk750gmt"]
 
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="1_nbm7e"]
 [ext_resource type="Script" path="res://scenes/interactables/HideOnStart.gd" id="2_0kado"]
@@ -11,6 +11,12 @@
 [ext_resource type="AudioStream" uid="uid://cohqrgcf1pr75" path="res://sounds/footstep09_goal_transition.ogg" id="9_l3hrv"]
 [ext_resource type="AudioStream" uid="uid://lhwjgb3q6lom" path="res://sounds/footstep06_goal_transition.ogg" id="10_qyjk4"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/StartAudioAtTime.gd" id="11_esmy1"]
+[ext_resource type="PackedScene" uid="uid://6mp6ggussd3x" path="res://scenes/props/completed_dream_sprite.tscn" id="12_as7td"]
+[ext_resource type="Texture2D" uid="uid://bnmk78pbdym2r" path="res://textures/dream_snapshots/forest.png" id="13_1tjvj"]
+[ext_resource type="Texture2D" uid="uid://dexydjuth0vuo" path="res://textures/dream_snapshots/golf.png" id="14_bl4hp"]
+[ext_resource type="Texture2D" uid="uid://c122l2im41lmw" path="res://textures/dream_snapshots/museum.png" id="15_bjwo0"]
+[ext_resource type="Texture2D" uid="uid://di7xfmq7ot6gm" path="res://textures/dream_snapshots/cinema.png" id="16_axcin"]
+[ext_resource type="Texture2D" uid="uid://bfdeo6go0trwe" path="res://textures/dream_snapshots/galaxy.png" id="17_4ym0g"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ahyoj"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -100,6 +106,7 @@ visible = false
 
 [node name="Blockout" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
+visible = false
 script = ExtResource("2_0kado")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Blockout"]
@@ -111,7 +118,7 @@ material = ExtResource("3_vw63c")
 [node name="CSGBox3D2" type="CSGBox3D" parent="Blockout/CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 operation = 2
-size = Vector3(19, 4, 39)
+size = Vector3(7, 4, 39)
 material = ExtResource("3_vw63c")
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
@@ -181,6 +188,51 @@ autoplay = true
 panning_strength = 0.36
 script = ExtResource("11_esmy1")
 
+[node name="CompletedDreams" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 9)
+
+[node name="Beach" parent="CompletedDreams" instance=ExtResource("12_as7td")]
+
+[node name="Forest" parent="CompletedDreams" instance=ExtResource("12_as7td")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 16)
+dream_name = "Forest"
+
+[node name="Texture" parent="CompletedDreams/Forest" index="0"]
+texture = ExtResource("13_1tjvj")
+
+[node name="Golf" parent="CompletedDreams" instance=ExtResource("12_as7td")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 24)
+dream_name = "Golf Course"
+
+[node name="Texture" parent="CompletedDreams/Golf" index="0"]
+texture = ExtResource("14_bl4hp")
+
+[node name="Museum" parent="CompletedDreams" instance=ExtResource("12_as7td")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -5, 2, 24)
+dream_name = "Museum"
+
+[node name="Texture" parent="CompletedDreams/Museum" index="0"]
+texture = ExtResource("15_bjwo0")
+
+[node name="Cinema" parent="CompletedDreams" instance=ExtResource("12_as7td")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -5, 2, 16)
+dream_name = "Cinema"
+
+[node name="Texture" parent="CompletedDreams/Cinema" index="0"]
+texture = ExtResource("16_axcin")
+
+[node name="Galaxy" parent="CompletedDreams" instance=ExtResource("12_as7td")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -5, 2, 8)
+dream_name = "Galaxy Ship"
+
+[node name="Texture" parent="CompletedDreams/Galaxy" index="0"]
+texture = ExtResource("17_4ym0g")
+
 [editable path="SceneTrigger"]
 [editable path="SceneTrigger/DistortionBubble"]
 [editable path="SceneTrigger/DistortionBubbleInteract"]
+[editable path="CompletedDreams/Forest"]
+[editable path="CompletedDreams/Golf"]
+[editable path="CompletedDreams/Museum"]
+[editable path="CompletedDreams/Cinema"]
+[editable path="CompletedDreams/Galaxy"]
