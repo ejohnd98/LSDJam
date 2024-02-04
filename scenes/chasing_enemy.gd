@@ -10,18 +10,18 @@ var player_control_limit_mod = 0.0
 @export var direction_threshold = 0.45
 @export var nightmare_progress_dist_threshold = 15.0
 
-@export var progress_curve : Curve
+#@export var progress_curve : Curve
 
 const chase_speed_to_anim_speed = 2.7
 
-@onready var player_node : LSDPlayer = GameManager.player
-@onready var anim : AnimationPlayer = $AnimationPlayer
+#@onready var player_node : LSDPlayer = GameManager.player
+#@onready var anim : AnimationPlayer = $AnimationPlayer
 
 func start_chase():
 	is_active = true
-	anim.play("WalkAnim")
-	$AudioStreamPlayer.play()
-	$AudioStreamPlayer3D.play()
+	$AnimationPlayer.play("WalkAnim")
+	#$AudioStreamPlayer.play()
+	#$AudioStreamPlayer3D.play()
 
 	player_control_limit_mod = 0.9
 	#player_node.set_frozen(true)
@@ -35,25 +35,26 @@ func start_chase():
 
 func end_chase():
 	is_active = false
-	anim.stop()
+	$AnimationPlayer.stop()
 	#$AudioStreamPlayer.fade_out(true)
 	#$AudioStreamPlayer.detach_from_parent()
-	player_node.limit_controls(1.0)
+	GameManager.player.limit_controls(1.0)
 	queue_free()
 
 func chase_player(delta):
-	var player_pos = player_node.global_position
+	var player_pos = GameManager.player.global_position
 
-	var direction = (player_node.global_position - global_position).normalized()
+	var direction = (GameManager.player.global_position - global_position).normalized()
 	var direction_flattened : Vector2 = Vector2(direction.x, direction.z)
 	
 	rotation.y = (PI/2.0) - direction_flattened.angle()
 	
-	var dist = player_node.global_position.distance_to(global_position)
-	var nightmare_progress_amount = progress_curve.sample(1.0 - clampf(dist/nightmare_progress_dist_threshold, 0.0, 1.0))
+	var dist = GameManager.player.global_position.distance_to(global_position)
+	#var nightmare_progress_amount = progress_curve.sample(1.0 - clampf(dist/nightmare_progress_dist_threshold, 0.0, 1.0))
+	var nightmare_progress_amount = (1.0 - clampf(dist/nightmare_progress_dist_threshold, 0.0, 1.0))
 	
 	var speed = chase_speed * (0.75 + 0.25 * (1.0 - nightmare_progress_amount))
-	anim.speed_scale = chase_speed_to_anim_speed * speed
+	$AnimationPlayer.speed_scale = chase_speed_to_anim_speed * speed
 	
 	var nightmare_amount = (nightmare_progress_amount*0.1) * delta
 	
@@ -72,16 +73,16 @@ func chase_player(delta):
 	if player_control_limit_mod > 0.0:
 		player_control_limit_mod -= 0.5 * delta
 	
-	player_node.limit_controls(1.0 - (nightmare_progress_amount * 0.5) - player_control_limit_mod)
+	GameManager.player.limit_controls(1.0 - (nightmare_progress_amount * 0.5) - player_control_limit_mod)
 
 func check_on_screen() -> bool:	
-	var direction = (player_node.global_position - global_position).normalized()
+	var direction = (GameManager.player.global_position - global_position).normalized()
 	
-	var direction_dot = -direction.dot(player_node.get_forward_vector())
+	var direction_dot = -direction.dot(GameManager.player.get_forward_vector())
 	if (direction_dot < direction_threshold):
 		return false
 	
-	if not player_node.can_see_point(global_position):
+	if not GameManager.player.can_see_point(global_position):
 		return false
 	
 	return true
