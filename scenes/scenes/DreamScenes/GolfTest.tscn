@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://d1iykkdd23cdh"]
+[gd_scene load_steps=36 format=3 uid="uid://d1iykkdd23cdh"]
 
 [ext_resource type="Texture2D" uid="uid://dbukkac0ovsvs" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect_MIRROR.png" id="1_ug24b"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_qaxwj"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://o2bsyxai1ex3" path="res://sounds/generic/fright01.ogg" id="17_4613t"]
 [ext_resource type="AudioStream" uid="uid://1cpkft60wfff" path="res://sounds/generic/fright02.ogg" id="18_11dty"]
 [ext_resource type="AudioStream" uid="uid://bteqg14d8yf0u" path="res://sounds/generic/fright03.ogg" id="19_3w8k2"]
+[ext_resource type="PackedScene" uid="uid://bsxtq5ptg76v5" path="res://scenes/chasing_enemy.tscn" id="20_oxxi7"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ixst8"]
 panorama = ExtResource("1_ug24b")
@@ -226,6 +227,9 @@ volume_db = 6.83
 [node name="ScareCooldown" type="Timer" parent="NightmareSpot"]
 wait_time = 6.0
 one_shot = true
+
+[node name="WalkingFigure" parent="." instance=ExtResource("20_oxxi7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.9838, 1.65887, -30.2468)
 
 [connection signal="body_entered" from="NightmareSpot/Area3D" to="NightmareSpot" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="NightmareSpot/Area3D" to="NightmareSpot" method="_on_area_3d_body_exited"]

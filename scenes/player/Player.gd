@@ -15,6 +15,7 @@ var vertical_velocity = 0
 var velocity = Vector3.ZERO
 
 var is_frozen = false
+var control_modifier = 1.0
 
 var default_footstep_volume
 var default_footstep_pitch
@@ -62,8 +63,8 @@ func _unhandled_input(event):
 		try_interact()
 		
 	if event is InputEventMouseMotion and not override_camera_handling:
-		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY * (0.2 + PlayerSettings.mouse_sensitivity * 2.0))
-		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY * (0.2 + PlayerSettings.mouse_sensitivity * 2.0))
+		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY * control_modifier *(0.2 + PlayerSettings.mouse_sensitivity * 2.0))
+		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY * control_modifier * (0.2 + PlayerSettings.mouse_sensitivity * 2.0))
 		$CameraPivot/Camera3D.rotation.x = clamp($CameraPivot/Camera3D.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 
 var held_item_offset
@@ -114,7 +115,7 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
 	var direction = ($CameraPivot.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	var move_speed : float = WALK_SPEED
+	var move_speed : float = WALK_SPEED * control_modifier
 	var is_sprinting = Input.is_action_pressed("Sprint")
 	if (is_sprinting):
 		move_speed *= SPRINT_MOD
@@ -178,9 +179,12 @@ func set_frozen (frozen):
 	$CollisionShape3D.disabled = frozen
 	velocity = Vector3.ZERO
 	if (frozen):
-		$CameraPivot/AnimationPlayer.stop()
+		$CameraPivot/AnimationPlayer.pause()
 	vertical_velocity = 0
 	is_frozen = frozen
+
+func limit_controls (control_amount : float):
+	control_modifier = clampf(control_amount, 0.0, 1.0)
 
 func set_spawn_position (new_position, new_rotation):
 	position = new_position
@@ -188,14 +192,14 @@ func set_spawn_position (new_position, new_rotation):
 	
 	#Snap to ground
 	var space_state = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(position + Vector3.UP, position + Vector3.DOWN * RAY_LENGTH)
+	var query = PhysicsRayQueryParameters3D.create(global_position + Vector3.UP, global_position + Vector3.DOWN * RAY_LENGTH)
 	query.exclude= [self, $CollisionShape3D]
 	var result = space_state.intersect_ray(query)
 	
 	if result:
 		var is_flat_surface = result["normal"].dot(Vector3.UP) > 0.4
 		if is_flat_surface:
-			position = result["position"] + Vector3.UP
+			global_position = result["position"] + (Vector3.UP * 0.01)
 			is_grounded = true
 			vertical_velocity = 0
 	
@@ -226,3 +230,15 @@ func try_interact():
 
 func get_camera() -> Camera3D:
 	return $CameraPivot/Camera3D
+
+func can_see_point(global_point : Vector3) -> bool:
+	
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(global_position, global_point)
+	query.exclude= [self, $CollisionShape3D]
+	
+	var result = space_state.intersect_ray(query)
+	if result:
+		return false
+	return true
+	

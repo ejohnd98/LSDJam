@@ -33,6 +33,7 @@ var rng = RandomNumberGenerator.new()
 
 var nightmare_recovery_speed = 0.01
 var nightmare_progress = 0.0
+var shifting_to_nightmare = false
 var in_nightmare = false
 
 var in_transition_dream = false
@@ -252,6 +253,11 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	if CameraManagerObject.override_active:
 		CameraManagerObject.reset_camera()
 	
+	if shifting_to_nightmare:
+		nightmare_progress = 0.0
+		canvas_layer.get_node("NightmareBar/ProgressBar").value = nightmare_progress * 100
+		canvas_layer.get_node("NightmareBar").show()
+	
 	if changing_dreams:
 		if player.equipped_item != null and not player.equipped_item.keep_between_dreams:
 			player.unequip_item()
@@ -268,6 +274,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		player.reset_footstep_sounds()
 	
 	player.set_frozen(false)
+	player.limit_controls(1.0)
+	shifting_to_nightmare = false
 	can_pause = true
 	canvas_layer.get_node("UIParent/Compass").set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
@@ -317,18 +325,23 @@ func set_crosshair(visible : bool):
 		canvas_layer.get_node("Crosshair").hide()
 
 func _process(delta):
-	adjust_nightmare_progress(-delta*nightmare_recovery_speed)
+	if not shifting_to_nightmare:
+		adjust_nightmare_progress(-delta*nightmare_recovery_speed)
 
 func adjust_nightmare_progress(delta : float):
+	if shifting_to_nightmare:
+		return
+	
 	nightmare_progress += delta
 	
 	if nightmare_progress < 0:
 		nightmare_progress = 0.0
 	
 	if nightmare_progress > 1.0:
-		nightmare_progress = 0.0
-		canvas_layer.get_node("NightmareBar/ProgressBar").value = nightmare_progress * 100
+		canvas_layer.get_node("NightmareBar/ProgressBar").value = 100
+		shifting_to_nightmare = true
 		pick_nightmare()
+		canvas_layer.get_node("NightmareBar").hide()
 		return
 	
 	canvas_layer.get_node("NightmareBar/ProgressBar").value = nightmare_progress * 100

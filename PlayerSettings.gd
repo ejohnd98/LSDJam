@@ -12,7 +12,6 @@ var current_dream_array = null
 func set_overall_volume(new_volume : float):
 	overall_volume = new_volume
 	var volume_db = -80.0 + (80.0 * (1.0 - pow(1 - new_volume, 5)))
-	print("volume: " + str(volume_db))
 	AudioServer.set_bus_volume_db(0, volume_db)
 
 func add_completed_dream(dream_name : String):
