@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b0bj0pjbr8s5l"]
+[gd_scene load_steps=32 format=3 uid="uid://b0bj0pjbr8s5l"]
 
 [ext_resource type="Texture2D" uid="uid://bm2iusbsw8k8e" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_MoonBurst_Equirect.png" id="1_etvu2"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_vav22"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dwb8n4ceda6ug" path="res://sourceModels/Forest/FenceBars.glb" id="16_lgqt7"]
 [ext_resource type="PackedScene" uid="uid://dc2p4pd1upg3i" path="res://scenes/items/flashlight.tscn" id="17_iqjfg"]
 [ext_resource type="PackedScene" uid="uid://c88knq7ek0x5y" path="res://sourceModels/Forest/ForestBench.glb" id="17_qjkvn"]
+[ext_resource type="PackedScene" uid="uid://oemojq2461ft" path="res://scenes/chasing_enemy_final.tscn" id="18_06tqt"]
 [ext_resource type="PackedScene" uid="uid://bh34qkxql6bh" path="res://sourceModels/Forest/ForestBench2.glb" id="19_whrx3"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mjkut"]
@@ -91,6 +92,9 @@ shader_parameter/speedVertex = 0.1
 shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w3nd0"]
+size = Vector3(5.639, 5, 30)
 
 [node name="Forest" type="Node3D"]
 
@@ -382,4 +386,14 @@ visible = false
 [node name="PlayerItem" parent="." instance=ExtResource("17_iqjfg")]
 transform = Transform3D(-0.990509, 0, 0.137444, 0, 1, 0, -0.137444, 0, -0.990509, 16.5627, 2.30228, -43.6237)
 
+[node name="ChasingEnemy" parent="." instance=ExtResource("18_06tqt")]
+transform = Transform3D(-0.137358, 0, -0.990521, 0, 1, 0, 0.990521, 0, -0.137358, 14.051, -0.0818433, 2.21858)
+check_los = false
+escape_distance = 20.0
+
+[node name="CollisionShape3D" parent="ChasingEnemy/Area3D" index="0"]
+transform = Transform3D(1.00001, 0, 0, 0, 1, 0, 0, 0, 1.00001, 0, 0, 0)
+shape = SubResource("BoxShape3D_w3nd0")
+
 [editable path="SceneTrigger/DistortionBubble2"]
+[editable path="ChasingEnemy"]

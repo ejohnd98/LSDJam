@@ -23,37 +23,17 @@ offset_bottom = 200.0
 grow_horizontal = 0
 columns = 3
 
-[node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_0x1k8")]
+[node name="DreamCell12" parent="GridContainer" instance=ExtResource("2_0x1k8")]
+self_modulate = Color(0, 1, 1, 1)
 layout_mode = 2
 scene_name = "DreamScenes/Forest"
 has_key = true
 has_multiple_spawns = true
-allow_up = true
 allow_right = true
 allow_down = true
-allow_left = true
+dream_keys = Array[String](["has_enemy"])
 
-[node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_0x1k8")]
-layout_mode = 2
-scene_name = "DreamScenes/Forest"
-is_nightmare = true
-is_dream_transition = true
-has_multiple_spawns = true
-allow_up = true
-allow_right = true
-allow_down = true
-allow_left = true
-
-[node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_0x1k8")]
-layout_mode = 2
-scene_name = "DreamScenes/Forest"
-has_multiple_spawns = true
-allow_up = true
-allow_right = true
-allow_down = true
-allow_left = true
-
-[node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_0x1k8")]
+[node name="DreamCell10" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2
 scene_name = "DreamScenes/Forest"
 is_nightmare = true
@@ -74,18 +54,15 @@ allow_right = true
 allow_down = true
 allow_left = true
 
-[node name="DreamCell8" parent="GridContainer" instance=ExtResource("2_0x1k8")]
+[node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2
 scene_name = "DreamScenes/Forest"
-is_nightmare = true
-is_dream_transition = true
+has_key = false
 has_multiple_spawns = true
 allow_up = true
-allow_right = true
-allow_down = true
 allow_left = true
 
-[node name="DreamCell10" parent="GridContainer" instance=ExtResource("2_0x1k8")]
+[node name="DreamCell13" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2
 scene_name = "DreamScenes/Forest"
 is_nightmare = true
@@ -106,9 +83,33 @@ allow_right = true
 allow_down = true
 allow_left = true
 
-[node name="DreamCell12" parent="GridContainer" instance=ExtResource("2_0x1k8")]
+[node name="DreamCell14" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2
 scene_name = "DreamScenes/Forest"
+is_nightmare = true
+is_dream_transition = true
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell15" parent="GridContainer" instance=ExtResource("2_0x1k8")]
+layout_mode = 2
+scene_name = "DreamScenes/Forest"
+is_nightmare = true
+is_dream_transition = true
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell16" parent="GridContainer" instance=ExtResource("2_0x1k8")]
+layout_mode = 2
+scene_name = "DreamScenes/Forest"
+is_nightmare = true
+is_dream_transition = true
 has_multiple_spawns = true
 allow_up = true
 allow_right = true

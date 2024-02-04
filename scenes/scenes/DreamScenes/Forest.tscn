@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bvge3g0uemu4"]
+[gd_scene load_steps=37 format=3 uid="uid://bvge3g0uemu4"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_fluer"]
 [ext_resource type="Texture2D" uid="uid://bgrxkyvd3cqx0" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect.png" id="1_qc3ga"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://btmldfxcfpybj" path="res://scenes/props/distortion_bubble.tscn" id="18_ituke"]
 [ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="20_5mdem"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="21_ia11n"]
+[ext_resource type="PackedScene" uid="uid://oemojq2461ft" path="res://scenes/chasing_enemy_final.tscn" id="22_ev3d3"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ho3ki"]
 panorama = ExtResource("1_qc3ga")
@@ -95,6 +96,9 @@ shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_snghy"]
 size = Vector3(100, 30, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d52nd"]
+size = Vector3(6, 6, 20)
 
 [node name="Forest" type="Node3D"]
 
@@ -238,7 +242,7 @@ transform = Transform3D(0.994952, -0.102673, 2.82834, 0, 2.99803, 0.108832, -2.8
 required_key = "forestKey"
 require_up = true
 destroy_on_pass = true
-required_position = Vector2i(1, 2)
+required_position = Vector2i(2, 1)
 
 [node name="firTreeDowned" parent="DreamConditionGoal" instance=ExtResource("9_aqqpy")]
 transform = Transform3D(-0.995, 5.62932e-08, -0.0998761, -0.00362321, 0.99934, 0.036096, 0.0998099, 0.0362775, -0.994347, 0.236188, -0.0280414, 0.218784)
@@ -462,4 +466,43 @@ shape = SubResource("BoxShape3D_snghy")
 script = ExtResource("21_ia11n")
 enable_visuals = true
 
+[node name="DreamConditionEnemy" parent="." instance=ExtResource("14_l8kij")]
+pass_if_key_is_present = false
+required_position = Vector2i(0, 0)
+
+[node name="ChasingEnemy" parent="DreamConditionEnemy" instance=ExtResource("22_ev3d3")]
+transform = Transform3D(0.0846343, 0, -0.996412, 0, 1, 0, 0.996412, 0, 0.0846343, 19.6504, 0.620133, -21.2266)
+chase_speed = 0.8
+activation_direction_threshold = 0.5
+check_los = false
+escape_distance = 15.0
+
+[node name="CollisionShape3D" parent="DreamConditionEnemy/ChasingEnemy/Area3D" index="0"]
+shape = SubResource("BoxShape3D_d52nd")
+
+[node name="ChasingEnemy" parent="." instance=ExtResource("22_ev3d3")]
+transform = Transform3D(-0.724052, 0, 0.689746, 0, 1, 0, -0.689746, 0, -0.724052, 37.8962, -3.13478, 33.4847)
+check_los = false
+
+[node name="ChasingEnemy2" parent="." instance=ExtResource("22_ev3d3")]
+transform = Transform3D(-0.88796, 0, -0.459921, 0, 1, 0, 0.459921, 0, -0.88796, -27.0948, 2.17203, 21.1777)
+check_los = false
+
+[node name="ChasingEnemy3" parent="." instance=ExtResource("22_ev3d3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6224, 0.398302, 19.7632)
+check_los = false
+
+[node name="ChasingEnemy4" parent="." instance=ExtResource("22_ev3d3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5496, 7.5053, -58.6117)
+check_los = false
+
+[node name="ChasingEnemy5" parent="." instance=ExtResource("22_ev3d3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.8728, 4.68564, -18.4342)
+check_los = false
+
+[node name="ChasingEnemy6" parent="." instance=ExtResource("22_ev3d3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.8572, 3.5754, -37.2797)
+check_los = false
+
 [editable path="SceneTrigger/DistortionBubble2"]
+[editable path="DreamConditionEnemy/ChasingEnemy"]

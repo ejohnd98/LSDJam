@@ -63,14 +63,15 @@ func _unhandled_input(event):
 		try_interact()
 		
 	if event is InputEventMouseMotion and not override_camera_handling:
-		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY * control_modifier *(0.2 + PlayerSettings.mouse_sensitivity * 2.0))
-		$CameraPivot/Camera3D.rotate_x(-event.relative.y * SENSITIVITY * control_modifier * (0.2 + PlayerSettings.mouse_sensitivity * 2.0))
-		$CameraPivot/Camera3D.rotation.x = clamp($CameraPivot/Camera3D.rotation.x, deg_to_rad(-80), deg_to_rad(80))
+		var camera_control_mod = control_modifier * control_modifier
+		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY * camera_control_mod *(0.2 + PlayerSettings.mouse_sensitivity * 2.0))
+		$CameraPivot/CameraParent.rotate_x(-event.relative.y * SENSITIVITY * camera_control_mod * (0.2 + PlayerSettings.mouse_sensitivity * 2.0))
+		$CameraPivot/CameraParent.rotation.x = clamp($CameraPivot/CameraParent.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 
 var held_item_offset
 
 func _process(delta):
-	$HeldItemPivot.global_rotation = $CameraPivot/Camera3D.global_rotation
+	$HeldItemPivot.global_rotation = $CameraPivot/CameraParent.global_rotation
 	pass
 
 func _physics_process(delta):
@@ -205,7 +206,7 @@ func set_spawn_position (new_position, new_rotation):
 	
 func update_current_interactable():
 	var space_state = get_world_3d().direct_space_state
-	var cam = $CameraPivot/Camera3D
+	var cam = $CameraPivot/CameraParent/Camera3D
 	var mousepos = get_viewport().get_mouse_position()
 
 	var origin = cam.project_ray_origin(mousepos)
@@ -229,7 +230,7 @@ func try_interact():
 		current_interactable.interact(self)
 
 func get_camera() -> Camera3D:
-	return $CameraPivot/Camera3D
+	return $CameraPivot/CameraParent
 
 func can_see_point(global_point : Vector3) -> bool:
 	

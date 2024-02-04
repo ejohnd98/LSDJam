@@ -109,12 +109,14 @@ mesh = SubResource("CapsuleMesh_ckb3d")
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CameraPivot"]
 libraries = {
 "": SubResource("AnimationLibrary_682er")
 }
+
+[node name="CameraParent" type="Node3D" parent="CameraPivot"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraParent"]
 
 [node name="HeldItemPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.385, 0)

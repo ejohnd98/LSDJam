@@ -13,7 +13,7 @@ var rng = RandomNumberGenerator.new()
 var random_modifier = 1.0
 
 func type_out_text (text_to_display : String):
-	if text_to_display.contains("??"):
+	if text_to_display.contains("??") or GameManager.get_dream_grid().is_nightmare:
 		$TypewriterSound.pitch_scale = 0.1
 	else:
 		$TypewriterSound.pitch_scale = 0.95

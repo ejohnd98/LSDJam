@@ -12,6 +12,9 @@ var destroy_on_fade_out = false
 
 func detach_from_parent():
 	reparent(get_parent().get_parent(), true)
+	
+func _ready():
+	volume_db = -80 + (80 * (1.0 - pow(1 - (1.0 * overall_volume), 5)))
 
 func fade_in():
 	if not is_fading_out:

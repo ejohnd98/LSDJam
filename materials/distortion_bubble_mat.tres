@@ -1,6 +1,17 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://c0qmxe2hvwyrh"]
+[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://c0qmxe2hvwyrh"]
 
 [ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="1_3phof"]
+[ext_resource type="Shader" path="res://materials/golf_tree_material.gdshader" id="1_ihppu"]
+[ext_resource type="Texture2D" uid="uid://b7efira1k2rsk" path="res://textures/vignette.png" id="2_e5xtx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r4iu0"]
+render_priority = 0
+shader = ExtResource("1_ihppu")
+shader_parameter/transmission = Color(0, 0, 0, 0)
+shader_parameter/sway_speed = 1.0
+shader_parameter/sway_strength = 0.02
+shader_parameter/sway_phase_len = 4.0
+shader_parameter/texture_albedo = ExtResource("2_e5xtx")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
 noise_type = 3
@@ -13,6 +24,7 @@ noise = SubResource("FastNoiseLite_iorx3")
 
 [resource]
 render_priority = 0
+next_pass = SubResource("ShaderMaterial_r4iu0")
 shader = ExtResource("1_3phof")
 shader_parameter/distortionView = 0.03
 shader_parameter/speedView = 0.1

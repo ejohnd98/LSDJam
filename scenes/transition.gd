@@ -18,6 +18,7 @@ func transition(to_nightmare : bool = false):
 	else:
 		transition_mid_point.emit()
 		return
+	$AnimationPlayer.speed_scale = 2.0
 	$AnimationPlayer.play("dissolve")
 	if to_nightmare:
 		$TransitionSoundAlt.play()
@@ -29,6 +30,7 @@ func transition(to_nightmare : bool = false):
 	transition_mid_point.emit()
 	
 func finish_transition():
+	$AnimationPlayer.speed_scale = 1.0
 	$AnimationPlayer.play_backwards("dissolve")
 	await $AnimationPlayer.animation_finished
 	transition_end_point.emit()

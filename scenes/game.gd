@@ -24,6 +24,7 @@ var transition_index = -1
 @onready var canvas_layer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer")
 @onready var player : LSDPlayer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player")
 @onready var main_menu : MainMenu = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/MainMenu")
+@onready var transition_node : transition = get_tree().get_root().get_node("SubViewportContainer/SubViewport2/CanvasLayer/transition")
 
 var current_scene_node = null
 var next_scene_path = ""
@@ -85,12 +86,10 @@ func exit_game():
 	get_tree().quit()
 
 func on_entered_nightmare():
-	canvas_layer.get_node("NightmareOverlay").show()
 	canvas_layer.get_node("UIParent/Compass").hide()
 	in_nightmare = true
 
 func on_left_nightmare():
-	canvas_layer.get_node("NightmareOverlay").hide()
 	canvas_layer.get_node("UIParent/Compass").show()
 	in_nightmare = false
 
@@ -204,9 +203,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	
 	var current_cell = dream_grid.get_current_cell()
 	
-	var transition_obj : transition = canvas_layer.get_node("transition")
-	transition_obj.transition(current_cell.is_nightmare)
-	await transition_obj.transition_mid_point
+	transition_node.transition(current_cell.is_nightmare or dream_grid.is_nightmare)
+	await transition_node.transition_mid_point
 
 	var new_scene_resource = ResourceLoader.load_threaded_get(next_scene_path)
 	var new_scene = new_scene_resource.instantiate()
@@ -253,8 +251,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	if CameraManagerObject.override_active:
 		CameraManagerObject.reset_camera()
 	
+	nightmare_progress *= 0.5
 	if shifting_to_nightmare:
-		nightmare_progress = 0.0
 		canvas_layer.get_node("NightmareBar/ProgressBar").value = nightmare_progress * 100
 		canvas_layer.get_node("NightmareBar").show()
 	
@@ -262,9 +260,9 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		if player.equipped_item != null and not player.equipped_item.keep_between_dreams:
 			player.unequip_item()
 	
-	transition_obj.finish_transition()
+	transition_node.finish_transition()
 	GameManager.set_crosshair(true)
-	await transition_obj.transition_end_point
+	await transition_node.transition_end_point
 	canvas_layer.get_node("LevelText").type_out_text(dream_grid.get_current_cell_name(not in_transition_dream))
 	
 	var footstep_override : AudioStreamPlayer = current_scene_node.get_node("FootstepOverride")
@@ -282,8 +280,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	
 
 func set_transition_alpha(alpha : float):
-	var transition_obj : transition = canvas_layer.get_node("transition")
-	transition_obj.set_progress(alpha)
+	transition_node.set_progress(alpha)
 
 func set_interact_text(interact_text : String):
 	canvas_layer.get_node("InteractText").set_text(interact_text)
@@ -336,6 +333,8 @@ func adjust_nightmare_progress(delta : float):
 	
 	if nightmare_progress < 0:
 		nightmare_progress = 0.0
+	
+	canvas_layer.get_node("NightmareOverlay").modulate.a = nightmare_progress
 	
 	if nightmare_progress > 1.0:
 		canvas_layer.get_node("NightmareBar/ProgressBar").value = 100

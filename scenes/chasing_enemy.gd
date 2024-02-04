@@ -4,86 +4,102 @@ var is_active = false
 var is_on_screen = false
 var player_within_radius = false
 
+var los_lost = false
+
 var player_control_limit_mod = 0.0
 
-@export var chase_speed = 1
+@export var chase_speed = 1.0
 @export var direction_threshold = 0.45
+@export var activation_direction_threshold = 0.75
 @export var nightmare_progress_dist_threshold = 15.0
 
-#@export var progress_curve : Curve
+@export var check_los = true
+@export var escape_distance = 9.0
+
+@export var progress_curve : Curve
 
 const chase_speed_to_anim_speed = 2.7
 
-#@onready var player_node : LSDPlayer = GameManager.player
-#@onready var anim : AnimationPlayer = $AnimationPlayer
+var player_node : LSDPlayer
+var player_dist
+
+var speed_increase = 0.0
+
+func _ready():
+	player_node = GameManager.player
 
 func start_chase():
 	is_active = true
 	$AnimationPlayer.play("WalkAnim")
-	#$AudioStreamPlayer.play()
-	#$AudioStreamPlayer3D.play()
+	$AudioStreamPlayer.play()
+	$AudioStreamPlayer3D.play()
+	
+	GameManager.adjust_nightmare_progress(0.3)
 
-	player_control_limit_mod = 0.9
-	#player_node.set_frozen(true)
-	
-	#await $PlayerStunTimer.timeout
-	
-	#player_node.set_frozen(false)
-	
-	#freeze player input for a few seconds (or significantly reduce)
-	#play scream-like sound (re-dead)
+	player_control_limit_mod = 0.95
 
 func end_chase():
 	is_active = false
 	$AnimationPlayer.stop()
-	#$AudioStreamPlayer.fade_out(true)
-	#$AudioStreamPlayer.detach_from_parent()
-	GameManager.player.limit_controls(1.0)
+	$AudioStreamPlayer.fade_out(true)
+	$AudioStreamPlayer.detach_from_parent()
+	player_node.limit_controls(1.0)
 	queue_free()
 
 func chase_player(delta):
-	var player_pos = GameManager.player.global_position
+	var player_pos = player_node.global_position
 
-	var direction = (GameManager.player.global_position - global_position).normalized()
+	var direction = (player_node.global_position - global_position).normalized()
 	var direction_flattened : Vector2 = Vector2(direction.x, direction.z)
 	
 	rotation.y = (PI/2.0) - direction_flattened.angle()
 	
-	var dist = GameManager.player.global_position.distance_to(global_position)
-	#var nightmare_progress_amount = progress_curve.sample(1.0 - clampf(dist/nightmare_progress_dist_threshold, 0.0, 1.0))
-	var nightmare_progress_amount = (1.0 - clampf(dist/nightmare_progress_dist_threshold, 0.0, 1.0))
+	var nightmare_progress_amount = progress_curve.sample(1.0 - clampf(player_dist/nightmare_progress_dist_threshold, 0.0, 1.0))
 	
-	var speed = chase_speed * (0.75 + 0.25 * (1.0 - nightmare_progress_amount))
+	speed_increase += delta * 0.025
+	
+	var speed = speed_increase + chase_speed * (0.75 + 0.25 * (1.0 - nightmare_progress_amount))
 	$AnimationPlayer.speed_scale = chase_speed_to_anim_speed * speed
 	
-	var nightmare_amount = (nightmare_progress_amount*0.1) * delta
+	var nightmare_amount = (0.025 + (nightmare_progress_amount*0.15)) * delta
 	
-	if (dist > 1.0):
+	if (player_dist > 1.0):
 		global_position += direction * delta * speed
-	elif is_on_screen:
-		nightmare_amount += (0.025 * delta)
+	else:
+		nightmare_amount += (1.0 - player_dist) * delta
 	
 	if is_on_screen:
 		nightmare_amount += (nightmare_progress_amount * 0.1 * delta)
 	
 	GameManager.adjust_nightmare_progress(nightmare_amount)
 	
-	#$Armature/Skeleton3D/Cube.scale.y = 0.2 + nightmare_progress_amount * 2
-	
 	if player_control_limit_mod > 0.0:
-		player_control_limit_mod -= 0.5 * delta
+		player_control_limit_mod -= 0.2 * delta
 	
-	GameManager.player.limit_controls(1.0 - (nightmare_progress_amount * 0.5) - player_control_limit_mod)
+	player_node.limit_controls(1.0 - (nightmare_progress_amount * 0.5) - player_control_limit_mod)
 
 func check_on_screen() -> bool:	
-	var direction = (GameManager.player.global_position - global_position).normalized()
+	var direction = (player_node.global_position - global_position).normalized()
 	
-	var direction_dot = -direction.dot(GameManager.player.get_forward_vector())
-	if (direction_dot < direction_threshold):
-		return false
+	var direction_dot = -direction.dot(player_node.get_forward_vector())
+	if is_active:
+		if (direction_dot < direction_threshold):
+			return false
+	else:
+		if (direction_dot < activation_direction_threshold):
+			return false
 	
-	if not GameManager.player.can_see_point(global_position):
-		return false
+	if check_los and not player_node.can_see_point(global_position):
+		#in this frame, we do not have LoS
+		if los_lost and $OffscreenTimer.is_stopped():
+			return false
+		elif not los_lost:
+			los_lost = true
+			$OffscreenTimer.start()
+		return is_on_screen
+	else:
+		los_lost = false
+		$OffscreenTimer.stop()
 	
 	return true
 	
@@ -92,7 +108,9 @@ func _process(delta):
 		is_on_screen = check_on_screen()
 	
 	if is_active:
-		if not player_within_radius and not is_on_screen:
+		player_dist = player_node.global_position.distance_to(global_position)
+		
+		if (player_dist > escape_distance) and not is_on_screen:
 			end_chase()
 			
 		else:
