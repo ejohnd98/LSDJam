@@ -18,7 +18,7 @@ var player_control_limit_mod = 0.0
 
 @export var progress_curve : Curve
 
-const chase_speed_to_anim_speed = 2.7
+const chase_speed_to_anim_speed = 2.5
 
 var player_node : LSDPlayer
 var player_dist
@@ -27,6 +27,17 @@ var speed_increase = 0.0
 
 func _ready():
 	player_node = GameManager.player
+	move_to_ground()
+
+func move_to_ground():
+	#Snap to ground
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(global_position + Vector3.UP, global_position + Vector3.DOWN * 4.0)
+	query.exclude= [self, $Area3D/CollisionShape3D]
+	var result = space_state.intersect_ray(query)
+	
+	if result:
+		global_position = result["position"]
 
 func start_chase():
 	is_active = true
@@ -34,7 +45,11 @@ func start_chase():
 	$AudioStreamPlayer.play()
 	$AudioStreamPlayer3D.play()
 	
-	GameManager.adjust_nightmare_progress(0.3)
+	$StartAnim.play("start_chase")
+	
+	player_node.get_camera_shake().start(0.5)
+	
+	GameManager.adjust_nightmare_progress(0.25)
 
 	player_control_limit_mod = 0.95
 
@@ -47,6 +62,7 @@ func end_chase():
 	queue_free()
 
 func chase_player(delta):
+	move_to_ground()
 	var player_pos = player_node.global_position
 
 	var direction = (player_node.global_position - global_position).normalized()

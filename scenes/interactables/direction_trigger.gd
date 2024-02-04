@@ -7,7 +7,7 @@ extends click_interaction
 @export var show_mesh : bool = true
 @export var show_arrow : bool = true
 
-@export var start_dist : float = 4.0
+@export var start_dist : float = 3.0
 
 func _ready():
 	var angle = atan2(float(grid_direction.x), float(grid_direction.y))

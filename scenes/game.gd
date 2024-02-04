@@ -100,6 +100,7 @@ func on_interactable_change(interactable):
 		hide_interact_text()
 	
 func move_in_direction(direction: Vector2i):
+	
 	if (not is_direction_allowed(direction)):
 		return
 		
@@ -204,6 +205,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	var current_cell = dream_grid.get_current_cell()
 	
 	transition_node.transition(current_cell.is_nightmare or dream_grid.is_nightmare)
+	
 	await transition_node.transition_mid_point
 
 	var new_scene_resource = ResourceLoader.load_threaded_get(next_scene_path)
@@ -218,7 +220,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	current_scene_node = new_scene
 	
 	# get player spawn position
-	var new_spawn
+	var new_spawn : Node3D
 	if current_cell != null and current_cell.has_multiple_spawns:
 		match incoming_direction:
 			Vector2i.DOWN:
@@ -235,8 +237,6 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 				
 	else:
 		new_spawn = current_scene_node.get_node("PlayerSpawn")
-		
-	player.set_spawn_position(new_spawn.position, new_spawn.rotation)
 	
 	if dream_grid.is_nightmare and not in_nightmare:
 		on_entered_nightmare()
@@ -259,6 +259,11 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	if changing_dreams:
 		if player.equipped_item != null and not player.equipped_item.keep_between_dreams:
 			player.unequip_item()
+	
+	#fixes issue where player wasn't snapping to ground
+	await get_tree().create_timer(0.25).timeout
+	
+	player.set_spawn_position(new_spawn.global_position, new_spawn.global_rotation)
 	
 	transition_node.finish_transition()
 	GameManager.set_crosshair(true)

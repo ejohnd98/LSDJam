@@ -1,6 +1,6 @@
 class_name LSDPlayer extends RigidBody3D
 
-const RAY_LENGTH = 10
+const RAY_LENGTH = 30
 const WALK_SPEED = 2.5
 const SPRINT_MOD = 1.8
 const DEBUG_SPRINT_MOD = 8
@@ -188,21 +188,20 @@ func limit_controls (control_amount : float):
 	control_modifier = clampf(control_amount, 0.0, 1.0)
 
 func set_spawn_position (new_position, new_rotation):
-	position = new_position
 	$CameraPivot.rotation.y = new_rotation.y + PI
 	
 	#Snap to ground
 	var space_state = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(global_position + Vector3.UP, global_position + Vector3.DOWN * RAY_LENGTH)
-	query.exclude= [self, $CollisionShape3D]
+	var query = PhysicsRayQueryParameters3D.create(new_position + Vector3.UP, new_position + (Vector3.DOWN * RAY_LENGTH))
+	query.exclude = [self, $CollisionShape3D]
 	var result = space_state.intersect_ray(query)
 	
 	if result:
-		var is_flat_surface = result["normal"].dot(Vector3.UP) > 0.4
-		if is_flat_surface:
-			global_position = result["position"] + (Vector3.UP * 0.01)
-			is_grounded = true
-			vertical_velocity = 0
+		global_position = result["position"]
+		is_grounded = true
+		vertical_velocity = 0
+	else:
+		global_position = new_position
 	
 func update_current_interactable():
 	var space_state = get_world_3d().direct_space_state
@@ -231,6 +230,9 @@ func try_interact():
 
 func get_camera() -> Camera3D:
 	return $CameraPivot/CameraParent
+
+func get_camera_shake() -> Shaker:
+	return $CameraPivot/CameraParent/Camera3D/Shaker
 
 func can_see_point(global_point : Vector3) -> bool:
 	

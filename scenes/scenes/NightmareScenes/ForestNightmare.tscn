@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://b0bj0pjbr8s5l"]
+[gd_scene load_steps=38 format=3 uid="uid://b0bj0pjbr8s5l"]
 
 [ext_resource type="Texture2D" uid="uid://bm2iusbsw8k8e" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_MoonBurst_Equirect.png" id="1_etvu2"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_vav22"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dc2p4pd1upg3i" path="res://scenes/items/flashlight.tscn" id="17_iqjfg"]
 [ext_resource type="PackedScene" uid="uid://c88knq7ek0x5y" path="res://sourceModels/Forest/ForestBench.glb" id="17_qjkvn"]
 [ext_resource type="PackedScene" uid="uid://oemojq2461ft" path="res://scenes/chasing_enemy_final.tscn" id="18_06tqt"]
+[ext_resource type="PackedScene" uid="uid://1il5btkm7phy" path="res://sourceModels/firTreeDowned.glb" id="19_jmb7t"]
 [ext_resource type="PackedScene" uid="uid://bh34qkxql6bh" path="res://sourceModels/Forest/ForestBench2.glb" id="19_whrx3"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mjkut"]
@@ -93,8 +94,52 @@ shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_slpjc"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3dcqk"]
+seamless = true
+noise = SubResource("FastNoiseLite_slpjc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k52ky"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("7_m7u4b")
+shader_parameter/distortionView = 0.125
+shader_parameter/speedView = 0.113
+shader_parameter/static_intensity = 0.95
+shader_parameter/tintColor = Color(1, 0.235294, 0.180392, 1)
+shader_parameter/fesnelAmount = 0.05
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_3dcqk")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_3dcqk")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_3dcqk")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_w3nd0"]
-size = Vector3(5.639, 5, 30)
+size = Vector3(5.639, 5, 20)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iy4hv"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("7_m7u4b")
+shader_parameter/distortionView = 0.125
+shader_parameter/speedView = 0.113
+shader_parameter/static_intensity = 0.95
+shader_parameter/tintColor = Color(1, 0.235294, 0.180392, 1)
+shader_parameter/fesnelAmount = 0.05
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_3dcqk")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_3dcqk")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_3dcqk")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2wqtn"]
+size = Vector3(20, 5, 5)
 
 [node name="Forest" type="Node3D"]
 
@@ -286,9 +331,6 @@ transform = Transform3D(0.50305, 0, -0.864257, 0, 1, 0, 0.864257, 0, 0.50305, -1
 [node name="FencePost7" parent="RightFences" instance=ExtResource("15_68doo")]
 transform = Transform3D(0.50305, 0, -0.864257, 0, 1, 0, 0.864257, 0, 0.50305, -12.0932, -0.255, -1.9629)
 
-[node name="FenceBars5" parent="RightFences" instance=ExtResource("16_lgqt7")]
-transform = Transform3D(0.763773, 0, 0.645484, 0, 1, 0, -0.645484, 0, 0.763773, -7.04259, -0.143894, -5.42653)
-
 [node name="FenceBars7" parent="RightFences" instance=ExtResource("16_lgqt7")]
 transform = Transform3D(-0.704609, 0, -0.709596, 0, 1, 0, 0.709596, 0, -0.704609, -6.81345, -0.143894, -5.62017)
 
@@ -356,7 +398,10 @@ transform = Transform3D(0.864257, 0, 0.50305, 0, 1, 0, -0.50305, 0, 0.864257, -8
 transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, -4.22825, -0.0747477, -3.38152)
 
 [node name="ForestBench2" parent="." instance=ExtResource("17_qjkvn")]
-transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, -1.05308, -0.0747477, -2.85587)
+transform = Transform3D(0.986572, 0, -0.163326, 0, 1, 0, 0.163326, 0, 0.986572, -2.633, -0.0747477, -6.33936)
+
+[node name="ForestBench10" parent="." instance=ExtResource("17_qjkvn")]
+transform = Transform3D(-0.0475373, -0.256195, -0.965456, -0.0348915, 0.966384, -0.254723, 0.99826, 0.0215774, -0.0548784, -6.25159, 0.284539, -3.23583)
 
 [node name="ForestBench3" parent="." instance=ExtResource("19_whrx3")]
 transform = Transform3D(-0.154572, 0, -0.987981, 0, 1, 0, 0.987981, 0, -0.154572, 30.8149, -0.0990523, 6.42006)
@@ -371,7 +416,7 @@ transform = Transform3D(0.991216, 0, -0.132256, 0, 1, 0, 0.132256, 0, 0.991216, 
 transform = Transform3D(0.998687, 0, -0.0512204, 0, 1, 0, 0.0512204, 0, 0.998687, -7.70565, -0.0244881, 36.4067)
 
 [node name="ForestBench7" parent="." instance=ExtResource("17_qjkvn")]
-transform = Transform3D(0.175708, -0.00692914, -0.984418, 0.0749014, 0.997171, 0.00635021, 0.981589, -0.0748501, 0.17573, 16.1346, 1.58575, -41.0029)
+transform = Transform3D(0.153474, 0.099001, -0.983181, 0.518817, 0.838724, 0.165442, 0.840996, -0.535482, 0.0773591, 16.5439, 1.45178, -38.9253)
 
 [node name="ForestBench9" parent="." instance=ExtResource("17_qjkvn")]
 transform = Transform3D(0.175708, 0.0360858, -0.983781, 0.0749014, 0.995941, 0.0499097, 0.981589, -0.0824562, 0.172292, 15.6425, 1.32339, -43.196)
@@ -387,13 +432,68 @@ visible = false
 transform = Transform3D(-0.990509, 0, 0.137444, 0, 1, 0, -0.137444, 0, -0.990509, 16.5627, 2.30228, -43.6237)
 
 [node name="ChasingEnemy" parent="." instance=ExtResource("18_06tqt")]
-transform = Transform3D(-0.137358, 0, -0.990521, 0, 1, 0, 0.990521, 0, -0.137358, 14.051, -0.0818433, 2.21858)
+transform = Transform3D(0.00736534, 0, 0.999973, 0, 1, 0, -0.999973, 0, 0.00736534, -13.571, -0.0818433, -0.92991)
+chase_speed = 1.4
 check_los = false
 escape_distance = 20.0
+
+[node name="Cube" parent="ChasingEnemy/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_k52ky")
 
 [node name="CollisionShape3D" parent="ChasingEnemy/Area3D" index="0"]
 transform = Transform3D(1.00001, 0, 0, 0, 1, 0, 0, 0, 1.00001, 0, 0, 0)
 shape = SubResource("BoxShape3D_w3nd0")
 
+[node name="ChasingEnemy2" parent="." instance=ExtResource("18_06tqt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.8599, 1.09234, 15.5746)
+check_los = false
+escape_distance = 15.0
+
+[node name="ChasingEnemy3" parent="." instance=ExtResource("18_06tqt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.8545, -0.477539, 17.9402)
+check_los = false
+escape_distance = 15.0
+
+[node name="ChasingEnemy4" parent="." instance=ExtResource("18_06tqt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72118, 1.93242, 56.3638)
+check_los = false
+escape_distance = 15.0
+
+[node name="ChasingEnemy5" parent="." instance=ExtResource("18_06tqt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.582, 0.726895, 32.8221)
+check_los = false
+escape_distance = 15.0
+
+[node name="ChasingEnemy6" parent="." instance=ExtResource("18_06tqt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.4498, 2.57156, -10.9925)
+check_los = false
+escape_distance = 15.0
+
+[node name="ChasingEnemy8" parent="." instance=ExtResource("18_06tqt")]
+transform = Transform3D(0.873611, 0, -0.486625, 0, 1, 0, 0.486625, 0, 0.873611, 27.2369, 1.32776, -25.7816)
+check_los = false
+escape_distance = 15.0
+
+[node name="Cube" parent="ChasingEnemy8/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_iy4hv")
+
+[node name="CollisionShape3D" parent="ChasingEnemy8/Area3D" index="0"]
+shape = SubResource("BoxShape3D_2wqtn")
+
+[node name="ChasingEnemy9" parent="." instance=ExtResource("18_06tqt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.4036, -1.73669, 17.4512)
+check_los = false
+escape_distance = 15.0
+
+[node name="firTreeDowned" parent="." instance=ExtResource("19_jmb7t")]
+transform = Transform3D(-0.389188, 0.106945, 1.95885, 0, -1.99703, 0.109029, 1.96177, 0.0212163, 0.388609, -7.82433, 1.44669, -5.0838)
+
+[node name="firTreeDowned2" parent="." instance=ExtResource("19_jmb7t")]
+transform = Transform3D(-0.614051, 0, 0.789266, 0, 1, 0, -0.789266, 0, -0.614051, 14.8962, 1.61938, -39.7617)
+
+[node name="firTreeDowned3" parent="." instance=ExtResource("19_jmb7t")]
+transform = Transform3D(-0.945289, 0, -1.35569, 0, 1.65272, 0, 1.35569, 0, -0.945289, 22.3997, 1.26125, -26.7991)
+
 [editable path="SceneTrigger/DistortionBubble2"]
 [editable path="ChasingEnemy"]
+[editable path="ChasingEnemy8"]

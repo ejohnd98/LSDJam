@@ -33,10 +33,10 @@ skeleton = NodePath("../..")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Flashlight"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.206933, 9.04534e-09)
-light_energy = 6.0
+light_energy = 7.0
 light_projector = ExtResource("2_ncrgw")
 shadow_enabled = true
-spot_range = 19.0
+spot_range = 24.0
 spot_angle = 60.0
 
 [node name="InteractableObject" parent="." instance=ExtResource("2_v6ch3")]
