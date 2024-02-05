@@ -1,0 +1,51 @@
+[gd_scene load_steps=13 format=3 uid="uid://c6q5nhj655um8"]
+
+[ext_resource type="PackedScene" uid="uid://caw7gncid2prw" path="res://sourceModels/cinema/Cinema.glb" id="1_v7sm0"]
+[ext_resource type="Texture2D" uid="uid://dohhf68i2ion1" path="res://sourceModels/cinema/theaterWall.png" id="2_jmjae"]
+[ext_resource type="Texture2D" uid="uid://cee3tffe05vxd" path="res://sourceModels/cinema/theaterCarpetLights.png" id="2_mpm6r"]
+[ext_resource type="Texture2D" uid="uid://cmr43x7wtjcow" path="res://sourceModels/cinema/theaterInsideWall.png" id="3_3qdrf"]
+[ext_resource type="Texture2D" uid="uid://btvh3y6a4r3ma" path="res://sourceModels/cinema/theaterCarpetLightsEmissive.png" id="3_kcc8p"]
+[ext_resource type="Texture2D" uid="uid://d4c8hx6emqgyg" path="res://sourceModels/cinema/theaterScreen.png" id="4_obk73"]
+[ext_resource type="Texture2D" uid="uid://c4tevfmhu06hm" path="res://sourceModels/cinema/theaterCarpet.png" id="7_elwkl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7nd81"]
+albedo_texture = ExtResource("2_jmjae")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yycot"]
+albedo_texture = ExtResource("3_3qdrf")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fr84g"]
+albedo_texture = ExtResource("4_obk73")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jnl33"]
+albedo_texture = ExtResource("2_mpm6r")
+emission_enabled = true
+emission_texture = ExtResource("3_kcc8p")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fhxkh"]
+albedo_texture = ExtResource("7_elwkl")
+texture_filter = 2
+
+[node name="Cinema" instance=ExtResource("1_v7sm0")]
+
+[node name="Theater" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_7nd81")
+surface_material_override/1 = SubResource("StandardMaterial3D_yycot")
+surface_material_override/2 = SubResource("StandardMaterial3D_fr84g")
+surface_material_override/3 = SubResource("StandardMaterial3D_jnl33")
+
+[node name="Seats" parent="Theater" index="6"]
+surface_material_override/0 = SubResource("StandardMaterial3D_fhxkh")
+
+[node name="Seats_001" parent="Theater" index="7"]
+surface_material_override/0 = SubResource("StandardMaterial3D_fhxkh")
+
+[node name="Seats_002" parent="Theater" index="8"]
+surface_material_override/0 = SubResource("StandardMaterial3D_fhxkh")
+
+[node name="Ceiling" parent="." index="2"]
+gi_mode = 0

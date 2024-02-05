@@ -9,19 +9,19 @@
 [ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="6_05k7o"]
 [ext_resource type="PackedScene" uid="uid://dv2mfrpn0x5md" path="res://scenes/dream_condition.tscn" id="6_28od4"]
 [ext_resource type="PackedScene" uid="uid://cm5srrepm42b4" path="res://scenes/interactables/key_object.tscn" id="8_m5tpd"]
+[ext_resource type="VoxelGIData" uid="uid://bx6evjealbpih" path="res://scenes/scenes/DreamScenes/Theater.VoxelGI_data.res" id="10_i330n"]
+[ext_resource type="PackedScene" uid="uid://c6q5nhj655um8" path="res://models/cinema.tscn" id="10_nh18k"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t5gl7"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_2tymr"]
-sky_material = SubResource("ProceduralSkyMaterial_t5gl7")
-
-[sub_resource type="Environment" id="Environment_77ybp"]
-background_mode = 2
-sky = SubResource("Sky_2tymr")
-tonemap_mode = 2
-glow_enabled = true
+[sub_resource type="Environment" id="Environment_7qkrs"]
+reflected_light_source = 1
+tonemap_white = 0.36
+sdfgi_use_occlusion = true
+sdfgi_read_sky_light = false
+sdfgi_bounce_feedback = 0.4
+adjustment_enabled = true
+adjustment_brightness = 1.23
+adjustment_contrast = 1.05
+adjustment_saturation = 1.29
 
 [sub_resource type="BoxMesh" id="BoxMesh_x6tlp"]
 lightmap_size_hint = Vector2i(14, 21)
@@ -75,28 +75,29 @@ texture_filter = 2
 [node name="Theater" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, -122.879, 0, 0)
+visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_77ybp")
+environment = SubResource("Environment_7qkrs")
 
 [node name="PlayerSpawn" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.04448, -30.1663)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12117, 0.665915, -27.1663)
 
 [node name="SceneTrigger" parent="." instance=ExtResource("1_wi6lw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.3, 18.786)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -129.879, 1.3, 18.786)
 grid_direction = Vector2i(0, -1)
 
 [node name="SceneTrigger2" parent="." instance=ExtResource("1_wi6lw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.178, 1.3, 0.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -115.701, 1.3, 0.1)
 grid_direction = Vector2i(-1, 0)
 
 [node name="SceneTrigger3" parent="." instance=ExtResource("1_wi6lw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.078, 1.3, -28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -141.957, 1.3, -28)
 grid_direction = Vector2i(1, 0)
 
 [node name="SceneTrigger4" parent="." instance=ExtResource("1_wi6lw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0779991, 1.3, -37)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -122.957, 1.3, -37)
 proximity_trigger = true
 show_mesh = false
 show_arrow = false
@@ -110,10 +111,10 @@ mesh = SubResource("BoxMesh_x6tlp")
 surface_material_override/0 = ExtResource("2_6xt0h")
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_6ifvt")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5.417, -3.667)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -122.879, 5.417, -3.667)
 
 [node name="Blockout" type="Node3D" parent="."]
-transform = Transform3D(-0.8, 0, -1.20797e-07, 0, 1, 0, 1.20797e-07, 0, -0.8, 0, 0, 0)
+transform = Transform3D(-0.8, 0, -1.20797e-07, 0, 1, 0, 1.20797e-07, 0, -0.8, -122.879, 0, 0)
 
 [node name="Building" type="CSGBox3D" parent="Blockout"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
@@ -518,7 +519,7 @@ size = Vector3(7, 4, 0.2)
 material = SubResource("StandardMaterial3D_j5ydx")
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -122.879, 2, -10)
 stream = ExtResource("5_8ny74")
 attenuation_model = 3
 unit_size = 100.0
@@ -527,11 +528,42 @@ panning_strength = 0.4
 bus = &"SFX"
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(-0.8, 0, -1.20797e-07, 0, 1, 0, 1.20797e-07, 0, -0.8, 0, 0.5, 0)
+transform = Transform3D(-0.8, 0, -1.20797e-07, 0, 1, 0, 1.20797e-07, 0, -0.8, -122.879, 0.5, 0)
 visible = false
 use_collision = true
 size = Vector3(70, 1, 100)
 
 [node name="KeyObject" parent="." instance=ExtResource("8_m5tpd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -115.879, 1, -20)
 key = "theater_5"
+
+[node name="VoxelGI" type="VoxelGI" parent="."]
+size = Vector3(70, 20, 70)
+data = ExtResource("10_i330n")
+
+[node name="Cinema" parent="VoxelGI" instance=ExtResource("10_nh18k")]
+
+[node name="Door" parent="VoxelGI/Cinema/Theater" index="0"]
+visible = false
+
+[node name="Door_001" parent="VoxelGI/Cinema/Theater" index="1"]
+visible = false
+
+[node name="Door_002" parent="VoxelGI/Cinema/Theater" index="2"]
+visible = false
+
+[node name="Door2_001" parent="VoxelGI/Cinema/Theater" index="4"]
+visible = false
+
+[node name="Door2_002" parent="VoxelGI/Cinema/Theater" index="5"]
+visible = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="VoxelGI/Cinema"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.67353, 0)
+light_color = Color(1, 0.941176, 0.878431, 1)
+light_energy = 3.0
+light_indirect_energy = 0.254
+light_bake_mode = 1
+shadow_enabled = true
+
+[editable path="VoxelGI/Cinema"]
