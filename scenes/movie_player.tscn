@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://vv3cnb03urre"]
+
+[ext_resource type="VideoStream" path="res://video/cinema-wip.mp4" id="1_bq0g8"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nmu3q"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Movie" type="Node3D"]
+
+[node name="UI" type="Sprite3D" parent="."]
+gi_mode = 0
+double_sided = false
+texture_filter = 4
+texture = SubResource("ViewportTexture_nmu3q")
+region_rect = Rect2(11.8881, 12.1333, 37.8365, 40.2689)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="UI"]
+volume_db = -12.222
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(910, 512)
+render_target_update_mode = 4
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ratio = 1.7778
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport/AspectRatioContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.494118, 0.494118, 0.494118, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="SubViewport/AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("1_bq0g8")
+volume_db = -80.0
+autoplay = true
+expand = true
+loop = true

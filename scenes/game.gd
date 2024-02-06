@@ -216,27 +216,30 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		current_scene_node.queue_free()
 		current_scene_node = null
 	
-	add_child(new_scene)
+	add_child(new_scene, true)
+	await get_tree().create_timer(0.1).timeout
 	current_scene_node = new_scene
 	
 	# get player spawn position
 	var new_spawn : Node3D
-	if current_cell != null and current_cell.has_multiple_spawns:
-		match incoming_direction:
-			Vector2i.DOWN:
-				new_spawn = current_scene_node.get_node("PlayerSpawnDown")
-			Vector2i.RIGHT:
-				new_spawn = current_scene_node.get_node("PlayerSpawnRight")
-			Vector2i.UP:
-				new_spawn = current_scene_node.get_node("PlayerSpawnUp")
-			Vector2i.LEFT:
-				new_spawn = current_scene_node.get_node("PlayerSpawnLeft")
-		if new_spawn == null:
-			push_warning("Could not get directional spawn point!")
+	if current_cell != null: 
+		if current_cell.has_multiple_spawns:
+			match incoming_direction:
+				Vector2i.DOWN:
+					new_spawn = current_scene_node.get_node("PlayerSpawnDown")
+				Vector2i.RIGHT:
+					new_spawn = current_scene_node.get_node("PlayerSpawnRight")
+				Vector2i.UP:
+					new_spawn = current_scene_node.get_node("PlayerSpawnUp")
+				Vector2i.LEFT:
+					new_spawn = current_scene_node.get_node("PlayerSpawnLeft")
+			if new_spawn == null:
+				push_warning("load_new_scene: could not get directional spawn point!")
+				new_spawn = current_scene_node.get_node("PlayerSpawn")
+		else:
 			new_spawn = current_scene_node.get_node("PlayerSpawn")
-				
 	else:
-		new_spawn = current_scene_node.get_node("PlayerSpawn")
+		push_error("load_new_scene: current cell is null!")
 	
 	if dream_grid.is_nightmare and not in_nightmare:
 		on_entered_nightmare()
