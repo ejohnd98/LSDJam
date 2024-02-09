@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ctf3xb7to4085"]
+[gd_scene load_steps=23 format=3 uid="uid://ctf3xb7to4085"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_wi6lw"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_6ifvt"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cv7gge5txupjt" path="res://sourceModels/cinema/CinemaPole.glb" id="12_djtc1"]
 [ext_resource type="PackedScene" uid="uid://w60oqu3y1kmn" path="res://sourceModels/cinema/CinemaPoleWithRope.glb" id="13_xnqop"]
 [ext_resource type="PackedScene" uid="uid://vv3cnb03urre" path="res://scenes/movie_player.tscn" id="14_c3yuy"]
+[ext_resource type="PackedScene" uid="uid://chynui24s8lsv" path="res://scenes/props/cinema_projector.tscn" id="15_r5big"]
 
 [sub_resource type="Environment" id="Environment_7qkrs"]
 reflected_light_source = 1
@@ -78,6 +79,9 @@ uv2_scale = Vector3(0.5, 0.5, 0.5)
 uv2_triplanar = true
 uv2_world_triplanar = true
 texture_filter = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e7xu4"]
+size = Vector3(18, 7, 19)
 
 [node name="Theater" type="Node3D"]
 
@@ -556,12 +560,6 @@ visible = false
 [node name="CollisionShape3D" parent="VoxelGI/Cinema/Theater/Door_002/StaticBody3D" index="0"]
 disabled = true
 
-[node name="Door2_001" parent="VoxelGI/Cinema/Theater" index="4"]
-visible = false
-
-[node name="Door2_002" parent="VoxelGI/Cinema/Theater" index="5"]
-visible = false
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="VoxelGI"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 9.30107, 0)
 light_color = Color(1, 0.941176, 0.878431, 1)
@@ -580,5 +578,20 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 21.077
 
 [node name="Movie" parent="." instance=ExtResource("14_c3yuy")]
 transform = Transform3D(-3.99551e-08, 0, -0.914067, 0, 0.914067, 0, 0.914067, 0, -3.99551e-08, -3.08307, 3.07161, 11.6218)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Movie"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90735e-06, 0, 9.01408)
+shape = SubResource("BoxShape3D_e7xu4")
+
+[node name="CinemaProjector" parent="." instance=ExtResource("15_r5big")]
+transform = Transform3D(0.997197, 0.0748221, 0, -0.0748221, 0.997197, 0, 0, 0, 1, -16.5222, 3.33731, 11.4647)
+
+[node name="CinemaProjector2" parent="." instance=ExtResource("15_r5big")]
+transform = Transform3D(0.997197, 0.0748221, 0, -0.0748221, 0.997197, 0, 0, 0, 1, -16.5222, 3.33731, -11.4426)
+is_spinning = false
+
+[node name="CinemaProjector3" parent="." instance=ExtResource("15_r5big")]
+transform = Transform3D(-0.997197, -0.0748221, -8.74228e-08, -0.0748221, 0.997197, 0, 8.71777e-08, 6.54115e-09, -1, 16.0476, 3.33731, -11.4426)
+is_spinning = false
 
 [editable path="VoxelGI/Cinema"]

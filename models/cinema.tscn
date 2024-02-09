@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c6q5nhj655um8"]
+[gd_scene load_steps=21 format=3 uid="uid://c6q5nhj655um8"]
 
 [ext_resource type="PackedScene" uid="uid://caw7gncid2prw" path="res://sourceModels/cinema/Cinema.glb" id="1_v7sm0"]
 [ext_resource type="Texture2D" uid="uid://dohhf68i2ion1" path="res://sourceModels/cinema/theaterWall.png" id="2_jmjae"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c4tevfmhu06hm" path="res://sourceModels/cinema/theaterCarpet.png" id="7_elwkl"]
 [ext_resource type="Texture2D" uid="uid://ban5joj0ys5uc" path="res://sourceModels/cinema/exitDoor.png" id="8_m3qbu"]
 [ext_resource type="Texture2D" uid="uid://bf8pckvgk4i5h" path="res://sourceModels/cinema/outside.png" id="8_yoi0o"]
+[ext_resource type="Texture2D" uid="uid://cp4mwypx8dy3u" path="res://sourceModels/cinema/store.png" id="10_ioukx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7nd81"]
 albedo_texture = ExtResource("2_jmjae")
@@ -48,6 +49,15 @@ emission_energy_multiplier = 0.5
 emission_texture = ExtResource("8_yoi0o")
 texture_filter = 2
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3drra"]
+albedo_texture = ExtResource("10_ioukx")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bsaoj"]
+transparency = 1
+albedo_texture = ExtResource("10_ioukx")
+texture_filter = 2
+
 [node name="Cinema" instance=ExtResource("1_v7sm0")]
 
 [node name="Theater" parent="." index="0"]
@@ -77,3 +87,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vnwgx")
 [node name="Outside" parent="." index="4"]
 gi_mode = 0
 surface_material_override/0 = SubResource("StandardMaterial3D_y0sqa")
+
+[node name="Store" parent="." index="5"]
+surface_material_override/0 = SubResource("StandardMaterial3D_3drra")
+
+[node name="Glass" parent="Store" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bsaoj")

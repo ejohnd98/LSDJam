@@ -1,0 +1,131 @@
+[gd_scene load_steps=15 format=3 uid="uid://chynui24s8lsv"]
+
+[ext_resource type="PackedScene" uid="uid://s3wkh4nbsnhk" path="res://sourceModels/cinema/CinemaProjector.glb" id="1_bhodo"]
+[ext_resource type="Script" path="res://CinemaProjector.gd" id="2_tjxig"]
+[ext_resource type="Texture2D" uid="uid://05ty1loham53" path="res://sourceModels/cinema/filmReelLight.png" id="3_37m15"]
+[ext_resource type="Texture2D" uid="uid://dms2eeb3xfd3w" path="res://sourceModels/cinema/filmReel.png" id="4_8ioy6"]
+[ext_resource type="AudioStream" uid="uid://b2pywn0h2c1hn" path="res://sounds/cinema/projectorLoop.ogg" id="5_w7gjs"]
+[ext_resource type="PackedScene" uid="uid://dsik30if3a23x" path="res://scenes/interactables/interactable_object.tscn" id="6_1756j"]
+[ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="7_o5wq5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kckhl"]
+transparency = 1
+blend_mode = 1
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("3_37m15")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+texture_filter = 2
+disable_receive_shadows = true
+proximity_fade_distance = 10.0
+distance_fade_mode = 2
+distance_fade_min_distance = 25.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_elc7d"]
+transparency = 1
+albedo_texture = ExtResource("4_8ioy6")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_02t06"]
+transparency = 1
+albedo_texture = ExtResource("4_8ioy6")
+texture_filter = 2
+
+[sub_resource type="Animation" id="Animation_2qi7x"]
+resource_name = "Light"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FilmPlayer/FilmThing:surface_material_override/0:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.0470588), Color(1, 1, 1, 0.235294), Color(1, 1, 1, 0.141176), Color(1, 1, 1, 0.0235294), Color(1, 1, 1, 0.129412), Color(1, 1, 1, 0.0352941), Color(1, 1, 1, 0.0470588)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FilmPlayer/FilmThing:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 0.553809), Vector3(1.04, 1.04, 0.576), Vector3(1, 1, 0.553809), Vector3(1.03, 1.03, 0.57), Vector3(0.98, 0.98, 0.543), Vector3(1.02, 1.02, 0.565), Vector3(1, 1, 0.554)]
+}
+
+[sub_resource type="Animation" id="Animation_6hxil"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FilmPlayer/FilmThing:surface_material_override/0:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FilmPlayer/FilmThing:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 0.553809)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v0rmd"]
+_data = {
+"Light": SubResource("Animation_2qi7x"),
+"RESET": SubResource("Animation_6hxil")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jrwxi"]
+size = Vector3(1.25, 1.25, 1)
+
+[node name="CinemaProjector" instance=ExtResource("1_bhodo")]
+script = ExtResource("2_tjxig")
+
+[node name="FilmThing" parent="FilmPlayer" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kckhl")
+
+[node name="Reel1" parent="FilmPlayer" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_elc7d")
+
+[node name="Reel2" parent="FilmPlayer" index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_02t06")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_v0rmd")
+}
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="2"]
+stream = ExtResource("5_w7gjs")
+volume_db = -15.0
+unit_size = 3.0
+max_distance = 15.0
+
+[node name="InteractionObject" parent="." index="3" instance=ExtResource("6_1756j")]
+interact_prompt = "Project"
+interact_sound = ExtResource("7_o5wq5")
+
+[node name="Collider" type="CollisionShape3D" parent="InteractionObject" index="2" groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8147e-05, 1.5, -4.00543e-05)
+shape = SubResource("BoxShape3D_jrwxi")
+
+[connection signal="on_interact" from="InteractionObject" to="." method="_on_interaction_object_on_interact"]

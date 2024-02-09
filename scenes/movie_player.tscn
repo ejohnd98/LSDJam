@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://vv3cnb03urre"]
+[gd_scene load_steps=5 format=3 uid="uid://vv3cnb03urre"]
 
-[ext_resource type="VideoStream" path="res://video/cinema-wip.mp4" id="1_bq0g8"]
+[ext_resource type="Script" path="res://scenes/movie_player.gd" id="1_0tr4c"]
+[ext_resource type="AudioStream" uid="uid://bdlbxb3tefwpy" path="res://video/Alien Autopsy.ogg" id="1_iokqt"]
+[ext_resource type="VideoStream" path="res://video/alien.mp4" id="2_w4bfi"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_nmu3q"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Movie" type="Node3D"]
+[node name="MovieArea" type="Area3D"]
+script = ExtResource("1_0tr4c")
 
 [node name="UI" type="Sprite3D" parent="."]
 gi_mode = 0
@@ -15,7 +18,13 @@ texture = SubResource("ViewportTexture_nmu3q")
 region_rect = Rect2(11.8881, 12.1333, 37.8365, 40.2689)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="UI"]
+transform = Transform3D(-1, -9.74038e-09, -8.68785e-08, 0, 0.993774, -0.111417, 8.74228e-08, -0.111417, -0.993774, 4.55557e-08, -1.86237, 0.521096)
+stream = ExtResource("1_iokqt")
 volume_db = -12.222
+autoplay = true
+emission_angle_enabled = true
+emission_angle_degrees = 85.0
+emission_angle_filter_attenuation_db = -14.0
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
@@ -40,8 +49,11 @@ color = Color(0.494118, 0.494118, 0.494118, 1)
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="SubViewport/AspectRatioContainer"]
 layout_mode = 2
-stream = ExtResource("1_bq0g8")
+stream = ExtResource("2_w4bfi")
 volume_db = -80.0
 autoplay = true
 expand = true
 loop = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
