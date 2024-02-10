@@ -254,6 +254,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	if CameraManagerObject.override_active:
 		CameraManagerObject.reset_camera()
 	
+	set_interact_text("")
+	
 	nightmare_progress *= 0.5
 	if shifting_to_nightmare:
 		canvas_layer.get_node("NightmareBar/ProgressBar").value = nightmare_progress * 100

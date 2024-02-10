@@ -101,6 +101,7 @@ size = Vector3(1.25, 1.25, 1)
 script = ExtResource("2_tjxig")
 
 [node name="FilmThing" parent="FilmPlayer" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.553809, 0.54975, 1.18836, -0.03715)
 surface_material_override/0 = SubResource("StandardMaterial3D_kckhl")
 
 [node name="Reel1" parent="FilmPlayer" index="1"]

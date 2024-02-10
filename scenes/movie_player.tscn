@@ -45,7 +45,7 @@ ratio = 1.7778
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(0.494118, 0.494118, 0.494118, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="SubViewport/AspectRatioContainer"]
 layout_mode = 2

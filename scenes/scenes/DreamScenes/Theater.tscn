@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ctf3xb7to4085"]
+[gd_scene load_steps=28 format=3 uid="uid://ctf3xb7to4085"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_wi6lw"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_6ifvt"]
@@ -12,9 +12,14 @@
 [ext_resource type="VoxelGIData" uid="uid://bx6evjealbpih" path="res://scenes/scenes/DreamScenes/Theater.VoxelGI_data.res" id="10_i330n"]
 [ext_resource type="PackedScene" uid="uid://c6q5nhj655um8" path="res://models/cinema.tscn" id="10_nh18k"]
 [ext_resource type="PackedScene" uid="uid://cv7gge5txupjt" path="res://sourceModels/cinema/CinemaPole.glb" id="12_djtc1"]
+[ext_resource type="Script" path="res://DreamCondition.gd" id="12_iacaa"]
 [ext_resource type="PackedScene" uid="uid://w60oqu3y1kmn" path="res://sourceModels/cinema/CinemaPoleWithRope.glb" id="13_xnqop"]
 [ext_resource type="PackedScene" uid="uid://vv3cnb03urre" path="res://scenes/movie_player.tscn" id="14_c3yuy"]
 [ext_resource type="PackedScene" uid="uid://chynui24s8lsv" path="res://scenes/props/cinema_projector.tscn" id="15_r5big"]
+[ext_resource type="Texture2D" uid="uid://c8n7icvk1jlhc" path="res://textures/billboard_items/game_coin.png" id="16_b2je1"]
+[ext_resource type="PackedScene" uid="uid://bevrc41yhbsif" path="res://scenes/props/arcade_machine.tscn" id="17_lvy4t"]
+[ext_resource type="Texture2D" uid="uid://ckx511bqitpf8" path="res://textures/billboard_items/film_reel.png" id="18_ivgp0"]
+[ext_resource type="PackedScene" uid="uid://oatv0e0tlxfc" path="res://sourceModels/cinema/MoviePoster.glb" id="20_ljv87"]
 
 [sub_resource type="Environment" id="Environment_7qkrs"]
 reflected_light_source = 1
@@ -122,7 +127,7 @@ mesh = SubResource("BoxMesh_x6tlp")
 surface_material_override/0 = ExtResource("2_6xt0h")
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_6ifvt")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -122.879, 5.417, -3.667)
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 3.51337, 2.36717, 19.8478)
 
 [node name="Blockout" type="Node3D" parent="."]
 transform = Transform3D(-0.8, 0, -1.20797e-07, 0, 1, 0, 1.20797e-07, 0, -0.8, -122.879, 0, 0)
@@ -554,11 +559,35 @@ data = ExtResource("10_i330n")
 
 [node name="Cinema" parent="VoxelGI" instance=ExtResource("10_nh18k")]
 
-[node name="Door_002" parent="VoxelGI/Cinema/Theater" index="2"]
-visible = false
+[node name="Door" parent="VoxelGI/Cinema/Theater" index="0"]
+script = ExtResource("12_iacaa")
+require_left = true
+destroy_on_pass = true
 
-[node name="CollisionShape3D" parent="VoxelGI/Cinema/Theater/Door_002/StaticBody3D" index="0"]
-disabled = true
+[node name="Door_001" parent="VoxelGI/Cinema/Theater" index="1"]
+script = ExtResource("12_iacaa")
+require_down = true
+destroy_on_pass = true
+
+[node name="Door_002" parent="VoxelGI/Cinema/Theater" index="2"]
+script = ExtResource("12_iacaa")
+require_up = true
+destroy_on_pass = true
+
+[node name="Door2" parent="VoxelGI/Cinema/Theater" index="3"]
+script = ExtResource("12_iacaa")
+require_left = true
+destroy_on_pass = true
+
+[node name="Door2_001" parent="VoxelGI/Cinema/Theater" index="4"]
+script = ExtResource("12_iacaa")
+require_down = true
+destroy_on_pass = true
+
+[node name="Door2_002" parent="VoxelGI/Cinema/Theater" index="5"]
+script = ExtResource("12_iacaa")
+require_up = true
+destroy_on_pass = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="VoxelGI"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 9.30107, 0)
@@ -586,12 +615,91 @@ shape = SubResource("BoxShape3D_e7xu4")
 [node name="CinemaProjector" parent="." instance=ExtResource("15_r5big")]
 transform = Transform3D(0.997197, 0.0748221, 0, -0.0748221, 0.997197, 0, 0, 0, 1, -16.5222, 3.33731, 11.4647)
 
+[node name="DreamCondition" parent="CinemaProjector" instance=ExtResource("6_28od4")]
+required_key = "cinemaFilm"
+require_up = true
+
+[node name="Movie2" parent="." instance=ExtResource("14_c3yuy")]
+transform = Transform3D(-3.99551e-08, 0, -0.914067, 0, 0.914067, 0, 0.914067, 0, -3.99551e-08, -3.08307, 3.07161, -11.3782)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Movie2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90735e-06, 0, 9.01408)
+shape = SubResource("BoxShape3D_e7xu4")
+
 [node name="CinemaProjector2" parent="." instance=ExtResource("15_r5big")]
 transform = Transform3D(0.997197, 0.0748221, 0, -0.0748221, 0.997197, 0, 0, 0, 1, -16.5222, 3.33731, -11.4426)
-is_spinning = false
+direction = Vector2i(0, 1)
+
+[node name="Movie3" parent="." instance=ExtResource("14_c3yuy")]
+transform = Transform3D(-3.99552e-08, 0, 0.914067, 0, 0.914067, 0, -0.914067, 0, -3.99552e-08, 3.0883, 3.07161, -11.3782)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Movie3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90735e-06, 0, 9.01408)
+shape = SubResource("BoxShape3D_e7xu4")
 
 [node name="CinemaProjector3" parent="." instance=ExtResource("15_r5big")]
 transform = Transform3D(-0.997197, -0.0748221, -8.74228e-08, -0.0748221, 0.997197, 0, 8.71777e-08, 6.54115e-09, -1, 16.0476, 3.33731, -11.4426)
-is_spinning = false
+direction = Vector2i(-1, 0)
+
+[node name="Coin" parent="." instance=ExtResource("6_28od4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.66739, 1.0605, 20.127)
+required_key = "cinemaCoin"
+destroy_on_pass = true
+required_position = Vector2i(0, 2)
+
+[node name="KeyObject" parent="Coin" instance=ExtResource("8_m5tpd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
+key = "cinemaCoin"
+
+[node name="Sprite3D" parent="Coin/KeyObject" index="3"]
+texture = ExtResource("16_b2je1")
+
+[node name="FilmItem" parent="." instance=ExtResource("6_28od4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.66739, 1.11437, 20.127)
+required_key = "cinemaFilm"
+destroy_on_pass = true
+required_position = Vector2i(2, 2)
+
+[node name="KeyObject" parent="FilmItem" instance=ExtResource("8_m5tpd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
+key = "cinemaFilm"
+
+[node name="Sprite3D" parent="FilmItem/KeyObject" index="3"]
+pixel_size = 0.004
+texture = ExtResource("18_ivgp0")
+
+[node name="ArcadeMachine" parent="." instance=ExtResource("17_lvy4t")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5.90908, 2.38419e-07, 8.92448)
+direction = Vector2i(1, 0)
+
+[node name="DreamCondition" parent="ArcadeMachine" instance=ExtResource("6_28od4")]
+required_key = "cinemaCoin"
+require_right = true
+
+[node name="MoviePoster" parent="." instance=ExtResource("20_ljv87")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.30753, 1.50544, -2.55)
+
+[node name="MoviePoster2" parent="." instance=ExtResource("20_ljv87")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2841, 1.50544, -2.55)
+
+[node name="MoviePoster5" parent="." instance=ExtResource("20_ljv87")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.2841, 1.50544, -20.4026)
+
+[node name="MoviePoster6" parent="." instance=ExtResource("20_ljv87")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.30753, 1.50544, -20.4026)
+
+[node name="MoviePoster3" parent="." instance=ExtResource("20_ljv87")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.2841, 1.50544, 2.53549)
+
+[node name="MoviePoster4" parent="." instance=ExtResource("20_ljv87")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2841, 1.50544, 20.403)
+
+[connection signal="on_condition_check" from="CinemaProjector/DreamCondition" to="Movie" method="set_playing"]
+[connection signal="on_condition_check" from="CinemaProjector/DreamCondition" to="CinemaProjector" method="set_spinning"]
+[connection signal="on_pick_up" from="Coin/KeyObject" to="ArcadeMachine" method="_refresh_condition"]
+[connection signal="on_interact" from="FilmItem/KeyObject" to="ArcadeMachine" method="_refresh_condition"]
+[connection signal="on_condition_check" from="ArcadeMachine/DreamCondition" to="ArcadeMachine" method="set_usable"]
 
 [editable path="VoxelGI/Cinema"]
+[editable path="Coin/KeyObject"]
+[editable path="FilmItem/KeyObject"]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=9 format=3 uid="uid://bevrc41yhbsif"]
+
+[ext_resource type="PackedScene" uid="uid://crv0wrsfw0c6q" path="res://sourceModels/cinema/ArcadeMachine.glb" id="1_jgpf3"]
+[ext_resource type="PackedScene" uid="uid://dsik30if3a23x" path="res://scenes/interactables/interactable_object.tscn" id="2_iwv61"]
+[ext_resource type="Script" path="res://scenes/props/arcade_machine.gd" id="2_o3ur4"]
+[ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="3_3gb5g"]
+[ext_resource type="Texture2D" uid="uid://1ttxt51644ij" path="res://sourceModels/cinema/arcade_machine.png" id="3_7b2ks"]
+[ext_resource type="Texture2D" uid="uid://sofemtl4kux6" path="res://sourceModels/cinema/arcade_machine_light.png" id="4_alwf6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j002e"]
+albedo_texture = ExtResource("3_7b2ks")
+emission_enabled = true
+emission_energy_multiplier = 1.2
+emission_texture = ExtResource("4_alwf6")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fsmk6"]
+size = Vector3(0.75, 0.8, 0.6)
+
+[node name="ArcadeMachine" instance=ExtResource("1_jgpf3")]
+script = ExtResource("2_o3ur4")
+
+[node name="ArcadeMachine" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_j002e")
+
+[node name="InteractionObject" parent="." index="1" instance=ExtResource("2_iwv61")]
+interact_prompt = "Play"
+interact_sound = ExtResource("3_3gb5g")
+
+[node name="Collider" type="CollisionShape3D" parent="InteractionObject" index="2" groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 0.95032, 0.311274, 0, -0.311274, 0.95032, 0, 1.35933, 0.214594)
+shape = SubResource("BoxShape3D_fsmk6")
+
+[connection signal="on_interact" from="InteractionObject" to="." method="_on_interaction_object_on_interact"]

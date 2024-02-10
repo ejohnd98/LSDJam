@@ -10,7 +10,7 @@ func _ready():
 
 func _process(delta):
 	if is_spinning:
-		$FilmPlayer/Reel1.rotation.z += delta * spin_speed
+		$FilmPlayer/Reel1.rotation.z -= delta * spin_speed
 		$FilmPlayer/Reel2.rotation.z += delta * spin_speed
 		$FilmPlayer/FilmThing.rotation.x += delta * spin_speed
 

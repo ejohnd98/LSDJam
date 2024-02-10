@@ -6,6 +6,8 @@ extends click_interaction
 
 var has_been_picked_up = false
 
+signal on_pick_up
+
 func pick_up():
 	if (has_been_picked_up):
 		return
@@ -20,7 +22,7 @@ func pick_up():
 	$AudioStreamPlayer.playing = true
 	$PickupEffect.show()
 	$PickupEffect.emitting = true
-	#queue_free()
+	on_pick_up.emit()
 
 func _on_area_3d_body_entered(body):
 	if proximity_pickup and body.is_in_group("player") and can_interact_internal():

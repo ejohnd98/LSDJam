@@ -28,3 +28,12 @@ func _on_body_entered(body):
 func _on_body_exited(body):
 	if body.is_in_group("player"):
 		player_in_theater = false
+
+func set_playing(playing : bool):
+	if playing:
+		$UI/AudioStreamPlayer3D.play()
+		($SubViewport/AspectRatioContainer/VideoStreamPlayer as VideoStreamPlayer).play()
+		
+	else:
+		$UI/AudioStreamPlayer3D.stop()
+		($SubViewport/AspectRatioContainer/VideoStreamPlayer as VideoStreamPlayer).stop()
