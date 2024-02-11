@@ -9,6 +9,8 @@ extends click_interaction
 
 @export var start_dist : float = 3.0
 
+var has_triggered = false
+
 func _ready():
 	var angle = atan2(float(grid_direction.x), float(grid_direction.y))
 	var rot_matrix = Basis(Vector3.UP, angle - rotation.y).get_euler()
@@ -50,6 +52,10 @@ func _process(delta):
 			trigger_direction()
 
 func trigger_direction():
+	if has_triggered:
+		return
+	
+	has_triggered = true
 	if force_new_dream:
 		GameManager.pick_random_dream()
 	else:

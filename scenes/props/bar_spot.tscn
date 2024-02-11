@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2faw0c6i42xo"]
+
+[ext_resource type="Script" path="res://scenes/props/bar_spot.gd" id="1_vvp8b"]
+[ext_resource type="PackedScene" uid="uid://dsik30if3a23x" path="res://scenes/interactables/interactable_object.tscn" id="2_coynx"]
+[ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="3_mucrg"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/AlternateCamera.gd" id="4_obhnl"]
+[ext_resource type="PackedScene" uid="uid://djmioxsjxgd0" path="res://scenes/interactables/golf_UI.tscn" id="5_y7wtq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ah4cb"]
+size = Vector3(1, 1.5, 4)
+
+[node name="BarSpot" type="Node3D"]
+script = ExtResource("1_vvp8b")
+
+[node name="Interaction" parent="." instance=ExtResource("2_coynx")]
+interact_prompt = "Have a Drink"
+show_distorted_text = true
+interact_sound = ExtResource("3_mucrg")
+
+[node name="Collider" type="CollisionShape3D" parent="Interaction" groups=["interactable"]]
+shape = SubResource("BoxShape3D_ah4cb")
+
+[node name="AlternateCamera" type="Camera3D" parent="Interaction"]
+transform = Transform3D(1, 0, 0, 0, 0.931634, 0.363398, 0, -0.363398, 0.931634, 0, 1.95507, 3.8861)
+script = ExtResource("4_obhnl")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(800, 256)
+render_target_update_mode = 4
+
+[node name="Control" parent="SubViewport" instance=ExtResource("5_y7wtq")]
+
+[connection signal="on_interact" from="Interaction" to="." method="_on_interaction_object_on_interact"]
+
+[editable path="SubViewport/Control"]

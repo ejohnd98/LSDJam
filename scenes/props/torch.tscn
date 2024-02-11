@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://bobtyb6nmdgcs"]
+
+[ext_resource type="Texture2D" uid="uid://dw054jie485xv" path="res://sourceModels/beach/torch.png" id="1_spywn"]
+[ext_resource type="Texture2D" uid="uid://brx2sf7fkglki" path="res://sourceModels/beach/torch_emissive.png" id="2_07vxr"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/LightFlicker.gd" id="3_eoxp7"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_wlkt6"]
+flip_faces = true
+size = Vector2(2, 2)
+center_offset = Vector3(0, 1, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_obk51"]
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("1_spywn")
+emission_enabled = true
+emission_texture = ExtResource("2_07vxr")
+texture_filter = 2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jhs4a"]
+frequency = 0.0561
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o74mj"]
+seamless = true
+noise = SubResource("FastNoiseLite_jhs4a")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ftm8b"]
+radius = 0.1
+
+[node name="Torch" type="MeshInstance3D"]
+mesh = SubResource("QuadMesh_wlkt6")
+surface_material_override/0 = SubResource("StandardMaterial3D_obk51")
+
+[node name="Torch2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_wlkt6")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_obk51")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65881, 0)
+light_color = Color(1, 0.886275, 0.701961, 1)
+script = ExtResource("3_eoxp7")
+noise_texture = SubResource("NoiseTexture2D_o74mj")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_ftm8b")

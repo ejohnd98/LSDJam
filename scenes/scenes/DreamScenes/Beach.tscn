@@ -1,15 +1,24 @@
-[gd_scene load_steps=24 format=3 uid="uid://c4dovvdxb8nlw"]
+[gd_scene load_steps=39 format=3 uid="uid://c4dovvdxb8nlw"]
 
 [ext_resource type="Texture2D" uid="uid://dmbvhkwa5c4i1" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ClearBlueSky_Equirect.png" id="1_dkn17"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_s85f1"]
 [ext_resource type="AudioStream" uid="uid://ch7i2uabfi4o6" path="res://sounds/various_ambiences/beach.ogg" id="3_k2gho"]
-[ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="4_p7rqk"]
-[ext_resource type="PackedScene" uid="uid://2vxbufrwivfy" path="res://scenes/props/gradient_box.tscn" id="5_so53f"]
 [ext_resource type="PackedScene" uid="uid://btmldfxcfpybj" path="res://scenes/props/distortion_bubble.tscn" id="6_bb3hg"]
 [ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="7_1cfl6"]
 [ext_resource type="PackedScene" uid="uid://7tve255gynel" path="res://models/beach_scene.tscn" id="8_s6ehm"]
 [ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="9_0cnfh"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="10_f1rag"]
+[ext_resource type="Script" path="res://scenes/interactables/HoverItem.gd" id="11_ci5p8"]
+[ext_resource type="PackedScene" uid="uid://ly81cippa4dk" path="res://scenes/props/boat_spot.tscn" id="11_wn4o8"]
+[ext_resource type="PackedScene" uid="uid://dv2mfrpn0x5md" path="res://scenes/dream_condition.tscn" id="13_3308o"]
+[ext_resource type="PackedScene" uid="uid://cm5srrepm42b4" path="res://scenes/interactables/key_object.tscn" id="14_o14m8"]
+[ext_resource type="Texture2D" uid="uid://f87f26clk8od" path="res://textures/billboard_items/bar_ingredients.png" id="15_mhhqu"]
+[ext_resource type="PackedScene" uid="uid://dqrxqr5h6xrky" path="res://sourceModels/beach/BeachBarNight.glb" id="16_10hon"]
+[ext_resource type="Texture2D" uid="uid://cd0tkg33ip8a0" path="res://sourceModels/beach/hatched.png" id="17_ertoh"]
+[ext_resource type="Texture2D" uid="uid://cb3oi5pwvxmvh" path="res://sourceModels/beach/barTexture.png" id="18_wo3kf"]
+[ext_resource type="Texture2D" uid="uid://da7dcgqvbsjtr" path="res://sourceModels/beach/barTextureEmissive.png" id="19_2j0bp"]
+[ext_resource type="PackedScene" uid="uid://36q0bb1gffqg" path="res://sourceModels/beach/BeachDock.glb" id="19_btvh8"]
+[ext_resource type="Texture2D" uid="uid://bo0nqyacm4qtc" path="res://sourceModels/beach/barTextureNormal.png" id="20_bc6p6"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ho3ki"]
 panorama = ExtResource("1_dkn17")
@@ -59,32 +68,69 @@ albedo_texture = SubResource("NoiseTexture2D_ohmkj")
 albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
 albedo_texture = SubResource("NoiseTexture2D_ohmkj")
 
+[sub_resource type="QuadMesh" id="QuadMesh_nlx11"]
+size = Vector2(10, 2)
+subdivide_width = 10
+subdivide_depth = 4
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
 noise_type = 3
-frequency = 0.0072
+frequency = 0.0105
 fractal_type = 2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1y30t"]
 seamless = true
 noise = SubResource("FastNoiseLite_iorx3")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_omxp6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ugota"]
 render_priority = 0
 shader = ExtResource("7_1cfl6")
-shader_parameter/distortionView = 0.03
-shader_parameter/speedView = 0.1
+shader_parameter/distortionView = 0.02
+shader_parameter/speedView = 0.02
 shader_parameter/static_intensity = 0.3
-shader_parameter/tintColor = Color(0.827451, 0.764706, 0.968627, 1)
-shader_parameter/fesnelAmount = 1.2
-shader_parameter/fresnelTintOffset = 1.49012e-08
+shader_parameter/tintColor = Color(1, 1, 1, 1)
+shader_parameter/fesnelAmount = 0.87
+shader_parameter/fresnelTintOffset = -1.0
 shader_parameter/distortionVertex = 0.01
 shader_parameter/speedVertex = 0.1
-shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
-shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
-shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_1y30t")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_1y30t")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_1y30t")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ee70u"]
 size = Vector3(220, 5, 220)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nkdyb"]
+size = Vector3(100, 30, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j34w6"]
+size = Vector3(20, 5.815, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0rhx6"]
+size = Vector3(100, 30, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0th7f"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("17_ertoh")
+metallic = 0.35
+roughness = 0.74
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nclho"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_color = Color(0.635294, 0.635294, 0.635294, 1)
+albedo_texture = ExtResource("18_wo3kf")
+roughness = 0.82
+emission_texture = ExtResource("19_2j0bp")
+normal_scale = 1.25
+normal_texture = ExtResource("20_bc6p6")
+texture_filter = 2
 
 [node name="Beach" type="Node3D"]
 
@@ -97,10 +143,10 @@ shadow_enabled = true
 environment = SubResource("Environment_u80vi")
 
 [node name="PlayerSpawnUp" type="Node3D" parent="."]
-transform = Transform3D(0.999837, 0, 0.0180807, 0, 1, 0, -0.0180807, 0, 0.999837, 19.3114, 1.41266, -40.8126)
+transform = Transform3D(0.999837, 0, 0.0180807, 0, 1, 0, -0.0180807, 0, 0.999837, 19.3114, 1.41266, -35.8186)
 
 [node name="PlayerSpawnDown" type="Node3D" parent="."]
-transform = Transform3D(-0.99278, 0, 0.119946, 0, 1, 0, -0.119946, 0, -0.99278, 17.6537, 0.46253, 38.5751)
+transform = Transform3D(-0.99278, 0, 0.119946, 0, 1, 0, -0.119946, 0, -0.99278, 20.2648, 0.46253, 27.0571)
 
 [node name="PlayerSpawnRight" type="Node3D" parent="."]
 transform = Transform3D(-0.0463045, 0, 0.998927, 0, 1, 0, -0.998927, 0, -0.0463045, -4.68594, 0.760589, -15.0586)
@@ -143,72 +189,22 @@ autoplay = true
 panning_strength = 0.4
 bus = &"SFX"
 
-[node name="SceneTrigger" parent="." instance=ExtResource("4_p7rqk")]
-transform = Transform3D(-0.999533, 0, 0.0305728, 0, 1, 0, -0.0305728, 0, -0.999533, 17.2993, 0.520702, 44.8224)
-grid_direction = Vector2i(0, -1)
-proximity_trigger = true
-show_mesh = false
-show_arrow = false
-start_dist = 5.0
+[node name="DistortionPlane2" type="Node3D" parent="."]
+transform = Transform3D(-3.99813, 0, 0.122291, 0, 4, 0, -0.122291, 0, -3.99813, 17.123, 0.280219, 37.1923)
 
-[node name="GradientBox" parent="SceneTrigger" instance=ExtResource("5_so53f")]
-transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
-visible = false
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DistortionPlane2"]
+transform = Transform3D(0.932197, 0.209159, 0.2954, -0.216668, 0.976217, -0.00747235, -0.289937, -0.057038, 0.955344, -1.05969, 0, -0.89174)
+mesh = SubResource("QuadMesh_nlx11")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_ugota")
 
-[node name="DistortionBubble2" parent="SceneTrigger" instance=ExtResource("6_bb3hg")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, -0.240483, -5.76582)
-visible = false
+[node name="DistortionPlane" type="Node3D" parent="."]
+transform = Transform3D(3.99813, 0, -0.122292, 0, 4, 0, 0.122292, 0, 3.99813, 21.6527, 0.280219, -53.7719)
 
-[node name="MeshInstance3D" parent="SceneTrigger/DistortionBubble2" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0128136, 0, 0.418964)
-surface_material_override/0 = SubResource("ShaderMaterial_omxp6")
-
-[node name="SceneTrigger2" parent="." instance=ExtResource("4_p7rqk")]
-transform = Transform3D(0.0305561, 0, -0.999533, 0, 1, 0, 0.999533, 0, 0.0305561, 44.4631, 0.496823, -10.2609)
-grid_direction = Vector2i(-1, 0)
-proximity_trigger = true
-show_mesh = false
-show_arrow = false
-start_dist = 5.0
-
-[node name="GradientBox" parent="SceneTrigger2" instance=ExtResource("5_so53f")]
-transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
-visible = false
-
-[node name="DistortionBubble2" parent="SceneTrigger2" instance=ExtResource("6_bb3hg")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.0549889, -0.240483, -3.96695)
-visible = false
-
-[node name="SceneTrigger3" parent="." instance=ExtResource("4_p7rqk")]
-transform = Transform3D(0.999724, 0, 0.0234727, 0, 1, 0, -0.0234727, 0, 0.999724, 19.3592, 0.464749, -47.9846)
-proximity_trigger = true
-show_mesh = false
-show_arrow = false
-start_dist = 5.0
-
-[node name="GradientBox" parent="SceneTrigger3" instance=ExtResource("5_so53f")]
-transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 3.41252)
-visible = false
-
-[node name="DistortionBubble2" parent="SceneTrigger3" instance=ExtResource("6_bb3hg")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.0365238, -0.240483, -4.21023)
-visible = false
-
-[node name="SceneTrigger4" parent="." instance=ExtResource("4_p7rqk")]
-transform = Transform3D(-0.0247461, 0, 0.999693, 0, 1, 0, -0.999693, 0, -0.0247461, -7.88735, 0.827267, -15.1259)
-grid_direction = Vector2i(1, 0)
-proximity_trigger = true
-show_mesh = false
-show_arrow = false
-start_dist = 5.0
-
-[node name="GradientBox" parent="SceneTrigger4" instance=ExtResource("5_so53f")]
-transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 5)
-visible = false
-
-[node name="DistortionBubble2" parent="SceneTrigger4" instance=ExtResource("6_bb3hg")]
-transform = Transform3D(1, 0, -5.58794e-09, 0, 2, 0, 5.58794e-09, 0, 1, -0.117889, -0.320428, -1.00335)
-visible = false
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DistortionPlane"]
+transform = Transform3D(0.923067, -0.276462, 0.267425, 0.253072, 0.960099, 0.119018, -0.289658, -0.0421842, 0.9562, 0.0049119, 0, -0.924305)
+mesh = SubResource("QuadMesh_nlx11")
+surface_material_override/0 = SubResource("ShaderMaterial_ugota")
 
 [node name="DistortionBubble" parent="." instance=ExtResource("6_bb3hg")]
 transform = Transform3D(7.64737, 0, -2.34899, 0, 8, 0, 2.34899, 0, 7.64737, 25.0532, -0.130844, -62.1122)
@@ -229,4 +225,122 @@ shape = SubResource("BoxShape3D_ee70u")
 script = ExtResource("10_f1rag")
 enable_visuals = true
 
-[editable path="SceneTrigger/DistortionBubble2"]
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1634, 0)
+script = ExtResource("11_ci5p8")
+bob_amount = 0.1
+bob_speed = 0.6
+
+[node name="BoatSpot" parent="Node3D" instance=ExtResource("11_wn4o8")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6.9629, -0.27676, -12.6683)
+direction = Vector2(1, 0)
+
+[node name="DreamCondition3" parent="." instance=ExtResource("13_3308o")]
+transform = Transform3D(0.992317, 0, -0.123723, 0, 1, 0, 0.123723, 0, 0.992317, 37.8839, 1.21919, -4.06933)
+required_key = "boatKey"
+destroy_on_pass = true
+required_position = Vector2i(1, 0)
+
+[node name="KeyObject" parent="DreamCondition3" instance=ExtResource("14_o14m8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
+key = "boatKey"
+
+[node name="DreamCondition4" parent="." instance=ExtResource("13_3308o")]
+transform = Transform3D(0.992317, 0, -0.123723, 0, 1, 0, 0.123723, 0, 0.992317, 37.8839, 1.26858, -5.44963)
+required_key = "tikiIngredients"
+destroy_on_pass = true
+required_position = Vector2i(2, 1)
+
+[node name="KeyObjectDrinks" parent="DreamCondition4" instance=ExtResource("14_o14m8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00198197, 0.155876)
+key = "tikiIngredients"
+
+[node name="Sprite3D" parent="DreamCondition4/KeyObjectDrinks" index="3"]
+pixel_size = 0.004
+texture = ExtResource("15_mhhqu")
+
+[node name="ForcedTransitionArea2" type="Area3D" parent="."]
+transform = Transform3D(0.709731, 0, 0.704473, 0, 1, 0, -0.704473, 0, 0.709731, 75.1871, 0, -60.4768)
+script = ExtResource("9_0cnfh")
+force_direction = true
+direction = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea2"]
+transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -50.8046, 9.11387, -43.8603)
+shape = SubResource("BoxShape3D_nkdyb")
+script = ExtResource("10_f1rag")
+
+[node name="ForcedTransitionArea4" type="Area3D" parent="."]
+transform = Transform3D(-0.655229, 0, 0.755431, 0, 1, 0, -0.755431, 0, -0.655229, 55.7671, 0, -60.4768)
+script = ExtResource("9_0cnfh")
+force_direction = true
+direction = Vector2i(-1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea4"]
+transform = Transform3D(0.839698, 0, -0.543058, 0, 1, 0, 0.543058, 0, 0.839698, -31.6751, 4.06719, -36.1976)
+shape = SubResource("BoxShape3D_j34w6")
+script = ExtResource("10_f1rag")
+
+[node name="ForcedTransitionArea3" type="Area3D" parent="."]
+transform = Transform3D(0.709731, 0, 0.704473, 0, 1, 0, -0.704473, 0, 0.709731, 75.1871, 0, 34.8032)
+script = ExtResource("9_0cnfh")
+force_direction = true
+direction = Vector2i(0, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea3"]
+transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -50.8046, 9.11387, -43.8603)
+shape = SubResource("BoxShape3D_0rhx6")
+script = ExtResource("10_f1rag")
+
+[node name="BeachBarNightOff" parent="." instance=ExtResource("16_10hon")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 38.6202, 0.0755346, -1.4641)
+
+[node name="Bar" parent="BeachBarNightOff" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_0th7f")
+surface_material_override/1 = SubResource("StandardMaterial3D_nclho")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="BeachBarNightOff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.58897, 2.02205, 0.684982)
+visible = false
+light_color = Color(0.113725, 1, 0, 1)
+light_energy = 0.4
+omni_range = 2.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="BeachBarNightOff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.61608, 2.02205, -0.123386)
+visible = false
+light_color = Color(0.113725, 1, 0, 1)
+light_energy = 0.4
+omni_range = 2.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="BeachBarNightOff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02605, 2.02205, 1.04552)
+visible = false
+light_color = Color(1, 0.721569, 0.721569, 1)
+light_energy = 0.4
+omni_range = 2.0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="BeachBarNightOff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.24899, 2.14455, 0.117039)
+visible = false
+light_color = Color(1, 0.721569, 0.721569, 1)
+light_energy = 0.4
+omni_range = 2.0
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="BeachBarNightOff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.70677, 1.25174, 0.663826)
+visible = false
+light_color = Color(0.941176, 0.8, 0.686275, 1)
+light_energy = 0.254
+omni_range = 4.0
+
+[node name="BeachDock2" parent="." instance=ExtResource("19_btvh8")]
+transform = Transform3D(1.2645e-07, -0.322943, -0.946419, 2.82326e-08, 0.946419, -0.322943, 1, 1.41163e-08, 1.28792e-07, 32.4302, -3.20844, -13.6364)
+
+[node name="BeachDock3" parent="BeachDock2" instance=ExtResource("19_btvh8")]
+transform = Transform3D(1, 4.89977e-08, 4.01218e-09, -4.69653e-08, 0.928012, 0.372551, 1.45304e-08, -0.372551, 0.928012, 2.86102e-06, -0.504666, -23.7899)
+
+[connection signal="on_pick_up" from="DreamCondition3/KeyObject" to="Node3D/BoatSpot" method="_refresh_condition"]
+
+[editable path="DreamCondition4/KeyObjectDrinks"]
+[editable path="BeachBarNightOff"]

@@ -36,8 +36,8 @@ allow_left = true
 
 [node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_fcki6")]
 layout_mode = 2
-scene_name = "DreamScenes/Beach"
-has_key = false
+scene_name = "DreamScenes/BeachNight"
+has_key = true
 has_multiple_spawns = true
 allow_up = true
 allow_right = true

@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://86wsgb8t7ist"]
+
+[ext_resource type="PackedScene" uid="uid://b3p0gltahpmpq" path="res://sourceModels/beach/boat.glb" id="1_h8dai"]
+[ext_resource type="Script" path="res://boat.gd" id="2_5pag1"]
+[ext_resource type="PackedScene" uid="uid://dsik30if3a23x" path="res://scenes/interactables/interactable_object.tscn" id="3_mhi0p"]
+[ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="4_u6bq2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tfkpo"]
+size = Vector3(2, 1.5, 5)
+
+[node name="boat" instance=ExtResource("1_h8dai")]
+script = ExtResource("2_5pag1")
+
+[node name="InteractionObject" parent="." index="1" instance=ExtResource("3_mhi0p")]
+interact_prompt = "Play"
+interact_sound = ExtResource("4_u6bq2")
+
+[node name="Collider" type="CollisionShape3D" parent="InteractionObject" index="2" groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7353, -0.20241)
+shape = SubResource("BoxShape3D_tfkpo")
+
+[connection signal="on_interact" from="InteractionObject" to="." method="_on_interaction_object_on_interact"]

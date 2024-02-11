@@ -497,7 +497,6 @@ script = ExtResource("20_5mdem")
 transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -50.8046, 9.11387, -43.8603)
 shape = SubResource("BoxShape3D_snghy")
 script = ExtResource("21_ia11n")
-enable_visuals = true
 
 [node name="ForcedTransitionArea2" type="Area3D" parent="ForcedTriggers"]
 transform = Transform3D(-0.29132, 0, -0.956626, 0, 1, 0, 0.956626, 0, -0.29132, 0, 0, 0)
@@ -507,7 +506,6 @@ script = ExtResource("20_5mdem")
 transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -50.8046, 9.11387, -43.8603)
 shape = SubResource("BoxShape3D_snghy")
 script = ExtResource("21_ia11n")
-enable_visuals = true
 
 [node name="ForcedTransitionArea3" type="Area3D" parent="ForcedTriggers"]
 transform = Transform3D(-0.992593, 0, 0.121488, 0, 1, 0, -0.121488, 0, -0.992593, 0, 0, 0)
@@ -517,7 +515,6 @@ script = ExtResource("20_5mdem")
 transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -45.2815, 9.11387, -43.9371)
 shape = SubResource("BoxShape3D_snghy")
 script = ExtResource("21_ia11n")
-enable_visuals = true
 
 [node name="ForcedTransitionArea4" type="Area3D" parent="ForcedTriggers"]
 transform = Transform3D(0.0715844, 0, 0.997434, 0, 1, 0, -0.997434, 0, 0.0715844, 0, 0, 0)
@@ -527,7 +524,6 @@ script = ExtResource("20_5mdem")
 transform = Transform3D(0.767255, 0, -0.641343, 0, 1, 0, 0.641343, 0, 0.767255, -48.0087, 9.11387, -46.6977)
 shape = SubResource("BoxShape3D_snghy")
 script = ExtResource("21_ia11n")
-enable_visuals = true
 
 [node name="DreamConditionEnemy" parent="." instance=ExtResource("14_l8kij")]
 pass_if_key_is_present = false

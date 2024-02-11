@@ -51,11 +51,12 @@ func _process(delta):
 				fixed_lerp_done.emit()
 				is_lerping = false
 		elif use_lookat:
-			if (proxy_lookat):
+			if (proxy_lookat and proxy_lookat_node != null and lookat_target != null):
 				proxy_lookat_node.look_at(lookat_target.position, Vector3.UP)
 				cam.rotation.x = proxy_lookat_node.rotation.x + look_at_offset_x
 			else:
-				cam.look_at(lookat_target.position, Vector3.UP)
+				if lookat_target != null:
+					cam.look_at(lookat_target.position, Vector3.UP)
 
 func set_camera_override(target, fixed_position = true):
 	fixed_positions = fixed_position
@@ -97,6 +98,7 @@ func lerp_back_to_player():
 	is_lerping = true
 
 func reset_camera():
+	fixed_lerp_length = 1.0
 	cam.position = original_local_pos
 	cam.rotation = original_local_rot
 	player.override_camera_handling = false
@@ -104,4 +106,5 @@ func reset_camera():
 	override_active = false
 	current_target = null
 	use_lookat = false
-	proxy_lookat_node.queue_free()
+	if proxy_lookat_node != null:
+		proxy_lookat_node.queue_free()

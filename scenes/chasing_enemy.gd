@@ -13,6 +13,9 @@ var player_control_limit_mod = 0.0
 @export var activation_direction_threshold = 0.75
 @export var nightmare_progress_dist_threshold = 15.0
 
+@export var snap_to_ground = true
+@export var hide_before_showing = false
+
 @export var check_los = true
 @export var escape_distance = 9.0
 
@@ -28,8 +31,13 @@ var speed_increase = 0.0
 func _ready():
 	player_node = GameManager.player
 	move_to_ground()
+	
+	if hide_before_showing:
+		hide()
 
 func move_to_ground():
+	if not snap_to_ground:
+		return
 	#Snap to ground
 	var space_state = get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(global_position + Vector3.UP, global_position + Vector3.DOWN * 4.0)
@@ -40,6 +48,9 @@ func move_to_ground():
 		global_position = result["position"]
 
 func start_chase():
+	if hide_before_showing:
+		show()
+	
 	is_active = true
 	$AnimationPlayer.play("WalkAnim")
 	$AudioStreamPlayer.play()
@@ -49,7 +60,7 @@ func start_chase():
 	
 	player_node.get_camera_shake().start(0.5)
 	
-	GameManager.adjust_nightmare_progress(0.25)
+	GameManager.adjust_nightmare_progress(0.15)
 
 	player_control_limit_mod = 0.95
 
@@ -120,6 +131,9 @@ func check_on_screen() -> bool:
 	return true
 	
 func _process(delta):
+	if not $StartingTimer.is_stopped:
+		return
+	
 	if player_within_radius or is_active:
 		is_on_screen = check_on_screen()
 	

@@ -24,6 +24,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_j002e")
 
 [node name="InteractionObject" parent="." index="1" instance=ExtResource("2_iwv61")]
 interact_prompt = "Play"
+show_distorted_text = true
 interact_sound = ExtResource("3_3gb5g")
 
 [node name="Collider" type="CollisionShape3D" parent="InteractionObject" index="2" groups=["interactable"]]

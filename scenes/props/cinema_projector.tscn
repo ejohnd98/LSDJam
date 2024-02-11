@@ -123,6 +123,7 @@ max_distance = 15.0
 
 [node name="InteractionObject" parent="." index="3" instance=ExtResource("6_1756j")]
 interact_prompt = "Project"
+show_distorted_text = true
 interact_sound = ExtResource("7_o5wq5")
 
 [node name="Collider" type="CollisionShape3D" parent="InteractionObject" index="2" groups=["interactable"]]

@@ -39,6 +39,8 @@ var in_nightmare = false
 
 var in_transition_dream = false
 
+var is_loading_dream = false
+
 static func get_game(tree_node : SceneTree) -> game_manager:
 	return tree_node.get_root().get_node("SubViewportContainer/SubViewport/Game")
 
@@ -95,11 +97,19 @@ func on_left_nightmare():
 
 func on_interactable_change(interactable):
 	if interactable != null and interactable is click_interaction:
-		set_interact_text(interactable.interact_prompt)
+		set_interact_text(interactable.interact_prompt, interactable.show_distorted_text)
 	else:
 		hide_interact_text()
-	
+
+
 func move_in_direction(direction: Vector2i):
+	#messy hack to prevent this being called twice at once
+	if not $MoveCooldownTimer.is_stopped():
+		return
+	
+	$MoveCooldownTimer.start()
+	
+	print("Direction moved: " + str(direction))
 	
 	if (not is_direction_allowed(direction)):
 		return
@@ -195,6 +205,11 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	if not $SceneChangeTimer.is_stopped():
 		return
 	
+	if is_loading_dream:
+		return
+	
+	is_loading_dream = true
+	
 	player.set_frozen(true)
 	can_pause = false
 	canvas_layer.get_node("UIParent/Compass").set_frozen(true)
@@ -240,6 +255,9 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 			new_spawn = current_scene_node.get_node("PlayerSpawn")
 	else:
 		push_error("load_new_scene: current cell is null!")
+	
+	if new_spawn == null:
+		printerr("new_spawn is null!")
 	
 	if dream_grid.is_nightmare and not in_nightmare:
 		on_entered_nightmare()
@@ -287,13 +305,14 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	can_pause = true
 	canvas_layer.get_node("UIParent/Compass").set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
+	is_loading_dream = false
 	
 
 func set_transition_alpha(alpha : float):
 	transition_node.set_progress(alpha)
 
-func set_interact_text(interact_text : String):
-	canvas_layer.get_node("InteractText").set_text(interact_text)
+func set_interact_text(interact_text : String, use_distortion : bool = false):
+	canvas_layer.get_node("InteractText").set_text(interact_text, use_distortion)
 
 func hide_interact_text():
 	canvas_layer.get_node("InteractText").hide_text()

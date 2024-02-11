@@ -23,6 +23,7 @@ func set_spinning(spin : bool):
 		$AudioStreamPlayer3D.play()
 		$InteractionObject.show()
 		$InteractionObject/Collider.disabled = false
+		$FilmPlayer/Reel1.show()
 		
 	else:
 		$AnimationPlayer.stop()
@@ -30,6 +31,7 @@ func set_spinning(spin : bool):
 		$AudioStreamPlayer3D.stop()
 		$InteractionObject.hide()
 		$InteractionObject/Collider.disabled = true
+		$FilmPlayer/Reel1.hide()
 
 
 func _on_interaction_object_on_interact():

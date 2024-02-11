@@ -1,4 +1,4 @@
-extends Sprite3D
+extends Node3D
 
 @export var bob_amount = 0.05
 @export var bob_speed : float = 2

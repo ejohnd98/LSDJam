@@ -91,6 +91,7 @@ power_bar_curve = SubResource("Curve_kst5h")
 
 [node name="GolfInteraction" parent="." instance=ExtResource("1_wn171")]
 interact_prompt = "Swing"
+show_distorted_text = true
 interact_sound = ExtResource("2_b8gvj")
 
 [node name="BagColliders" type="CollisionShape3D" parent="GolfInteraction" groups=["interactable"]]

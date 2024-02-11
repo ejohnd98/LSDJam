@@ -6,6 +6,7 @@ const SPRINT_MOD = 1.8
 const DEBUG_SPRINT_MOD = 8
 const JUMP_VELOCITY = 3.0
 const SENSITIVITY = 0.003
+const GAMEPAD_LOOK_MOD = 13.0
 
 @export var ground_snap =  0.05
 @export_flags_3d_physics var ground_collision_mask
@@ -71,6 +72,12 @@ func _unhandled_input(event):
 var held_item_offset
 
 func _process(delta):
+	var gamepad_look_dir = Input.get_vector("Look_Left", "Look_Right", "Look_Up", "Look_Down")
+	var camera_control_mod = control_modifier * control_modifier
+	$CameraPivot.rotate_y(-gamepad_look_dir.x * SENSITIVITY * GAMEPAD_LOOK_MOD * camera_control_mod *(0.2 + PlayerSettings.mouse_sensitivity * 2.0))
+	$CameraPivot/CameraParent.rotate_x(-gamepad_look_dir.y * 0.6 * SENSITIVITY * GAMEPAD_LOOK_MOD * camera_control_mod * (0.2 + PlayerSettings.mouse_sensitivity * 2.0))
+	$CameraPivot/CameraParent.rotation.x = clamp($CameraPivot/CameraParent.rotation.x, deg_to_rad(-80), deg_to_rad(80))
+	
 	$HeldItemPivot.global_rotation = $CameraPivot/CameraParent.global_rotation
 	pass
 
@@ -114,7 +121,9 @@ func _physics_process(delta):
 		position.y += vertical_velocity*delta
 	
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
-	var direction = ($CameraPivot.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var direction : Vector3 = ($CameraPivot.transform.basis * Vector3(input_dir.x, 0, input_dir.y))
+	if direction.length() > 1.0:
+		direction = direction.normalized()
 	
 	var move_speed : float = WALK_SPEED * control_modifier
 	var is_sprinting = Input.is_action_pressed("Sprint")
@@ -177,7 +186,7 @@ func unequip_item():
 	equipped_item = null
 
 func set_frozen (frozen):
-	$CollisionShape3D.disabled = frozen
+	#$CollisionShape3D.disabled = frozen
 	velocity = Vector3.ZERO
 	if (frozen):
 		$CameraPivot/AnimationPlayer.pause()

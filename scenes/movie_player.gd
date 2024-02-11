@@ -4,11 +4,11 @@ extends Area3D
 
 var player_in_theater = false
 
-var unit_size_inside = 20
-var unit_size_outside = 14
+var unit_size_inside = 40
+var unit_size_outside = 12
 
-var db_inside = -14
-var db_outside = -32
+var db_inside = -16
+var db_outside = -25
 
 var counter = 0.0
 

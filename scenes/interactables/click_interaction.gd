@@ -4,6 +4,7 @@ class_name click_interaction extends Area3D
 @export var max_interacts : int = -1
 
 @export var interact_prompt = "Interact"
+@export var show_distorted_text = false
 
 @export var interact_sound : AudioStream
 

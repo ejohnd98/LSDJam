@@ -1,8 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://7tve255gynel"]
+[gd_scene load_steps=20 format=3 uid="uid://7tve255gynel"]
 
 [ext_resource type="PackedScene" uid="uid://d2qbiurmvm6x0" path="res://sourceModels/beach/Beach.glb" id="1_q7xby"]
+[ext_resource type="Texture2D" uid="uid://cd0tkg33ip8a0" path="res://sourceModels/beach/hatched.png" id="3_jg105"]
 [ext_resource type="PackedScene" uid="uid://dnetq8wdqajsf" path="res://sourceModels/beach/BeachBar.glb" id="4_ddne6"]
-[ext_resource type="AudioStream" uid="uid://bqd47qlakf5ci" path="res://sounds/music/tiki_radio.ogg" id="5_s0sxo"]
 [ext_resource type="PackedScene" uid="uid://36q0bb1gffqg" path="res://sourceModels/beach/BeachDock.glb" id="6_jek7j"]
 [ext_resource type="PackedScene" uid="uid://c3pl77hj45q5i" path="res://sourceModels/beach/Palm3.glb" id="7_mikh0"]
 [ext_resource type="PackedScene" uid="uid://dp6b7k1u56154" path="res://sourceModels/beach/Palm2.glb" id="8_76bbb"]
@@ -13,6 +13,16 @@
 [ext_resource type="Texture2D" uid="uid://bwwkf8s1vbk0x" path="res://sourceModels/beach/palm_billboard1.png" id="11_lsf26"]
 [ext_resource type="Texture2D" uid="uid://dbfq15f807mxv" path="res://sourceModels/beach/palm_billboard2.png" id="12_8mjmu"]
 [ext_resource type="Texture2D" uid="uid://d1u6scyfpdtco" path="res://sourceModels/beach/beach skyline.png" id="13_kil5w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mdck7"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("3_jg105")
+metallic = 0.35
+roughness = 0.74
+texture_filter = 2
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_l6f0k"]
 
@@ -52,12 +62,9 @@ shader_parameter/normal2 = ExtResource("10_xw0cl")
 [node name="BeachBar" parent="." index="2" instance=ExtResource("4_ddne6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.42811, 0.0755346, 38.6826)
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="BeachBar" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16558, 1.75662, -1.14761)
-stream = ExtResource("5_s0sxo")
-volume_db = -10.0
-autoplay = true
-panning_strength = 0.75
+[node name="Bar" parent="BeachBar" index="0"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_mdck7")
 
 [node name="BeachDock" parent="." index="3" instance=ExtResource("6_jek7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9761, 0.319543, 11.8606)
@@ -1475,3 +1482,5 @@ offset = Vector2(-256, 0)
 pixel_size = 0.5
 alpha_cut = 1
 texture = ExtResource("13_kil5w")
+
+[editable path="BeachBar"]

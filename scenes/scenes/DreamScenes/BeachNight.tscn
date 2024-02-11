@@ -1,0 +1,902 @@
+[gd_scene load_steps=45 format=3 uid="uid://d2ihn5j58j4dg"]
+
+[ext_resource type="Texture2D" uid="uid://02s6p0rkwn3j" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ColdNight_Equirect.png" id="1_f6mkx"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_rev4g"]
+[ext_resource type="AudioStream" uid="uid://ch7i2uabfi4o6" path="res://sounds/various_ambiences/beach.ogg" id="3_w4bfi"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="5_anv4h"]
+[ext_resource type="PackedScene" uid="uid://btmldfxcfpybj" path="res://scenes/props/distortion_bubble.tscn" id="7_1c4hf"]
+[ext_resource type="PackedScene" uid="uid://7tve255gynel" path="res://models/beach_scene.tscn" id="8_5oses"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="9_dnoul"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="10_yp0mu"]
+[ext_resource type="Script" path="res://scenes/interactables/HoverItem.gd" id="11_r2yut"]
+[ext_resource type="PackedScene" uid="uid://ly81cippa4dk" path="res://scenes/props/boat_spot.tscn" id="12_4xayn"]
+[ext_resource type="AudioStream" uid="uid://bqd47qlakf5ci" path="res://sounds/music/tiki_radio.ogg" id="12_siyoy"]
+[ext_resource type="PackedScene" uid="uid://dv2mfrpn0x5md" path="res://scenes/dream_condition.tscn" id="13_j0f0l"]
+[ext_resource type="PackedScene" uid="uid://cm5srrepm42b4" path="res://scenes/interactables/key_object.tscn" id="14_ikp63"]
+[ext_resource type="Texture2D" uid="uid://f1c0wp8l3ba0" path="res://sourceModels/beach/bar_closed_sign.png" id="16_4m05r"]
+[ext_resource type="PackedScene" uid="uid://dqrxqr5h6xrky" path="res://sourceModels/beach/BeachBarNight.glb" id="16_7gyqn"]
+[ext_resource type="PackedScene" uid="uid://bobtyb6nmdgcs" path="res://scenes/props/torch.tscn" id="16_kkyxm"]
+[ext_resource type="Texture2D" uid="uid://cd0tkg33ip8a0" path="res://sourceModels/beach/hatched.png" id="17_ebfhn"]
+[ext_resource type="Texture2D" uid="uid://cb3oi5pwvxmvh" path="res://sourceModels/beach/barTexture.png" id="17_j503f"]
+[ext_resource type="Texture2D" uid="uid://da7dcgqvbsjtr" path="res://sourceModels/beach/barTextureEmissive.png" id="18_a7yac"]
+[ext_resource type="Texture2D" uid="uid://bo0nqyacm4qtc" path="res://sourceModels/beach/barTextureNormal.png" id="20_4j6yw"]
+[ext_resource type="Texture2D" uid="uid://ctr6rgfvgeqk1" path="res://sourceModels/beach/Beach_shrubs.png" id="21_1wytl"]
+[ext_resource type="PackedScene" uid="uid://c2faw0c6i42xo" path="res://scenes/props/bar_spot.tscn" id="22_b8ool"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xgm4g"]
+panorama = ExtResource("1_f6mkx")
+
+[sub_resource type="Sky" id="Sky_7q0fc"]
+sky_material = SubResource("PanoramaSkyMaterial_xgm4g")
+
+[sub_resource type="Environment" id="Environment_20yqv"]
+background_mode = 2
+background_energy_multiplier = 1.1
+sky = SubResource("Sky_7q0fc")
+reflected_light_source = 2
+tonemap_white = 0.25
+sdfgi_enabled = true
+glow_enabled = true
+glow_strength = 0.88
+glow_bloom = 0.31
+fog_enabled = true
+fog_light_color = Color(0.545098, 0.729412, 1, 1)
+fog_light_energy = 3.9
+fog_density = 0.004
+fog_aerial_perspective = 1.0
+fog_height_density = 1.1319
+adjustment_enabled = true
+adjustment_brightness = 0.9
+adjustment_contrast = 1.25
+adjustment_saturation = 1.64
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ujr4y"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohmkj"]
+noise = SubResource("FastNoiseLite_ujr4y")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0d0y"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e7q65"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtsqx"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckpgi"]
+albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ee70u"]
+size = Vector3(220, 5, 220)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q8nsq"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("17_ebfhn")
+metallic = 0.35
+roughness = 0.74
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f7msx"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_color = Color(0.635294, 0.635294, 0.635294, 1)
+albedo_texture = ExtResource("17_j503f")
+roughness = 0.82
+emission_texture = ExtResource("18_a7yac")
+normal_scale = 1.25
+normal_texture = ExtResource("20_4j6yw")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8gu1u"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("17_ebfhn")
+metallic = 0.35
+roughness = 0.74
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xmtqy"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("17_j503f")
+roughness = 0.25
+emission_enabled = true
+emission_texture = ExtResource("18_a7yac")
+normal_enabled = true
+normal_scale = 4.76
+normal_texture = ExtResource("20_4j6yw")
+texture_filter = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_nnjet"]
+size = Vector2(10, 2)
+subdivide_width = 10
+subdivide_depth = 4
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uk7r7"]
+noise_type = 3
+frequency = 0.0105
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_uk7r7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_50bd8"]
+render_priority = 0
+shader = ExtResource("5_anv4h")
+shader_parameter/distortionView = 0.02
+shader_parameter/speedView = 0.02
+shader_parameter/static_intensity = 0.3
+shader_parameter/tintColor = Color(1, 1, 1, 1)
+shader_parameter/fesnelAmount = 0.87
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.01
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y46he"]
+size = Vector3(100, 30, 4)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5oy0l"]
+radius = 2.0
+height = 3.0
+radial_segments = 8
+rings = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1pgf"]
+albedo_texture = ExtResource("21_1wytl")
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v40yy"]
+size = Vector3(2, 4, 4)
+
+[node name="BeachNight" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(0.352941, 0.403922, 0.580392, 1)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_20yqv")
+
+[node name="PlayerSpawnUp" type="Node3D" parent="."]
+transform = Transform3D(0.999837, 0, 0.0180807, 0, 1, 0, -0.0180807, 0, 0.999837, 19.3114, 1.41266, -35.8186)
+
+[node name="PlayerSpawnDown" type="Node3D" parent="."]
+transform = Transform3D(-0.99278, 0, 0.119946, 0, 1, 0, -0.119946, 0, -0.99278, 20.2648, 0.46253, 27.0571)
+
+[node name="PlayerSpawnRight" type="Node3D" parent="."]
+transform = Transform3D(-0.0463045, 0, 0.998927, 0, 1, 0, -0.998927, 0, -0.0463045, -4.68594, 0.760589, -15.0586)
+
+[node name="PlayerSpawnLeft" type="Node3D" parent="."]
+transform = Transform3D(0.024554, 0, 0.999699, 0, 1, 0, -0.999699, 0, 0.024554, -7.23877, 0.824788, -15.1598)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 15.7301, 1.617, -11.7602)
+size = Vector3(1.1, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_m0d0y")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+operation = 2
+size = Vector3(1, 1, 0.45)
+material = SubResource("StandardMaterial3D_e7q65")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_xtsqx")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_ckpgi")
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("2_rev4g")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 15.7301, 1.637, -11.7879)
+grid_scale = Vector2(1, 1)
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1.13373)
+stream = ExtResource("3_w4bfi")
+attenuation_model = 3
+volume_db = -6.0
+unit_size = 100.0
+autoplay = true
+panning_strength = 0.4
+bus = &"SFX"
+
+[node name="DistortionBubble" parent="." instance=ExtResource("7_1c4hf")]
+transform = Transform3D(7.64737, 0, -2.34899, 0, 8, 0, 2.34899, 0, 7.64737, 25.0532, -0.130844, -62.1122)
+visible = false
+
+[node name="ForcedTriggers" type="Node3D" parent="."]
+
+[node name="Beach2" parent="." instance=ExtResource("8_5oses")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="BeachBar" parent="Beach2" index="2"]
+visible = false
+
+[node name="Sprite3D" parent="Beach2/2d Palms" index="0"]
+shaded = true
+
+[node name="Sprite3D2" parent="Beach2/2d Palms" index="1"]
+shaded = true
+
+[node name="Sprite3D3" parent="Beach2/2d Palms" index="2"]
+shaded = true
+
+[node name="Sprite3D4" parent="Beach2/2d Palms" index="3"]
+shaded = true
+
+[node name="Sprite3D5" parent="Beach2/2d Palms" index="4"]
+shaded = true
+
+[node name="Sprite3D6" parent="Beach2/2d Palms" index="5"]
+shaded = true
+
+[node name="Sprite3D7" parent="Beach2/2d Palms" index="6"]
+shaded = true
+
+[node name="Sprite3D8" parent="Beach2/2d Palms" index="7"]
+shaded = true
+
+[node name="Sprite3D9" parent="Beach2/2d Palms" index="8"]
+shaded = true
+
+[node name="Sprite3D10" parent="Beach2/2d Palms" index="9"]
+shaded = true
+
+[node name="Sprite3D11" parent="Beach2/2d Palms" index="10"]
+shaded = true
+
+[node name="Sprite3D12" parent="Beach2/2d Palms" index="11"]
+shaded = true
+
+[node name="Sprite3D13" parent="Beach2/2d Palms" index="12"]
+shaded = true
+
+[node name="Sprite3D14" parent="Beach2/2d Palms" index="13"]
+shaded = true
+
+[node name="Sprite3D15" parent="Beach2/2d Palms" index="14"]
+shaded = true
+
+[node name="Sprite3D16" parent="Beach2/2d Palms" index="15"]
+shaded = true
+
+[node name="Sprite3D17" parent="Beach2/2d Palms" index="16"]
+shaded = true
+
+[node name="Sprite3D18" parent="Beach2/2d Palms" index="17"]
+shaded = true
+
+[node name="Sprite3D19" parent="Beach2/2d Palms" index="18"]
+shaded = true
+
+[node name="Sprite3D20" parent="Beach2/2d Palms" index="19"]
+shaded = true
+
+[node name="Sprite3D21" parent="Beach2/2d Palms" index="20"]
+shaded = true
+
+[node name="Sprite3D22" parent="Beach2/2d Palms" index="21"]
+shaded = true
+
+[node name="Sprite3D23" parent="Beach2/2d Palms" index="22"]
+shaded = true
+
+[node name="Sprite3D" parent="Beach2/2d Palms3" index="0"]
+shaded = true
+
+[node name="Sprite3D2" parent="Beach2/2d Palms3" index="1"]
+shaded = true
+
+[node name="Sprite3D3" parent="Beach2/2d Palms3" index="2"]
+shaded = true
+
+[node name="Sprite3D4" parent="Beach2/2d Palms3" index="3"]
+shaded = true
+
+[node name="Sprite3D5" parent="Beach2/2d Palms3" index="4"]
+shaded = true
+
+[node name="Sprite3D6" parent="Beach2/2d Palms3" index="5"]
+shaded = true
+
+[node name="Sprite3D7" parent="Beach2/2d Palms3" index="6"]
+shaded = true
+
+[node name="Sprite3D8" parent="Beach2/2d Palms3" index="7"]
+shaded = true
+
+[node name="Sprite3D9" parent="Beach2/2d Palms3" index="8"]
+shaded = true
+
+[node name="Sprite3D10" parent="Beach2/2d Palms3" index="9"]
+shaded = true
+
+[node name="Sprite3D11" parent="Beach2/2d Palms3" index="10"]
+shaded = true
+
+[node name="Sprite3D12" parent="Beach2/2d Palms3" index="11"]
+shaded = true
+
+[node name="Sprite3D13" parent="Beach2/2d Palms3" index="12"]
+shaded = true
+
+[node name="Sprite3D14" parent="Beach2/2d Palms3" index="13"]
+shaded = true
+
+[node name="Sprite3D15" parent="Beach2/2d Palms3" index="14"]
+shaded = true
+
+[node name="Sprite3D16" parent="Beach2/2d Palms3" index="15"]
+shaded = true
+
+[node name="Sprite3D17" parent="Beach2/2d Palms3" index="16"]
+shaded = true
+
+[node name="Sprite3D18" parent="Beach2/2d Palms3" index="17"]
+shaded = true
+
+[node name="Sprite3D19" parent="Beach2/2d Palms3" index="18"]
+shaded = true
+
+[node name="Sprite3D20" parent="Beach2/2d Palms3" index="19"]
+shaded = true
+
+[node name="Sprite3D21" parent="Beach2/2d Palms3" index="20"]
+shaded = true
+
+[node name="Sprite3D22" parent="Beach2/2d Palms3" index="21"]
+shaded = true
+
+[node name="Sprite3D23" parent="Beach2/2d Palms3" index="22"]
+shaded = true
+
+[node name="Sprite3D" parent="Beach2/2d Palms4" index="0"]
+shaded = true
+
+[node name="Sprite3D2" parent="Beach2/2d Palms4" index="1"]
+shaded = true
+
+[node name="Sprite3D3" parent="Beach2/2d Palms4" index="2"]
+shaded = true
+
+[node name="Sprite3D4" parent="Beach2/2d Palms4" index="3"]
+shaded = true
+
+[node name="Sprite3D5" parent="Beach2/2d Palms4" index="4"]
+shaded = true
+
+[node name="Sprite3D6" parent="Beach2/2d Palms4" index="5"]
+shaded = true
+
+[node name="Sprite3D7" parent="Beach2/2d Palms4" index="6"]
+shaded = true
+
+[node name="Sprite3D8" parent="Beach2/2d Palms4" index="7"]
+shaded = true
+
+[node name="Sprite3D9" parent="Beach2/2d Palms4" index="8"]
+shaded = true
+
+[node name="Sprite3D10" parent="Beach2/2d Palms4" index="9"]
+shaded = true
+
+[node name="Sprite3D11" parent="Beach2/2d Palms4" index="10"]
+shaded = true
+
+[node name="Sprite3D12" parent="Beach2/2d Palms4" index="11"]
+shaded = true
+
+[node name="Sprite3D13" parent="Beach2/2d Palms4" index="12"]
+shaded = true
+
+[node name="Sprite3D14" parent="Beach2/2d Palms4" index="13"]
+shaded = true
+
+[node name="Sprite3D15" parent="Beach2/2d Palms4" index="14"]
+shaded = true
+
+[node name="Sprite3D16" parent="Beach2/2d Palms4" index="15"]
+shaded = true
+
+[node name="Sprite3D17" parent="Beach2/2d Palms4" index="16"]
+shaded = true
+
+[node name="Sprite3D18" parent="Beach2/2d Palms4" index="17"]
+shaded = true
+
+[node name="Sprite3D19" parent="Beach2/2d Palms4" index="18"]
+shaded = true
+
+[node name="Sprite3D20" parent="Beach2/2d Palms4" index="19"]
+shaded = true
+
+[node name="Sprite3D21" parent="Beach2/2d Palms4" index="20"]
+shaded = true
+
+[node name="Sprite3D22" parent="Beach2/2d Palms4" index="21"]
+shaded = true
+
+[node name="Sprite3D23" parent="Beach2/2d Palms4" index="22"]
+shaded = true
+
+[node name="Sprite3D" parent="Beach2/2d Palms5" index="0"]
+shaded = true
+
+[node name="Sprite3D2" parent="Beach2/2d Palms5" index="1"]
+shaded = true
+
+[node name="Sprite3D3" parent="Beach2/2d Palms5" index="2"]
+shaded = true
+
+[node name="Sprite3D4" parent="Beach2/2d Palms5" index="3"]
+shaded = true
+
+[node name="Sprite3D5" parent="Beach2/2d Palms5" index="4"]
+shaded = true
+
+[node name="Sprite3D6" parent="Beach2/2d Palms5" index="5"]
+shaded = true
+
+[node name="Sprite3D7" parent="Beach2/2d Palms5" index="6"]
+shaded = true
+
+[node name="Sprite3D8" parent="Beach2/2d Palms5" index="7"]
+shaded = true
+
+[node name="Sprite3D9" parent="Beach2/2d Palms5" index="8"]
+shaded = true
+
+[node name="Sprite3D10" parent="Beach2/2d Palms5" index="9"]
+shaded = true
+
+[node name="Sprite3D11" parent="Beach2/2d Palms5" index="10"]
+shaded = true
+
+[node name="Sprite3D12" parent="Beach2/2d Palms5" index="11"]
+shaded = true
+
+[node name="Sprite3D13" parent="Beach2/2d Palms5" index="12"]
+shaded = true
+
+[node name="Sprite3D14" parent="Beach2/2d Palms5" index="13"]
+shaded = true
+
+[node name="Sprite3D15" parent="Beach2/2d Palms5" index="14"]
+shaded = true
+
+[node name="Sprite3D16" parent="Beach2/2d Palms5" index="15"]
+shaded = true
+
+[node name="Sprite3D17" parent="Beach2/2d Palms5" index="16"]
+shaded = true
+
+[node name="Sprite3D18" parent="Beach2/2d Palms5" index="17"]
+shaded = true
+
+[node name="Sprite3D19" parent="Beach2/2d Palms5" index="18"]
+shaded = true
+
+[node name="Sprite3D20" parent="Beach2/2d Palms5" index="19"]
+shaded = true
+
+[node name="Sprite3D21" parent="Beach2/2d Palms5" index="20"]
+shaded = true
+
+[node name="Sprite3D22" parent="Beach2/2d Palms5" index="21"]
+shaded = true
+
+[node name="Sprite3D23" parent="Beach2/2d Palms5" index="22"]
+shaded = true
+
+[node name="Sprite3D" parent="Beach2/2d Palms6" index="0"]
+shaded = true
+
+[node name="Sprite3D2" parent="Beach2/2d Palms6" index="1"]
+shaded = true
+
+[node name="Sprite3D3" parent="Beach2/2d Palms6" index="2"]
+shaded = true
+
+[node name="Sprite3D4" parent="Beach2/2d Palms6" index="3"]
+shaded = true
+
+[node name="Sprite3D5" parent="Beach2/2d Palms6" index="4"]
+shaded = true
+
+[node name="Sprite3D6" parent="Beach2/2d Palms6" index="5"]
+shaded = true
+
+[node name="Sprite3D7" parent="Beach2/2d Palms6" index="6"]
+shaded = true
+
+[node name="Sprite3D8" parent="Beach2/2d Palms6" index="7"]
+shaded = true
+
+[node name="Sprite3D9" parent="Beach2/2d Palms6" index="8"]
+shaded = true
+
+[node name="Sprite3D10" parent="Beach2/2d Palms6" index="9"]
+shaded = true
+
+[node name="Sprite3D11" parent="Beach2/2d Palms6" index="10"]
+shaded = true
+
+[node name="Sprite3D12" parent="Beach2/2d Palms6" index="11"]
+shaded = true
+
+[node name="Sprite3D13" parent="Beach2/2d Palms6" index="12"]
+shaded = true
+
+[node name="Sprite3D14" parent="Beach2/2d Palms6" index="13"]
+shaded = true
+
+[node name="Sprite3D15" parent="Beach2/2d Palms6" index="14"]
+shaded = true
+
+[node name="Sprite3D16" parent="Beach2/2d Palms6" index="15"]
+shaded = true
+
+[node name="Sprite3D17" parent="Beach2/2d Palms6" index="16"]
+shaded = true
+
+[node name="Sprite3D18" parent="Beach2/2d Palms6" index="17"]
+shaded = true
+
+[node name="Sprite3D19" parent="Beach2/2d Palms6" index="18"]
+shaded = true
+
+[node name="Sprite3D20" parent="Beach2/2d Palms6" index="19"]
+shaded = true
+
+[node name="Sprite3D21" parent="Beach2/2d Palms6" index="20"]
+shaded = true
+
+[node name="Sprite3D22" parent="Beach2/2d Palms6" index="21"]
+shaded = true
+
+[node name="Sprite3D23" parent="Beach2/2d Palms6" index="22"]
+shaded = true
+
+[node name="Sprite3D" parent="Beach2/2d Palms7" index="0"]
+shaded = true
+
+[node name="Sprite3D2" parent="Beach2/2d Palms7" index="1"]
+shaded = true
+
+[node name="Sprite3D3" parent="Beach2/2d Palms7" index="2"]
+shaded = true
+
+[node name="Sprite3D4" parent="Beach2/2d Palms7" index="3"]
+shaded = true
+
+[node name="Sprite3D5" parent="Beach2/2d Palms7" index="4"]
+shaded = true
+
+[node name="Sprite3D6" parent="Beach2/2d Palms7" index="5"]
+shaded = true
+
+[node name="Sprite3D7" parent="Beach2/2d Palms7" index="6"]
+shaded = true
+
+[node name="Sprite3D8" parent="Beach2/2d Palms7" index="7"]
+shaded = true
+
+[node name="Sprite3D9" parent="Beach2/2d Palms7" index="8"]
+shaded = true
+
+[node name="Sprite3D10" parent="Beach2/2d Palms7" index="9"]
+shaded = true
+
+[node name="Sprite3D11" parent="Beach2/2d Palms7" index="10"]
+shaded = true
+
+[node name="Sprite3D12" parent="Beach2/2d Palms7" index="11"]
+shaded = true
+
+[node name="Sprite3D13" parent="Beach2/2d Palms7" index="12"]
+shaded = true
+
+[node name="Sprite3D14" parent="Beach2/2d Palms7" index="13"]
+shaded = true
+
+[node name="Sprite3D15" parent="Beach2/2d Palms7" index="14"]
+shaded = true
+
+[node name="Sprite3D16" parent="Beach2/2d Palms7" index="15"]
+shaded = true
+
+[node name="Sprite3D17" parent="Beach2/2d Palms7" index="16"]
+shaded = true
+
+[node name="Sprite3D18" parent="Beach2/2d Palms7" index="17"]
+shaded = true
+
+[node name="Sprite3D19" parent="Beach2/2d Palms7" index="18"]
+shaded = true
+
+[node name="Sprite3D20" parent="Beach2/2d Palms7" index="19"]
+shaded = true
+
+[node name="Sprite3D21" parent="Beach2/2d Palms7" index="20"]
+shaded = true
+
+[node name="Sprite3D22" parent="Beach2/2d Palms7" index="21"]
+shaded = true
+
+[node name="Sprite3D23" parent="Beach2/2d Palms7" index="22"]
+shaded = true
+
+[node name="Sprite3D" parent="Beach2/2d Palms2" index="0"]
+shaded = true
+
+[node name="Sprite3D2" parent="Beach2/2d Palms2" index="1"]
+shaded = true
+
+[node name="Sprite3D3" parent="Beach2/2d Palms2" index="2"]
+shaded = true
+
+[node name="Sprite3D4" parent="Beach2/2d Palms2" index="3"]
+shaded = true
+
+[node name="Sprite3D5" parent="Beach2/2d Palms2" index="4"]
+shaded = true
+
+[node name="Sprite3D6" parent="Beach2/2d Palms2" index="5"]
+shaded = true
+
+[node name="Sprite3D7" parent="Beach2/2d Palms2" index="6"]
+shaded = true
+
+[node name="Sprite3D8" parent="Beach2/2d Palms2" index="7"]
+shaded = true
+
+[node name="Sprite3D9" parent="Beach2/2d Palms2" index="8"]
+shaded = true
+
+[node name="Sprite3D10" parent="Beach2/2d Palms2" index="9"]
+shaded = true
+
+[node name="Sprite3D11" parent="Beach2/2d Palms2" index="10"]
+shaded = true
+
+[node name="Sprite3D12" parent="Beach2/2d Palms2" index="11"]
+shaded = true
+
+[node name="Sprite3D13" parent="Beach2/2d Palms2" index="12"]
+shaded = true
+
+[node name="Sprite3D14" parent="Beach2/2d Palms2" index="13"]
+shaded = true
+
+[node name="Sprite3D15" parent="Beach2/2d Palms2" index="14"]
+shaded = true
+
+[node name="Sprite3D16" parent="Beach2/2d Palms2" index="15"]
+shaded = true
+
+[node name="Sprite3D17" parent="Beach2/2d Palms2" index="16"]
+shaded = true
+
+[node name="Sprite3D18" parent="Beach2/2d Palms2" index="17"]
+shaded = true
+
+[node name="Sprite3D19" parent="Beach2/2d Palms2" index="18"]
+shaded = true
+
+[node name="Sprite3D20" parent="Beach2/2d Palms2" index="19"]
+shaded = true
+
+[node name="Sprite3D21" parent="Beach2/2d Palms2" index="20"]
+shaded = true
+
+[node name="Sprite3D22" parent="Beach2/2d Palms2" index="21"]
+shaded = true
+
+[node name="Sprite3D23" parent="Beach2/2d Palms2" index="22"]
+shaded = true
+
+[node name="ForcedTransitionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.242188, 0)
+script = ExtResource("9_dnoul")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3166, -3.25865, 11.7142)
+shape = SubResource("BoxShape3D_ee70u")
+script = ExtResource("10_yp0mu")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1634, 0)
+script = ExtResource("11_r2yut")
+bob_amount = 0.1
+bob_speed = 0.6
+
+[node name="BoatSpot" parent="Node3D" instance=ExtResource("12_4xayn")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6.9629, -0.27676, -12.6683)
+direction = Vector2(1, 0)
+
+[node name="DreamCondition3" parent="." instance=ExtResource("13_j0f0l")]
+transform = Transform3D(0.992317, 0, -0.123723, 0, 1, 0, 0.123723, 0, 0.992317, 37.8839, 1.21919, -4.06933)
+required_key = "boatKey"
+destroy_on_pass = true
+required_position = Vector2i(1, 0)
+
+[node name="KeyObject" parent="DreamCondition3" instance=ExtResource("14_ikp63")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
+key = "boatKey"
+
+[node name="DreamConditionBar" parent="." instance=ExtResource("13_j0f0l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5839, 1.84111, -5.44963)
+required_key = "tikiIngredients"
+destroy_on_pass = true
+
+[node name="Sprite3D" type="Sprite3D" parent="DreamConditionBar"]
+transform = Transform3D(-4.47035e-08, 0, -1, 0, 1, 0, 1, 0, -4.47035e-08, 0, 0, 0)
+pixel_size = 0.003
+shaded = true
+texture = ExtResource("16_4m05r")
+
+[node name="BeachBarNightOff" parent="DreamConditionBar" instance=ExtResource("16_7gyqn")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.03628, -1.76558, 3.98553)
+
+[node name="Bar" parent="DreamConditionBar/BeachBarNightOff" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_q8nsq")
+surface_material_override/1 = SubResource("StandardMaterial3D_f7msx")
+
+[node name="DreamConditionBar2" parent="." instance=ExtResource("13_j0f0l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5839, 1.84111, -5.44963)
+required_key = "tikiIngredients"
+destroy_on_fail = true
+
+[node name="BeachBarNightOn" parent="DreamConditionBar2" instance=ExtResource("16_7gyqn")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.03628, -1.76558, 3.98553)
+
+[node name="Bar" parent="DreamConditionBar2/BeachBarNightOn" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8gu1u")
+surface_material_override/1 = SubResource("StandardMaterial3D_xmtqy")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="DreamConditionBar2/BeachBarNightOn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.58897, 2.02205, 0.684982)
+light_color = Color(0.113725, 1, 0, 1)
+light_energy = 0.4
+omni_range = 2.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="DreamConditionBar2/BeachBarNightOn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.61608, 2.02205, -0.123386)
+light_color = Color(0.113725, 1, 0, 1)
+light_energy = 0.4
+omni_range = 2.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="DreamConditionBar2/BeachBarNightOn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02605, 2.02205, 1.04552)
+light_color = Color(1, 0.721569, 0.721569, 1)
+light_energy = 0.4
+omni_range = 2.0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="DreamConditionBar2/BeachBarNightOn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.24899, 2.14455, 0.117039)
+light_color = Color(1, 0.721569, 0.721569, 1)
+light_energy = 0.4
+omni_range = 2.0
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="DreamConditionBar2/BeachBarNightOn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.70677, 1.25174, 0.663826)
+light_color = Color(0.941176, 0.8, 0.686275, 1)
+light_energy = 0.254
+omni_range = 4.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="DreamConditionBar2"]
+stream = ExtResource("12_siyoy")
+autoplay = true
+
+[node name="BarSpot" parent="DreamConditionBar2" instance=ExtResource("22_b8ool")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.593338, -0.412081, 1.08608)
+
+[node name="AlternateCamera" parent="DreamConditionBar2/BarSpot/Interaction" index="3"]
+transform = Transform3D(-0.724599, -0.0927813, -0.682897, -0.00496684, 0.991574, -0.129449, 0.689153, -0.0904071, -0.718954, -9.05398, 2.07763, -10.932)
+
+[node name="Torch" parent="." instance=ExtResource("16_kkyxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3747, 0.218731, 0.719284)
+
+[node name="Torch2" parent="." instance=ExtResource("16_kkyxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.4436, 0.210639, -9.43219)
+
+[node name="Torch3" parent="." instance=ExtResource("16_kkyxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3505, 0.21644, -3.93825)
+
+[node name="Torch4" parent="." instance=ExtResource("16_kkyxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.4943, 0.200976, -9.61333)
+
+[node name="Torch5" parent="." instance=ExtResource("16_kkyxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.5164, 0.206091, 1.03615)
+
+[node name="Torch6" parent="." instance=ExtResource("16_kkyxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4696, 0.189815, -12.2886)
+
+[node name="Torch7" parent="." instance=ExtResource("16_kkyxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0499, 0.875535, -14.1687)
+
+[node name="Torch8" parent="." instance=ExtResource("16_kkyxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.29445, 0.875535, -14.1739)
+
+[node name="DistortionPlane2" type="Node3D" parent="."]
+transform = Transform3D(-3.99813, 0, 0.122291, 0, 4, 0, -0.122291, 0, -3.99813, 17.123, 0.280219, 37.1923)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DistortionPlane2"]
+transform = Transform3D(0.932197, 0.209159, 0.2954, -0.216668, 0.976217, -0.00747235, -0.289937, -0.057038, 0.955344, -1.05969, 0, -0.89174)
+mesh = SubResource("QuadMesh_nnjet")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_50bd8")
+
+[node name="DistortionPlane" type="Node3D" parent="."]
+transform = Transform3D(3.99813, 0, -0.122292, 0, 4, 0, 0.122292, 0, 3.99813, 21.6527, 0.280219, -53.7719)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DistortionPlane"]
+transform = Transform3D(0.923067, -0.276462, 0.267425, 0.253072, 0.960099, 0.119018, -0.289658, -0.0421842, 0.9562, 0.0049119, 0, -0.924305)
+mesh = SubResource("QuadMesh_nnjet")
+surface_material_override/0 = SubResource("ShaderMaterial_50bd8")
+
+[node name="ForcedTransitionArea2" type="Area3D" parent="."]
+transform = Transform3D(0.709731, 0, 0.704473, 0, 1, 0, -0.704473, 0, 0.709731, 75.1871, 0, -60.4768)
+script = ExtResource("9_dnoul")
+force_direction = true
+direction = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea2"]
+transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -50.8046, 9.11387, -43.8603)
+shape = SubResource("BoxShape3D_y46he")
+script = ExtResource("10_yp0mu")
+
+[node name="ForcedTransitionArea3" type="Area3D" parent="."]
+transform = Transform3D(0.709731, 0, 0.704473, 0, 1, 0, -0.704473, 0, 0.709731, 75.1871, 0, 34.8032)
+script = ExtResource("9_dnoul")
+force_direction = true
+direction = Vector2i(0, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea3"]
+transform = Transform3D(0.77352, 0, -0.633773, 0, 1, 0, 0.633773, 0, 0.77352, -50.8046, 9.11387, -43.8603)
+shape = SubResource("BoxShape3D_y46he")
+script = ExtResource("10_yp0mu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.78087, 0, 0, 0, 3.88293, 49.9986, 1.5511, -11.7966)
+mesh = SubResource("SphereMesh_5oy0l")
+surface_material_override/0 = SubResource("StandardMaterial3D_c1pgf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.510632, 0, 0)
+shape = SubResource("BoxShape3D_v40yy")
+
+[connection signal="on_pick_up" from="DreamCondition3/KeyObject" to="Node3D/BoatSpot" method="_refresh_condition"]
+
+[editable path="Beach2"]
+[editable path="Beach2/BeachBar"]
+[editable path="DreamConditionBar/BeachBarNightOff"]
+[editable path="DreamConditionBar2/BeachBarNightOn"]
+[editable path="DreamConditionBar2/BarSpot"]
+[editable path="DreamConditionBar2/BarSpot/SubViewport/Control"]

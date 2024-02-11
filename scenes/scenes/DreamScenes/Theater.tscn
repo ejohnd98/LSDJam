@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ctf3xb7to4085"]
+[gd_scene load_steps=49 format=3 uid="uid://ctf3xb7to4085"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_wi6lw"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_6ifvt"]
@@ -18,8 +18,17 @@
 [ext_resource type="PackedScene" uid="uid://chynui24s8lsv" path="res://scenes/props/cinema_projector.tscn" id="15_r5big"]
 [ext_resource type="Texture2D" uid="uid://c8n7icvk1jlhc" path="res://textures/billboard_items/game_coin.png" id="16_b2je1"]
 [ext_resource type="PackedScene" uid="uid://bevrc41yhbsif" path="res://scenes/props/arcade_machine.tscn" id="17_lvy4t"]
+[ext_resource type="PackedScene" uid="uid://oemojq2461ft" path="res://scenes/chasing_enemy_final.tscn" id="17_v12gu"]
+[ext_resource type="AudioStream" uid="uid://v4d3wwodkmqo" path="res://video/Spooky Videoi.mp3" id="17_xsdgj"]
+[ext_resource type="AudioStream" uid="uid://c50i3mllk0cx0" path="res://video/descent.mp3" id="17_ypvra"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="18_0b7tl"]
+[ext_resource type="VideoStream" path="res://video/Spooky Videoi-1.mp4" id="18_0pjjq"]
 [ext_resource type="Texture2D" uid="uid://ckx511bqitpf8" path="res://textures/billboard_items/film_reel.png" id="18_ivgp0"]
+[ext_resource type="VideoStream" path="res://video/descent.mp4" id="18_sv83a"]
 [ext_resource type="PackedScene" uid="uid://oatv0e0tlxfc" path="res://sourceModels/cinema/MoviePoster.glb" id="20_ljv87"]
+[ext_resource type="Texture2D" uid="uid://df1jen7b8p2w1" path="res://sourceModels/cinema/movie_poster_left.png" id="23_gxm8m"]
+[ext_resource type="Texture2D" uid="uid://b5q66f3op80ly" path="res://sourceModels/cinema/movie_poster_down.png" id="24_ti7hj"]
+[ext_resource type="Texture2D" uid="uid://dsu25n7kd4tiq" path="res://sourceModels/cinema/movie_poster_alien.png" id="24_u2eba"]
 
 [sub_resource type="Environment" id="Environment_7qkrs"]
 reflected_light_source = 1
@@ -87,6 +96,82 @@ texture_filter = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e7xu4"]
 size = Vector3(18, 7, 19)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_slpjc"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3dcqk"]
+seamless = true
+noise = SubResource("FastNoiseLite_slpjc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qhrsb"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("18_0b7tl")
+shader_parameter/distortionView = 0.125
+shader_parameter/speedView = 0.113
+shader_parameter/static_intensity = 0.95
+shader_parameter/tintColor = Color(1, 0.235294, 0.180392, 1)
+shader_parameter/fesnelAmount = 0.05
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_3dcqk")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_3dcqk")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_3dcqk")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8wljj"]
+radius = 4.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_x3d60"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_khud0"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hyrai"]
+albedo_texture = ExtResource("23_gxm8m")
+emission_enabled = true
+emission_energy_multiplier = 0.25
+emission_texture = ExtResource("23_gxm8m")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dv2po"]
+albedo_texture = ExtResource("24_ti7hj")
+emission_enabled = true
+emission_energy_multiplier = 0.25
+emission_texture = ExtResource("24_ti7hj")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3oixp"]
+albedo_texture = ExtResource("24_ti7hj")
+emission_enabled = true
+emission_energy_multiplier = 0.25
+emission_texture = ExtResource("24_ti7hj")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aosc8"]
+albedo_texture = ExtResource("23_gxm8m")
+emission_enabled = true
+emission_energy_multiplier = 0.25
+emission_texture = ExtResource("23_gxm8m")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yxpi8"]
+albedo_texture = ExtResource("24_u2eba")
+emission_enabled = true
+emission_energy_multiplier = 0.25
+emission_texture = ExtResource("24_u2eba")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdr2y"]
+albedo_texture = ExtResource("24_u2eba")
+emission_enabled = true
+emission_energy_multiplier = 0.25
+emission_texture = ExtResource("24_u2eba")
+texture_filter = 2
 
 [node name="Theater" type="Node3D"]
 
@@ -619,23 +704,116 @@ transform = Transform3D(0.997197, 0.0748221, 0, -0.0748221, 0.997197, 0, 0, 0, 1
 required_key = "cinemaFilm"
 require_up = true
 
+[node name="DreamCondition2" parent="CinemaProjector" instance=ExtResource("6_28od4")]
+required_key = "cinemaFilm"
+require_up = true
+destroy_on_fail = true
+required_position = Vector2i(1, 2)
+
+[node name="ChasingEnemy" parent="CinemaProjector/DreamCondition2" instance=ExtResource("17_v12gu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.666, -0.368636, 0)
+chase_speed = 0.5
+activation_direction_threshold = 0.9
+snap_to_ground = false
+hide_before_showing = true
+check_los = false
+
+[node name="Skeleton3D" parent="CinemaProjector/DreamCondition2/ChasingEnemy/Armature" index="0"]
+bones/0/position = Vector3(5.53514, 5.69004, -313.905)
+bones/0/rotation = Quaternion(-0.712409, 0.217819, -0.150466, 0.649914)
+bones/1/rotation = Quaternion(-0.000512723, 0.0186433, -0.0141079, 0.999727)
+bones/2/rotation = Quaternion(0.0474138, 0.0406797, -0.0252586, 0.997727)
+bones/3/position = Vector3(-3.57628e-07, 49.4719, 7.15256e-07)
+bones/3/rotation = Quaternion(0.0473618, 0.0406375, -0.0254237, 0.997727)
+bones/4/position = Vector3(7.15256e-06, 55.6557, -8.19345e-06)
+bones/4/rotation = Quaternion(0.0510215, -0.0368348, -0.0355707, 0.997384)
+bones/5/position = Vector3(-8.34465e-06, 28.7281, 1.21734)
+bones/5/rotation = Quaternion(0.00300463, -0.257441, 0.0973987, 0.961368)
+bones/6/position = Vector3(1.19209e-06, 73.0855, 3.09695)
+bones/7/position = Vector3(26.0915, 48.0007, -0.468937)
+bones/7/rotation = Quaternion(-0.600718, -0.359928, 0.635795, -0.324584)
+bones/8/position = Vector3(1.17126e-05, 52.8348, 2.64183e-05)
+bones/8/rotation = Quaternion(0.427654, -0.0724424, 0.102863, 0.895144)
+bones/9/position = Vector3(-1.07022e-06, 81.6416, 9.06382e-06)
+bones/9/rotation = Quaternion(0.0101728, 0.0529469, 0.215185, 0.975084)
+bones/10/position = Vector3(2.20673e-05, 83.5223, -1.04498e-06)
+bones/10/rotation = Quaternion(0.118969, -0.0786944, -0.0100127, 0.989724)
+bones/11/position = Vector3(7.51258e-06, 23.8603, -1.97092e-05)
+bones/11/rotation = Quaternion(0.116649, 0.0102999, -0.0184074, 0.992949)
+bones/12/position = Vector3(1.69426e-05, 10.8248, -3.5509e-06)
+bones/12/rotation = Quaternion(-0.0448537, 0.0117603, -0.0933537, 0.994553)
+bones/13/rotation = Quaternion(0.204189, 0.00603803, 0.0499068, 0.97764)
+bones/14/position = Vector3(-0.190862, 10.2392, 1.50633)
+bones/15/position = Vector3(-26.0915, 47.9913, -0.276123)
+bones/15/rotation = Quaternion(0.548304, -0.422392, 0.61337, 0.380426)
+bones/16/position = Vector3(-3.71915e-06, 52.8348, -6.8317e-06)
+bones/16/rotation = Quaternion(0.489049, -0.0823053, 0.0560246, 0.866555)
+bones/17/position = Vector3(1.71542e-05, 81.6509, 2.39519e-05)
+bones/17/rotation = Quaternion(0.0113919, -0.0642054, -0.261289, 0.963056)
+bones/18/position = Vector3(-3.63358e-06, 83.517, -9.83518e-06)
+bones/18/rotation = Quaternion(0.250527, 0.00695922, 0.049922, 0.966797)
+bones/19/position = Vector3(1.23719e-05, 24.3528, -1.2965e-06)
+bones/19/rotation = Quaternion(0.104048, 0.00173023, 0.0175575, 0.994416)
+bones/20/position = Vector3(-3.27825e-06, 10.8887, 7.06546e-06)
+bones/20/rotation = Quaternion(0.134516, -0.0097151, 0.115819, 0.984072)
+bones/21/position = Vector3(3.06243, 15.2589, -0.968778)
+bones/21/rotation = Quaternion(-0.00494073, 0.00348456, -0.0606691, 0.99814)
+bones/22/position = Vector3(0.390362, 10.0608, 1.58918)
+bones/23/rotation = Quaternion(0.00618068, 0.0418045, 0.999017, -0.0133679)
+bones/24/position = Vector3(-9.28255e-06, 161.372, -3.51999e-06)
+bones/24/rotation = Quaternion(-0.347877, 0.0873514, 0.024042, 0.933152)
+bones/25/rotation = Quaternion(0.73125, 0.154968, -0.0975136, 0.657076)
+bones/26/rotation = Quaternion(0.22289, 0.000661634, -0.000151341, 0.974843)
+bones/28/rotation = Quaternion(-0.150903, 0.182969, 0.954027, 0.183259)
+bones/29/rotation = Quaternion(-0.307672, -0.0641128, 0.00757834, 0.9493)
+bones/30/position = Vector3(-3.77133e-06, 140.333, 1.36766e-05)
+bones/30/rotation = Quaternion(0.588425, 0.0322671, 0.0907921, 0.80279)
+bones/31/rotation = Quaternion(0.220177, -0.00156053, 0.000352272, 0.975459)
+bones/32/position = Vector3(9.4492e-06, 17.5449, 4.65664e-08)
+
+[node name="Cube" parent="CinemaProjector/DreamCondition2/ChasingEnemy/Armature/Skeleton3D" index="0"]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 10.6497, 0, 141.935)
+surface_material_override/0 = SubResource("ShaderMaterial_qhrsb")
+
+[node name="CollisionShape3D" parent="CinemaProjector/DreamCondition2/ChasingEnemy/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4029, 0.876515, 0)
+shape = SubResource("SphereShape3D_8wljj")
+
 [node name="Movie2" parent="." instance=ExtResource("14_c3yuy")]
 transform = Transform3D(-3.99551e-08, 0, -0.914067, 0, 0.914067, 0, 0.914067, 0, -3.99551e-08, -3.08307, 3.07161, -11.3782)
 
+[node name="UI" parent="Movie2" index="0"]
+texture = SubResource("ViewportTexture_x3d60")
+
+[node name="AudioStreamPlayer3D" parent="Movie2/UI" index="0"]
+stream = ExtResource("17_ypvra")
+
+[node name="VideoStreamPlayer" parent="Movie2/SubViewport/AspectRatioContainer" index="1"]
+stream = ExtResource("18_sv83a")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Movie2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90735e-06, 0, 9.01408)
+shape = SubResource("BoxShape3D_e7xu4")
+
+[node name="Movie3" parent="." instance=ExtResource("14_c3yuy")]
+transform = Transform3D(-3.99552e-08, 0, 0.914067, 0, 0.914067, 0, -0.914067, 0, -3.99552e-08, 3.08967, 3.07161, -11.3782)
+
+[node name="UI" parent="Movie3" index="0"]
+texture = SubResource("ViewportTexture_khud0")
+
+[node name="AudioStreamPlayer3D" parent="Movie3/UI" index="0"]
+stream = ExtResource("17_xsdgj")
+
+[node name="VideoStreamPlayer" parent="Movie3/SubViewport/AspectRatioContainer" index="1"]
+stream = ExtResource("18_0pjjq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Movie3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90735e-06, 0, 9.01408)
 shape = SubResource("BoxShape3D_e7xu4")
 
 [node name="CinemaProjector2" parent="." instance=ExtResource("15_r5big")]
 transform = Transform3D(0.997197, 0.0748221, 0, -0.0748221, 0.997197, 0, 0, 0, 1, -16.5222, 3.33731, -11.4426)
 direction = Vector2i(0, 1)
-
-[node name="Movie3" parent="." instance=ExtResource("14_c3yuy")]
-transform = Transform3D(-3.99552e-08, 0, 0.914067, 0, 0.914067, 0, -0.914067, 0, -3.99552e-08, 3.0883, 3.07161, -11.3782)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Movie3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90735e-06, 0, 9.01408)
-shape = SubResource("BoxShape3D_e7xu4")
 
 [node name="CinemaProjector3" parent="." instance=ExtResource("15_r5big")]
 transform = Transform3D(-0.997197, -0.0748221, -8.74228e-08, -0.0748221, 0.997197, 0, 8.71777e-08, 6.54115e-09, -1, 16.0476, 3.33731, -11.4426)
@@ -679,27 +857,56 @@ require_right = true
 [node name="MoviePoster" parent="." instance=ExtResource("20_ljv87")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.30753, 1.50544, -2.55)
 
+[node name="Frame" parent="MoviePoster" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_hyrai")
+
 [node name="MoviePoster2" parent="." instance=ExtResource("20_ljv87")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2841, 1.50544, -2.55)
+
+[node name="Frame" parent="MoviePoster2" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_dv2po")
 
 [node name="MoviePoster5" parent="." instance=ExtResource("20_ljv87")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.2841, 1.50544, -20.4026)
 
+[node name="Frame" parent="MoviePoster5" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_3oixp")
+
 [node name="MoviePoster6" parent="." instance=ExtResource("20_ljv87")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.30753, 1.50544, -20.4026)
+
+[node name="Frame" parent="MoviePoster6" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_aosc8")
 
 [node name="MoviePoster3" parent="." instance=ExtResource("20_ljv87")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.2841, 1.50544, 2.53549)
 
+[node name="Frame" parent="MoviePoster3" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_yxpi8")
+
 [node name="MoviePoster4" parent="." instance=ExtResource("20_ljv87")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2841, 1.50544, 20.403)
 
+[node name="Frame" parent="MoviePoster4" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_gdr2y")
+
 [connection signal="on_condition_check" from="CinemaProjector/DreamCondition" to="Movie" method="set_playing"]
 [connection signal="on_condition_check" from="CinemaProjector/DreamCondition" to="CinemaProjector" method="set_spinning"]
+[connection signal="on_condition_check" from="CinemaProjector/DreamCondition2" to="Movie" method="set_playing"]
+[connection signal="on_condition_check" from="CinemaProjector/DreamCondition2" to="CinemaProjector" method="set_spinning"]
 [connection signal="on_pick_up" from="Coin/KeyObject" to="ArcadeMachine" method="_refresh_condition"]
 [connection signal="on_interact" from="FilmItem/KeyObject" to="ArcadeMachine" method="_refresh_condition"]
 [connection signal="on_condition_check" from="ArcadeMachine/DreamCondition" to="ArcadeMachine" method="set_usable"]
 
 [editable path="VoxelGI/Cinema"]
+[editable path="CinemaProjector/DreamCondition2/ChasingEnemy"]
+[editable path="Movie2"]
+[editable path="Movie3"]
 [editable path="Coin/KeyObject"]
 [editable path="FilmItem/KeyObject"]
+[editable path="MoviePoster"]
+[editable path="MoviePoster2"]
+[editable path="MoviePoster5"]
+[editable path="MoviePoster6"]
+[editable path="MoviePoster3"]
+[editable path="MoviePoster4"]

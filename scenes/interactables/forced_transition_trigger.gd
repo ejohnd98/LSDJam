@@ -1,5 +1,8 @@
 class_name ForcedTransitionArea extends Area3D
 
+@export var force_direction = false
+@export var direction : Vector2i
+
 func _ready():
 	body_entered.connect(_on_body_entered)
 
@@ -8,4 +11,7 @@ func _on_body_entered(body):
 		trigger_transition()
 
 func trigger_transition():
-	GameManager.pick_random_dream()
+	if force_direction:
+		GameManager.move_in_direction(direction)
+	else:
+		GameManager.pick_random_dream()
