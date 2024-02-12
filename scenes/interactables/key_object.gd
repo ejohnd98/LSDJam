@@ -13,7 +13,8 @@ func pick_up():
 		return
 		
 	has_been_picked_up = true
-	GameManager.get_dream_grid().dream_keys.append(key)
+	#GameManager.get_dream_grid().dream_keys.append(key)
+	PlayerSettings.add_item(key)
 
 	$Sprite3D.hide()
 	$MeshInstance3D.hide()

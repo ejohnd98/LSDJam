@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cb8ennhmak0c6"]
+[gd_scene load_steps=18 format=3 uid="uid://cb8ennhmak0c6"]
 
 [ext_resource type="Script" path="res://scenes/player/Player.gd" id="1_v6pu0"]
 [ext_resource type="Script" path="res://addons/shaker/shaker.gd" id="2_cwelt"]
 [ext_resource type="AudioStream" uid="uid://bmr1qg0f2mye1" path="res://scenes/player/footstep_sounds.tres" id="2_scigr"]
+[ext_resource type="Script" path="res://scenes/items/EquippedItem.gd" id="4_7qnge"]
+[ext_resource type="Texture2D" uid="uid://y5mapwqofa5p" path="res://textures/flashlight_light.png" id="4_i63nf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2l4ng"]
 radius = 0.25
@@ -95,6 +97,36 @@ _data = {
 _data = [Vector2(0, 1), 0.0, -4.58824, 0, 0, Vector2(0.549632, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_sexee"]
+top_radius = 0.045
+bottom_radius = 0.045
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ip6lf"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ogg3o"]
+top_radius = 0.07
+bottom_radius = 0.03
+height = 0.1
+
+[sub_resource type="GDScript" id="GDScript_7oyox"]
+script/source = "extends SpotLight3D
+
+func adjust_brightness():
+	if GameManager.get_dream_grid().name == \"Dark Forest\":
+		light_energy = 7.0
+	else:
+		light_energy = 2.0
+"
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_evhs4"]
+top_radius = 0.045
+bottom_radius = 0.045
+height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbwct"]
+albedo_color = Color(1, 0, 0, 1)
+
 [node name="Player" type="RigidBody3D" groups=["player"]]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
@@ -138,6 +170,41 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.385, 0)
 [node name="HeldItem" type="Node3D" parent="HeldItemPivot"]
 transform = Transform3D(0.999639, 0, 0.0268748, 0.00159151, 0.998245, -0.0591979, -0.0268277, 0.0592193, 0.997884, 0.360696, -0.290567, -0.416431)
 
+[node name="Flashlight" type="Node3D" parent="HeldItemPivot/HeldItem"]
+visible = false
+script = ExtResource("4_7qnge")
+item_name = "flashlight"
+
+[node name="Flashlight" type="MeshInstance3D" parent="HeldItemPivot/HeldItem/Flashlight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_sexee")
+surface_material_override/0 = SubResource("StandardMaterial3D_ip6lf")
+
+[node name="Flashlight2" type="MeshInstance3D" parent="HeldItemPivot/HeldItem/Flashlight/Flashlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.151749, 6.63316e-09)
+mesh = SubResource("CylinderMesh_ogg3o")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ip6lf")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="HeldItemPivot/HeldItem/Flashlight/Flashlight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.206933, 9.04534e-09)
+light_energy = 7.0
+light_projector = ExtResource("4_i63nf")
+shadow_enabled = true
+spot_range = 24.0
+spot_angle = 60.0
+script = SubResource("GDScript_7oyox")
+
+[node name="Gun" type="Node3D" parent="HeldItemPivot/HeldItem"]
+visible = false
+script = ExtResource("4_7qnge")
+item_name = "gun"
+
+[node name="GunModel" type="MeshInstance3D" parent="HeldItemPivot/HeldItem/Gun"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_evhs4")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbwct")
+
 [node name="JumpTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
@@ -151,3 +218,9 @@ bus = &"SFX"
 [node name="SoundCooldown" type="Timer" parent="AudioStreamPlayer"]
 wait_time = 0.15
 one_shot = true
+
+[node name="CycleItemTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="on_equipped" from="HeldItemPivot/HeldItem/Flashlight" to="HeldItemPivot/HeldItem/Flashlight/Flashlight/SpotLight3D" method="adjust_brightness"]

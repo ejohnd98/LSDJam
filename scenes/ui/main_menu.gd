@@ -34,7 +34,7 @@ func toggle_pause_menu():
 		await $ModulateFade.on_finished
 		set_paused(false)
 		close_menu()
-		GameManager.set_game_focus(true)
+		GameManager.set_game_focus(not GameManager.inventory_open)
 	else:
 		set_menu(MenuType.PAUSE_MENU)
 		GameManager.set_game_focus(false)

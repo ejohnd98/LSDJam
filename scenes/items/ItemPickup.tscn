@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://h1jho51tfsqo"]
+
+[ext_resource type="Script" path="res://scenes/items/ItemPickup.gd" id="1_badrn"]
+[ext_resource type="Script" path="res://scenes/interactables/click_interaction.gd" id="1_rhlb1"]
+[ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="2_7wtxc"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fv0sd"]
+radius = 0.4
+
+[node name="Pickup" type="Node3D"]
+script = ExtResource("1_badrn")
+
+[node name="Interaction" type="Area3D" parent="." groups=["interactable"]]
+script = ExtResource("1_rhlb1")
+interact_prompt = "Pickup Flashlight"
+interact_sound = ExtResource("2_7wtxc")
+
+[node name="InteractSound" type="AudioStreamPlayer3D" parent="Interaction"]
+
+[node name="CooldownTimer" type="Timer" parent="Interaction"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Collider" type="CollisionShape3D" parent="Interaction" groups=["interactable"]]
+shape = SubResource("SphereShape3D_fv0sd")
+
+[connection signal="on_interact" from="Interaction" to="." method="_on_interaction"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://c4dovvdxb8nlw"]
+[gd_scene load_steps=42 format=3 uid="uid://c4dovvdxb8nlw"]
 
 [ext_resource type="Texture2D" uid="uid://dmbvhkwa5c4i1" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ClearBlueSky_Equirect.png" id="1_dkn17"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_s85f1"]
@@ -69,7 +69,7 @@ albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
 albedo_texture = SubResource("NoiseTexture2D_ohmkj")
 
 [sub_resource type="QuadMesh" id="QuadMesh_nlx11"]
-size = Vector2(10, 2)
+size = Vector2(10, 3)
 subdivide_width = 10
 subdivide_depth = 4
 
@@ -85,9 +85,9 @@ noise = SubResource("FastNoiseLite_iorx3")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ugota"]
 render_priority = 0
 shader = ExtResource("7_1cfl6")
-shader_parameter/distortionView = 0.02
+shader_parameter/distortionView = 0.03
 shader_parameter/speedView = 0.02
-shader_parameter/static_intensity = 0.3
+shader_parameter/static_intensity = 0.0
 shader_parameter/tintColor = Color(1, 1, 1, 1)
 shader_parameter/fesnelAmount = 0.87
 shader_parameter/fresnelTintOffset = -1.0
@@ -96,6 +96,31 @@ shader_parameter/speedVertex = 0.1
 shader_parameter/noiseViewX = SubResource("NoiseTexture2D_1y30t")
 shader_parameter/noiseViewY = SubResource("NoiseTexture2D_1y30t")
 shader_parameter/noiseVertex = SubResource("NoiseTexture2D_1y30t")
+
+[sub_resource type="QuadMesh" id="QuadMesh_l5jsp"]
+size = Vector2(12, 5)
+subdivide_width = 10
+subdivide_depth = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p56fa"]
+render_priority = 0
+shader = ExtResource("7_1cfl6")
+shader_parameter/distortionView = 0.04
+shader_parameter/speedView = 0.04
+shader_parameter/static_intensity = 0.0
+shader_parameter/tintColor = Color(1, 1, 1, 1)
+shader_parameter/fesnelAmount = 0.87
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.01
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_1y30t")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_1y30t")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_1y30t")
+
+[sub_resource type="QuadMesh" id="QuadMesh_j6dwo"]
+size = Vector2(7, 2)
+subdivide_width = 10
+subdivide_depth = 4
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ee70u"]
 size = Vector3(220, 5, 220)
@@ -193,8 +218,29 @@ bus = &"SFX"
 transform = Transform3D(-3.99813, 0, 0.122291, 0, 4, 0, -0.122291, 0, -3.99813, 17.123, 0.280219, 37.1923)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="DistortionPlane2"]
-transform = Transform3D(0.932197, 0.209159, 0.2954, -0.216668, 0.976217, -0.00747235, -0.289937, -0.057038, 0.955344, -1.05969, 0, -0.89174)
+transform = Transform3D(0.868881, 0.397221, 0.2954, -0.413661, 0.9104, -0.00747235, -0.2719, -0.115703, 0.955344, -1.09062, -0.291979, -0.884464)
 mesh = SubResource("QuadMesh_nlx11")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_ugota")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="DistortionPlane2"]
+transform = Transform3D(0.820591, 0.489252, 0.2954, -0.510105, 0.86008, -0.00747235, -0.257723, -0.144553, 0.955343, -3.64269, 1.08766, -10.7)
+mesh = SubResource("QuadMesh_l5jsp")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_p56fa")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="DistortionPlane2"]
+transform = Transform3D(-0.608271, 0.792686, -0.0406739, 0.788713, 0.597882, -0.143063, -0.0890859, -0.119101, -0.988876, -3.38668, -0.736977, 30.6023)
+mesh = SubResource("QuadMesh_l5jsp")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_p56fa")
+
+[node name="DistortionPlane3" type="Node3D" parent="."]
+transform = Transform3D(-1.74846e-07, -1.49104, -3.71171, -7.10543e-15, 3.71171, -1.49104, 4, -6.51756e-08, -1.62244e-07, 51.0163, 6.60694, -11.9848)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DistortionPlane3"]
+transform = Transform3D(1, -3.55271e-15, 0, -1.77636e-15, 1, -2.98023e-08, 3.55271e-15, 6.60897e-16, 1, 0, 0, 0)
+mesh = SubResource("QuadMesh_j6dwo")
 skeleton = NodePath("../../DistortionPlane2")
 surface_material_override/0 = SubResource("ShaderMaterial_ugota")
 
@@ -202,7 +248,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_ugota")
 transform = Transform3D(3.99813, 0, -0.122292, 0, 4, 0, 0.122292, 0, 3.99813, 21.6527, 0.280219, -53.7719)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="DistortionPlane"]
-transform = Transform3D(0.923067, -0.276462, 0.267425, 0.253072, 0.960099, 0.119018, -0.289658, -0.0421842, 0.9562, 0.0049119, 0, -0.924305)
+transform = Transform3D(0.888325, -0.373311, 0.267425, 0.354003, 0.927641, 0.119018, -0.292505, -0.0110579, 0.9562, 0.197865, -0.505165, -0.915398)
 mesh = SubResource("QuadMesh_nlx11")
 surface_material_override/0 = SubResource("ShaderMaterial_ugota")
 

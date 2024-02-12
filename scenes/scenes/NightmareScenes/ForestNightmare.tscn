@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://b0bj0pjbr8s5l"]
+[gd_scene load_steps=41 format=3 uid="uid://b0bj0pjbr8s5l"]
 
 [ext_resource type="Texture2D" uid="uid://bm2iusbsw8k8e" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_MoonBurst_Equirect.png" id="1_etvu2"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_vav22"]
@@ -14,11 +14,12 @@
 [ext_resource type="PackedScene" uid="uid://c2tu4ks6lbr0u" path="res://sourceModels/Forest/FencePillar.glb" id="14_txfq8"]
 [ext_resource type="PackedScene" uid="uid://b2uisjwpcaqs8" path="res://sourceModels/Forest/FencePost.glb" id="15_68doo"]
 [ext_resource type="PackedScene" uid="uid://dwb8n4ceda6ug" path="res://sourceModels/Forest/FenceBars.glb" id="16_lgqt7"]
-[ext_resource type="PackedScene" uid="uid://dc2p4pd1upg3i" path="res://scenes/items/flashlight.tscn" id="17_iqjfg"]
 [ext_resource type="PackedScene" uid="uid://c88knq7ek0x5y" path="res://sourceModels/Forest/ForestBench.glb" id="17_qjkvn"]
 [ext_resource type="PackedScene" uid="uid://oemojq2461ft" path="res://scenes/chasing_enemy_final.tscn" id="18_06tqt"]
+[ext_resource type="PackedScene" uid="uid://h1jho51tfsqo" path="res://scenes/items/ItemPickup.tscn" id="19_aql84"]
 [ext_resource type="PackedScene" uid="uid://1il5btkm7phy" path="res://sourceModels/firTreeDowned.glb" id="19_jmb7t"]
 [ext_resource type="PackedScene" uid="uid://bh34qkxql6bh" path="res://sourceModels/Forest/ForestBench2.glb" id="19_whrx3"]
+[ext_resource type="Texture2D" uid="uid://y5mapwqofa5p" path="res://textures/flashlight_light.png" id="20_q42hj"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mjkut"]
 panorama = ExtResource("1_etvu2")
@@ -140,6 +141,16 @@ shader_parameter/noiseVertex = SubResource("NoiseTexture2D_3dcqk")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2wqtn"]
 size = Vector3(20, 5, 5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_u72sg"]
+top_radius = 0.045
+bottom_radius = 0.045
+height = 0.4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_s4xcg"]
+top_radius = 0.07
+bottom_radius = 0.03
+height = 0.1
 
 [node name="Forest" type="Node3D"]
 
@@ -428,9 +439,6 @@ transform = Transform3D(0.994602, -0.00297752, 0.103724, 0.00376882, 0.999965, -
 transform = Transform3D(7.64737, 0, -2.34899, 0, 8, 0, 2.34899, 0, 7.64737, 25.0532, -0.130844, -62.1122)
 visible = false
 
-[node name="PlayerItem" parent="." instance=ExtResource("17_iqjfg")]
-transform = Transform3D(-0.990509, 0, 0.137444, 0, 1, 0, -0.137444, 0, -0.990509, 16.5627, 2.30228, -43.6237)
-
 [node name="ChasingEnemy" parent="." instance=ExtResource("18_06tqt")]
 transform = Transform3D(0.00736534, 0, 0.999973, 0, 1, 0, -0.999973, 0, 0.00736534, -13.571, -0.0818433, -0.92991)
 chase_speed = 1.4
@@ -493,6 +501,27 @@ transform = Transform3D(-0.614051, 0, 0.789266, 0, 1, 0, -0.789266, 0, -0.614051
 
 [node name="firTreeDowned3" parent="." instance=ExtResource("19_jmb7t")]
 transform = Transform3D(-0.945289, 0, -1.35569, 0, 1.65272, 0, 1.35569, 0, -0.945289, 22.3997, 1.26125, -26.7991)
+
+[node name="Pickup" parent="." instance=ExtResource("19_aql84")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6993, 2.2181, -43.6332)
+item_name = "flashlight"
+
+[node name="Flashlight" type="MeshInstance3D" parent="Pickup"]
+transform = Transform3D(-1, 8.69216e-08, -9.34755e-09, 3.55271e-15, 0.106924, 0.994267, 8.74228e-08, 0.994267, -0.106924, 0.116009, 0.0507073, 0.00532913)
+mesh = SubResource("CylinderMesh_u72sg")
+
+[node name="Flashlight2" type="MeshInstance3D" parent="Pickup/Flashlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.151749, 6.63316e-09)
+mesh = SubResource("CylinderMesh_s4xcg")
+skeleton = NodePath("../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Pickup/Flashlight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.206933, 9.04534e-09)
+light_energy = 7.0
+light_projector = ExtResource("20_q42hj")
+shadow_enabled = true
+spot_range = 24.0
+spot_angle = 60.0
 
 [editable path="SceneTrigger/DistortionBubble2"]
 [editable path="ChasingEnemy"]

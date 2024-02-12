@@ -28,12 +28,12 @@ var override_camera_handling = false
 var current_interactable : Area3D = null
 signal interactable_changed(interactable)
 
-var equipped_item : PlayerItem = null
-
 func _ready():
 	default_footstep_sounds = $AudioStreamPlayer.stream
 	default_footstep_volume = $AudioStreamPlayer.volume_db
 	default_footstep_pitch = $AudioStreamPlayer.pitch_scale
+	
+	init_items()
 
 func get_forward_vector():
 	return -$CameraPivot.global_transform.basis.z
@@ -62,12 +62,19 @@ func _unhandled_input(event):
 		
 	if event.is_action_pressed("Interact"):
 		try_interact()
+	
+	if $CycleItemTimer.is_stopped():
+		if event.is_action_pressed("CycleItemRight"):
+			cycle_items(1)
+		if event.is_action_pressed("CycleItemLeft"):
+			cycle_items(-1)
 		
 	if event is InputEventMouseMotion and not override_camera_handling:
 		var camera_control_mod = control_modifier * control_modifier
 		$CameraPivot.rotate_y(-event.relative.x * SENSITIVITY * camera_control_mod *(0.2 + PlayerSettings.mouse_sensitivity * 2.0))
 		$CameraPivot/CameraParent.rotate_x(-event.relative.y * SENSITIVITY * camera_control_mod * (0.2 + PlayerSettings.mouse_sensitivity * 2.0))
 		$CameraPivot/CameraParent.rotation.x = clamp($CameraPivot/CameraParent.rotation.x, deg_to_rad(-80), deg_to_rad(80))
+		
 
 var held_item_offset
 
@@ -165,25 +172,41 @@ func on_footstep():
 		$AudioStreamPlayer.play()
 		$AudioStreamPlayer/SoundCooldown.start()
 
-func equip_item(item_to_equip : PlayerItem):
-	if equipped_item != null:
-		#for now, delete item
-		equipped_item.on_unequip.emit()
-		equipped_item.queue_free()
-	
-	item_to_equip.reparent($HeldItemPivot/HeldItem)
-	item_to_equip.position = Vector3.ZERO
-	item_to_equip.rotation = Vector3.ZERO
-	item_to_equip.on_equip.emit()
-	equipped_item = item_to_equip
+var current_item_node : EquippedItem = null
+var equipped_item_index = 0
+var item_name_dict = {}
 
-func unequip_item():
-	if equipped_item == null:
+func init_items():
+	for item : EquippedItem in $HeldItemPivot/HeldItem.get_children():
+		print(item.item_name)
+		item_name_dict[item.item_name] = item
+
+func add_found_item(item_name : String, also_equip : bool = true):
+	if PlayerSettings.found_items.has(item_name):
+		return
+	PlayerSettings.found_items.append(item_name)
+	if also_equip:
+		set_current_item(item_name)
+
+func set_current_item(item_name : String):
+	if current_item_node != null:
+		current_item_node.unequip_item()
+		current_item_node.hide()
+	
+	if item_name.is_empty():
 		return
 	
-	equipped_item.on_unequip.emit()
-	equipped_item.queue_free()
-	equipped_item = null
+	current_item_node = item_name_dict[item_name]
+	current_item_node.equip_item()
+	current_item_node.show()
+	
+	equipped_item_index = PlayerSettings.found_items.find(item_name)
+	print("Current item index: " + str(equipped_item_index) + " / " + str(PlayerSettings.found_items.size()))
+
+func cycle_items(direction = 1):
+	$CycleItemTimer.start()
+	equipped_item_index = wrapi(equipped_item_index + direction, 0, PlayerSettings.found_items.size())
+	set_current_item(PlayerSettings.found_items[equipped_item_index])
 
 func set_frozen (frozen):
 	#$CollisionShape3D.disabled = frozen

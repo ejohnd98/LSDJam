@@ -41,6 +41,8 @@ var in_transition_dream = false
 
 var is_loading_dream = false
 
+var inventory_open = false
+
 static func get_game(tree_node : SceneTree) -> game_manager:
 	return tree_node.get_root().get_node("SubViewportContainer/SubViewport/Game")
 
@@ -280,8 +282,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		canvas_layer.get_node("NightmareBar").show()
 	
 	if changing_dreams:
-		if player.equipped_item != null and not player.equipped_item.keep_between_dreams:
-			player.unequip_item()
+		pass
 	
 	#fixes issue where player wasn't snapping to ground
 	await get_tree().create_timer(0.25).timeout
@@ -319,12 +320,7 @@ func hide_interact_text():
 
 func does_key_exist(key : String) -> bool:
 	var current_cell : DreamCell = dream_grid.get_current_cell()
-	return current_cell.dream_keys.has(key) or dream_grid.dream_keys.has(key)
-
-func is_item_equipped(key : String) -> bool:
-	if player.equipped_item != null:
-		return key == player.equipped_item.item_key
-	return false
+	return current_cell.dream_keys.has(key) or dream_grid.dream_keys.has(key) or PlayerSettings.misc_items.has(key)
 
 func is_direction_allowed(direction : Vector2i) -> bool:
 	var current_cell : DreamCell = get_current_cell()

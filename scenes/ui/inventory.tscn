@@ -1,0 +1,101 @@
+[gd_scene load_steps=10 format=3 uid="uid://c7y23appditp6"]
+
+[ext_resource type="Script" path="res://scenes/ui/inventory.gd" id="1_onii4"]
+[ext_resource type="FontFile" uid="uid://vd80c5wwb0pb" path="res://textures/fonts/atwriter.ttf" id="4_4j222"]
+[ext_resource type="PackedScene" uid="uid://cc06vydyxrumr" path="res://scenes/ui/modulate_fade.tscn" id="5_w5ik6"]
+
+[sub_resource type="Theme" id="Theme_8t71l"]
+default_font = ExtResource("4_4j222")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xhrvv"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hslef"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.866667, 0.866667, 0.866667, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtwfb"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 0.776471)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uy0rs"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.227451, 0.227451, 0.227451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgcuk"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[node name="Inventory" type="Control"]
+process_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_onii4")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseTint" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -27.0
+offset_right = -48.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.1, 1.1)
+color = Color(0, 0, 0, 0.666667)
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 44.0
+offset_top = 117.0
+offset_right = 309.0
+offset_bottom = 423.0
+alignment = 1
+
+[node name="Resume" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtwfb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mgcuk")
+action_mode = 0
+text = "Resume"
+alignment = 0
+
+[node name="ModulateFade" parent="Buttons" instance=ExtResource("5_w5ik6")]
+length = 0.25
+
+[node name="ModulateFade" parent="." instance=ExtResource("5_w5ik6")]
+
+[connection signal="pressed" from="Buttons/Resume" to="." method="_on_resume_pressed"]
