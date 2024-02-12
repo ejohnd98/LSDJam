@@ -747,6 +747,7 @@ required_position = Vector2i(1, 0)
 [node name="KeyObject" parent="DreamCondition3" instance=ExtResource("14_ikp63")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
 key = "boatKey"
+pickup_prompt = "pick up boat key"
 
 [node name="DreamConditionBar" parent="." instance=ExtResource("13_j0f0l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5839, 1.84111, -5.44963)

@@ -505,6 +505,7 @@ transform = Transform3D(-0.945289, 0, -1.35569, 0, 1.65272, 0, 1.35569, 0, -0.94
 [node name="Pickup" parent="." instance=ExtResource("19_aql84")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6993, 2.2181, -43.6332)
 item_name = "flashlight"
+pickup_prompt = "pick up flashlight"
 
 [node name="Flashlight" type="MeshInstance3D" parent="Pickup"]
 transform = Transform3D(-1, 8.69216e-08, -9.34755e-09, 3.55271e-15, 0.106924, 0.994267, 8.74228e-08, 0.994267, -0.106924, 0.116009, 0.0507073, 0.00532913)

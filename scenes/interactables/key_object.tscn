@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cm5srrepm42b4"]
+[gd_scene load_steps=21 format=3 uid="uid://cm5srrepm42b4"]
 
 [ext_resource type="Script" path="res://scenes/interactables/key_object.gd" id="1_0wsko"]
 [ext_resource type="PackedScene" uid="uid://bb5ipk8pk4lm5" path="res://scenes/fx/particle_effect_base.tscn" id="2_vc68w"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://scenes/interactables/HoverItem.gd" id="3_5op32"]
 [ext_resource type="Texture2D" uid="uid://brtakal18hrgo" path="res://addons/kenney_particle_pack/star_08.png" id="5_vqve5"]
 [ext_resource type="AudioStream" uid="uid://cnymb70nfb7a8" path="res://sounds/generic/key_pickup.ogg" id="6_ac2xo"]
+[ext_resource type="Script" path="res://scenes/interactables/click_interaction.gd" id="7_4f8ny"]
+[ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="8_6e851"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gkhko"]
 size = Vector3(0.25, 0.25, 0.25)
@@ -59,6 +61,9 @@ alpha_curve = SubResource("CurveTexture_k71lw")
 [sub_resource type="QuadMesh" id="QuadMesh_82ow3"]
 size = Vector2(0.1, 0.1)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_j60as"]
+radius = 0.4
+
 [node name="KeyObject" type="Area3D" groups=["interactable"]]
 script = ExtResource("1_0wsko")
 one_shot = true
@@ -75,10 +80,12 @@ shape = SubResource("BoxShape3D_cvwl0")
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+visible = false
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_uoxg1")
+disabled = true
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
@@ -102,5 +109,21 @@ draw_pass_1 = SubResource("QuadMesh_82ow3")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_ac2xo")
 
+[node name="Interaction" type="Area3D" parent="." groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.214063, 0)
+script = ExtResource("7_4f8ny")
+interact_prompt = "Pickup"
+interact_sound = ExtResource("8_6e851")
+
+[node name="InteractSound" type="AudioStreamPlayer3D" parent="Interaction"]
+
+[node name="CooldownTimer" type="Timer" parent="Interaction"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Collider" type="CollisionShape3D" parent="Interaction" groups=["interactable"]]
+shape = SubResource("SphereShape3D_j60as")
+
 [connection signal="on_interact" from="." to="." method="_on_interact"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="on_interact" from="Interaction" to="." method="pick_up"]

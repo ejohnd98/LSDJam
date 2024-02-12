@@ -850,6 +850,7 @@ required_position = Vector2i(0, 2)
 [node name="KeyObject" parent="Coin" instance=ExtResource("8_m5tpd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
 key = "cinemaCoin"
+pickup_prompt = "pick up arcade token"
 
 [node name="Sprite3D" parent="Coin/KeyObject" index="3"]
 texture = ExtResource("16_b2je1")
@@ -863,6 +864,7 @@ required_position = Vector2i(2, 2)
 [node name="KeyObject" parent="FilmItem" instance=ExtResource("8_m5tpd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
 key = "cinemaFilm"
+pickup_prompt = "pick up film reel"
 
 [node name="Sprite3D" parent="FilmItem/KeyObject" index="3"]
 pixel_size = 0.004
