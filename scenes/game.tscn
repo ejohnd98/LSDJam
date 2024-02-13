@@ -358,35 +358,6 @@ offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="DebugDreamText" type="Control" parent="SubViewport/CanvasLayer"]
-layout_mode = 3
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_bottom = 30.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Label" type="Label" parent="SubViewport/CanvasLayer/DebugDreamText"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -68.5
-offset_right = 68.5
-offset_bottom = 200.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("8_g7nr7")
-text = "Dreams Completed:
-sdfsdf
-sdf
-sdf
-sdf
-sdf
-sdf"
-label_settings = SubResource("LabelSettings_56chh")
-horizontal_alignment = 1
-
 [node name="NightmareBar" type="Control" parent="SubViewport/CanvasLayer"]
 process_mode = 1
 layout_mode = 3

@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7y23appditp6"]
+[gd_scene load_steps=12 format=3 uid="uid://c7y23appditp6"]
 
 [ext_resource type="Script" path="res://scenes/ui/inventory.gd" id="1_onii4"]
 [ext_resource type="FontFile" uid="uid://vd80c5wwb0pb" path="res://textures/fonts/atwriter.ttf" id="4_4j222"]
+[ext_resource type="Texture2D" uid="uid://qfngo2ok3a86" path="res://textures/UI/corny_9slice.png" id="4_87vmu"]
 [ext_resource type="PackedScene" uid="uid://cc06vydyxrumr" path="res://scenes/ui/modulate_fade.tscn" id="5_w5ik6"]
 
 [sub_resource type="Theme" id="Theme_8t71l"]
@@ -39,6 +40,12 @@ content_margin_left = 10.0
 content_margin_top = 10.0
 content_margin_right = 10.0
 content_margin_bottom = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_mu3vu"]
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.647059)
 
 [node name="Inventory" type="Control"]
 process_mode = 1
@@ -97,5 +104,205 @@ alignment = 0
 length = 0.25
 
 [node name="ModulateFade" parent="." instance=ExtResource("5_w5ik6")]
+
+[node name="DebugDreamText" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 379.0
+offset_top = -178.0
+offset_right = 379.0
+offset_bottom = -178.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="DebugDreamText"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -86.0
+offset_top = -88.0
+offset_right = 86.0
+offset_bottom = 197.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_4j222")
+text = "Dreams:
+
+Items:"
+label_settings = SubResource("LabelSettings_mu3vu")
+horizontal_alignment = 1
+
+[node name="Items" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.0
+offset_top = -50.0
+offset_right = 206.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 8
+
+[node name="ColorRect" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect2" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect3" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect4" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect5" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect6" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect7" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect8" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect9" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect10" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect11" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect12" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect13" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect15" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect16" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect14" type="TextureRect" parent="Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="Description" type="Label" parent="."]
+custom_minimum_size = Vector2(400, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -152.0
+offset_right = 200.0
+offset_bottom = -52.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_4j222")
+text = "Item Description"
+label_settings = SubResource("LabelSettings_mu3vu")
+horizontal_alignment = 1
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 126.0
+offset_bottom = 126.0
+grow_horizontal = 2
+
+[node name="Dreams" type="GridContainer" parent="Control2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -202.0
+offset_top = -32.0
+offset_right = 202.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 8
+
+[node name="ColorRect" type="TextureRect" parent="Control2/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect2" type="TextureRect" parent="Control2/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect3" type="TextureRect" parent="Control2/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect4" type="TextureRect" parent="Control2/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect5" type="TextureRect" parent="Control2/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
+
+[node name="ColorRect6" type="TextureRect" parent="Control2/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_87vmu")
 
 [connection signal="pressed" from="Buttons/Resume" to="." method="_on_resume_pressed"]

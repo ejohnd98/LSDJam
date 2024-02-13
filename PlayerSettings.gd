@@ -21,12 +21,12 @@ func set_overall_volume(new_volume : float):
 func add_item(item_name : String):
 	misc_items.append(item_name)
 	PlayerSettings.save_settings()
-	GameManager.canvas_layer.get_node("DebugDreamText/Label").text = "Dreams:\n" + "\n".join(completed_dreams) + "\nItems:\n" + "\n".join(misc_items)
+	GameManager.canvas_layer.get_node("Inventory/DebugDreamText/Label").text = "Dreams:\n" + "\n".join(completed_dreams) + "\nItems:\n" + "\n".join(misc_items)
 
 func add_completed_dream(dream_name : String):
 	completed_dreams.append(dream_name)
 	PlayerSettings.save_settings()
-	GameManager.canvas_layer.get_node("DebugDreamText/Label").text = "Dreams:\n" + "\n".join(completed_dreams) + "\nItems:\n" + "\n".join(misc_items)
+	GameManager.canvas_layer.get_node("Inventory/DebugDreamText/Label").text = "Dreams:\n" + "\n".join(completed_dreams) + "\nItems:\n" + "\n".join(misc_items)
 
 func has_completed_dream(dream_name : String) -> bool:
 	return completed_dreams.has(dream_name)
@@ -77,4 +77,4 @@ func load_settings():
 			
 	
 	#debug:
-	GameManager.canvas_layer.get_node("DebugDreamText/Label").text = "Dreams:\n" + "\n".join(completed_dreams) + "\nItems:\n" + "\n".join(misc_items)
+	GameManager.canvas_layer.get_node("Inventory/DebugDreamText/Label").text = "Dreams:\n" + "\n".join(completed_dreams) + "\nItems:\n" + "\n".join(misc_items)
