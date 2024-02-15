@@ -1,9 +1,22 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7y23appditp6"]
+[gd_scene load_steps=26 format=3 uid="uid://c7y23appditp6"]
 
 [ext_resource type="Script" path="res://scenes/ui/inventory.gd" id="1_onii4"]
 [ext_resource type="FontFile" uid="uid://vd80c5wwb0pb" path="res://textures/fonts/atwriter.ttf" id="4_4j222"]
-[ext_resource type="Texture2D" uid="uid://qfngo2ok3a86" path="res://textures/UI/corny_9slice.png" id="4_87vmu"]
+[ext_resource type="Texture2D" uid="uid://bae3fg2aofrss" path="res://textures/UI/minimal_border.png" id="4_vofxu"]
+[ext_resource type="Script" path="res://scenes/ui/InventoryIcon.gd" id="5_67m40"]
 [ext_resource type="PackedScene" uid="uid://cc06vydyxrumr" path="res://scenes/ui/modulate_fade.tscn" id="5_w5ik6"]
+[ext_resource type="Script" path="res://scenes/ui/DreamIcon.gd" id="5_yn0jp"]
+[ext_resource type="Texture2D" uid="uid://bnmk78pbdym2r" path="res://textures/dream_snapshots/forest.png" id="6_7r24p"]
+[ext_resource type="Texture2D" uid="uid://f87f26clk8od" path="res://textures/billboard_items/bar_ingredients.png" id="6_uydri"]
+[ext_resource type="Texture2D" uid="uid://c5008qlggtspk" path="res://textures/billboard_items/flashlight.png" id="7_08eni"]
+[ext_resource type="Texture2D" uid="uid://bp3k2de4imavy" path="res://textures/dream_snapshots/beach.png" id="7_68v6c"]
+[ext_resource type="Texture2D" uid="uid://dexydjuth0vuo" path="res://textures/dream_snapshots/golf.png" id="8_cq3dy"]
+[ext_resource type="Texture2D" uid="uid://ckx511bqitpf8" path="res://textures/billboard_items/film_reel.png" id="8_u7skq"]
+[ext_resource type="Texture2D" uid="uid://c122l2im41lmw" path="res://textures/dream_snapshots/museum.png" id="9_5vjyb"]
+[ext_resource type="Texture2D" uid="uid://c8n7icvk1jlhc" path="res://textures/billboard_items/game_coin.png" id="9_t6rhb"]
+[ext_resource type="Texture2D" uid="uid://dtry0pd3cnsa0" path="res://textures/billboard_items/generic_key.png" id="10_hh6w0"]
+[ext_resource type="Texture2D" uid="uid://di7xfmq7ot6gm" path="res://textures/dream_snapshots/cinema.png" id="10_snmyk"]
+[ext_resource type="Texture2D" uid="uid://bfdeo6go0trwe" path="res://textures/dream_snapshots/galaxy.png" id="11_gn86a"]
 
 [sub_resource type="Theme" id="Theme_8t71l"]
 default_font = ExtResource("4_4j222")
@@ -47,6 +60,13 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 10
 shadow_color = Color(0, 0, 0, 0.647059)
 
+[sub_resource type="LabelSettings" id="LabelSettings_ofx5l"]
+font_size = 24
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.647059)
+
 [node name="Inventory" type="Control"]
 process_mode = 1
 layout_mode = 3
@@ -57,7 +77,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_onii4")
 
-[node name="Control" type="Control" parent="."]
+[node name="ModulateFade" parent="." instance=ExtResource("5_w5ik6")]
+
+[node name="BG" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,7 +87,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PauseTint" type="ColorRect" parent="Control"]
+[node name="PauseTint" type="ColorRect" parent="BG"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -80,6 +102,7 @@ scale = Vector2(1.1, 1.1)
 color = Color(0, 0, 0, 0.666667)
 
 [node name="Buttons" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 offset_left = 44.0
 offset_top = 117.0
@@ -103,7 +126,401 @@ alignment = 0
 [node name="ModulateFade" parent="Buttons" instance=ExtResource("5_w5ik6")]
 length = 0.25
 
-[node name="ModulateFade" parent="." instance=ExtResource("5_w5ik6")]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Control2" type="Control" parent="VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Dreams" type="GridContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.5
+columns = 9
+
+[node name="DreamIcon" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_yn0jp")
+required_key = "Forest"
+dream_name = "Forest"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams/DreamIcon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_7r24p")
+expand_mode = 4
+
+[node name="DreamIcon2" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_yn0jp")
+required_key = "Beach"
+dream_name = "Beach"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams/DreamIcon2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_68v6c")
+expand_mode = 4
+
+[node name="DreamIcon3" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_yn0jp")
+required_key = "Golf Course"
+dream_name = "Golf Course"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams/DreamIcon3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_cq3dy")
+expand_mode = 4
+
+[node name="DreamIcon4" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_yn0jp")
+required_key = "Museum"
+dream_name = "Museum"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams/DreamIcon4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_5vjyb")
+expand_mode = 4
+
+[node name="DreamIcon5" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_yn0jp")
+required_key = "Cinema"
+dream_name = "Cinema"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams/DreamIcon5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_snmyk")
+expand_mode = 4
+
+[node name="DreamIcon6" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_yn0jp")
+required_key = "Galaxy Ship"
+dream_name = "Galaxy Ship"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams/DreamIcon6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_gn86a")
+expand_mode = 4
+
+[node name="Nothing" type="Label" parent="VBoxContainer/VBoxContainer/Dreams"]
+visible = false
+modulate = Color(1, 1, 1, 0.458824)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("4_4j222")
+text = "No Completed Dreams"
+label_settings = SubResource("LabelSettings_mu3vu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Items" type="GridContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 9
+
+[node name="ItemIcon" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_67m40")
+required_key = "tikiIngredients"
+item_name = "Bar Ingredients"
+description = "An assortment of ingredients to be used when mixing exotic drinks"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_uydri")
+expand_mode = 4
+
+[node name="ItemIcon2" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_67m40")
+required_key = "flashlight"
+item_name = "Flashlight"
+description = "A tool against the darkness."
+equippable = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_08eni")
+expand_mode = 4
+
+[node name="ItemIcon3" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_67m40")
+required_key = "cinemaFilm"
+item_name = "Film Reel"
+description = "Aliens."
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_u7skq")
+expand_mode = 4
+
+[node name="ItemIcon4" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_67m40")
+required_key = "cinemaCoin"
+item_name = "Arcade Token"
+description = "Allows you to play the video games."
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_t6rhb")
+expand_mode = 4
+
+[node name="ItemIcon5" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_67m40")
+required_key = "boatKey"
+item_name = "Boat Key"
+description = "Used to operate a boat."
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_hh6w0")
+expand_mode = 4
+
+[node name="ItemIcon6" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_67m40")
+required_key = "forestKey"
+item_name = "Forest Key"
+description = "Unlocks the forest path."
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_hh6w0")
+expand_mode = 4
+
+[node name="Nothing" type="Label" parent="VBoxContainer/VBoxContainer/Items"]
+visible = false
+modulate = Color(1, 1, 1, 0.458824)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("4_4j222")
+text = "No Items"
+label_settings = SubResource("LabelSettings_mu3vu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control3" type="Control" parent="VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="DescriptionFrame" type="NinePatchRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(48, 200)
+layout_mode = 2
+size_flags_vertical = 6
+texture = ExtResource("4_vofxu")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/DescriptionFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/DescriptionFrame/MarginContainer"]
+layout_mode = 2
+
+[node name="Item Name" type="Label" parent="VBoxContainer/DescriptionFrame/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_4j222")
+text = "Item Name"
+label_settings = SubResource("LabelSettings_ofx5l")
+horizontal_alignment = 1
+
+[node name="Attributes" type="Label" parent="VBoxContainer/DescriptionFrame/MarginContainer/VBoxContainer"]
+modulate = Color(0.623529, 0.584314, 0.960784, 1)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("4_4j222")
+text = "Equippable"
+label_settings = SubResource("LabelSettings_mu3vu")
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="VBoxContainer/DescriptionFrame/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("4_4j222")
+text = "Item Description: This is an item used somewhere in the game to achieve something for some purpose or anothe"
+label_settings = SubResource("LabelSettings_mu3vu")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 126.0
+offset_bottom = 126.0
+grow_horizontal = 2
 
 [node name="DebugDreamText" type="Control" parent="."]
 layout_mode = 1
@@ -136,173 +553,5 @@ text = "Dreams:
 Items:"
 label_settings = SubResource("LabelSettings_mu3vu")
 horizontal_alignment = 1
-
-[node name="Items" type="GridContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -206.0
-offset_top = -50.0
-offset_right = 206.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-columns = 8
-
-[node name="ColorRect" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect2" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect3" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect4" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect5" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect6" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect7" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect8" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect9" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect10" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect11" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect12" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect13" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect15" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect16" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect14" type="TextureRect" parent="Items"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="Description" type="Label" parent="."]
-custom_minimum_size = Vector2(400, 100)
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -152.0
-offset_right = 200.0
-offset_bottom = -52.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("4_4j222")
-text = "Item Description"
-label_settings = SubResource("LabelSettings_mu3vu")
-horizontal_alignment = 1
-
-[node name="Control2" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_top = 126.0
-offset_bottom = 126.0
-grow_horizontal = 2
-
-[node name="Dreams" type="GridContainer" parent="Control2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -202.0
-offset_top = -32.0
-offset_right = 202.0
-offset_bottom = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-columns = 8
-
-[node name="ColorRect" type="TextureRect" parent="Control2/Dreams"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect2" type="TextureRect" parent="Control2/Dreams"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect3" type="TextureRect" parent="Control2/Dreams"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect4" type="TextureRect" parent="Control2/Dreams"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect5" type="TextureRect" parent="Control2/Dreams"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
-
-[node name="ColorRect6" type="TextureRect" parent="Control2/Dreams"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("4_87vmu")
 
 [connection signal="pressed" from="Buttons/Resume" to="." method="_on_resume_pressed"]

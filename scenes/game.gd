@@ -237,6 +237,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	await get_tree().create_timer(0.1).timeout
 	current_scene_node = new_scene
 	
+	current_cell = dream_grid.get_current_cell()
+	
 	# get player spawn position
 	var new_spawn : Node3D
 	if current_cell != null: 
@@ -320,7 +322,7 @@ func hide_interact_text():
 
 func does_key_exist(key : String) -> bool:
 	var current_cell : DreamCell = dream_grid.get_current_cell()
-	return current_cell.dream_keys.has(key) or dream_grid.dream_keys.has(key) or PlayerSettings.misc_items.has(key)
+	return current_cell.dream_keys.has(key) or dream_grid.dream_keys.has(key) or PlayerSettings.misc_items.has(key) or PlayerSettings.found_items.has(key)
 
 func is_direction_allowed(direction : Vector2i) -> bool:
 	var current_cell : DreamCell = get_current_cell()
