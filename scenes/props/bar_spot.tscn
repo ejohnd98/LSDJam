@@ -20,7 +20,7 @@ interact_sound = ExtResource("3_mucrg")
 [node name="Collider" type="CollisionShape3D" parent="Interaction" groups=["interactable"]]
 shape = SubResource("BoxShape3D_ah4cb")
 
-[node name="AlternateCamera" type="Camera3D" parent="Interaction"]
+[node name="AlternateCamera" type="Node3D" parent="Interaction"]
 transform = Transform3D(1, 0, 0, 0, 0.931634, 0.363398, 0, -0.363398, 0.931634, 0, 1.95507, 3.8861)
 script = ExtResource("4_obhnl")
 

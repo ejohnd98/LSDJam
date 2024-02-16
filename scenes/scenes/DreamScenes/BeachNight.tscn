@@ -26,13 +26,13 @@
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xgm4g"]
 panorama = ExtResource("1_f6mkx")
 
-[sub_resource type="Sky" id="Sky_7q0fc"]
+[sub_resource type="Sky" id="Sky_qvvq8"]
 sky_material = SubResource("PanoramaSkyMaterial_xgm4g")
 
 [sub_resource type="Environment" id="Environment_20yqv"]
 background_mode = 2
 background_energy_multiplier = 1.1
-sky = SubResource("Sky_7q0fc")
+sky = SubResource("Sky_qvvq8")
 reflected_light_source = 2
 tonemap_white = 0.25
 sdfgi_enabled = true
@@ -178,16 +178,16 @@ shadow_enabled = true
 environment = SubResource("Environment_20yqv")
 
 [node name="PlayerSpawnUp" type="Node3D" parent="."]
-transform = Transform3D(0.999837, 0, 0.0180807, 0, 1, 0, -0.0180807, 0, 0.999837, 19.3114, 1.41266, -35.8186)
+transform = Transform3D(0.999837, 0, 0.0180807, 0, 1, 0, -0.0180807, 0, 0.999837, 19.3621, 1.41266, -35.8031)
 
 [node name="PlayerSpawnDown" type="Node3D" parent="."]
-transform = Transform3D(-0.99278, 0, 0.119946, 0, 1, 0, -0.119946, 0, -0.99278, 20.2648, 0.46253, 27.0571)
+transform = Transform3D(-0.99278, 0, 0.119946, 0, 1, 0, -0.119946, 0, -0.99278, 20.3155, 0.462534, 27.0726)
 
 [node name="PlayerSpawnRight" type="Node3D" parent="."]
-transform = Transform3D(-0.0463045, 0, 0.998927, 0, 1, 0, -0.998927, 0, -0.0463045, -4.68594, 0.760589, -15.0586)
+transform = Transform3D(-0.0463045, 0, 0.998927, 0, 1, 0, -0.998927, 0, -0.0463045, -4.63522, 0.760593, -15.0431)
 
 [node name="PlayerSpawnLeft" type="Node3D" parent="."]
-transform = Transform3D(0.024554, 0, 0.999699, 0, 1, 0, -0.999699, 0, 0.024554, -7.23877, 0.824788, -15.1598)
+transform = Transform3D(0.024554, 0, 0.999699, 0, 1, 0, -0.999699, 0, 0.024554, -7.18805, 0.824792, -15.1443)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 15.7301, 1.617, -11.7602)
@@ -809,8 +809,10 @@ light_color = Color(0.941176, 0.8, 0.686275, 1)
 light_energy = 0.254
 omni_range = 4.0
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="DreamConditionBar2"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="DreamConditionBar2/BeachBarNightOn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7887, 1.61392, 0.0975342)
 stream = ExtResource("12_siyoy")
+volume_db = -5.0
 autoplay = true
 
 [node name="BarSpot" parent="DreamConditionBar2" instance=ExtResource("22_b8ool")]

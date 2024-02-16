@@ -1,4 +1,4 @@
-extends Camera3D
+extends Node3D
 
 func set_active():
 	GameManager.hide_interact_text()

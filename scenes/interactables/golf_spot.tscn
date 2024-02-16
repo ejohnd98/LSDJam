@@ -134,7 +134,7 @@ alpha_cut = 2
 texture_filter = 4
 texture = ExtResource("6_rbxqe")
 
-[node name="AlternateCamera" type="Camera3D" parent="GolfInteraction"]
+[node name="AlternateCamera" type="Node3D" parent="GolfInteraction"]
 transform = Transform3D(-1, 2.65549e-09, 8.93676e-08, 0, 0.999559, -0.0297012, -8.9407e-08, -0.0297012, -0.999559, 0.999797, 1.27743, -2.3821)
 script = ExtResource("7_rcjga")
 
