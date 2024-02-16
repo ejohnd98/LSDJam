@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bevrc41yhbsif"]
+[gd_scene load_steps=12 format=3 uid="uid://bevrc41yhbsif"]
 
 [ext_resource type="PackedScene" uid="uid://crv0wrsfw0c6q" path="res://sourceModels/cinema/ArcadeMachine.glb" id="1_jgpf3"]
 [ext_resource type="PackedScene" uid="uid://dsik30if3a23x" path="res://scenes/interactables/interactable_object.tscn" id="2_iwv61"]
@@ -6,6 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="3_3gb5g"]
 [ext_resource type="Texture2D" uid="uid://1ttxt51644ij" path="res://sourceModels/cinema/arcade_machine.png" id="3_7b2ks"]
 [ext_resource type="Texture2D" uid="uid://sofemtl4kux6" path="res://sourceModels/cinema/arcade_machine_light.png" id="4_alwf6"]
+[ext_resource type="PackedScene" uid="uid://cikt2vicc06wx" path="res://scenes/interactables/prompt_without_interaction.tscn" id="7_dyg1p"]
+[ext_resource type="AudioStream" uid="uid://cpe6eouhlbt0y" path="res://sounds/generic/cant_interact.ogg" id="8_1orf3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j002e"]
 albedo_texture = ExtResource("3_7b2ks")
@@ -13,8 +15,11 @@ emission_enabled = true
 emission_energy_multiplier = 1.2
 emission_texture = ExtResource("4_alwf6")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fsmk6"]
-size = Vector3(0.75, 0.8, 0.6)
+[sub_resource type="BoxShape3D" id="BoxShape3D_g0owc"]
+size = Vector3(0.75, 1, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mjwfq"]
+size = Vector3(0.7, 1, 0.3)
 
 [node name="ArcadeMachine" instance=ExtResource("1_jgpf3")]
 script = ExtResource("2_o3ur4")
@@ -28,7 +33,16 @@ show_distorted_text = true
 interact_sound = ExtResource("3_3gb5g")
 
 [node name="Collider" type="CollisionShape3D" parent="InteractionObject" index="2" groups=["interactable"]]
-transform = Transform3D(1, 0, 0, 0, 0.95032, 0.311274, 0, -0.311274, 0.95032, 0, 1.35933, 0.214594)
-shape = SubResource("BoxShape3D_fsmk6")
+transform = Transform3D(1, 0, 0, 0, 0.976258, 0.21661, 0, -0.21661, 0.976258, 0, 1.21961, 0.336721)
+shape = SubResource("BoxShape3D_g0owc")
+
+[node name="InvalidInteraction" parent="." index="2" instance=ExtResource("7_dyg1p")]
+transform = Transform3D(1, 1.86265e-09, -2.5332e-07, 9.31323e-10, 1, -3.11993e-08, 2.98023e-08, 3.25963e-09, 1, -0.0178142, 1.35353, 0.01)
+interact_prompt = "the machine requires a token to play"
+interact_sound = ExtResource("8_1orf3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvalidInteraction" index="2"]
+transform = Transform3D(1, -1.61715e-08, -6.35879e-10, 1.61791e-08, 0.997959, 0.0638531, -3.98002e-10, -0.0638531, 0.997959, 0.00443614, -0.136273, 0.481122)
+shape = SubResource("BoxShape3D_mjwfq")
 
 [connection signal="on_interact" from="InteractionObject" to="." method="_on_interaction_object_on_interact"]

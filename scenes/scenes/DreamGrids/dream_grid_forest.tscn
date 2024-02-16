@@ -75,7 +75,7 @@ allow_left = true
 
 [node name="DreamCell11" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2
-scene_name = "DreamScenes/Forest"
+scene_name = "DreamScenes/ForestEnd"
 is_start = true
 has_multiple_spawns = true
 allow_up = true

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cikt2vicc06wx"]
+
+[ext_resource type="Script" path="res://scenes/interactables/click_interaction.gd" id="1_1jm5l"]
+[ext_resource type="AudioStream" uid="uid://cpe6eouhlbt0y" path="res://sounds/generic/cant_interact.ogg" id="2_dk2mt"]
+
+[node name="InvalidInteraction" type="Area3D" groups=["interactable"]]
+script = ExtResource("1_1jm5l")
+interact_prompt = "[missing item]"
+
+[node name="InteractSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_dk2mt")
+volume_db = -5.0
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true

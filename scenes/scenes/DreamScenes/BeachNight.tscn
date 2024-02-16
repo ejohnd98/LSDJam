@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://d2ihn5j58j4dg"]
+[gd_scene load_steps=48 format=3 uid="uid://d2ihn5j58j4dg"]
 
 [ext_resource type="Texture2D" uid="uid://02s6p0rkwn3j" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ColdNight_Equirect.png" id="1_f6mkx"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_rev4g"]
@@ -19,6 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://cd0tkg33ip8a0" path="res://sourceModels/beach/hatched.png" id="17_ebfhn"]
 [ext_resource type="Texture2D" uid="uid://cb3oi5pwvxmvh" path="res://sourceModels/beach/barTexture.png" id="17_j503f"]
 [ext_resource type="Texture2D" uid="uid://da7dcgqvbsjtr" path="res://sourceModels/beach/barTextureEmissive.png" id="18_a7yac"]
+[ext_resource type="PackedScene" uid="uid://cikt2vicc06wx" path="res://scenes/interactables/prompt_without_interaction.tscn" id="18_jdi70"]
+[ext_resource type="AudioStream" uid="uid://cpe6eouhlbt0y" path="res://sounds/generic/cant_interact.ogg" id="19_qeuyq"]
 [ext_resource type="Texture2D" uid="uid://bo0nqyacm4qtc" path="res://sourceModels/beach/barTextureNormal.png" id="20_4j6yw"]
 [ext_resource type="Texture2D" uid="uid://ctr6rgfvgeqk1" path="res://sourceModels/beach/Beach_shrubs.png" id="21_1wytl"]
 [ext_resource type="PackedScene" uid="uid://c2faw0c6i42xo" path="res://scenes/props/bar_spot.tscn" id="22_b8ool"]
@@ -96,6 +98,9 @@ emission_texture = ExtResource("18_a7yac")
 normal_scale = 1.25
 normal_texture = ExtResource("20_4j6yw")
 texture_filter = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c34xt"]
+size = Vector3(2, 1.5, 4.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8gu1u"]
 transparency = 2
@@ -766,6 +771,15 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.0362
 [node name="Bar" parent="DreamConditionBar/BeachBarNightOff" index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_q8nsq")
 surface_material_override/1 = SubResource("StandardMaterial3D_f7msx")
+
+[node name="InvalidInteraction" parent="DreamConditionBar" instance=ExtResource("18_jdi70")]
+transform = Transform3D(1, 0, -1.49012e-08, 0, 1, 0, 0, 0, 1, 1.17362, -0.266097, 1.26689)
+interact_prompt = "the bar is closed..."
+interact_sound = ExtResource("19_qeuyq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DreamConditionBar/InvalidInteraction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00443649, 0, 0)
+shape = SubResource("BoxShape3D_c34xt")
 
 [node name="DreamConditionBar2" parent="." instance=ExtResource("13_j0f0l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5839, 1.84111, -5.44963)

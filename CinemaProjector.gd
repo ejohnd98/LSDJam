@@ -24,6 +24,7 @@ func set_spinning(spin : bool):
 		$InteractionObject.show()
 		$InteractionObject/Collider.disabled = false
 		$FilmPlayer/Reel1.show()
+		$InvalidInteraction.queue_free()
 		
 	else:
 		$AnimationPlayer.stop()

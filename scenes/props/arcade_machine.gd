@@ -12,7 +12,7 @@ func set_usable(can_use : bool):
 	if can_use:
 		$InteractionObject.show()
 		$InteractionObject/Collider.disabled = false
-		
+		$InvalidInteraction.queue_free()
 	else:
 		$InteractionObject.hide()
 		$InteractionObject/Collider.disabled = true

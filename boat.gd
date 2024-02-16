@@ -19,6 +19,7 @@ func set_usable(usable : bool):
 	if usable:
 		$Interaction/Collider.disabled = false
 		$DreamCondition/Sprite3D.hide()
+		$DreamCondition/InvalidInteraction.queue_free()
 	else:
 		$Interaction/Collider.disabled = true
 		$DreamCondition/Sprite3D.show()

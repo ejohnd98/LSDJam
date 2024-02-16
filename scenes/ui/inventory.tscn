@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c7y23appditp6"]
+[gd_scene load_steps=27 format=3 uid="uid://c7y23appditp6"]
 
 [ext_resource type="Script" path="res://scenes/ui/inventory.gd" id="1_onii4"]
 [ext_resource type="FontFile" uid="uid://vd80c5wwb0pb" path="res://textures/fonts/atwriter.ttf" id="4_4j222"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dtry0pd3cnsa0" path="res://textures/billboard_items/generic_key.png" id="10_hh6w0"]
 [ext_resource type="Texture2D" uid="uid://di7xfmq7ot6gm" path="res://textures/dream_snapshots/cinema.png" id="10_snmyk"]
 [ext_resource type="Texture2D" uid="uid://bfdeo6go0trwe" path="res://textures/dream_snapshots/galaxy.png" id="11_gn86a"]
+[ext_resource type="Texture2D" uid="uid://ceu5ohr5bmu3f" path="res://textures/billboard_items/generic_key_2.png" id="18_5g8l5"]
 
 [sub_resource type="Theme" id="Theme_8t71l"]
 default_font = ExtResource("4_4j222")
@@ -428,8 +429,8 @@ layout_mode = 2
 texture = ExtResource("4_vofxu")
 script = ExtResource("5_67m40")
 required_key = "forestKey"
-item_name = "Forest Key"
-description = "Unlocks the forest path."
+item_name = "Tunnel Key"
+description = "Unlocks the forest tunnel."
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon6"]
 layout_mode = 1
@@ -442,7 +443,7 @@ offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("10_hh6w0")
+texture = ExtResource("18_5g8l5")
 expand_mode = 4
 
 [node name="Nothing" type="Label" parent="VBoxContainer/VBoxContainer/Items"]

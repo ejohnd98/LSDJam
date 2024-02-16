@@ -96,7 +96,7 @@ func chase_player(delta):
 		nightmare_amount += (1.0 - player_dist) * delta
 	
 	if is_on_screen:
-		nightmare_amount += (nightmare_progress_amount * 0.1 * delta)
+		nightmare_amount += (nightmare_progress_amount * 0.15 * delta)
 	
 	GameManager.adjust_nightmare_progress(nightmare_amount)
 	
