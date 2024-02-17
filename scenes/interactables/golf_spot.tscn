@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://6c7w3rw4trfi" path="res://textures/billboard_items/golf_ball.png" id="5_r1pjy"]
 [ext_resource type="Texture2D" uid="uid://dfqnokvpmg3t8" path="res://textures/billboard_items/golf_tee.png" id="6_rbxqe"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/AlternateCamera.gd" id="7_rcjga"]
-[ext_resource type="PackedScene" uid="uid://djmioxsjxgd0" path="res://scenes/interactables/golf_UI.tscn" id="8_36boj"]
 [ext_resource type="AudioStream" uid="uid://d3kjepavxlkpx" path="res://sounds/golf/golf_swing.ogg" id="9_mp1iu"]
+[ext_resource type="PackedScene" uid="uid://beqjrnoaqpfpc" path="res://scenes/ui/golf_ui_control.tscn" id="10_82ks4"]
 
 [sub_resource type="Curve" id="Curve_kst5h"]
 _data = [Vector2(0, 0.0826325), 0.0, 1.26299, 0, 0, Vector2(1, 1), 0.963436, 0.0, 0, 0]
@@ -160,11 +160,8 @@ region_rect = Rect2(11.8881, 12.1333, 37.8365, 40.2689)
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
-size = Vector2i(800, 256)
-render_target_update_mode = 4
+size = Vector2i(960, 540)
 
-[node name="Control" parent="SubViewport" instance=ExtResource("8_36boj")]
+[node name="Control" parent="SubViewport" instance=ExtResource("10_82ks4")]
 
 [connection signal="on_interact" from="GolfInteraction" to="." method="_on_golf_interaction_on_interact"]
-
-[editable path="SubViewport/Control"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://djmioxsjxgd0"]
+[gd_scene load_steps=6 format=3 uid="uid://beqjrnoaqpfpc"]
 
-[ext_resource type="Texture2D" uid="uid://qfngo2ok3a86" path="res://textures/UI/corny_9slice.png" id="1_xc2ni"]
-[ext_resource type="Texture2D" uid="uid://chqp67hehqxqq" path="res://textures/UI/golf_power_back.png" id="2_i02ne"]
-[ext_resource type="Texture2D" uid="uid://dudciotf2k6hm" path="res://textures/UI/golf_power_fill.png" id="3_1i56l"]
+[ext_resource type="Texture2D" uid="uid://qfngo2ok3a86" path="res://textures/UI/corny_9slice.png" id="1_b1dv1"]
+[ext_resource type="Texture2D" uid="uid://chqp67hehqxqq" path="res://textures/UI/golf_power_back.png" id="2_m2egt"]
+[ext_resource type="Texture2D" uid="uid://dudciotf2k6hm" path="res://textures/UI/golf_power_fill.png" id="3_56n7t"]
+[ext_resource type="Texture2D" uid="uid://v2wusmsdaj5h" path="res://textures/UI/golf map.png" id="4_e1evy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_36xsy"]
 font_size = 32
@@ -29,7 +30,7 @@ offset_right = 270.0
 offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_xc2ni")
+texture = ExtResource("1_b1dv1")
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
@@ -118,18 +119,60 @@ show_percentage = false
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
 layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -131.0
+offset_top = -89.0
+offset_right = 131.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 100.0
+texture_under = ExtResource("2_m2egt")
+texture_progress = ExtResource("3_56n7t")
+
+[node name="AimPivot" type="Control" parent="."]
+visible = false
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -203.0
-offset_top = -70.0
-offset_right = 59.0
-offset_bottom = -2.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.5, 1.5)
-value = 100.0
-texture_under = ExtResource("2_i02ne")
-texture_progress = ExtResource("3_1i56l")
+pivot_offset = Vector2(20, 20)
+
+[node name="ColorRect" type="ColorRect" parent="AimPivot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -180.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -174.0
+offset_top = 22.0
+offset_right = -23.0
+offset_bottom = 202.0
+grow_horizontal = 0
+texture = ExtResource("4_e1evy")
+expand_mode = 5
+stretch_mode = 4

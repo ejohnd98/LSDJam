@@ -8,13 +8,14 @@ var is_active = false
 var has_swung = false
 var swing_power = 0.0
 var increasing = true
-@onready var power_bar : ProgressBar = $SubViewport/Control/PowerBarContainer/ProgressBar
 
 var golf_ball_start_pos : Vector3
 var golf_ball_dist = 100
 
 @export var power_bar_curve : Curve
 @export var power_bar_speed = 4.0
+
+@onready var golf_ui = $UI
 
 func _unhandled_input(event):
 	if not is_active:
@@ -29,11 +30,15 @@ func _unhandled_input(event):
 
 func _ready():
 	$"GolfInteraction/Golf Club".hide()
-	$UI.hide()
+	golf_ui.hide()
 
 func _process(delta):
 	if not is_active:
 		return
+	
+	#TODO: have a phase where the direction is chosen
+	# rotate pivot in UI
+	# then construct a vector2 and round x and y to get move direction
 	
 	if not has_swung:
 		if increasing:
@@ -46,7 +51,7 @@ func _process(delta):
 		elif swing_power <= 0.0:
 			increasing = true
 		
-		power_bar.value = swing_power * power_bar.max_value
+		$SubViewport/Control/TextureProgressBar.value = swing_power * 100
 	else:
 		if not $GolfInteraction/GolfBallArcTime.is_stopped():
 			animate_golf_ball(1.0 - ($GolfInteraction/GolfBallArcTime.time_left / $GolfInteraction/GolfBallArcTime.wait_time))
@@ -70,6 +75,8 @@ func swing_club():
 	else:
 		move_amount = 3
 	
+	golf_ui.hide()
+	golf_ui.queue_free()
 	GameManager.move_in_direction(direction * move_amount)
 	
 	#TODO:
@@ -77,18 +84,26 @@ func swing_club():
 	#have golf ball shoot off (can scale distance with swing_power)
 
 func start_golf():
+	golf_ui.reparent(GameManager.player.get_camera())
+	golf_ui.scale = Vector3.ONE * 0.279
+	golf_ui.position = Vector3.MODEL_REAR
+	golf_ui.rotation = Vector3.ZERO
+	
 	$GolfInteraction/AlternateCamera.set_active()
+	
 	GameManager.set_crosshair(false)
 	await CameraManagerObject.fixed_lerp_done
 	$"GolfInteraction/Golf Club".show()
-	$UI.show()
+	golf_ui.show()
+	GameManager.set_compass_visible(false)
 	is_active = true
 	golf_ball_start_pos = $GolfInteraction/GolfBall.position
 
 func end_golf():
 	is_active = false
 	GameManager.set_crosshair(true)
-	$UI.hide()
+	golf_ui.hide()
+	GameManager.set_compass_visible(true)
 	$"GolfInteraction/Golf Club".hide()
 	
 	CameraManagerObject.lerp_back_to_player()

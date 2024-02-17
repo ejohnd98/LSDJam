@@ -1,0 +1,153 @@
+[gd_scene load_steps=3 format=3 uid="uid://urb4qvy71ysk"]
+
+[ext_resource type="PackedScene" uid="uid://o24gdvd81nse" path="res://sourceModels/Golf/Golf_course_final.glb" id="1_57pf4"]
+[ext_resource type="PackedScene" uid="uid://c5uq7uu6oyle3" path="res://sourceModels/GolfTree.glb" id="2_ujhb0"]
+
+[node name="Golf_course_final" instance=ExtResource("1_57pf4")]
+
+[node name="GolfTree" parent="." index="1" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 16.5705, 2.31813, -48.1543)
+
+[node name="GolfTree2" parent="." index="2" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.689249, 0, 0.857284, 0, 1.1, 0, -0.857284, 0, 0.689249, 15.69, 2.20984, -44.3334)
+
+[node name="GolfTree3" parent="." index="3" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -13.6397, 2.09528, -57.1314)
+
+[node name="GolfTree4" parent="." index="4" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.689249, 0, 0.857284, 0, 1.1, 0, -0.857284, 0, 0.689249, -14.5036, 1.94798, -64.2466)
+
+[node name="GolfTree5" parent="." index="5" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -12.3334, 2.07629, -67.2054)
+
+[node name="GolfTree6" parent="." index="6" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.689249, 0, 0.857284, 0, 1.1, 0, -0.857284, 0, 0.689249, 20.9819, 2.39352, -72.2863)
+
+[node name="GolfTree7" parent="." index="7" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 21.1292, 2.06688, -75.5042)
+
+[node name="GolfTree8" parent="." index="8" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, 18.444, 2.50106, -73.7874)
+
+[node name="GolfTree9" parent="." index="9" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.857284, 0, -0.689249, 0, 1.1, 0, 0.689249, 0, 0.857284, 18.6283, 2.03053, -77.6463)
+
+[node name="GolfTree10" parent="." index="10" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, 15.7558, 2.37571, -76.116)
+
+[node name="GolfTree11" parent="." index="11" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 32.5059, 2.05782, -2.48302)
+
+[node name="GolfTree12" parent="." index="12" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.689249, 0, 0.857284, 0, 1.1, 0, -0.857284, 0, 0.689249, 32.1336, 2.33728, -9.20608)
+
+[node name="GolfTree13" parent="." index="13" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 26.9182, 2.16919, -13.8038)
+
+[node name="GolfTree14" parent="." index="14" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, 25.2009, 2.20703, -16.6517)
+
+[node name="GolfTree15" parent="." index="15" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.857284, 0, -0.689249, 0, 1.1, 0, 0.689249, 0, 0.857284, 51.0009, 2.04729, -2.28845)
+
+[node name="GolfTree16" parent="." index="16" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, 51.7715, 1.82692, 5.99742)
+
+[node name="GolfTree17" parent="." index="17" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.857284, 0, -0.689249, 0, 1.1, 0, 0.689249, 0, 0.857284, 49.1433, 1.82816, 13.5078)
+
+[node name="GolfTree18" parent="." index="18" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, 42.3871, 2.49498, 18.1004)
+
+[node name="GolfTree19" parent="." index="19" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.857284, 0, -0.689249, 0, 1.1, 0, 0.689249, 0, 0.857284, 51.1323, 1.92973, -20.1746)
+
+[node name="GolfTree20" parent="." index="20" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, 51.1508, 1.82838, -23.251)
+
+[node name="GolfTree21" parent="." index="21" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 48.0368, 2.1478, -22.2537)
+
+[node name="GolfTree22" parent="." index="22" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.689249, 0, 0.857284, 0, 1.1, 0, -0.857284, 0, 0.689249, -50.3877, 4.05895, 47.989)
+
+[node name="GolfTree23" parent="." index="23" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -50.8684, 3.94569, 42.6991)
+
+[node name="GolfTree24" parent="." index="24" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, -47.9826, 3.628, 38.5714)
+
+[node name="GolfTree25" parent="." index="25" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.857284, 0, -0.689249, 0, 1.1, 0, 0.689249, 0, 0.857284, -49.9543, 3.38029, 35.2952)
+
+[node name="GolfTree27" parent="." index="26" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.87972, 0, 0, 0, 0.740638, 0, 0, 0, 0.87972, -49.386, 0.203342, 17.5443)
+
+[node name="GolfTree28" parent="." index="27" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.689249, 0, 0.857284, 0, 1.1, 0, -0.857284, 0, 0.689249, -48.8708, 1.9819, 18.8779)
+
+[node name="GolfTree29" parent="." index="28" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -39.3335, 1.60074, -7.81056)
+
+[node name="GolfTree30" parent="." index="29" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, -44.5329, 1.16601, -4.39716)
+
+[node name="GolfTree31" parent="." index="30" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.857284, 0, -0.689249, 0, 1.1, 0, 0.689249, 0, 0.857284, -46.3967, 1.04202, -9.50364)
+
+[node name="GolfTree32" parent="." index="31" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, -37.4965, 1.54547, 64.755)
+
+[node name="GolfTree33" parent="." index="32" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -43.1432, 2.15446, 60.6088)
+
+[node name="GolfTree34" parent="." index="33" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.689249, 0, 0.857284, 0, 1.1, 0, -0.857284, 0, 0.689249, -36.2557, 2.04083, 59.3182)
+
+[node name="GolfTree35" parent="." index="34" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -40.9779, 2.40276, 56.4956)
+
+[node name="GolfTree36" parent="." index="35" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, 14.9876, 3.81012, 90.4892)
+
+[node name="GolfTree37" parent="." index="36" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.857284, 0, -0.689249, 0, 1.1, 0, 0.689249, 0, 0.857284, 13.9488, 3.69412, 95.606)
+
+[node name="GolfTree38" parent="." index="37" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, 8.62935, 3.23309, 99.8065)
+
+[node name="GolfTree39" parent="." index="38" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -18.4092, 2.09048, 91.5084)
+
+[node name="GolfTree40" parent="." index="39" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.689249, 0, 0.857284, 0, 1.1, 0, -0.857284, 0, 0.689249, -18.3704, 1.92637, 87.3912)
+
+[node name="GolfTree41" parent="." index="40" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -7.64868, 1.38601, 74.249)
+
+[node name="GolfTree42" parent="." index="41" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-4.80825e-08, 0, 1.1, 0, 1.1, 0, -1.1, 0, -4.80825e-08, -4.57743, 1.35142, 73.5872)
+
+[node name="GolfTree43" parent="." index="42" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.857284, 0, -0.689249, 0, 1.1, 0, 0.689249, 0, 0.857284, -10.8914, 1.51198, 76.2478)
+
+[node name="GolfTree44" parent="." index="43" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 16.9444, 0.589295, -49.1032)
+
+[node name="GolfTree45" parent="." index="44" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.00354648, 0, -0.799992, 0, 0.8, 0, 0.799992, 0, 0.00354648, 16.6451, 0.589295, -45.8468)
+
+[node name="GolfTree46" parent="." index="45" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.1444, 0.3014, -16.3135)
+
+[node name="GolfTree47" parent="." index="46" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.8963, -0.245583, -23.4378)
+
+[node name="GolfTree26" parent="." index="47" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.593123, 0, -0.604114, 0, 0.84661, 0, 0.604114, 0, 0.593123, -36.4629, 0.153281, 58.2005)
+
+[node name="GolfTree48" parent="." index="48" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(0.808318, 0, 0, 0, 0.567806, 0, 0, 0, 0.808318, -5.98003, 0.550634, 73.0711)
+
+[node name="GolfTree49" parent="." index="49" instance=ExtResource("2_ujhb0")]
+transform = Transform3D(-0.474318, 0, -0.654523, 0, 0.567806, 0, 0.654523, 0, -0.474318, -3.80511, 0.210968, 72.7478)

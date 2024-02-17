@@ -170,6 +170,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="."]
 process_mode = 3
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
 size = Vector2i(960, 540)
@@ -379,6 +380,7 @@ visible = false
 [node name="SubViewport2" type="SubViewport" parent="."]
 transparent_bg = true
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 size = Vector2i(960, 540)
 render_target_update_mode = 4
 

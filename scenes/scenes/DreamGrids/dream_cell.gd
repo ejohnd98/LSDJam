@@ -13,6 +13,7 @@ extends CanvasItem
 #TODO: set this false once key has been picked up
 @export var has_key = false
 @export var has_multiple_spawns = false
+@export var has_position_spawns = false
 
 @export_group("Allowed Directions")
 @export var allow_up = false

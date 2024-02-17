@@ -255,6 +255,9 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 			if new_spawn == null:
 				push_warning("load_new_scene: could not get directional spawn point!")
 				new_spawn = current_scene_node.get_node("PlayerSpawn")
+		elif current_cell.has_position_spawns:
+			var spawn_name = "PlayerSpawn_" + str(dream_grid.player_position.x) + "_" + str(dream_grid.player_position.y)
+			new_spawn = current_scene_node.get_node(spawn_name)
 		else:
 			new_spawn = current_scene_node.get_node("PlayerSpawn")
 	else:
@@ -275,6 +278,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	#undo any camera stuff:
 	if CameraManagerObject.override_active:
 		CameraManagerObject.reset_camera()
+	
+	set_compass_visible(true)
 	
 	set_interact_text("")
 	
@@ -309,6 +314,12 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	canvas_layer.get_node("UIParent/Compass").set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
 	is_loading_dream = false
+
+func set_compass_visible(is_visible : bool):
+	if is_visible:
+		canvas_layer.get_node("UIParent/Compass").show()
+	else:
+		canvas_layer.get_node("UIParent/Compass").hide()
 	
 
 func set_transition_alpha(alpha : float):
