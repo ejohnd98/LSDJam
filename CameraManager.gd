@@ -82,6 +82,7 @@ func set_camera_override_node(target_node : Node3D):
 	original_local_rot = cam.rotation
 	player.override_camera_handling = true
 	override_active = true
+	GameManager.hide_interact_text()
 
 func set_camera_override(target, fixed_position = true):
 	fixed_positions = fixed_position
