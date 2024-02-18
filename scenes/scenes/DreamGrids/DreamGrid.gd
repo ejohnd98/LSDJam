@@ -13,6 +13,7 @@ var grid_size = Vector2i.ZERO
 var grid = []
 var player_position = Vector2i.ZERO
 var start_cell = null
+var goal_position : Vector2i = -Vector2i.ONE
 
 # :^)
 var letter_array = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n","o","p", "q", "r", "s", "t", "u", "v", "w","x", "y", "z"]
@@ -36,6 +37,8 @@ func populate_grid_array():
 			if grid[x][y].is_start:
 				start_cell = grid[x][y]
 				player_position = Vector2i(x,y)
+			if grid[x][y].is_goal:
+				goal_position = Vector2i(x,y)
 
 func move_in_direction (direction: Vector2i):
 	print("DreamGrid: Direction moved: " + str(direction))
@@ -53,6 +56,13 @@ func get_current_cell() -> DreamCell:
 
 func get_start_cell() -> DreamCell:
 	return start_cell
+
+func get_cell_relative(dir : Vector2i) -> DreamCell:
+	var actual_pos = player_position
+	actual_pos.x = wrap(actual_pos.x + dir.x, 0, grid_size.x)
+	actual_pos.y = wrap(actual_pos.y + dir.y, 0, grid_size.y)
+	return grid[actual_pos.x][actual_pos.y]
+	
 
 func get_scene_from_position ():
 	return grid[player_position.x][player_position.y].scene_name

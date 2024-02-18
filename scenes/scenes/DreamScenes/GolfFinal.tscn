@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dktoqy8kjwp4t"]
+[gd_scene load_steps=30 format=3 uid="uid://dktoqy8kjwp4t"]
 
 [ext_resource type="Texture2D" uid="uid://dbukkac0ovsvs" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect_MIRROR.png" id="1_uj2p1"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_mods2"]
@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://bjuac7bs5s228" path="res://sounds/golf/footstep_grass_05.ogg" id="14_da5e7"]
 [ext_resource type="PackedScene" uid="uid://urb4qvy71ysk" path="res://models/golf_course_final.tscn" id="14_gtx1t"]
 [ext_resource type="PackedScene" uid="uid://dv2mfrpn0x5md" path="res://scenes/dream_condition.tscn" id="14_mmtpx"]
+[ext_resource type="Texture2D" uid="uid://ksku4u02xeqr" path="res://textures/billboard_items/golf_pole.png" id="16_0umqb"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ixst8"]
 panorama = ExtResource("1_uj2p1")
@@ -115,25 +116,68 @@ shadow_enabled = true
 environment = SubResource("Environment_s12vt")
 
 [node name="PlayerSpawn_2_4" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.1087, 3.64918, -41.3233)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.1087, 3.64918, -43.1226)
+
+[node name="DreamConditionGolfSpot" parent="PlayerSpawn_2_4" instance=ExtResource("14_mmtpx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0713959, -0.295805, 7.80586)
+required_position = Vector2i(2, 4)
+
+[node name="GolfSpot" parent="PlayerSpawn_2_4/DreamConditionGolfSpot" instance=ExtResource("9_skiie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20752, -0.164411, 0.533909)
 
 [node name="PlayerSpawn_1_3" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6679, 3.30385, 9.39803)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6679, 3.30385, 7.12438)
+
+[node name="DreamConditionGolfSpot" parent="PlayerSpawn_1_3" instance=ExtResource("14_mmtpx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01709, -0.602033, 5.94978)
+required_position = Vector2i(1, 3)
+
+[node name="GolfSpot" parent="PlayerSpawn_1_3/DreamConditionGolfSpot" instance=ExtResource("9_skiie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20752, -0.164411, 0.533909)
 
 [node name="PlayerSpawn_1_2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.72664, 3.30385, 32.3728)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.72664, 3.30385, 30.0518)
+
+[node name="DreamConditionGolfSpot" parent="PlayerSpawn_1_2" instance=ExtResource("14_mmtpx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0713959, -0.635285, 3.11167)
+required_position = Vector2i(1, 2)
+
+[node name="GolfSpot" parent="PlayerSpawn_1_2/DreamConditionGolfSpot" instance=ExtResource("9_skiie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20752, -0.164411, 0.533909)
 
 [node name="PlayerSpawn_3_2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.5815, 3.52376, 35.2565)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.5815, 3.52376, 34.9258)
+
+[node name="DreamConditionGolfSpot" parent="PlayerSpawn_3_2" instance=ExtResource("14_mmtpx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.721291, -0.891111, 2.51723)
+required_position = Vector2i(3, 2)
+
+[node name="GolfSpot" parent="PlayerSpawn_3_2/DreamConditionGolfSpot" instance=ExtResource("9_skiie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20752, -0.164411, 0.533909)
 
 [node name="PlayerSpawn_3_1" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.4701, 3.30831, 67.6209)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.4701, 3.30831, 65.8218)
+
+[node name="DreamConditionGolfSpot" parent="PlayerSpawn_3_1" instance=ExtResource("14_mmtpx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02079, -0.278376, 3.55233)
+required_position = Vector2i(3, 1)
+
+[node name="GolfSpot" parent="PlayerSpawn_3_1/DreamConditionGolfSpot" instance=ExtResource("9_skiie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20752, -0.164411, 0.533909)
 
 [node name="PlayerSpawn_2_0" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.8022, 3.30831, 118.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.8022, 3.53288, 118.25)
+
+[node name="DreamConditionGolfSpot" parent="PlayerSpawn_2_0" instance=ExtResource("14_mmtpx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0713959, -0.295805, 1.26534)
+required_position = Vector2i(2, 0)
+
+[node name="GolfSpot" parent="PlayerSpawn_2_0/DreamConditionGolfSpot" instance=ExtResource("9_skiie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20752, -0.164411, 0.533909)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -51.2692, 4.85145, -41.407)
+visible = false
 size = Vector3(1.1, 1.1, 0.15)
 material = SubResource("StandardMaterial3D_m0d0y")
 
@@ -155,6 +199,7 @@ material = SubResource("StandardMaterial3D_ckpgi")
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_mods2")]
 transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -51.2692, 4.87145, -41.407)
+visible = false
 grid_scale = Vector2(1, 1)
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
@@ -199,9 +244,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.485, 0, 26.9918)
 [node name="Golf_course_final2" parent="." instance=ExtResource("14_gtx1t")]
 transform = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, 1, -49.485, 0, 26.9918)
 
-[node name="DreamConditionGolfSpot" parent="." instance=ExtResource("14_mmtpx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.1801, 3.35337, -40.0579)
-required_position = Vector2i(2, 4)
-
-[node name="GolfSpot" parent="DreamConditionGolfSpot" instance=ExtResource("9_skiie")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20752, -0.164411, 0.533909)
+[node name="GolfBag" type="Sprite3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -46.1503, 3.79533, 123.592)
+pixel_size = 0.006
+billboard = 2
+shaded = true
+alpha_cut = 2
+texture_filter = 4
+texture = ExtResource("16_0umqb")

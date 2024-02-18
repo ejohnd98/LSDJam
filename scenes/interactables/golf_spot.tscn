@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c8qqafyq522x"]
+[gd_scene load_steps=19 format=3 uid="uid://c8qqafyq522x"]
 
 [ext_resource type="Script" path="res://scenes/interactables/golf_spot.gd" id="1_c7j2m"]
 [ext_resource type="PackedScene" uid="uid://dsik30if3a23x" path="res://scenes/interactables/interactable_object.tscn" id="1_wn171"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/AlternateCamera.gd" id="7_rcjga"]
 [ext_resource type="AudioStream" uid="uid://d3kjepavxlkpx" path="res://sounds/golf/golf_swing.ogg" id="9_mp1iu"]
 [ext_resource type="PackedScene" uid="uid://beqjrnoaqpfpc" path="res://scenes/ui/golf_ui_control.tscn" id="10_82ks4"]
+[ext_resource type="AudioStream" uid="uid://cqvpr5juwu05i" path="res://sounds/golf/nice_shot.ogg" id="11_g8ne7"]
+[ext_resource type="AudioStream" uid="uid://c8vfu2faxt28f" path="res://sounds/golf/out_of_bounds.ogg" id="12_4rfoc"]
 
 [sub_resource type="Curve" id="Curve_kst5h"]
 _data = [Vector2(0, 0.0826325), 0.0, 1.26299, 0, 0, Vector2(1, 1), 0.963436, 0.0, 0, 0]
@@ -31,6 +33,18 @@ tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AlternateCamera:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.0297056, 3.14159, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_u7d4f"]
@@ -75,6 +89,32 @@ tracks/2/keys = {
 "method": &"play"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AlternateCamera:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.4, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.0297056, 3.14159, 0), Vector3(0.0297056, 3.14159, 0), Vector3(0.261799, 3.14159, 0)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("..")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_vo_line"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l70su"]
 _data = {
@@ -89,17 +129,8 @@ viewport_path = NodePath("SubViewport")
 script = ExtResource("1_c7j2m")
 power_bar_curve = SubResource("Curve_kst5h")
 
-[node name="GolfInteraction" parent="." instance=ExtResource("1_wn171")]
-interact_prompt = "Swing"
-show_distorted_text = true
-interact_sound = ExtResource("2_b8gvj")
-
-[node name="BagColliders" type="CollisionShape3D" parent="GolfInteraction" groups=["interactable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8147e-05, 1.5, -4.00543e-05)
-shape = SubResource("CapsuleShape3D_lt0wf")
-
-[node name="GolfBag" type="Sprite3D" parent="GolfInteraction/BagColliders"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.838152, 0)
+[node name="GolfBag" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00004, 0.661848, -0.210596)
 pixel_size = 0.006
 billboard = 2
 shaded = true
@@ -107,8 +138,17 @@ alpha_cut = 2
 texture_filter = 4
 texture = ExtResource("3_mk2sr")
 
+[node name="GolfInteraction" parent="." instance=ExtResource("1_wn171")]
+interact_prompt = "Swing"
+show_distorted_text = true
+interact_sound = ExtResource("2_b8gvj")
+
+[node name="BagColliders" type="CollisionShape3D" parent="GolfInteraction" groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00004, 1.5, -0.210596)
+shape = SubResource("CapsuleShape3D_lt0wf")
+
 [node name="Golf Club" type="Sprite3D" parent="GolfInteraction"]
-transform = Transform3D(0.945001, 0.32706, -0.00239222, -0.327061, 0.945003, 0, 0.00226066, 0.000782402, 0.999997, 1.5128, 1.53371, 0.155487)
+transform = Transform3D(0.945001, 0.32706, -0.00239222, -0.327061, 0.945003, 0, 0.00226066, 0.000782402, 0.999997, 0.5128, 1.53371, -0.055069)
 offset = Vector2(0, -128)
 pixel_size = 0.006
 shaded = true
@@ -117,7 +157,7 @@ texture_filter = 4
 texture = ExtResource("4_kp1g8")
 
 [node name="GolfBall" type="Sprite3D" parent="GolfInteraction"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.121, 0.209)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.121, -0.00155599)
 pixel_size = 0.002
 billboard = 1
 shaded = true
@@ -126,7 +166,7 @@ texture_filter = 4
 texture = ExtResource("5_r1pjy")
 
 [node name="Tee" type="Sprite3D" parent="GolfInteraction"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0.209)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.00155599)
 pixel_size = 0.002
 billboard = 2
 shaded = true
@@ -135,7 +175,7 @@ texture_filter = 4
 texture = ExtResource("6_rbxqe")
 
 [node name="AlternateCamera" type="Node3D" parent="GolfInteraction"]
-transform = Transform3D(-1, 2.65549e-09, 8.93676e-08, 0, 0.999559, -0.0297012, -8.9407e-08, -0.0297012, -0.999559, 0.999797, 1.27743, -2.3821)
+transform = Transform3D(-1, 4.48476e-09, 1.50929e-07, 0, 0.999559, -0.0297012, -1.50996e-07, -0.0297012, -0.999559, -0.000203013, 1.27743, -2.59266)
 script = ExtResource("7_rcjga")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GolfInteraction"]
@@ -152,6 +192,7 @@ stream = ExtResource("9_mp1iu")
 
 [node name="UI" type="Sprite3D" parent="."]
 transform = Transform3D(-0.279126, 0, 2.4402e-08, 0, 0.279126, 0, -2.4402e-08, 0, -0.279126, 1, 0.25, -0.7)
+visible = false
 gi_mode = 0
 double_sided = false
 texture_filter = 4
@@ -163,5 +204,13 @@ transparent_bg = true
 size = Vector2i(960, 540)
 
 [node name="Control" parent="SubViewport" instance=ExtResource("10_82ks4")]
+
+[node name="NiceShot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_g8ne7")
+volume_db = -7.0
+
+[node name="OB" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_4rfoc")
+volume_db = -7.0
 
 [connection signal="on_interact" from="GolfInteraction" to="." method="_on_golf_interaction_on_interact"]

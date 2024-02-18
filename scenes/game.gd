@@ -242,6 +242,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	# get player spawn position
 	var new_spawn : Node3D
 	if current_cell != null: 
+		await get_tree().create_timer(0.1).timeout
 		if current_cell.has_multiple_spawns:
 			match incoming_direction:
 				Vector2i.DOWN:

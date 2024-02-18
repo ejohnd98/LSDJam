@@ -30,6 +30,9 @@ var proxy_lookat_node : Node3D
 
 var look_at_offset_x = 0
 
+var following_node = false
+var follow_node : Node3D = null
+
 signal fixed_lerp_done
 
 func _process(delta):
@@ -57,6 +60,28 @@ func _process(delta):
 			else:
 				if lookat_target != null:
 					cam.look_at(lookat_target.position, Vector3.UP)
+		elif following_node and follow_node != null:
+			
+			var alpha = delta * 3.0
+			
+			var rot_a = cam.global_rotation
+			var rot_b = follow_node.global_rotation
+			var new_rot = Vector3(lerp_angle(rot_a.x, rot_b.x, alpha), lerp_angle(rot_a.y, rot_b.y, alpha), lerp_angle(rot_a.z, rot_b.z, alpha))
+			
+			cam.global_rotation = new_rot
+			cam.global_position = lerp(cam.global_position, follow_node.global_position, alpha)
+
+func set_camera_override_node(target_node : Node3D):
+	following_node = true
+	follow_node = target_node
+	
+	player = GameManager.player
+	player.set_frozen(true)
+	cam = player.get_camera()
+	original_local_pos = cam.position
+	original_local_rot = cam.rotation
+	player.override_camera_handling = true
+	override_active = true
 
 func set_camera_override(target, fixed_position = true):
 	fixed_positions = fixed_position
@@ -108,3 +133,6 @@ func reset_camera():
 	use_lookat = false
 	if proxy_lookat_node != null:
 		proxy_lookat_node.queue_free()
+	
+	following_node = false
+	follow_node = null
