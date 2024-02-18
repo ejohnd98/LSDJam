@@ -36,4 +36,6 @@ func set_spinning(spin : bool):
 
 
 func _on_interaction_object_on_interact():
+	CameraManagerObject.set_camera_override_node($CameraPos)
+	await get_tree().create_timer(2.0).timeout
 	GameManager.move_in_direction(direction)

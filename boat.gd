@@ -4,8 +4,8 @@ extends Node3D
 
 func _on_interaction_object_on_interact():
 	
-	$Interaction/AlternateCamera.set_active()
-	await CameraManagerObject.fixed_lerp_done
+	CameraManagerObject.set_camera_override_node($boat/CameraPos)
+	await get_tree().create_timer(0.6).timeout
 	$AnimationPlayer.play("BoatAnim")
 	$AudioStreamPlayer.play()
 	await $AnimationPlayer.animation_finished

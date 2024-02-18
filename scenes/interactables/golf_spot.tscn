@@ -175,7 +175,7 @@ texture_filter = 4
 texture = ExtResource("6_rbxqe")
 
 [node name="AlternateCamera" type="Node3D" parent="GolfInteraction"]
-transform = Transform3D(-1, 4.48476e-09, 1.50929e-07, 0, 0.999559, -0.0297012, -1.50996e-07, -0.0297012, -0.999559, -0.000203013, 1.27743, -2.59266)
+transform = Transform3D(-1, 7.5298e-08, 2.53406e-06, 0, 0.999559, -0.0297012, -2.53518e-06, -0.0297012, -0.999559, -0.000203013, 1.27743, -2.59266)
 script = ExtResource("7_rcjga")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GolfInteraction"]
