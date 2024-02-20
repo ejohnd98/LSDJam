@@ -23,17 +23,17 @@ seamless = true
 noise = SubResource("FastNoiseLite_iorx3")
 
 [resource]
-render_priority = 0
+render_priority = 1
 next_pass = SubResource("ShaderMaterial_r4iu0")
 shader = ExtResource("1_3phof")
-shader_parameter/distortionView = 0.03
+shader_parameter/distortionView = 0.025
 shader_parameter/speedView = 0.1
 shader_parameter/static_intensity = 0.3
 shader_parameter/tintColor = Color(0.827451, 0.764706, 0.968627, 1)
 shader_parameter/fesnelAmount = 0.85
 shader_parameter/fresnelTintOffset = -0.2
 shader_parameter/distortionVertex = 0.01
-shader_parameter/speedVertex = 0.1
+shader_parameter/speedVertex = 0.105
 shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
 shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")

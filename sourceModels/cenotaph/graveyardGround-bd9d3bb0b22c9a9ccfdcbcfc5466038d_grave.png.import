@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://datsn6enyqjhr"
-path.s3tc="res://.godot/imported/AllSkyFree_Sky_OvercastLow_Equirect.png-501868ae6db56a8f0b6d18a63ed267e3.s3tc.ctex"
+uid="uid://3ik6pgbc0tx6"
+path.s3tc="res://.godot/imported/graveyardGround-bd9d3bb0b22c9a9ccfdcbcfc5466038d_grave.png-c594f157f37f57f63f52eea346e746c9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_OvercastLow_Equirect.png"
-dest_files=["res://.godot/imported/AllSkyFree_Sky_OvercastLow_Equirect.png-501868ae6db56a8f0b6d18a63ed267e3.s3tc.ctex"]
+source_file="res://sourceModels/cenotaph/graveyardGround-bd9d3bb0b22c9a9ccfdcbcfc5466038d_grave.png"
+dest_files=["res://.godot/imported/graveyardGround-bd9d3bb0b22c9a9ccfdcbcfc5466038d_grave.png-c594f157f37f57f63f52eea346e746c9.s3tc.ctex"]
 
 [params]
 

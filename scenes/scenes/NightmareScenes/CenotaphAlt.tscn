@@ -1,0 +1,582 @@
+[gd_scene load_steps=22 format=3 uid="uid://c0wbbyxt6b7y5"]
+
+[ext_resource type="Script" path="res://scenes/scenes/NightmareScenes/Cenotaph.gd" id="1_deybj"]
+[ext_resource type="Texture2D" uid="uid://cb6u528xt4ix6" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_DeepDusk_Equirect.png" id="2_at2rq"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="3_kq58e"]
+[ext_resource type="AudioStream" uid="uid://b1deh0dl4ijcp" path="res://sounds/various_ambiences/digital sacrifice.ogg" id="4_eakpw"]
+[ext_resource type="PackedScene" uid="uid://ba33w0otpqhup" path="res://models/grave_cell.tscn" id="5_c2kxl"]
+[ext_resource type="PackedScene" uid="uid://c2x7do8qakb2b" path="res://scenes/props/fence_pivot.tscn" id="6_6gjkp"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="7_y5qgt"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="8_q3fwi"]
+[ext_resource type="Shader" path="res://models/Water.gdshader" id="9_7hves"]
+[ext_resource type="Texture2D" uid="uid://3vtrtk78peyv" path="res://models/WaterPlaneNormal.tres" id="10_7i6m6"]
+
+[sub_resource type="Curve" id="Curve_nxp77"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fhjxt"]
+panorama = ExtResource("2_at2rq")
+
+[sub_resource type="Sky" id="Sky_gaucc"]
+sky_material = SubResource("PanoramaSkyMaterial_fhjxt")
+
+[sub_resource type="Environment" id="Environment_lh6g0"]
+background_mode = 2
+sky = SubResource("Sky_gaucc")
+tonemap_mode = 2
+sdfgi_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.690196, 0.290196, 0.298039, 1)
+fog_light_energy = 0.28
+fog_density = 0.102
+fog_aerial_perspective = 0.339
+fog_height = 2.0
+fog_height_density = -2.1221
+adjustment_enabled = true
+adjustment_brightness = 1.04
+adjustment_contrast = 1.4
+adjustment_saturation = 1.22
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f3jtu"]
+size = Vector3(70, 10, 0.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8lu0h"]
+size = Vector2(300, 300)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l6f0k"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ywl01"]
+noise = SubResource("FastNoiseLite_l6f0k")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_osbt4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_33ry0"]
+seamless = true
+noise = SubResource("FastNoiseLite_osbt4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cp0qq"]
+render_priority = 0
+shader = ExtResource("9_7hves")
+shader_parameter/depth_fade_distance = 1.0
+shader_parameter/absorbance = 1.677
+shader_parameter/shallow_color = Color(1, 0, 0, 1)
+shader_parameter/deep_color = Color(0.67451, 0, 0.270588, 1)
+shader_parameter/foam_amount = 0.724
+shader_parameter/foam_color = Color(0.835294, 0, 0, 1)
+shader_parameter/roughness = 0.052
+shader_parameter/wave_scale = 4.0
+shader_parameter/height_scale = 0.01
+shader_parameter/global_wave_height = 0.01
+shader_parameter/global_wave_speed = 0.4
+shader_parameter/wave_dir1 = Vector2(1, 0)
+shader_parameter/wave_dir2 = Vector2(0, 1)
+shader_parameter/wave_speed = 0.05
+shader_parameter/foam_noise = SubResource("NoiseTexture2D_ywl01")
+shader_parameter/wave_texture = SubResource("NoiseTexture2D_33ry0")
+shader_parameter/normal1 = ExtResource("10_7i6m6")
+shader_parameter/normal2 = ExtResource("10_7i6m6")
+
+[node name="Cenotaph" type="Node3D"]
+script = ExtResource("1_deybj")
+pos_curve = SubResource("Curve_nxp77")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lh6g0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.736255, -0.302729, 0.605214, -0.0911457, 0.930569, 0.354591, -0.670538, 0.205906, -0.712728, 0, 2.15577, 0)
+light_color = Color(0.976471, 0.776471, 0.74902, 1)
+shadow_enabled = true
+shadow_opacity = 0.57
+shadow_blur = 4.61
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.952551, 0.43051, -0.471302)
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("3_kq58e")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 1, 1.637, 5.26963)
+visible = false
+grid_scale = Vector2(1, 1)
+
+[node name="AmbientSound2" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("4_eakpw")
+attenuation_model = 3
+volume_db = -18.0
+unit_size = 100.0
+autoplay = true
+panning_strength = 0.4
+bus = &"SFX"
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 3, 0, 3)
+
+[node name="GraveCell" parent="Node3D" instance=ExtResource("5_c2kxl")]
+
+[node name="GraveCell2" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="GraveCell3" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 0)
+
+[node name="GraveCell4" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 0)
+
+[node name="GraveCell5" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 0)
+
+[node name="GraveCell6" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+[node name="GraveCell7" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+
+[node name="GraveCell8" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 0)
+
+[node name="GraveCell9" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 0)
+
+[node name="FencePivot4" parent="Node3D/GraveCell9" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="GraveCell10" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 0)
+
+[node name="FencePivot2" parent="Node3D/GraveCell10" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="GraveCell11" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="GraveCell12" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
+
+[node name="GraveCell13" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 6)
+
+[node name="GraveCell14" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 6)
+
+[node name="GraveCell15" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 6)
+
+[node name="GraveCell16" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
+
+[node name="GraveCell17" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 6)
+
+[node name="GraveCell18" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 6)
+
+[node name="GraveCell19" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 6)
+
+[node name="FencePivot4" parent="Node3D/GraveCell19" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="GraveCell20" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 6)
+
+[node name="FencePivot2" parent="Node3D/GraveCell20" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="GraveCell21" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="GraveCell22" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 12)
+
+[node name="GraveCell23" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 12)
+
+[node name="GraveCell24" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 12)
+
+[node name="GraveCell25" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 12)
+
+[node name="GraveCell26" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 12)
+
+[node name="GraveCell27" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 12)
+
+[node name="GraveCell28" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 12)
+
+[node name="GraveCell29" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 12)
+
+[node name="FencePivot4" parent="Node3D/GraveCell29" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="GraveCell30" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 12)
+
+[node name="FencePivot2" parent="Node3D/GraveCell30" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="GraveCell31" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 18)
+
+[node name="GraveCell32" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 18)
+
+[node name="GraveCell33" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 18)
+
+[node name="GraveCell34" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 18)
+
+[node name="GraveCell35" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 18)
+
+[node name="GraveCell36" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 18)
+
+[node name="GraveCell37" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 18)
+
+[node name="GraveCell38" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 18)
+
+[node name="GraveCell39" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 18)
+
+[node name="FencePivot4" parent="Node3D/GraveCell39" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="GraveCell40" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 18)
+
+[node name="FencePivot2" parent="Node3D/GraveCell40" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="GraveCell41" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
+
+[node name="FencePivot5" parent="Node3D/GraveCell41" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0, 0, 0)
+
+[node name="GraveCell42" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 24)
+
+[node name="FencePivot5" parent="Node3D/GraveCell42" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0, 0, 0)
+
+[node name="GraveCell43" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 24)
+
+[node name="FencePivot5" parent="Node3D/GraveCell43" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0, 0, 0)
+
+[node name="GraveCell44" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 24)
+
+[node name="FencePivot5" parent="Node3D/GraveCell44" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0, 0, 0)
+
+[node name="GraveCell45" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 24)
+
+[node name="FencePivot5" parent="Node3D/GraveCell45" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0, 0, 0)
+
+[node name="GraveCell46" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 24)
+
+[node name="FencePivot5" parent="Node3D/GraveCell46" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0, 0, 0)
+
+[node name="GraveCell47" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 24)
+
+[node name="FencePivot5" parent="Node3D/GraveCell47" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0, 0, 0)
+
+[node name="GraveCell48" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 24)
+
+[node name="FencePivot5" parent="Node3D/GraveCell48" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0, 0, 0)
+
+[node name="GraveCell49" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24)
+
+[node name="FencePivot4" parent="Node3D/GraveCell49" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="FencePivot5" parent="Node3D/GraveCell49" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 2.62268e-07, 0, 1, 0, -2.62268e-07, 0, -1, 0, 0, 0)
+
+[node name="GraveCell50" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 24)
+
+[node name="FencePivot" parent="Node3D/GraveCell50" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="FencePivot2" parent="Node3D/GraveCell50" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="GraveCell51" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+
+[node name="FencePivot3" parent="Node3D/GraveCell51" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="GraveCell52" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -30)
+
+[node name="FencePivot3" parent="Node3D/GraveCell52" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="GraveCell53" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -30)
+
+[node name="FencePivot3" parent="Node3D/GraveCell53" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="GraveCell54" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -30)
+
+[node name="FencePivot3" parent="Node3D/GraveCell54" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="GraveCell55" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -30)
+
+[node name="FencePivot3" parent="Node3D/GraveCell55" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="GraveCell56" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -30)
+
+[node name="FencePivot3" parent="Node3D/GraveCell56" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="GraveCell57" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -30)
+
+[node name="FencePivot3" parent="Node3D/GraveCell57" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="GraveCell58" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -30)
+
+[node name="FencePivot3" parent="Node3D/GraveCell58" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="GraveCell59" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -30)
+
+[node name="FencePivot3" parent="Node3D/GraveCell59" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="FencePivot4" parent="Node3D/GraveCell59" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="GraveCell60" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -30)
+
+[node name="FencePivot2" parent="Node3D/GraveCell60" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="FencePivot3" parent="Node3D/GraveCell60" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="GraveCell61" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
+
+[node name="GraveCell62" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -24)
+
+[node name="GraveCell63" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -24)
+
+[node name="GraveCell64" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -24)
+
+[node name="GraveCell65" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -24)
+
+[node name="GraveCell66" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -24)
+
+[node name="GraveCell67" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -24)
+
+[node name="GraveCell68" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -24)
+
+[node name="GraveCell69" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -24)
+
+[node name="FencePivot4" parent="Node3D/GraveCell69" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="GraveCell70" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -24)
+
+[node name="FencePivot2" parent="Node3D/GraveCell70" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="GraveCell71" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+
+[node name="GraveCell72" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -18)
+
+[node name="GraveCell73" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -18)
+
+[node name="GraveCell74" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -18)
+
+[node name="GraveCell75" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -18)
+
+[node name="GraveCell76" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -18)
+
+[node name="GraveCell77" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -18)
+
+[node name="GraveCell78" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -18)
+
+[node name="GraveCell79" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -18)
+
+[node name="FencePivot4" parent="Node3D/GraveCell79" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="GraveCell80" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -18)
+
+[node name="FencePivot2" parent="Node3D/GraveCell80" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="GraveCell81" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+
+[node name="GraveCell82" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -12)
+
+[node name="GraveCell83" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -12)
+
+[node name="GraveCell84" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -12)
+
+[node name="GraveCell85" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -12)
+
+[node name="GraveCell86" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -12)
+
+[node name="GraveCell87" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -12)
+
+[node name="GraveCell88" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -12)
+
+[node name="GraveCell89" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -12)
+
+[node name="FencePivot4" parent="Node3D/GraveCell89" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="GraveCell90" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -12)
+
+[node name="FencePivot2" parent="Node3D/GraveCell90" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="GraveCell91" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="GraveCell92" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -6)
+
+[node name="GraveCell93" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -6)
+
+[node name="GraveCell94" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -6)
+
+[node name="GraveCell95" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -6)
+
+[node name="GraveCell96" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
+
+[node name="GraveCell97" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -6)
+
+[node name="GraveCell98" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -6)
+
+[node name="GraveCell99" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -6)
+
+[node name="FencePivot4" parent="Node3D/GraveCell99" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+
+[node name="GraveCell100" parent="Node3D" instance=ExtResource("5_c2kxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -6)
+
+[node name="FencePivot2" parent="Node3D/GraveCell100" instance=ExtResource("6_6gjkp")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="ForcedTransitionArea2" type="Area3D" parent="."]
+transform = Transform3D(1.23, 0, 0, 0, 1.23, 0, 0, 0, 1.23, 0, 0, 0)
+script = ExtResource("7_y5qgt")
+force_direction = true
+direction = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+shape = SubResource("BoxShape3D_f3jtu")
+script = ExtResource("8_q3fwi")
+
+[node name="ForcedTransitionArea3" type="Area3D" parent="."]
+transform = Transform3D(-5.3765e-08, 0, -1.23, 0, 1.23, 0, 1.23, 0, -5.3765e-08, 0, 0, 0)
+script = ExtResource("7_y5qgt")
+force_direction = true
+direction = Vector2i(-1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+shape = SubResource("BoxShape3D_f3jtu")
+script = ExtResource("8_q3fwi")
+
+[node name="ForcedTransitionArea5" type="Area3D" parent="."]
+transform = Transform3D(9.28624e-08, 0, 1.23, 0, 1.23, 0, -1.23, 0, 9.28624e-08, 0, 0, 0)
+script = ExtResource("7_y5qgt")
+force_direction = true
+direction = Vector2i(1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+shape = SubResource("BoxShape3D_f3jtu")
+script = ExtResource("8_q3fwi")
+
+[node name="ForcedTransitionArea4" type="Area3D" parent="."]
+transform = Transform3D(-1.23, 0, 1.85725e-07, 0, 1.23, 0, -1.85725e-07, 0, -1.23, 0, 0, 0)
+script = ExtResource("7_y5qgt")
+force_direction = true
+direction = Vector2i(0, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+shape = SubResource("BoxShape3D_f3jtu")
+script = ExtResource("8_q3fwi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, -0.0893248, 0)
+mesh = SubResource("PlaneMesh_8lu0h")
+surface_material_override/0 = SubResource("ShaderMaterial_cp0qq")

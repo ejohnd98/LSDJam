@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://ba33w0otpqhup"]
+
+[ext_resource type="PackedScene" uid="uid://b2tgrsfrdbfik" path="res://sourceModels/cenotaph/graveyardGround.glb" id="1_26eos"]
+[ext_resource type="Texture2D" uid="uid://davubikhb3pn8" path="res://sourceModels/cenotaph/grave.png" id="2_28w8e"]
+[ext_resource type="Script" path="res://models/grave_cell.gd" id="2_a4gdg"]
+[ext_resource type="Texture2D" uid="uid://dkjg84lwwovpi" path="res://sourceModels/cenotaph/ground.png" id="3_htgv3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_raerx"]
+albedo_texture = ExtResource("3_htgv3")
+roughness = 0.84
+texture_filter = 2
+proximity_fade_distance = 2433.89
+distance_fade_mode = 2
+distance_fade_min_distance = 35.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b3u11"]
+render_priority = 1
+albedo_texture = ExtResource("2_28w8e")
+texture_filter = 2
+distance_fade_mode = 2
+distance_fade_min_distance = 35.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ksmex"]
+size = Vector3(6, 0.1, 6)
+
+[node name="graveyardGround" instance=ExtResource("1_26eos")]
+script = ExtResource("2_a4gdg")
+
+[node name="Ground" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_raerx")
+
+[node name="Grave" parent="Ground" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_b3u11")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+shape = SubResource("BoxShape3D_ksmex")

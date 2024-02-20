@@ -23,6 +23,8 @@ var default_footstep_pitch
 
 var default_footstep_sounds : AudioStream
 
+var camera_vertical_offset = 0.0
+
 var override_camera_handling = false
 
 var current_interactable : Area3D = null
@@ -86,7 +88,10 @@ func _process(delta):
 	$CameraPivot/CameraParent.rotation.x = clamp($CameraPivot/CameraParent.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 	
 	$HeldItemPivot.global_rotation = $CameraPivot/CameraParent.global_rotation
-	pass
+	
+	if camera_vertical_offset < 0.0:
+		camera_vertical_offset = minf(camera_vertical_offset + delta * 1.5, 0.0)
+		$CameraPivot/CameraParent.position.y = camera_vertical_offset
 
 func _physics_process(delta):
 	if is_frozen:
@@ -105,6 +110,8 @@ func _physics_process(delta):
 		if is_flat_surface:
 			var ground_dist = position.y - result["position"].y
 			if ground_dist < ground_snap and $JumpTimer.is_stopped():
+				if ground_dist < 0.0:
+					camera_vertical_offset = min(ground_dist, camera_vertical_offset)
 				position = result["position"]
 				var play_footstep = not is_grounded
 				is_grounded = true

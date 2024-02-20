@@ -741,7 +741,7 @@ region_rect = Rect2(11.8881, 12.1333, 37.8365, 40.2689)
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Movie2/UI"]
 transform = Transform3D(-1, -9.74038e-09, -8.68785e-08, 0, 0.993774, -0.111417, 8.74228e-08, -0.111417, -0.993774, 4.55557e-08, -1.86237, 0.521096)
 stream = ExtResource("17_ypvra")
-volume_db = -12.222
+volume_db = -15.222
 autoplay = true
 emission_angle_enabled = true
 emission_angle_degrees = 85.0

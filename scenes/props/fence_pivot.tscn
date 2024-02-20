@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2x7do8qakb2b"]
+
+[ext_resource type="Texture2D" uid="uid://cbaaen4cvbrtc" path="res://sourceModels/cenotaph/fence.png" id="1_p7oic"]
+[ext_resource type="Material" uid="uid://b1tsjf3imidlq" path="res://materials/fence_pivot.tres" id="2_b5waf"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_kin35"]
+size = Vector2(6, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xf0f8"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("1_p7oic")
+roughness = 0.84
+uv1_scale = Vector3(2, 1, 1)
+texture_filter = 2
+proximity_fade_distance = 2433.89
+distance_fade_mode = 2
+distance_fade_min_distance = 35.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ceq58"]
+size = Vector2(6, 20)
+
+[node name="FencePivot" type="Node3D"]
+
+[node name="Fence" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
+mesh = SubResource("QuadMesh_kin35")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xf0f8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.998, -3)
+mesh = SubResource("QuadMesh_ceq58")
+surface_material_override/0 = ExtResource("2_b5waf")

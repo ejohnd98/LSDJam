@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://datsn6enyqjhr"
-path.s3tc="res://.godot/imported/AllSkyFree_Sky_OvercastLow_Equirect.png-501868ae6db56a8f0b6d18a63ed267e3.s3tc.ctex"
+uid="uid://dkjg84lwwovpi"
+path.s3tc="res://.godot/imported/ground.png-efd829e2e4a3dc1b58c8666a106d0fd7.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_OvercastLow_Equirect.png"
-dest_files=["res://.godot/imported/AllSkyFree_Sky_OvercastLow_Equirect.png-501868ae6db56a8f0b6d18a63ed267e3.s3tc.ctex"]
+source_file="res://sourceModels/cenotaph/ground.png"
+dest_files=["res://.godot/imported/ground.png-efd829e2e4a3dc1b58c8666a106d0fd7.s3tc.ctex"]
 
 [params]
 
