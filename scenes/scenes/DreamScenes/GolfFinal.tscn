@@ -200,7 +200,6 @@ material = SubResource("StandardMaterial3D_ckpgi")
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_mods2")]
 transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -51.2692, 4.87145, -41.407)
 visible = false
-grid_scale = Vector2(1, 1)
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)

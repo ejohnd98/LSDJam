@@ -98,7 +98,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.952551, 0.43051, -0.471302
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("3_kq58e")]
 transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 1, 1.637, 5.26963)
 visible = false
-grid_scale = Vector2(1, 1)
 
 [node name="AmbientSound2" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)

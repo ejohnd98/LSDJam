@@ -22,6 +22,7 @@ GameManager="*res://scenes/core/game_manager.tscn"
 CameraManagerObject="*res://scenes/core/camera_manager.tscn"
 PlayerSettings="*res://scenes/core/player_settings.tscn"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
+DreamGridViewer="*res://scenes/core/dream_grid_viewer.tscn"
 
 [display]
 

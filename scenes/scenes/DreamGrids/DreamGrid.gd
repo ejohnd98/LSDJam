@@ -9,6 +9,15 @@ extends Control
 @export_group("Keys")
 @export var dream_keys: Array[String] = []
 
+@export_group("Dream Grid Textures")
+@export var use_custom_textures = false
+@export var dream_texture : Texture2D
+@export var nightmare_texture : Texture2D
+@export var player_texture : Texture2D
+@export var start_texture : Texture2D
+@export var goal_texture : Texture2D
+@export var key_texture : Texture2D
+
 var grid_size = Vector2i.ZERO
 var grid = []
 var player_position = Vector2i.ZERO

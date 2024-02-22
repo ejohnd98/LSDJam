@@ -272,9 +272,9 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	elif not dream_grid.is_nightmare and in_nightmare:
 		on_left_nightmare()
 	
-	var dream_grid_representation = current_scene_node.get_node("DreamGridRepresentation")
-	if (dream_grid_representation):
-		dream_grid_representation.create_representation(dream_grid)
+	#var dream_grid_representation = current_scene_node.get_node("DreamGridRepresentation")
+	#if (dream_grid_representation):
+		#dream_grid_representation.create_representation(dream_grid)
 	
 	#undo any camera stuff:
 	if CameraManagerObject.override_active:
@@ -296,6 +296,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	await get_tree().create_timer(0.25).timeout
 	
 	player.set_spawn_position(new_spawn.global_position, new_spawn.global_rotation)
+	
+	DreamGridViewer.refresh_dream_grid(dream_grid)
 	
 	transition_node.finish_transition()
 	GameManager.set_crosshair(true)
