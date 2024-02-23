@@ -13,7 +13,7 @@ var interact_count = 0
 signal on_interact
 
 func _ready():
-	if interact_sound != null:
+	if interact_sound != null and $InteractSound != null:
 		$InteractSound.stream = interact_sound
 
 func can_interact_internal() -> bool:
@@ -40,4 +40,5 @@ func interact(player):
 		on_interact.emit()
 		if $CooldownTimer != null:
 			$CooldownTimer.start()
-		$InteractSound.playing = true
+		if $InteractSound != null:
+			$InteractSound.playing = true

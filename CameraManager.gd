@@ -5,7 +5,7 @@ class_name CameraManager extends Node3D
 var override_active = false
 
 var player : LSDPlayer
-var cam : Camera3D
+var cam : Node3D
 
 var current_target : Node3D
 
@@ -77,7 +77,7 @@ func set_camera_override_node(target_node : Node3D):
 	
 	player = GameManager.player
 	player.set_frozen(true)
-	cam = player.get_camera()
+	cam = player.get_camera_target()
 	original_local_pos = cam.position
 	original_local_rot = cam.rotation
 	player.override_camera_handling = true
@@ -88,7 +88,7 @@ func set_camera_override(target, fixed_position = true):
 	fixed_positions = fixed_position
 	player = GameManager.player
 	player.set_frozen(true)
-	cam = player.get_camera()
+	cam = player.get_camera_target()
 	original_local_pos = cam.position
 	original_local_rot = cam.rotation
 	player.override_camera_handling = true

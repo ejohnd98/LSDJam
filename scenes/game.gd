@@ -43,6 +43,8 @@ var is_loading_dream = false
 
 var inventory_open = false
 
+var held_item_pivot : Node3D
+
 static func get_game(tree_node : SceneTree) -> game_manager:
 	return tree_node.get_root().get_node("SubViewportContainer/SubViewport/Game")
 
@@ -296,6 +298,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	await get_tree().create_timer(0.25).timeout
 	
 	player.set_spawn_position(new_spawn.global_position, new_spawn.global_rotation)
+	player.get_camera_parent().reset_position()
+	player.get_item_parent().reset_position()
 	
 	DreamGridViewer.refresh_dream_grid(dream_grid)
 	

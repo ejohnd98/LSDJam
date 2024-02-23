@@ -110,7 +110,7 @@ func swing_club():
 
 func start_golf():
 	$SubViewport/Control.set_player_position(GameManager.get_dream_grid().player_position)
-	golf_ui.reparent(GameManager.player.get_camera())
+	golf_ui.reparent(GameManager.player.get_camera_parent())
 	golf_ui.scale = Vector3.ONE * 0.279
 	golf_ui.position = Vector3.MODEL_REAR
 	golf_ui.rotation = Vector3.ZERO

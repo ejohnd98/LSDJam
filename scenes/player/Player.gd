@@ -27,6 +27,10 @@ var camera_vertical_offset = 0.0
 
 var override_camera_handling = false
 
+var cam_parent : Node3D
+var item_parent : Node3D
+var cam : Camera3D
+
 var current_interactable : Area3D = null
 signal interactable_changed(interactable)
 
@@ -34,6 +38,13 @@ func _ready():
 	default_footstep_sounds = $AudioStreamPlayer.stream
 	default_footstep_volume = $AudioStreamPlayer.volume_db
 	default_footstep_pitch = $AudioStreamPlayer.pitch_scale
+	
+	cam = $CameraPivot/CameraParent/CameraDetachedParent/Camera3D
+	cam_parent = $CameraPivot/CameraParent/CameraDetachedParent
+	cam_parent.start_following($CameraPivot/CameraParent)
+	
+	item_parent = $HeldItemPivot/HeldItem/HeldItemDetachedParent
+	item_parent.start_following($HeldItemPivot/HeldItem)
 	
 	init_items()
 
@@ -184,7 +195,7 @@ var equipped_item_index = 0
 var item_name_dict = {}
 
 func init_items():
-	for item : EquippedItem in $HeldItemPivot/HeldItem.get_children():
+	for item : EquippedItem in $HeldItemPivot/HeldItem/HeldItemDetachedParent.get_children():
 		print(item.item_name)
 		item_name_dict[item.item_name] = item
 
@@ -244,7 +255,6 @@ func set_spawn_position (new_position, new_rotation):
 	
 func update_current_interactable():
 	var space_state = get_world_3d().direct_space_state
-	var cam = $CameraPivot/CameraParent/Camera3D
 	var mousepos = get_viewport().get_mouse_position()
 
 	var origin = cam.project_ray_origin(mousepos)
@@ -267,11 +277,17 @@ func try_interact():
 	if current_interactable != null:
 		current_interactable.interact(self)
 
-func get_camera() -> Camera3D:
+func get_camera_parent() -> Node3D:
+	return cam_parent
+
+func get_item_parent() -> Node3D:
+	return item_parent
+
+func get_camera_target() -> Node3D:
 	return $CameraPivot/CameraParent
 
 func get_camera_shake() -> Shaker:
-	return $CameraPivot/CameraParent/Camera3D/Shaker
+	return cam.get_node("Shaker")
 
 func can_see_point(global_point : Vector3) -> bool:
 	
