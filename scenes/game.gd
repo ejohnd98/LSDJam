@@ -321,6 +321,9 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	canvas_layer.get_node("UIParent/Compass").set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
 	is_loading_dream = false
+	
+	#done just in case the first refresh didn't work in time (hopefully patches up a bug I saw once)
+	DreamGridViewer.refresh_dream_grid(dream_grid)
 
 func set_compass_visible(is_visible : bool):
 	if is_visible:

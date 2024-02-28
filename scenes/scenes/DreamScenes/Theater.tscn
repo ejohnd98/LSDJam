@@ -709,7 +709,7 @@ require_up = true
 required_key = "cinemaFilm"
 require_up = true
 destroy_on_fail = true
-required_position = Vector2i(1, 2)
+required_position = Vector2i(2, 1)
 
 [node name="ChasingEnemy" parent="CinemaProjector/DreamCondition2" instance=ExtResource("17_v12gu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.666, -0.368636, 0)
@@ -845,7 +845,7 @@ direction = Vector2i(-1, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.66739, 1.0605, 20.127)
 required_key = "cinemaCoin"
 destroy_on_pass = true
-required_position = Vector2i(0, 2)
+required_position = Vector2i(1, 2)
 
 [node name="KeyObject" parent="Coin" instance=ExtResource("8_m5tpd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
@@ -859,7 +859,7 @@ texture = ExtResource("16_b2je1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.66739, 1.11437, 20.127)
 required_key = "cinemaFilm"
 destroy_on_pass = true
-required_position = Vector2i(2, 2)
+required_position = Vector2i(3, 1)
 
 [node name="KeyObject" parent="FilmItem" instance=ExtResource("8_m5tpd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
