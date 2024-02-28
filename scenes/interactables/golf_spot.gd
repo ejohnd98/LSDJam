@@ -77,6 +77,7 @@ func play_vo_line():
 
 func swing_club():
 	has_swung = true
+	GameManager.clear_control_prompts()
 	
 	var trajectory = Vector2.UP.rotated(starting_rotation + aim_rotation).normalized()
 	trajectory *= (max_range * swing_power)
@@ -125,6 +126,9 @@ func start_golf():
 	#await CameraManagerObject.fixed_lerp_done
 	$"GolfInteraction/Golf Club".show()
 	golf_ui.show()
+	GameManager.add_control_prompt("Swing: Left Mouse/E")
+	GameManager.add_control_prompt("Aim: A/D")
+	
 	GameManager.set_compass_visible(false)
 	
 	
@@ -135,6 +139,7 @@ func end_golf():
 	is_active = false
 	GameManager.set_crosshair(true)
 	golf_ui.hide()
+	GameManager.clear_control_prompts()
 	$GolfInteraction.rotation.y = starting_rotation
 	GameManager.set_compass_visible(true)
 	$"GolfInteraction/Golf Club".hide()

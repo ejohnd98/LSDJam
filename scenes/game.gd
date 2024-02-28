@@ -25,6 +25,7 @@ var transition_index = -1
 @onready var player : LSDPlayer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/Player")
 @onready var main_menu : MainMenu = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/MainMenu")
 @onready var transition_node : transition = get_tree().get_root().get_node("SubViewportContainer/SubViewport2/CanvasLayer/transition")
+@onready var prompt_controller : prompt_controller = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/ControlText")
 
 var current_scene_node = null
 var next_scene_path = ""
@@ -303,6 +304,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	
 	DreamGridViewer.refresh_dream_grid(dream_grid)
 	
+	clear_control_prompts()
+	
 	transition_node.finish_transition()
 	GameManager.set_crosshair(true)
 	await transition_node.transition_end_point
@@ -368,6 +371,18 @@ func set_crosshair(visible : bool):
 		canvas_layer.get_node("Crosshair").show()
 	else:
 		canvas_layer.get_node("Crosshair").hide()
+
+func add_control_prompt(text : String):
+	prompt_controller.add_prompt(text)
+
+func clear_control_prompts():
+	prompt_controller.clear_control_info()
+	prompt_controller.add_prompt("Inventory - Tab")
+	prompt_controller.add_prompt("Pause Menu - Esc")
+	return
+	#todo: instead, list these in pause menu
+	prompt_controller.add_prompt("Interact - Click/E")
+	prompt_controller.add_prompt("Sprint - Shift")
 
 func _process(delta):
 	if not shifting_to_nightmare:

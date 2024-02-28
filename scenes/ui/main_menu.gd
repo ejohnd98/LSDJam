@@ -7,6 +7,8 @@ var is_open = false
 var is_paused = false
 
 var settings_open = false
+var controls_open = false
+var credits_open = false
 
 signal on_menu_type_changed (menu_type : MenuType)
 
@@ -14,6 +16,10 @@ func _input(event):
 	if event.is_action_pressed("Escape"):
 		if settings_open:
 			toggle_settings_menu()
+		elif credits_open:
+			toggle_credits_menu()
+		elif controls_open:
+			toggle_controls_menu()
 		elif is_paused or GameManager.can_pause:
 			toggle_pause_menu()
 
@@ -56,8 +62,6 @@ func toggle_settings_menu():
 		$Settings/ModulateFade.fade_in()
 		await $Settings/ModulateFade.on_finished
 		
-		
-		
 	else:
 		$Settings/ModulateFade.fade_out()
 		await $Settings/ModulateFade.on_finished
@@ -68,7 +72,52 @@ func toggle_settings_menu():
 		$MainMenuButtons.show()
 		$MainMenuButtons/ModulateFade.fade_in()
 		await $MainMenuButtons/ModulateFade.on_finished
+
+func toggle_credits_menu():
+	credits_open = not credits_open
+	
+	if credits_open:
+		$MainMenuButtons/ModulateFade.fade_out()
+		await $MainMenuButtons/ModulateFade.on_finished
+		$MainMenuButtons.hide()
 		
+		$Credits/ModulateFade.reset(false)
+		$Credits.show()
+		$Credits/ModulateFade.fade_in()
+		await $Credits/ModulateFade.on_finished
+		
+	else:
+		$Credits/ModulateFade.fade_out()
+		await $Credits/ModulateFade.on_finished
+		$Credits.hide()
+
+		$MainMenuButtons/ModulateFade.reset(false)
+		$MainMenuButtons.show()
+		$MainMenuButtons/ModulateFade.fade_in()
+		await $MainMenuButtons/ModulateFade.on_finished
+
+func toggle_controls_menu():
+	controls_open = not controls_open
+	
+	if controls_open:
+		$MainMenuButtons/ModulateFade.fade_out()
+		await $MainMenuButtons/ModulateFade.on_finished
+		$MainMenuButtons.hide()
+		
+		$Controls/ModulateFade.reset(false)
+		$Controls.show()
+		$Controls/ModulateFade.fade_in()
+		await $Controls/ModulateFade.on_finished
+		
+	else:
+		$Controls/ModulateFade.fade_out()
+		await $Controls/ModulateFade.on_finished
+		$Controls.hide()
+
+		$MainMenuButtons/ModulateFade.reset(false)
+		$MainMenuButtons.show()
+		$MainMenuButtons/ModulateFade.fade_in()
+		await $MainMenuButtons/ModulateFade.on_finished
 
 func close_menu():
 	hide()
@@ -106,3 +155,9 @@ func _on_main_menu_pressed():
 
 func _on_settings_pressed():
 	toggle_settings_menu()
+
+func _on_controls_pressed():
+	toggle_controls_menu()
+
+func _on_credits_pressed():
+	toggle_credits_menu()

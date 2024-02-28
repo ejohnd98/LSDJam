@@ -2,6 +2,8 @@ extends Node
 
 var mouse_sensitivity = 0.8
 var overall_volume = 0.8
+var max_fps : int = 0
+var vsync_on : bool = true
 
 var completed_dreams : PackedStringArray
 var current_dream_array = null
@@ -17,6 +19,16 @@ func set_overall_volume(new_volume : float):
 	overall_volume = new_volume
 	var volume_db = -80.0 + (80.0 * (1.0 - pow(1 - new_volume, 5)))
 	AudioServer.set_bus_volume_db(0, volume_db)
+
+func set_max_fps():
+	Engine.max_fps = max_fps
+
+func set_vsync_on():
+	return
+	if vsync_on:
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+	else:
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 
 func add_item(item_name : String):
 	misc_items.append(item_name)
@@ -36,6 +48,10 @@ func save_settings():
 	
 	config.set_value("Player", "mouse_sensitivity", mouse_sensitivity)
 	config.set_value("Player", "overall_volume", overall_volume)
+	config.set_value("Player", "max_fps", max_fps)
+	set_max_fps()
+	config.set_value("Player", "vsync_on", vsync_on)
+	set_vsync_on()
 	if save_completed_dreams:
 		config.set_value("Player", "completed_dreams", completed_dreams)
 		config.set_value("Player", "current_dream_array", GameManager.dreams)
@@ -62,6 +78,14 @@ func load_settings():
 			mouse_sensitivity = config.get_value(section, "mouse_sensitivity")
 		if config.has_section_key(section, "overall_volume"):
 			set_overall_volume(config.get_value(section, "overall_volume"))
+		if config.has_section_key(section, "max_fps"):
+			max_fps = config.get_value(section, "max_fps")
+			set_max_fps()
+		if config.has_section_key(section, "vsync_on"):
+			vsync_on = config.get_value(section, "vsync_on")
+			set_vsync_on()
+			
+			
 		if save_completed_dreams:
 			if config.has_section_key(section, "completed_dreams"):
 				completed_dreams = config.get_value(section, "completed_dreams")

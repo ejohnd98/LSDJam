@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bhbcjyp88n1q0"]
+[gd_scene load_steps=15 format=3 uid="uid://bhbcjyp88n1q0"]
 
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_fu1d6"]
 [ext_resource type="Texture2D" uid="uid://ba2dveqpuegd3" path="res://textures/UI/logo placeholder.png" id="1_y8w4d"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scenes/ui/SettingsMenu.gd" id="5_1iy0v"]
 [ext_resource type="PackedScene" uid="uid://cc06vydyxrumr" path="res://scenes/ui/modulate_fade.tscn" id="5_5q8g0"]
 [ext_resource type="AudioStream" uid="uid://brg1nf0dfekdj" path="res://sounds/various_ambiences/sad ending.ogg" id="6_4ly21"]
+[ext_resource type="Texture2D" uid="uid://bmpm1p8n03oc6" path="res://textures/DreamGrid/empty_dream_icon.png" id="7_qtjdv"]
 
 [sub_resource type="Theme" id="Theme_8t71l"]
 default_font = ExtResource("2_0idkb")
@@ -101,6 +102,7 @@ script = ExtResource("4_pb48p")
 on_main_menu = false
 
 [node name="Main Menu" type="Button" parent="MainMenuButtons"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 6
 theme = SubResource("Theme_8t71l")
@@ -115,6 +117,7 @@ text = "Main Menu"
 alignment = 0
 script = ExtResource("4_pb48p")
 on_main_menu = false
+on_pause_menu = false
 
 [node name="Start" type="Button" parent="MainMenuButtons"]
 layout_mode = 2
@@ -146,6 +149,34 @@ text = "Settings"
 alignment = 0
 script = ExtResource("4_pb48p")
 
+[node name="Controls" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xhrvv")
+action_mode = 0
+text = "Controls"
+alignment = 0
+script = ExtResource("4_pb48p")
+
+[node name="Credits" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xhrvv")
+action_mode = 0
+text = "Credits"
+alignment = 0
+script = ExtResource("4_pb48p")
+
 [node name="Exit" type="Button" parent="MainMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
@@ -166,7 +197,6 @@ length = 0.25
 
 [node name="Settings" type="VBoxContainer" parent="."]
 visible = false
-modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 offset_left = 44.0
 offset_top = 117.0
@@ -222,6 +252,45 @@ value = 0.8
 tick_count = 11
 ticks_on_borders = true
 
+[node name="Max Fps" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+
+[node name="Label" type="Label" parent="Settings/Max Fps"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.25
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Max FPS"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/Max Fps"]
+layout_mode = 2
+placeholder_text = "FPS"
+
+[node name="Vsync_on" type="HBoxContainer" parent="Settings"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+
+[node name="Label" type="Label" parent="Settings/Vsync_on"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.25
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "V-Sync"
+
+[node name="CheckBox" type="CheckBox" parent="Settings/Vsync_on"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_icons/checked = ExtResource("7_qtjdv")
+theme_override_icons/unchecked = ExtResource("7_qtjdv")
+
 [node name="Volume" type="HBoxContainer" parent="Settings"]
 layout_mode = 2
 size_flags_horizontal = 5
@@ -249,6 +318,105 @@ ticks_on_borders = true
 [node name="ModulateFade" parent="Settings" instance=ExtResource("5_5q8g0")]
 length = 0.25
 
+[node name="Controls" type="VBoxContainer" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+offset_left = 44.0
+offset_top = 117.0
+offset_right = 913.0
+offset_bottom = 423.0
+alignment = 1
+
+[node name="Label" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Controls
+"
+
+[node name="Label2" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Movement: WASD, Left Stick
+Look: Mouse, Right Stick
+Sprint: Shift, Left Shoulder
+Jump: Space, Left Button
+---
+Interact: Left Mouse, E, Bottom Button
+Cycle Held Item: Scroll, Dpad L/R
+---
+Inventory: Tab, I, Top Button
+Pause Menu: Esc, Start Button"
+
+[node name="Back" type="Button" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtwfb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mgcuk")
+action_mode = 0
+text = "Back"
+alignment = 0
+
+[node name="ModulateFade" parent="Controls" instance=ExtResource("5_5q8g0")]
+length = 0.25
+
+[node name="Credits" type="VBoxContainer" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+offset_left = 44.0
+offset_top = 117.0
+offset_right = 913.0
+offset_bottom = 423.0
+alignment = 1
+
+[node name="Label" type="Label" parent="Credits"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Credits
+"
+
+[node name="Label2" type="Label" parent="Credits"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "[PLACEHOLDER"
+
+[node name="Back" type="Button" parent="Credits"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtwfb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mgcuk")
+action_mode = 0
+text = "Back"
+alignment = 0
+
+[node name="ModulateFade" parent="Credits" instance=ExtResource("5_5q8g0")]
+length = 0.25
+
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_4ly21")
 
@@ -258,5 +426,9 @@ stream = ExtResource("6_4ly21")
 [connection signal="pressed" from="MainMenuButtons/Main Menu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="MainMenuButtons/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MainMenuButtons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MainMenuButtons/Controls" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="MainMenuButtons/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="MainMenuButtons/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Settings/Back" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Controls/Back" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="Credits/Back" to="." method="_on_credits_pressed"]
