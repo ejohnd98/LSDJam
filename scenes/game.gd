@@ -46,6 +46,8 @@ var inventory_open = false
 
 var held_item_pivot : Node3D
 
+var debug_force_transition = false
+
 static func get_game(tree_node : SceneTree) -> game_manager:
 	return tree_node.get_root().get_node("SubViewportContainer/SubViewport/Game")
 
@@ -57,6 +59,8 @@ func _unhandled_input(event):
 			set_cursor_state(true)
 	if event.is_action_pressed("DebugNightmare"):
 		pick_nightmare()
+	if event.is_action_pressed("ForceTransition"):
+		debug_force_transition = true
 
 func set_cursor_state(is_captured : bool):
 	if is_captured:
@@ -154,8 +158,9 @@ func advance_dream():
 func pick_random_dream(allow_transition_dreams : bool = true):
 	var new_index = dream_index
 	
-	if (not in_transition_dream and allow_transition_dreams and randf() > 0.7):
+	if (not in_transition_dream and allow_transition_dreams and (randf() > 0.70)):# or debug_force_transition)):
 		in_transition_dream = true
+		debug_force_transition = false
 	else:
 		if allow_transition_dreams and not in_transition_dream and not get_dream_grid().is_nightmare and randf() > 0.8:
 			in_transition_dream = false
@@ -185,7 +190,7 @@ func change_dreams(index : int, is_nightmare : bool = false):
 	#remove old dream grid
 	if dream_grid:
 		dream_grid.queue_free()
-		dream_grid = null
+		await dream_grid.tree_exited
 	
 	var new_dream
 	#add new dream grid
@@ -209,13 +214,44 @@ func change_dreams(index : int, is_nightmare : bool = false):
 	#load starting scene
 	load_new_scene(dream_grid.get_start_cell().scene_name, Vector2i.UP, true)
 
+func get_spawn_node(incoming_direction) -> Node3D:
+	await get_tree().create_timer(0.1).timeout
+	var current_cell = dream_grid.get_current_cell()
+	var new_spawn : Node3D
+	if current_cell != null: 
+		if current_cell.has_multiple_spawns:
+			match incoming_direction:
+				Vector2i.DOWN:
+					new_spawn = current_scene_node.get_node("PlayerSpawnDown")
+				Vector2i.RIGHT:
+					new_spawn = current_scene_node.get_node("PlayerSpawnRight")
+				Vector2i.UP:
+					new_spawn = current_scene_node.get_node("PlayerSpawnUp")
+				Vector2i.LEFT:
+					new_spawn = current_scene_node.get_node("PlayerSpawnLeft")
+			if new_spawn == null:
+				push_warning("load_new_scene: could not get directional spawn point!")
+				new_spawn = current_scene_node.get_node("PlayerSpawn")
+		elif current_cell.has_position_spawns:
+			var spawn_name = "PlayerSpawn_" + str(dream_grid.player_position.x) + "_" + str(dream_grid.player_position.y)
+			new_spawn = current_scene_node.get_node(spawn_name)
+		else:
+			new_spawn = current_scene_node.get_node("PlayerSpawn")
+	else:
+		push_error("load_new_scene: current cell is null!")
+	
+	return new_spawn
 
+#INCOMING DIRECTION IS SOMETIMES NULL (forced?)
 func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vector2i.UP, changing_dreams = false):
 	if not $SceneChangeTimer.is_stopped():
 		return
 	
 	if is_loading_dream:
 		return
+	
+	if incoming_direction == null:
+		incoming_direction = Vector2i.UP
 	
 	is_loading_dream = true
 	
@@ -238,7 +274,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	# Remove old scene
 	if current_scene_node:
 		current_scene_node.queue_free()
-		current_scene_node = null
+		await current_scene_node.tree_exited
 	
 	add_child(new_scene, true)
 	await get_tree().create_timer(0.1).timeout
@@ -248,31 +284,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	
 	# get player spawn position
 	var new_spawn : Node3D
-	if current_cell != null: 
-		await get_tree().create_timer(0.1).timeout
-		if current_cell.has_multiple_spawns:
-			match incoming_direction:
-				Vector2i.DOWN:
-					new_spawn = current_scene_node.get_node("PlayerSpawnDown")
-				Vector2i.RIGHT:
-					new_spawn = current_scene_node.get_node("PlayerSpawnRight")
-				Vector2i.UP:
-					new_spawn = current_scene_node.get_node("PlayerSpawnUp")
-				Vector2i.LEFT:
-					new_spawn = current_scene_node.get_node("PlayerSpawnLeft")
-			if new_spawn == null:
-				push_warning("load_new_scene: could not get directional spawn point!")
-				new_spawn = current_scene_node.get_node("PlayerSpawn")
-		elif current_cell.has_position_spawns:
-			var spawn_name = "PlayerSpawn_" + str(dream_grid.player_position.x) + "_" + str(dream_grid.player_position.y)
-			new_spawn = current_scene_node.get_node(spawn_name)
-		else:
-			new_spawn = current_scene_node.get_node("PlayerSpawn")
-	else:
-		push_error("load_new_scene: current cell is null!")
-	
-	if new_spawn == null:
-		printerr("new_spawn is null!")
+	new_spawn = await get_spawn_node(incoming_direction)
 	
 	if dream_grid.is_nightmare and not in_nightmare:
 		on_entered_nightmare()
@@ -300,7 +312,10 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		pass
 	
 	#fixes issue where player wasn't snapping to ground
-	await get_tree().create_timer(0.25).timeout
+	await get_tree().create_timer(0.1).timeout
+	
+	if (new_spawn == null):
+		new_spawn = await get_spawn_node(incoming_direction)
 	
 	player.set_spawn_position(new_spawn.global_position, new_spawn.global_rotation)
 	player.get_camera_parent().reset_position()

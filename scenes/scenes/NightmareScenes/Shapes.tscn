@@ -1,0 +1,144 @@
+[gd_scene load_steps=18 format=3 uid="uid://brfmnv4rr7jjs"]
+
+[ext_resource type="AudioStream" uid="uid://cma6v5txnqoq5" path="res://sounds/herald_slow.ogg" id="2_uc10x"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="3_ddunl"]
+[ext_resource type="Texture2D" uid="uid://keps8pn8wgob" path="res://textures/grid.png" id="6_jvrjg"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="7_co63r"]
+[ext_resource type="PackedScene" uid="uid://dtwhm27xmb8u1" path="res://scenes/props/rotating_shape.tscn" id="7_m7i0o"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="8_hvnlx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vomn2"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.647059, 0.654902, 0.670588, 1)
+sky_curve = 0.0046875
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.196078, 0.203922, 0.211765, 1)
+ground_curve = 0.0141422
+
+[sub_resource type="Sky" id="Sky_wycyx"]
+sky_material = SubResource("ProceduralSkyMaterial_vomn2")
+
+[sub_resource type="Environment" id="Environment_7u1cd"]
+background_mode = 2
+sky = SubResource("Sky_wycyx")
+tonemap_mode = 2
+glow_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_light_energy = 3.01
+fog_density = 0.0511
+fog_sky_affect = 0.303
+volumetric_fog_density = 0.1366
+volumetric_fog_albedo = Color(0, 0, 0, 1)
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_gi_inject = 0.34
+volumetric_fog_ambient_inject = 0.46
+volumetric_fog_sky_affect = 0.608
+adjustment_enabled = true
+adjustment_brightness = 1.33
+adjustment_contrast = 1.03
+adjustment_saturation = 1.03
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uq4a5"]
+size = Vector3(150, 1, 150)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1xfk7"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bbyr1"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uuubc"]
+albedo_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+albedo_texture = ExtResource("6_jvrjg")
+metallic_specular = 0.0
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_scale = Vector3(0.5, 0.5, 0.5)
+uv2_triplanar = true
+uv2_world_triplanar = true
+texture_filter = 2
+
+[sub_resource type="PrismMesh" id="PrismMesh_q2s46"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kc32w"]
+albedo_color = Color(0, 1, 0, 1)
+metallic_specular = 0.4
+roughness = 0.22
+rim = 0.74
+clearcoat_roughness = 0.73
+
+[sub_resource type="BoxMesh" id="BoxMesh_hb65b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hprq0"]
+albedo_color = Color(0, 0, 1, 1)
+metallic_specular = 0.4
+roughness = 0.22
+rim = 0.74
+clearcoat_roughness = 0.73
+
+[node name="Shapes" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7u1cd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.02923, 0.173995, -0.0434564)
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("3_ddunl")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 1, 1.637, 5.26963)
+visible = false
+
+[node name="AmbientSound2" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("2_uc10x")
+attenuation_model = 3
+volume_db = -14.0
+unit_size = 100.0
+autoplay = true
+panning_strength = 0.4
+bus = &"SFX"
+
+[node name="ForcedTransitionArea2" type="Area3D" parent="."]
+transform = Transform3D(1.23, 0, 0, 0, 1.23, 0, 0, 0, 1.23, 0, 0, 0)
+script = ExtResource("7_co63r")
+force_direction = true
+direction = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -13.3892, 0)
+shape = SubResource("BoxShape3D_uq4a5")
+script = ExtResource("8_hvnlx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_1xfk7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_bbyr1")
+surface_material_override/0 = SubResource("StandardMaterial3D_uuubc")
+
+[node name="Node3D" parent="." instance=ExtResource("7_m7i0o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+
+[node name="Node3D2" parent="." instance=ExtResource("7_m7i0o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 11)
+
+[node name="MeshInstance3D" parent="Node3D2" index="1"]
+mesh = SubResource("PrismMesh_q2s46")
+surface_material_override/0 = SubResource("StandardMaterial3D_kc32w")
+
+[node name="Node3D3" parent="." instance=ExtResource("7_m7i0o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 11)
+
+[node name="MeshInstance3D" parent="Node3D3" index="1"]
+mesh = SubResource("BoxMesh_hb65b")
+surface_material_override/0 = SubResource("StandardMaterial3D_hprq0")
+
+[editable path="Node3D2"]
+[editable path="Node3D3"]

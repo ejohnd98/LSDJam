@@ -1,0 +1,80 @@
+[gd_scene load_steps=13 format=3 uid="uid://crei5xs83jhkj"]
+
+[ext_resource type="Texture2D" uid="uid://begi00vuw3si7" path="res://textures/space_skybox.png" id="1_wclpx"]
+[ext_resource type="AudioStream" uid="uid://7htj1chxmfp7" path="res://sounds/various_ambiences/Gravity.ogg" id="2_vyxbo"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="3_u02vn"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="5_v15v4"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="6_2xm0u"]
+[ext_resource type="PackedScene" uid="uid://crefejrw6fpo5" path="res://textures/earth.glb" id="6_hk3sb"]
+[ext_resource type="Texture2D" uid="uid://b62ublqmscrdd" path="res://textures/moon.png" id="7_74t46"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4l85b"]
+panorama = ExtResource("1_wclpx")
+
+[sub_resource type="Sky" id="Sky_8x3a2"]
+sky_material = SubResource("PanoramaSkyMaterial_4l85b")
+
+[sub_resource type="Environment" id="Environment_ev67k"]
+background_mode = 2
+sky = SubResource("Sky_8x3a2")
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.0
+fog_sky_affect = 0.0
+fog_height = -137.42
+fog_height_density = 0.3463
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fktx3"]
+size = Vector3(300, 5, 300)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eeqsd"]
+albedo_texture = ExtResource("7_74t46")
+
+[node name="SpaceTransition" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ev67k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0.346238, -0.158631, 0.924638, -0.360725, 0.887318, 0.287305, 0, 0, 0)
+shadow_enabled = true
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("2_vyxbo")
+attenuation_model = 3
+volume_db = -16.0
+unit_size = 800.0
+autoplay = true
+panning_strength = 0.2
+bus = &"SFX"
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, 160.42, 0)
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("3_u02vn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 98.0987, 0.269625)
+visible = false
+
+[node name="ForcedTransitionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0329895, -11.2676, 0.00255775)
+script = ExtResource("5_v15v4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -110.366, 0)
+shape = SubResource("BoxShape3D_fktx3")
+script = ExtResource("6_2xm0u")
+
+[node name="earth" parent="." instance=ExtResource("6_hk3sb")]
+transform = Transform3D(36.5222, 0, 0, 0, 9.90224, 0, 0, 0, 36.5222, 0, -147.014, 0)
+
+[node name="moon" parent="." instance=ExtResource("6_hk3sb")]
+transform = Transform3D(16.8858, 0, 0, 0, -7.38101e-07, -16.8858, 0, 16.8858, -7.38101e-07, 0, 5.57617, -384.703)
+
+[node name="Sphere" parent="moon" index="0"]
+transform = Transform3D(2.1267, 0, 0, 0, 0.783577, -4.9738e-14, 0, 2.13163e-14, 2.1267, 0, -56.9057, 2.5928e-06)
+surface_material_override/0 = SubResource("StandardMaterial3D_eeqsd")
+
+[editable path="moon"]

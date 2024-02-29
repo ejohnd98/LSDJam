@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://dtwhm27xmb8u1"]
+
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="1_fjth2"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="2_p54bn"]
+[ext_resource type="Script" path="res://scenes/interactables/HoverItem.gd" id="3_tmhwf"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_p75hf"]
+radius = 1.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_fcm6g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7i55a"]
+albedo_color = Color(1, 0, 0, 1)
+metallic_specular = 0.4
+roughness = 0.22
+rim = 0.74
+clearcoat_roughness = 0.73
+
+[node name="Node3D" type="Node3D"]
+
+[node name="ForcedArea" type="Area3D" parent="."]
+transform = Transform3D(1.23, 0, 0, 0, 1.23, 0, 0, 0, 1.23, 0, 0, 0)
+script = ExtResource("1_fjth2")
+force_direction = true
+direction = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59605, 0)
+shape = SubResource("SphereShape3D_p75hf")
+script = ExtResource("2_p54bn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.65042, 0, 0, 0, 4.65042, 0, 0, 0, 4.65042, 0, 2.99236, 0)
+mesh = SubResource("SphereMesh_fcm6g")
+surface_material_override/0 = SubResource("StandardMaterial3D_7i55a")
+script = ExtResource("3_tmhwf")
+bob_speed = 0.8
+rotate_speed = 0.2
+rotate = true

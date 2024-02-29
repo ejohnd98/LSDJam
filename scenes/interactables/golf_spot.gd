@@ -115,6 +115,8 @@ func start_golf():
 	golf_ui.scale = Vector3.ONE * 0.279
 	golf_ui.position = Vector3.MODEL_REAR
 	golf_ui.rotation = Vector3.ZERO
+
+	GameManager.player.unequip_item()
 	
 	CameraManagerObject.set_camera_override_node($GolfInteraction/AlternateCamera)
 	GameManager.hide_interact_text()

@@ -5,6 +5,7 @@ extends Node3D
 func _on_interaction_object_on_interact():
 	
 	CameraManagerObject.set_camera_override_node($boat/CameraPos)
+	GameManager.player.unequip_item()
 	await get_tree().create_timer(0.6).timeout
 	$AnimationPlayer.play("BoatAnim")
 	$AudioStreamPlayer.play()

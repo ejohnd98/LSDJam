@@ -1,0 +1,132 @@
+[gd_scene load_steps=22 format=3 uid="uid://dx3e7k3714qp3"]
+
+[ext_resource type="Texture2D" uid="uid://bgrxkyvd3cqx0" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect.png" id="1_vh1a2"]
+[ext_resource type="AudioStream" uid="uid://deqyihaddcvn7" path="res://sounds/forest_ambience.ogg" id="2_uobnh"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="3_0anij"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="4_4juny"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="5_r7fpe"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="6_4eegv"]
+[ext_resource type="PackedScene" uid="uid://crefejrw6fpo5" path="res://textures/earth.glb" id="7_80hmr"]
+[ext_resource type="Texture2D" uid="uid://biofmumaacwl2" path="res://sourceModels/Golf/golf_base_grass.png" id="8_yyt7m"]
+[ext_resource type="PackedScene" uid="uid://d27k6ytplbw5k" path="res://models/water_plane.tscn" id="9_m8mr3"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_bvy47"]
+panorama = ExtResource("1_vh1a2")
+
+[sub_resource type="Sky" id="Sky_xjto4"]
+sky_material = SubResource("PanoramaSkyMaterial_bvy47")
+
+[sub_resource type="Environment" id="Environment_i5o2s"]
+background_mode = 2
+sky = SubResource("Sky_xjto4")
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.0941176, 0.176471, 0.341176, 1)
+fog_density = 0.0
+fog_sky_affect = 0.0
+fog_height = -2.0
+fog_height_density = 1.2468
+
+[sub_resource type="SphereMesh" id="SphereMesh_oi5rx"]
+flip_faces = true
+radius = 200.0
+height = 200.0
+radial_segments = 128
+rings = 128
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_iorx3")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8oso0"]
+noise_type = 0
+offset = Vector3(240, 0, 0)
+fractal_type = 3
+fractal_octaves = 1
+fractal_ping_pong_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pio0u"]
+seamless = true
+noise = SubResource("FastNoiseLite_8oso0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kyll7"]
+render_priority = 0
+shader = ExtResource("4_4juny")
+shader_parameter/distortionView = 0.025
+shader_parameter/speedView = 0.0413
+shader_parameter/static_intensity = 0.0
+shader_parameter/tintColor = Color(1, 1, 1, 1)
+shader_parameter/fesnelAmount = 0.78
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.0
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_pio0u")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_232gj"]
+size = Vector3(220, 5, 220)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uhbgr"]
+albedo_texture = ExtResource("8_yyt7m")
+uv1_scale = Vector3(10, 10, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nuogf"]
+top_radius = 200.0
+bottom_radius = 200.0
+
+[node name="TransitionTemp" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_i5o2s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("2_uobnh")
+attenuation_model = 3
+volume_db = -16.0
+unit_size = 800.0
+autoplay = true
+panning_strength = 0.2
+bus = &"SFX"
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("3_0anij")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.417, 0.269625)
+visible = false
+
+[node name="Distortion" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_oi5rx")
+surface_material_override/0 = SubResource("ShaderMaterial_kyll7")
+
+[node name="ForcedTransitionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.91438, 0)
+script = ExtResource("5_r7fpe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
+shape = SubResource("BoxShape3D_232gj")
+script = ExtResource("6_4eegv")
+
+[node name="earth" parent="." instance=ExtResource("7_80hmr")]
+transform = Transform3D(3.98217, 0, 0, 0, 3.98217, 0, 0, 0, 3.98217, 0, -10.0631, 0)
+
+[node name="Sphere" parent="earth" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_uhbgr")
+
+[node name="WaterPlane" parent="." instance=ExtResource("9_m8mr3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.94106, 0)
+mesh = SubResource("CylinderMesh_nuogf")
+
+[editable path="earth"]

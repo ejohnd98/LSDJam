@@ -31,6 +31,8 @@ var cam_parent : Node3D
 var item_parent : Node3D
 var cam : Camera3D
 
+@export var debug_camera_height_override = 0.0
+
 var current_interactable : Area3D = null
 signal interactable_changed(interactable)
 
@@ -102,7 +104,7 @@ func _process(delta):
 	
 	if camera_vertical_offset < 0.0:
 		camera_vertical_offset = minf(camera_vertical_offset + delta * 1.5, 0.0)
-		$CameraPivot/CameraParent.position.y = camera_vertical_offset
+		$CameraPivot/CameraParent.position.y = camera_vertical_offset + debug_camera_height_override
 
 func _physics_process(delta):
 	if is_frozen:
@@ -224,6 +226,11 @@ func set_current_item(item_name : String):
 func cycle_items(direction = 1):
 	$CycleItemTimer.start()
 	equipped_item_index = wrapi(equipped_item_index + direction, 0, PlayerSettings.found_items.size())
+	set_current_item(PlayerSettings.found_items[equipped_item_index])
+
+func unequip_item():
+	$CycleItemTimer.start()
+	equipped_item_index = 0
 	set_current_item(PlayerSettings.found_items[equipped_item_index])
 
 func set_frozen (frozen):

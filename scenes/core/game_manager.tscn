@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b3cji1mbgackj"]
+[gd_scene load_steps=16 format=3 uid="uid://b3cji1mbgackj"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_o0mgw"]
 [ext_resource type="PackedScene" uid="uid://cvg57vh1pq5pu" path="res://scenes/scenes/DreamGrids/dream_grid_forest.tscn" id="2_5j5jn"]
@@ -10,14 +10,17 @@
 [ext_resource type="PackedScene" uid="uid://btkn6g45g27pt" path="res://scenes/scenes/DreamGrids/dream_grid_theater.tscn" id="2_qpm1d"]
 [ext_resource type="PackedScene" uid="uid://dqpvyhc3dapsi" path="res://scenes/scenes/NightmareGrids/nightmare_grid_forest.tscn" id="7_t8n6k"]
 [ext_resource type="PackedScene" uid="uid://coomu4hb7j114" path="res://scenes/scenes/NightmareGrids/nightmare_grid_cenotaph.tscn" id="8_1dkr5"]
+[ext_resource type="PackedScene" uid="uid://cgo5ruj6aesvf" path="res://scenes/scenes/NightmareGrids/nightmare_grid_shapes.tscn" id="8_6mjau"]
 [ext_resource type="PackedScene" uid="uid://b8vh68yp0oo1w" path="res://scenes/scenes/TransitionGrids/test_transition_grid.tscn" id="9_kaf6a"]
 [ext_resource type="PackedScene" uid="uid://cctwkt6ihh4pp" path="res://scenes/scenes/NightmareGrids/nightmare_grid_cenotaph_alt.tscn" id="10_wh5yi"]
+[ext_resource type="PackedScene" uid="uid://pkuuwqc8jkqe" path="res://scenes/scenes/TransitionGrids/space_transition_grid.tscn" id="11_tlfdt"]
+[ext_resource type="PackedScene" uid="uid://d2hnmsnupmopg" path="res://scenes/scenes/TransitionGrids/meadow_transition_grid.tscn" id="14_imue7"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_o0mgw")
 dreams = Array[PackedScene]([ExtResource("2_qpm1d"), ExtResource("2_7cvka"), ExtResource("2_17qwh"), ExtResource("2_5j5jn"), ExtResource("2_nbwkb"), ExtResource("2_12uwn")])
-nightmares = Array[PackedScene]([ExtResource("7_t8n6k"), ExtResource("8_1dkr5"), ExtResource("10_wh5yi")])
-transitions = Array[PackedScene]([ExtResource("9_kaf6a")])
+nightmares = Array[PackedScene]([ExtResource("8_1dkr5"), ExtResource("7_t8n6k"), ExtResource("8_6mjau"), ExtResource("10_wh5yi")])
+transitions = Array[PackedScene]([ExtResource("14_imue7"), ExtResource("11_tlfdt"), ExtResource("9_kaf6a")])
 dream_transition = ExtResource("2_m3dlw")
 
 [node name="SceneChangeTimer" type="Timer" parent="."]

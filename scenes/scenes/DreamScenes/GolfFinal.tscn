@@ -224,6 +224,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_cxpgf")
 script = ExtResource("6_wl1jm")
 
 [node name="ForcedTransitionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.190495, 0)
 script = ExtResource("7_by200")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
