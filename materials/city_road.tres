@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c7ll003d5dac2"]
+
+[ext_resource type="Texture2D" uid="uid://ssgrxh3qfy5c" path="res://sourceModels/Mini City_Building Side.png" id="1_15fnw"]
+
+[resource]
+albedo_texture = ExtResource("1_15fnw")
+roughness = 0.76
+texture_filter = 2

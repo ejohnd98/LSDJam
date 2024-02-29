@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://d34w2dh1oog0p"]
+
+[ext_resource type="Texture2D" uid="uid://dl4hx2wugc74r" path="res://sourceModels/City/BUILD011.png" id="1_nmuq4"]
+[ext_resource type="Texture2D" uid="uid://bf8vwxyskwiod" path="res://sourceModels/City/BUILD011_NORMAL.png" id="2_dtswm"]
+
+[resource]
+albedo_texture = ExtResource("1_nmuq4")
+metallic = 0.22
+roughness = 0.78
+normal_enabled = true
+normal_scale = 0.5
+normal_texture = ExtResource("2_dtswm")
+texture_filter = 2

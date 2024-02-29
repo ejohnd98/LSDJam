@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://c4dovvdxb8nlw"]
+[gd_scene load_steps=44 format=3 uid="uid://c4dovvdxb8nlw"]
 
 [ext_resource type="Texture2D" uid="uid://dmbvhkwa5c4i1" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ClearBlueSky_Equirect.png" id="1_dkn17"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_s85f1"]
@@ -78,7 +78,7 @@ noise_type = 3
 frequency = 0.0105
 fractal_type = 2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1y30t"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fxiwp"]
 seamless = true
 noise = SubResource("FastNoiseLite_iorx3")
 
@@ -93,14 +93,23 @@ shader_parameter/fesnelAmount = 0.87
 shader_parameter/fresnelTintOffset = -1.0
 shader_parameter/distortionVertex = 0.01
 shader_parameter/speedVertex = 0.1
-shader_parameter/noiseViewX = SubResource("NoiseTexture2D_1y30t")
-shader_parameter/noiseViewY = SubResource("NoiseTexture2D_1y30t")
-shader_parameter/noiseVertex = SubResource("NoiseTexture2D_1y30t")
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_fxiwp")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_fxiwp")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_fxiwp")
 
 [sub_resource type="QuadMesh" id="QuadMesh_l5jsp"]
 size = Vector2(12, 5)
 subdivide_width = 10
 subdivide_depth = 4
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hodyl"]
+noise_type = 3
+frequency = 0.0105
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1y30t"]
+seamless = true
+noise = SubResource("FastNoiseLite_hodyl")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p56fa"]
 render_priority = 0

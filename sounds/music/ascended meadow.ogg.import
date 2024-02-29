@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://md7rx0r67wl4"
+path="res://.godot/imported/ascended meadow.ogg-fe94898b2af78a1d82303e0a069ac964.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/music/ascended meadow.ogg"
+dest_files=["res://.godot/imported/ascended meadow.ogg-fe94898b2af78a1d82303e0a069ac964.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

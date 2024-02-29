@@ -6,8 +6,8 @@
 [ext_resource type="Script" path="res://scenes/ui/MenuButtonHelper.gd" id="4_pb48p"]
 [ext_resource type="Script" path="res://scenes/ui/SettingsMenu.gd" id="5_1iy0v"]
 [ext_resource type="PackedScene" uid="uid://cc06vydyxrumr" path="res://scenes/ui/modulate_fade.tscn" id="5_5q8g0"]
-[ext_resource type="AudioStream" uid="uid://brg1nf0dfekdj" path="res://sounds/various_ambiences/sad ending.ogg" id="6_4ly21"]
 [ext_resource type="Texture2D" uid="uid://bmpm1p8n03oc6" path="res://textures/DreamGrid/empty_dream_icon.png" id="7_qtjdv"]
+[ext_resource type="AudioStream" uid="uid://yvmqffxc3krh" path="res://sounds/ambient march.ogg" id="8_ontdd"]
 
 [sub_resource type="Theme" id="Theme_8t71l"]
 default_font = ExtResource("2_0idkb")
@@ -418,7 +418,8 @@ alignment = 0
 length = 0.25
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_4ly21")
+stream = ExtResource("8_ontdd")
+volume_db = -8.0
 
 [node name="ModulateFade" parent="." instance=ExtResource("5_5q8g0")]
 

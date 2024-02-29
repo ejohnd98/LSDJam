@@ -3,6 +3,7 @@ class_name LSDPlayer extends RigidBody3D
 const RAY_LENGTH = 30
 const WALK_SPEED = 2.5
 const SPRINT_MOD = 1.8
+const BIKE_MOD = 3.0
 const DEBUG_SPRINT_MOD = 8
 const JUMP_VELOCITY = 3.0
 const SENSITIVITY = 0.003
@@ -105,6 +106,7 @@ func _process(delta):
 	if camera_vertical_offset < 0.0:
 		camera_vertical_offset = minf(camera_vertical_offset + delta * 1.5, 0.0)
 		$CameraPivot/CameraParent.position.y = camera_vertical_offset + debug_camera_height_override
+		$HeldItemPivot/HeldItem.position.y = -0.291 + camera_vertical_offset
 
 func _physics_process(delta):
 	if is_frozen:
@@ -147,15 +149,22 @@ func _physics_process(delta):
 		vertical_velocity -= delta * 9
 		position.y += vertical_velocity*delta
 	
-	var input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
-	var direction : Vector3 = ($CameraPivot.transform.basis * Vector3(input_dir.x, 0, input_dir.y))
-	if direction.length() > 1.0:
-		direction = direction.normalized()
+	
 	
 	var move_speed : float = WALK_SPEED * control_modifier
 	var is_sprinting = Input.is_action_pressed("Sprint")
 	if (is_sprinting):
 		move_speed *= SPRINT_MOD
+	
+	var input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
+	
+	if (current_item_node != null and current_item_node.item_name == "bike"):
+		move_speed *= BIKE_MOD
+		input_dir = Vector2i.UP
+	
+	var direction : Vector3 = ($CameraPivot.transform.basis * Vector3(input_dir.x, 0, input_dir.y))
+	if direction.length() > 1.0:
+		direction = direction.normalized()
 	
 	if (Input.is_action_pressed("DebugSprint")):
 		move_speed *= DEBUG_SPRINT_MOD
@@ -212,6 +221,7 @@ func set_current_item(item_name : String):
 	if current_item_node != null:
 		current_item_node.unequip_item()
 		current_item_node.hide()
+		current_item_node = null
 	
 	if item_name.is_empty():
 		return

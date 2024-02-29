@@ -184,7 +184,13 @@ func get_next_transition_dream() -> PackedScene:
 	return transitions[transition_index]
 	
  
+var change_dreams_called = false
+
 func change_dreams(index : int, is_nightmare : bool = false):
+	if change_dreams_called:
+		return
+	
+	change_dreams_called = true
 	dream_index = index
 	
 	#remove old dream grid
@@ -208,6 +214,7 @@ func change_dreams(index : int, is_nightmare : bool = false):
 		return
 		
 	get_tree().get_root().get_node("SubViewportContainer/CanvasLayer").add_child(new_dream)
+	await get_tree().create_timer(0.1).timeout
 	dream_grid = new_dream
 	dream_grid.initialize_grid()
 	
@@ -343,6 +350,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	canvas_layer.get_node("UIParent/Compass").set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
 	is_loading_dream = false
+	change_dreams_called = false
 	
 	#done just in case the first refresh didn't work in time (hopefully patches up a bug I saw once)
 	DreamGridViewer.refresh_dream_grid(dream_grid)
