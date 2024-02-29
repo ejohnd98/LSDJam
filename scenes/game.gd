@@ -154,9 +154,13 @@ func advance_dream():
 func pick_random_dream(allow_transition_dreams : bool = true):
 	var new_index = dream_index
 	
-	if (not in_transition_dream and allow_transition_dreams and randf() > 0.6):
+	if (not in_transition_dream and allow_transition_dreams and randf() > 0.7):
 		in_transition_dream = true
 	else:
+		if allow_transition_dreams and not in_transition_dream and not get_dream_grid().is_nightmare and randf() > 0.8:
+			in_transition_dream = false
+			pick_nightmare()
+			return
 		in_transition_dream = false
 		
 	# this (hopefully) ensures when going to a transition, we don't return to the same dream afterwards
