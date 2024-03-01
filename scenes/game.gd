@@ -151,6 +151,7 @@ func move_in_direction(direction: Vector2i):
 	load_new_scene(dream_grid.get_scene_from_position(), direction)
 
 func win_game():
+	player.set_frozen(true)
 	can_pause = false
 	set_cursor_state(false)
 	TransitionVolume.fade_out()
@@ -171,11 +172,11 @@ func advance_dream():
 func pick_random_dream(allow_transition_dreams : bool = true):
 	var new_index = dream_index
 	
-	if (not in_transition_dream and allow_transition_dreams and (randf() > 0.65)):# or debug_force_transition)):
+	if (not in_transition_dream and allow_transition_dreams and (randf() > 0.6)):# or debug_force_transition)):
 		in_transition_dream = true
 		debug_force_transition = false
 	else:
-		if allow_transition_dreams and not in_transition_dream and not get_dream_grid().is_nightmare and randf() > 0.8:
+		if allow_transition_dreams and not in_transition_dream and not get_dream_grid().is_nightmare and randf() > 0.5:
 			in_transition_dream = false
 			pick_nightmare()
 			return
@@ -212,6 +213,10 @@ func change_dreams(index : int, is_nightmare : bool = false, is_transition : boo
 		dream_grid.queue_free()
 		await dream_grid.tree_exited
 	
+	if dreams.size() == 0:
+		win_game()
+		return
+	
 	var new_dream
 	#add new dream grid
 	if is_transition:
@@ -223,9 +228,11 @@ func change_dreams(index : int, is_nightmare : bool = false, is_transition : boo
 	elif dreams.size() > 0:
 		new_dream = dreams[dream_index].instantiate()
 	else:
-		player.set_frozen(true)
 		win_game()
 		return
+	
+	if new_dream == null:
+		printerr("new dream is null!")
 		
 	get_tree().get_root().get_node("SubViewportContainer/CanvasLayer").add_child(new_dream)
 	await get_tree().create_timer(0.1).timeout

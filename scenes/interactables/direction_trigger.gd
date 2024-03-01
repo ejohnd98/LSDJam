@@ -10,6 +10,7 @@ extends click_interaction
 @export var start_dist : float = 3.0
 
 var has_triggered = false
+var can_trigger = false
 
 func _ready():
 	var angle = atan2(float(grid_direction.x), float(grid_direction.y))
@@ -33,9 +34,14 @@ func _ready():
 	else:
 		$DistortionBubbleInteract.hide()
 	
+	await GameManager.on_dream_started
+	can_trigger = true
+	
 	connect("on_interact", trigger_direction)
 
 func _process(delta):
+	if not can_trigger:
+		return
 	if not proximity_trigger or not set_transition_amount or player_body == null:
 		return
 	
@@ -52,7 +58,7 @@ func _process(delta):
 			trigger_direction()
 
 func trigger_direction():
-	if has_triggered:
+	if has_triggered or not can_trigger:
 		return
 	
 	has_triggered = true

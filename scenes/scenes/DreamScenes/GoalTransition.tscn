@@ -44,7 +44,7 @@ size = Vector3(1.5, 2, 0.5)
 _data = [Vector2(0, 0), 0.0, 8.65714, 0, 0, Vector2(0.357673, 0.959143), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.12298, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_j3ggf"]
+[sub_resource type="CurveTexture" id="CurveTexture_1ufpd"]
 curve = SubResource("Curve_0yyms")
 
 [sub_resource type="Curve" id="Curve_vavsq"]
@@ -53,7 +53,7 @@ max_value = 10.0
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 10), 12.614, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_77b3l"]
+[sub_resource type="CurveTexture" id="CurveTexture_oxijx"]
 curve = SubResource("Curve_vavsq")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cy3mx"]
@@ -62,17 +62,17 @@ emission_shape = 3
 emission_box_extents = Vector3(40, 1, 40)
 gravity = Vector3(0, 0.5, 0)
 attractor_interaction_enabled = false
-scale_curve = SubResource("CurveTexture_77b3l")
-alpha_curve = SubResource("CurveTexture_j3ggf")
+scale_curve = SubResource("CurveTexture_oxijx")
+alpha_curve = SubResource("CurveTexture_1ufpd")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0nr8o"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0j2d5"]
 transparency = 1
 blend_mode = 1
 vertex_color_use_as_albedo = true
 proximity_fade_enabled = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_xjgoo"]
-material = SubResource("StandardMaterial3D_0nr8o")
+material = SubResource("StandardMaterial3D_0j2d5")
 size = Vector2(0.02, 0.03)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y5nt3"]
@@ -136,6 +136,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.5
 [node name="SceneTrigger" parent="." instance=ExtResource("5_wn5bx")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 40.1)
 grid_direction = Vector2i(0, -1)
+force_new_dream = true
 proximity_trigger = true
 show_mesh = false
 show_arrow = false

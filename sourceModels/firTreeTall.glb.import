@@ -30,6 +30,12 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
+"materials": {
+"Material.002": {
+"use_external/enabled": true,
+"use_external/path": "res://materials/fir_tree.tres"
+}
+},
 "nodes": {
 "PATH:FirTreeTall": {
 "generate/physics": true,

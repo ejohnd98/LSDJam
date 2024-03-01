@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://db4an17bwplsp"]
+
+[ext_resource type="Texture2D" uid="uid://b4k8o2d3aycso" path="res://sourceModels/firTree.png" id="1_1jlaj"]
+[ext_resource type="Texture2D" uid="uid://b1q121venwstd" path="res://sourceModels/City/BUILD058_NORMAL.png" id="2_mofpx"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_1jlaj")
+normal_scale = 0.5
+normal_texture = ExtResource("2_mofpx")
+texture_filter = 2
+distance_fade_min_distance = 70.0
+distance_fade_max_distance = 60.0
