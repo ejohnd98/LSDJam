@@ -1,13 +1,69 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhbcjyp88n1q0"]
+[gd_scene load_steps=32 format=3 uid="uid://bhbcjyp88n1q0"]
 
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_fu1d6"]
 [ext_resource type="Texture2D" uid="uid://ba2dveqpuegd3" path="res://textures/UI/logo placeholder.png" id="1_y8w4d"]
 [ext_resource type="FontFile" uid="uid://vd80c5wwb0pb" path="res://textures/fonts/atwriter.ttf" id="2_0idkb"]
+[ext_resource type="Texture2D" uid="uid://b23q3kc031q6b" path="res://textures/main menu bg.png" id="3_wiqs3"]
 [ext_resource type="Script" path="res://scenes/ui/MenuButtonHelper.gd" id="4_pb48p"]
+[ext_resource type="Texture2D" uid="uid://xp5ivwcvet7t" path="res://textures/menu thing.png" id="4_yukjv"]
 [ext_resource type="Script" path="res://scenes/ui/SettingsMenu.gd" id="5_1iy0v"]
 [ext_resource type="PackedScene" uid="uid://cc06vydyxrumr" path="res://scenes/ui/modulate_fade.tscn" id="5_5q8g0"]
+[ext_resource type="Texture2D" uid="uid://c2pj2t14eabro" path="res://textures/menu thing 2.png" id="5_84ptt"]
+[ext_resource type="Shader" path="res://scenes/distortionText.gdshader" id="5_oryig"]
 [ext_resource type="Texture2D" uid="uid://bmpm1p8n03oc6" path="res://textures/DreamGrid/empty_dream_icon.png" id="7_qtjdv"]
 [ext_resource type="AudioStream" uid="uid://yvmqffxc3krh" path="res://sounds/ambient march.ogg" id="8_ontdd"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_st0km"]
+blend_mode = 1
+
+[sub_resource type="GDScript" id="GDScript_pnb1o"]
+script/source = "extends TextureRect
+
+@export var speed : float = 0.02
+
+func _process(delta):
+	rotation += speed * delta
+"
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3gf68"]
+blend_mode = 3
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_73r7s"]
+noise_type = 0
+frequency = 0.0036
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o4e26"]
+seamless = true
+seamless_blend_skirt = 0.293
+noise = SubResource("FastNoiseLite_73r7s")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tx18t"]
+shader = ExtResource("5_oryig")
+shader_parameter/speed = 0.2
+shader_parameter/size = 0.005
+shader_parameter/smoke = SubResource("NoiseTexture2D_o4e26")
+
+[sub_resource type="GDScript" id="GDScript_omhwq"]
+script/source = "extends ColorRect
+
+@export var default_size : float = 0.005
+var use_distortion = true
+var progress = 1.0
+
+func set_distortion_amount(alpha : float):
+	material.set_shader_parameter(\"size\", alpha * default_size)
+
+func _process(delta):
+	if not is_visible_in_tree():
+		return
+	if use_distortion and progress < 1.0:
+		progress += delta * 4.0
+		set_distortion_amount(progress)
+	elif not use_distortion and progress > 0.0:
+		progress -= delta * 4.0
+		set_distortion_amount(progress)
+"
 
 [sub_resource type="Theme" id="Theme_8t71l"]
 default_font = ExtResource("2_0idkb")
@@ -23,14 +79,14 @@ content_margin_left = 10.0
 content_margin_top = 10.0
 content_margin_right = 10.0
 content_margin_bottom = 10.0
-bg_color = Color(0.866667, 0.866667, 0.866667, 0.392157)
+bg_color = Color(0.866667, 0.866667, 0.866667, 0.603922)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtwfb"]
 content_margin_left = 10.0
 content_margin_top = 10.0
 content_margin_right = 10.0
 content_margin_bottom = 10.0
-bg_color = Color(1, 1, 1, 0.776471)
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uy0rs"]
 content_margin_left = 10.0
@@ -44,6 +100,28 @@ content_margin_left = 10.0
 content_margin_top = 10.0
 content_margin_right = 10.0
 content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_43y8h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_piu2s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8o7no"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.866667, 0.866667, 0.866667, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xsivj"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.866667, 0.866667, 0.866667, 0)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d3onv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0wji5"]
 
 [node name="MainMenu" type="Control"]
 process_mode = 3
@@ -73,12 +151,76 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.803922)
 script = ExtResource("4_pb48p")
 
+[node name="MainMenuBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_wiqs3")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="MainMenuBG3" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.388235)
+material = SubResource("CanvasItemMaterial_st0km")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -270.0
+offset_right = 544.0
+offset_bottom = 754.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.6, 1.6)
+pivot_offset = Vector2(512, 512)
+texture = ExtResource("5_84ptt")
+stretch_mode = 6
+script = SubResource("GDScript_pnb1o")
+speed = -0.05
+
+[node name="MainMenuBG2" type="TextureRect" parent="."]
+material = SubResource("CanvasItemMaterial_3gf68")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -270.0
+offset_right = 420.0
+offset_bottom = 630.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.6, 1.6)
+pivot_offset = Vector2(450, 450)
+texture = ExtResource("4_yukjv")
+expand_mode = 2
+stretch_mode = 6
+script = SubResource("GDScript_pnb1o")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_tx18t")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_omhwq")
+
 [node name="MainMenuButtons" type="VBoxContainer" parent="."]
 layout_mode = 1
 offset_left = 44.0
-offset_top = 117.0
+offset_top = 60.0
 offset_right = 309.0
-offset_bottom = 423.0
+offset_bottom = 480.0
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MainMenuButtons"]
@@ -135,20 +277,6 @@ alignment = 0
 script = ExtResource("4_pb48p")
 on_pause_menu = false
 
-[node name="Settings" type="Button" parent="MainMenuButtons"]
-layout_mode = 2
-size_flags_vertical = 6
-theme = SubResource("Theme_8t71l")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_xhrvv")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_xhrvv")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_xhrvv")
-action_mode = 0
-text = "Settings"
-alignment = 0
-script = ExtResource("4_pb48p")
-
 [node name="Controls" type="Button" parent="MainMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
@@ -160,6 +288,20 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_xhrvv")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_xhrvv")
 action_mode = 0
 text = "Controls"
+alignment = 0
+script = ExtResource("4_pb48p")
+
+[node name="Settings" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xhrvv")
+action_mode = 0
+text = "Settings"
 alignment = 0
 script = ExtResource("4_pb48p")
 
@@ -228,6 +370,83 @@ action_mode = 0
 text = "Back"
 alignment = 0
 
+[node name="Window Mode" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+
+[node name="Label" type="Label" parent="Settings/Window Mode"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.25
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Window Mode"
+
+[node name="MenuBar" type="MenuBar" parent="Settings/Window Mode"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_0idkb")
+theme_override_font_sizes/font_size = 16
+
+[node name="Window Mode" type="PopupMenu" parent="Settings/Window Mode/MenuBar"]
+transparent_bg = true
+size = Vector2i(110, 100)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_0idkb")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_43y8h")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_piu2s")
+item_count = 2
+item_0/text = "Windowed"
+item_0/id = 0
+item_1/text = "Fullscreen"
+item_1/id = 1
+
+[node name="Auto Run" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+
+[node name="Back" type="Button" parent="Settings/Auto Run"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8o7no")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xsivj")
+action_mode = 0
+text = "Auto Run"
+alignment = 0
+
+[node name="CheckBox" type="CheckBox" parent="Settings/Auto Run"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_d3onv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wji5")
+alignment = 1
+
+[node name="Max Fps" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+
+[node name="Label" type="Label" parent="Settings/Max Fps"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.25
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Max FPS"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/Max Fps"]
+layout_mode = 2
+placeholder_text = "FPS"
+
 [node name="Mouse Sensitivity" type="HBoxContainer" parent="Settings"]
 layout_mode = 2
 size_flags_horizontal = 5
@@ -251,24 +470,6 @@ step = 0.2
 value = 0.8
 tick_count = 11
 ticks_on_borders = true
-
-[node name="Max Fps" type="HBoxContainer" parent="Settings"]
-layout_mode = 2
-size_flags_horizontal = 5
-size_flags_vertical = 6
-
-[node name="Label" type="Label" parent="Settings/Max Fps"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-size_flags_stretch_ratio = 0.25
-theme = SubResource("Theme_8t71l")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
-text = "Max FPS"
-
-[node name="LineEdit" type="LineEdit" parent="Settings/Max Fps"]
-layout_mode = 2
-placeholder_text = "FPS"
 
 [node name="Vsync_on" type="HBoxContainer" parent="Settings"]
 visible = false
@@ -315,17 +516,49 @@ value = 0.8
 tick_count = 21
 ticks_on_borders = true
 
+[node name="Reset Progress" type="Button" parent="Settings"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_colors/font_color = Color(1, 0.854902, 0.827451, 1)
+theme_override_colors/font_hover_color = Color(1, 0.101961, 0.0705882, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtwfb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mgcuk")
+action_mode = 0
+text = "Reset Game Progress"
+alignment = 0
+
+[node name="Reset Progress2" type="Button" parent="Settings"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_colors/font_color = Color(1, 0.854902, 0.827451, 1)
+theme_override_colors/font_hover_color = Color(1, 0.101961, 0.0705882, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hslef")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtwfb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uy0rs")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mgcuk")
+action_mode = 0
+text = "Click again to clear progress and exit the game"
+alignment = 0
+
 [node name="ModulateFade" parent="Settings" instance=ExtResource("5_5q8g0")]
 length = 0.25
 
 [node name="Controls" type="VBoxContainer" parent="."]
 visible = false
-modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 offset_left = 44.0
-offset_top = 117.0
+offset_top = 6.0
 offset_right = 913.0
-offset_bottom = 423.0
+offset_bottom = 533.0
 alignment = 1
 
 [node name="Label" type="Label" parent="Controls"]
@@ -338,22 +571,66 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
 text = "Controls
 "
 
-[node name="Label2" type="Label" parent="Controls"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Controls"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Controls/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 7
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Input Type:
+--------------------------
+Movement:
+Look:
+Sprint: 
+Jump: 
+
+Interact: 
+Cycle Held Item:
+
+Inventory: 
+Pause Menu:"
+horizontal_alignment = 2
+
+[node name="Label4" type="Label" parent="Controls/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 6
 theme = SubResource("Theme_8t71l")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
-text = "Movement: WASD, Left Stick
-Look: Mouse, Right Stick
-Sprint: Shift, Left Shoulder
-Jump: Space, Left Button
----
-Interact: Left Mouse, E, Bottom Button
-Cycle Held Item: Scroll, Dpad L/R
----
-Inventory: Tab, I, Top Button
-Pause Menu: Esc, Start Button"
+text = "Mouse + Keyboard
+--------------------------
+WASD
+Mouse
+Shift
+Space
+
+Left Click, E
+Scroll Wheel, L/R Arrows
+
+Tab, I
+Esc"
+
+[node name="Label3" type="Label" parent="Controls/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 7
+size_flags_vertical = 6
+theme = SubResource("Theme_8t71l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
+text = "Gamepad
+--------------------------
+Left Stick
+Right Stick
+Left Shoulder
+Left Button
+
+Bottom Button
+L/R Dpad
+
+Top Button
+Start Button"
 
 [node name="Back" type="Button" parent="Controls"]
 layout_mode = 2
@@ -374,7 +651,6 @@ length = 0.25
 
 [node name="Credits" type="VBoxContainer" parent="."]
 visible = false
-modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 offset_left = 44.0
 offset_top = 117.0
@@ -389,8 +665,8 @@ size_flags_vertical = 6
 theme = SubResource("Theme_8t71l")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
-text = "Credits
-"
+text = "This Game Uses:"
+horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="Credits"]
 layout_mode = 2
@@ -398,7 +674,13 @@ size_flags_horizontal = 5
 size_flags_vertical = 6
 theme = SubResource("Theme_8t71l")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_xhrvv")
-text = "[PLACEHOLDER"
+text = "\"Secret of Tiki Island\" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
+
+Assets by Kenney (www.kenney.nl)
+"
+horizontal_alignment = 1
 
 [node name="Back" type="Button" parent="Credits"]
 layout_mode = 2
@@ -426,10 +708,15 @@ volume_db = -8.0
 [connection signal="pressed" from="MainMenuButtons/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="MainMenuButtons/Main Menu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="MainMenuButtons/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="MainMenuButtons/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MainMenuButtons/Controls" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="MainMenuButtons/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MainMenuButtons/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="MainMenuButtons/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Settings/Back" to="." method="_on_settings_pressed"]
+[connection signal="index_pressed" from="Settings/Window Mode/MenuBar/Window Mode" to="Settings" method="_on_popup_menu_index_pressed"]
+[connection signal="pressed" from="Settings/Auto Run/Back" to="Settings" method="_on_auto_run_pressed"]
+[connection signal="toggled" from="Settings/Auto Run/CheckBox" to="Settings" method="_on_check_box_toggled"]
+[connection signal="pressed" from="Settings/Reset Progress" to="." method="_on_reset_progress_pressed"]
+[connection signal="pressed" from="Settings/Reset Progress2" to="." method="_on_reset_progress_2_pressed"]
 [connection signal="pressed" from="Controls/Back" to="." method="_on_controls_pressed"]
 [connection signal="pressed" from="Credits/Back" to="." method="_on_credits_pressed"]

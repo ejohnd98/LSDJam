@@ -38,6 +38,10 @@ func _ready():
 	is_dream_transition = is_nightmare
 	UpdateTexture(is_start)
 
+@export var key_key : String = ""
+func ShowKey() -> bool:
+	return has_key and not GameManager.does_key_exist(key_key)
+
 func UpdateTexture(showPlayer: bool = false):
 	if showPlayer:
 		$Overlay.texture = load("res://textures/DreamGrid/you_icon.png")

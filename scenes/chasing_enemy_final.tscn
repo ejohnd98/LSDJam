@@ -147,6 +147,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_01e4o")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
 stream = ExtResource("3_d5edb")
+bus = &"SFX"
 script = ExtResource("4_m1mu6")
 fade_out_time = 4.0
 overall_volume = 0.35
@@ -154,6 +155,7 @@ overall_volume = 0.35
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="3"]
 stream = ExtResource("4_nq418")
 volume_db = -5.0
+bus = &"SFX"
 
 [node name="Area3D" type="Area3D" parent="." index="4"]
 
@@ -170,7 +172,7 @@ libraries = {
 }
 
 [node name="StartingTimer" type="Timer" parent="." index="7"]
-wait_time = 3.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 

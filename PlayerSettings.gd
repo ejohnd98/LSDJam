@@ -4,6 +4,8 @@ var mouse_sensitivity = 0.8
 var overall_volume = 0.8
 var max_fps : int = 0
 var vsync_on : bool = true
+var is_fullscreen : bool = false
+var auto_run : bool = false
 
 var completed_dreams : PackedStringArray
 var current_dream_array = null
@@ -12,7 +14,7 @@ var found_items : PackedStringArray = [""]
 
 var misc_items : PackedStringArray = []
 
-@export var save_completed_dreams = false
+var save_completed_dreams = true
 
 #setters
 func set_overall_volume(new_volume : float):
@@ -22,6 +24,15 @@ func set_overall_volume(new_volume : float):
 
 func set_max_fps():
 	Engine.max_fps = max_fps
+
+func refresh_fullscreen():
+	if is_fullscreen and DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
+	elif DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_WINDOWED:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+		get_window().size = Vector2i(960,540)
 
 func set_vsync_on():
 	return
@@ -43,7 +54,7 @@ func add_completed_dream(dream_name : String):
 func has_completed_dream(dream_name : String) -> bool:
 	return completed_dreams.has(dream_name)
 
-func save_settings():
+func save_settings(force_clear = false):
 	var config = ConfigFile.new()
 	
 	config.set_value("Player", "mouse_sensitivity", mouse_sensitivity)
@@ -52,7 +63,9 @@ func save_settings():
 	set_max_fps()
 	config.set_value("Player", "vsync_on", vsync_on)
 	set_vsync_on()
-	if save_completed_dreams:
+	config.set_value("Player", "is_fullscreen", is_fullscreen)
+	config.set_value("Player", "auto_run", auto_run)
+	if save_completed_dreams and not force_clear:
 		config.set_value("Player", "completed_dreams", completed_dreams)
 		config.set_value("Player", "current_dream_array", GameManager.dreams)
 		config.set_value("Player", "found_items", found_items)
@@ -84,7 +97,10 @@ func load_settings():
 		if config.has_section_key(section, "vsync_on"):
 			vsync_on = config.get_value(section, "vsync_on")
 			set_vsync_on()
-			
+		if config.has_section_key(section, "is_fullscreen"):
+			is_fullscreen = config.get_value(section, "is_fullscreen")
+		if config.has_section_key(section, "auto_run"):
+			auto_run = config.get_value(section, "auto_run")
 			
 		if save_completed_dreams:
 			if config.has_section_key(section, "completed_dreams"):
@@ -102,3 +118,6 @@ func load_settings():
 	
 	#debug:
 	GameManager.canvas_layer.get_node("Inventory/DebugDreamText/Label").text = "Dreams:\n" + "\n".join(completed_dreams) + "\nItems:\n" + "\n".join(misc_items)
+
+func clear_progress():
+	save_settings(true)

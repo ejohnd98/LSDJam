@@ -36,7 +36,7 @@ func create_dream_grid_visuals(dream_grid : DreamGrid):
 					chosen_texture = dream_grid.goal_texture
 				if dream_cell.is_start:
 					chosen_texture = dream_grid.start_texture
-				if dream_cell.has_key:
+				if dream_cell.ShowKey():
 					chosen_texture = dream_grid.key_texture
 				if dream_grid.player_position == Vector2i(x,y):
 					chosen_texture = dream_grid.player_texture
@@ -47,7 +47,7 @@ func create_dream_grid_visuals(dream_grid : DreamGrid):
 					chosen_texture = goal_texture
 				if dream_cell.is_start:
 					chosen_texture = start_texture
-				if dream_cell.has_key:
+				if dream_cell.ShowKey():
 					chosen_texture = key_texture
 				if dream_grid.player_position == Vector2i(x,y):
 					chosen_texture = player_texture

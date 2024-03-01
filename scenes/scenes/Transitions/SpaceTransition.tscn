@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://crei5xs83jhkj"]
 
 [ext_resource type="Texture2D" uid="uid://begi00vuw3si7" path="res://textures/space_skybox.png" id="1_wclpx"]
-[ext_resource type="AudioStream" uid="uid://7htj1chxmfp7" path="res://sounds/various_ambiences/Gravity.ogg" id="2_vyxbo"]
+[ext_resource type="AudioStream" uid="uid://ce2c6infnypt" path="res://sounds/moon.ogg" id="2_lk5yl"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="3_u02vn"]
 [ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="5_v15v4"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="6_2xm0u"]
@@ -43,9 +43,9 @@ shadow_enabled = true
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
-stream = ExtResource("2_vyxbo")
+stream = ExtResource("2_lk5yl")
 attenuation_model = 3
-volume_db = -16.0
+volume_db = -9.0
 unit_size = 800.0
 autoplay = true
 panning_strength = 0.2

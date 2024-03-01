@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://b0bj0pjbr8s5l"]
+[gd_scene load_steps=45 format=3 uid="uid://b0bj0pjbr8s5l"]
 
 [ext_resource type="Texture2D" uid="uid://bm2iusbsw8k8e" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_MoonBurst_Equirect.png" id="1_etvu2"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_vav22"]
@@ -142,6 +142,34 @@ shader_parameter/noiseVertex = SubResource("NoiseTexture2D_3dcqk")
 [sub_resource type="BoxShape3D" id="BoxShape3D_2wqtn"]
 size = Vector3(20, 5, 5)
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wecu7"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tdym4"]
+seamless = true
+noise = SubResource("FastNoiseLite_wecu7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d8lqu"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("7_m7u4b")
+shader_parameter/distortionView = 0.125
+shader_parameter/speedView = 0.113
+shader_parameter/static_intensity = 0.95
+shader_parameter/tintColor = Color(1, 0.235294, 0.180392, 1)
+shader_parameter/fesnelAmount = 0.05
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_tdym4")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_tdym4")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_tdym4")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wqjmr"]
+size = Vector3(4, 4, 20)
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_u72sg"]
 top_radius = 0.045
 bottom_radius = 0.045
@@ -254,20 +282,6 @@ visible = false
 
 [node name="DistortionBubble2" parent="SceneTrigger2" instance=ExtResource("6_wkjik")]
 transform = Transform3D(7, 0, -1.49012e-08, 0, 7, 0, 0, 0, 6, 7.15256e-07, -0.240483, -5.76582)
-
-[node name="SceneTrigger3" parent="." instance=ExtResource("4_fp4wh")]
-transform = Transform3D(0.938932, 0, -0.344102, 0, 1, 0, 0.344102, 0, 0.938932, 22.8099, 0.3282, -55.169)
-proximity_trigger = true
-show_mesh = false
-show_arrow = false
-start_dist = 5.0
-
-[node name="GradientBox" parent="SceneTrigger3" instance=ExtResource("5_uhv8b")]
-transform = Transform3D(-3.49691e-07, 0, 3, 0, 3, 0, -8, 0, -1.31134e-07, 0, -0.7, 3.41252)
-visible = false
-
-[node name="DistortionBubble2" parent="SceneTrigger3" instance=ExtResource("6_wkjik")]
-transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
 
 [node name="SceneTrigger4" parent="." instance=ExtResource("4_fp4wh")]
 transform = Transform3D(-0.293623, 0, 0.955921, 0, 1, 0, -0.955921, 0, -0.293623, -55.8748, 2.44003, 13.944)
@@ -488,15 +502,26 @@ surface_material_override/0 = SubResource("ShaderMaterial_iy4hv")
 shape = SubResource("BoxShape3D_2wqtn")
 
 [node name="ChasingEnemy9" parent="." instance=ExtResource("18_06tqt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.4036, -1.73669, 17.4512)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.77, -2.13844, 0.8447)
+activation_direction_threshold = 0.6
 check_los = false
 escape_distance = 15.0
+
+[node name="Cube" parent="ChasingEnemy9/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_d8lqu")
+
+[node name="CollisionShape3D" parent="ChasingEnemy9/Area3D" index="0"]
+transform = Transform3D(0.831712, 0, -0.555207, 0, 1, 0, 0.555207, 0, 0.831712, 0, 0, 0)
+shape = SubResource("BoxShape3D_wqjmr")
 
 [node name="firTreeDowned" parent="." instance=ExtResource("19_jmb7t")]
 transform = Transform3D(-0.389188, 0.106945, 1.95885, 0, -1.99703, 0.109029, 1.96177, 0.0212163, 0.388609, -7.82433, 1.44669, -5.0838)
 
 [node name="firTreeDowned2" parent="." instance=ExtResource("19_jmb7t")]
 transform = Transform3D(-0.614051, 0, 0.789266, 0, 1, 0, -0.789266, 0, -0.614051, 14.8962, 1.61938, -39.7617)
+
+[node name="firTreeDowned4" parent="." instance=ExtResource("19_jmb7t")]
+transform = Transform3D(1.39368, 0, 1.57821, 0, 2.10549, 0, -1.57821, 0, 1.39368, 23.8515, -0.630396, -58.8745)
 
 [node name="firTreeDowned3" parent="." instance=ExtResource("19_jmb7t")]
 transform = Transform3D(-0.945289, 0, -1.35569, 0, 1.65272, 0, 1.35569, 0, -0.945289, 22.3997, 1.26125, -26.7991)
@@ -526,3 +551,4 @@ spot_angle = 60.0
 [editable path="SceneTrigger/DistortionBubble2"]
 [editable path="ChasingEnemy"]
 [editable path="ChasingEnemy8"]
+[editable path="ChasingEnemy9"]

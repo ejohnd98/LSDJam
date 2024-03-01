@@ -1,0 +1,91 @@
+[gd_scene load_steps=12 format=3 uid="uid://jn7koagreuru"]
+
+[ext_resource type="Texture2D" uid="uid://cb6u528xt4ix6" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_DeepDusk_Equirect.png" id="1_ew6n5"]
+[ext_resource type="PackedScene" uid="uid://cc06vydyxrumr" path="res://scenes/ui/modulate_fade.tscn" id="2_e1toq"]
+[ext_resource type="Texture2D" uid="uid://ba2dveqpuegd3" path="res://textures/UI/logo placeholder.png" id="3_xshxm"]
+[ext_resource type="FontFile" uid="uid://vd80c5wwb0pb" path="res://textures/fonts/atwriter.ttf" id="4_o2ia1"]
+
+[sub_resource type="Theme" id="Theme_8ea02"]
+default_font = ExtResource("4_o2ia1")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vki7v"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_um5ni"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.866667, 0.866667, 0.866667, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3spll"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 0.776471)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8q85v"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.227451, 0.227451, 0.227451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sabig"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="GDScript" id="GDScript_g3mvd"]
+script/source = "extends Button
+
+func _on_pressed():
+	GameManager.exit_game()
+"
+
+[node name="WinScreen" type="TextureRect"]
+process_mode = 3
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ew6n5")
+expand_mode = 2
+
+[node name="ModulateFade" parent="." instance=ExtResource("2_e1toq")]
+length = 1.5
+
+[node name="MainMenuButtons" type="VBoxContainer" parent="."]
+offset_left = 44.0
+offset_top = 60.0
+offset_right = 309.0
+offset_bottom = 480.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MainMenuButtons"]
+layout_mode = 2
+texture = ExtResource("3_xshxm")
+expand_mode = 5
+
+[node name="Exit" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+theme = SubResource("Theme_8ea02")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vki7v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_um5ni")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3spll")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_8q85v")
+theme_override_styles/focus = SubResource("StyleBoxFlat_sabig")
+action_mode = 0
+text = "Exit Game
+"
+alignment = 0
+script = SubResource("GDScript_g3mvd")
+
+[connection signal="pressed" from="MainMenuButtons/Exit" to="MainMenuButtons/Exit" method="_on_pressed"]

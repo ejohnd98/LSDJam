@@ -34,8 +34,17 @@ environment = SubResource("Environment_heefn")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="PlayerSpawn" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.9, 1.1, 8.2203)
+[node name="PlayerSpawnUp" type="Node3D" parent="."]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -7.64659, 1.1, -5.5084)
+
+[node name="PlayerSpawnDown" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -8.39392, 1.1, 17.8395)
+
+[node name="PlayerSpawnRight" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25.4256, 1.1, -8.87692)
+
+[node name="PlayerSpawnLeft" type="Node3D" parent="."]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 3.42556, 1.1, 16.1231)
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("1_behm0")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -1, 2.517, 3.26962)

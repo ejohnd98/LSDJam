@@ -110,6 +110,7 @@ has_multiple_spawns = false
 allow_right = true
 allow_down = true
 allow_left = true
+key_key = "cinemaFilm"
 
 [node name="DreamCell9" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2
@@ -131,6 +132,7 @@ has_multiple_spawns = false
 allow_right = true
 allow_down = true
 allow_left = true
+key_key = "cinemaCoin"
 
 [node name="DreamCell11" parent="GridContainer" instance=ExtResource("2_x3wbk")]
 layout_mode = 2

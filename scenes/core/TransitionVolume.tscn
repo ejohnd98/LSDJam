@@ -1,29 +1,16 @@
-extends Node
+[gd_scene load_steps=2 format=3 uid="uid://cigynkfqaw1x1"]
 
-@onready var parent_control : Control = $".."
+[sub_resource type="GDScript" id="GDScript_ql0eg"]
+resource_name = "TransitionVolume"
+script/source = "extends Node
 
-@export var fade_curve : Curve
-@export var length = 0.5
-
-@export var auto_start = false
+@export var length = 1.0
 
 signal on_finished
 
 var counter = 0.0
 var is_playing = false
 var fading_in = true
-
-func _ready():
-	if auto_start:
-		fade_in()
-
-func reset(is_visible : bool):
-	if parent_control == null:
-		parent_control = $".."
-	if is_visible:
-		parent_control.modulate.a = 1.0
-	else:
-		parent_control.modulate.a = 0.0
 
 func fade_in():
 	counter = 0.0
@@ -49,9 +36,16 @@ func _process(delta):
 				counter = 0.0
 				finished()
 		
-		parent_control.modulate.a = fade_curve.sample(counter)
-	
+		set_transition_volume(counter)
 
 func finished():
 	is_playing = false
 	on_finished.emit()
+
+func set_transition_volume(new_volume : float):
+	var volume_db = -80.0 + (80.0 * (1.0 - pow(1 - new_volume, 5)))
+	AudioServer.set_bus_volume_db(1, volume_db)
+"
+
+[node name="Node" type="Node"]
+script = SubResource("GDScript_ql0eg")

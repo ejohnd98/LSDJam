@@ -67,14 +67,15 @@ func _unhandled_input(event):
 	if is_frozen:
 		return
 	
-	if event.is_action_pressed("Debug_Up"):
-		GameManager.move_in_direction(Vector2i.UP)
-	if event.is_action_pressed("Debug_Right"):
-		GameManager.move_in_direction(Vector2i.RIGHT)
-	if event.is_action_pressed("Debug_Down"):
-		GameManager.move_in_direction(Vector2i.DOWN)
-	if event.is_action_pressed("Debug_Left"):
-		GameManager.move_in_direction(Vector2i.LEFT)
+	if OS.has_feature("editor"):
+		if event.is_action_pressed("Debug_Up"):
+			GameManager.move_in_direction(Vector2i.UP)
+		if event.is_action_pressed("Debug_Right"):
+			GameManager.move_in_direction(Vector2i.RIGHT)
+		if event.is_action_pressed("Debug_Down"):
+			GameManager.move_in_direction(Vector2i.DOWN)
+		if event.is_action_pressed("Debug_Left"):
+			GameManager.move_in_direction(Vector2i.LEFT)
 		
 	if event.is_action_pressed("Interact"):
 		try_interact()
@@ -152,22 +153,23 @@ func _physics_process(delta):
 	
 	
 	var move_speed : float = WALK_SPEED * control_modifier
-	var is_sprinting = Input.is_action_pressed("Sprint")
+	var is_sprinting = Input.is_action_pressed("Sprint") != PlayerSettings.auto_run
 	if (is_sprinting):
 		move_speed *= SPRINT_MOD
 	
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
 	
 	if (current_item_node != null and current_item_node.item_name == "bike"):
-		move_speed *= BIKE_MOD
+		move_speed = BIKE_MOD * WALK_SPEED * control_modifier
 		input_dir = Vector2i.UP
 	
 	var direction : Vector3 = ($CameraPivot.transform.basis * Vector3(input_dir.x, 0, input_dir.y))
 	if direction.length() > 1.0:
 		direction = direction.normalized()
 	
-	if (Input.is_action_pressed("DebugSprint")):
-		move_speed *= DEBUG_SPRINT_MOD
+	if (Input.is_action_pressed("DebugSprint") and OS.has_feature("editor")):
+		#move_speed *= DEBUG_SPRINT_MOD
+		move_speed = BIKE_MOD * WALK_SPEED * control_modifier * 1.1
 		
 	if direction:
 		velocity.x = direction.x * move_speed

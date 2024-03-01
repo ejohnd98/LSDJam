@@ -4,7 +4,7 @@ var is_open = false
 @onready var description_node = $VBoxContainer/DescriptionFrame/MarginContainer/VBoxContainer
 
 func _input(event):
-	if event.is_action_pressed("Inventory"):
+	if event.is_action_pressed("Inventory") and GameManager.can_pause:
 		toggle_menu()
 
 func _ready():

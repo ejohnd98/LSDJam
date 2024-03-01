@@ -87,7 +87,6 @@ transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_eek8x")]
 transform = Transform3D(0.565685, -0.0493027, 0.563533, 0, 0.796956, 0.0697246, -0.565685, -0.0493027, 0.563533, 1.53306, 1.82745, 1.53306)
-grid_scale = Vector2(0.3, 0.75)
 
 [node name="VoxelGI" type="VoxelGI" parent="."]
 subdiv = 0

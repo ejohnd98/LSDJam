@@ -32,6 +32,7 @@ has_multiple_spawns = true
 allow_right = true
 allow_down = true
 dream_keys = Array[String](["has_enemy"])
+key_key = "forestKey"
 
 [node name="DreamCell10" parent="GridContainer" instance=ExtResource("2_0x1k8")]
 layout_mode = 2

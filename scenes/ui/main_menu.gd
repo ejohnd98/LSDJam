@@ -24,11 +24,14 @@ func _input(event):
 			toggle_pause_menu()
 
 func _ready():
-	$ModulateFade.reset(false)
+	$ModulateFade.reset(true)
+	GameManager.black_fade.reset(true)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	PlayerSettings.load_settings()
+	PlayerSettings.refresh_fullscreen()
 	set_menu(MenuType.MAIN_MENU)
-	$ModulateFade.fade_in()
+	$ColorRect.use_distortion = true
+	GameManager.black_fade.fade_out()
 
 func set_paused(pause_state):
 	get_tree().paused = pause_state
@@ -37,6 +40,7 @@ func set_paused(pause_state):
 func toggle_pause_menu():
 	if is_open:
 		$ModulateFade.fade_out()
+		$ColorRect.use_distortion = false
 		await $ModulateFade.on_finished
 		set_paused(false)
 		close_menu()
@@ -46,6 +50,7 @@ func toggle_pause_menu():
 		GameManager.set_game_focus(false)
 		set_paused(true)
 		$ModulateFade.fade_in()
+		$ColorRect.use_distortion = true
 		await $ModulateFade.on_finished
 
 func toggle_settings_menu():
@@ -63,6 +68,9 @@ func toggle_settings_menu():
 		await $Settings/ModulateFade.on_finished
 		
 	else:
+		$"Settings/Reset Progress".show()
+		$"Settings/Reset Progress2".hide()
+		
 		$Settings/ModulateFade.fade_out()
 		await $Settings/ModulateFade.on_finished
 		$Settings.hide()
@@ -137,12 +145,24 @@ func set_menu (menu : MenuType):
 
 func _on_start_pressed():
 	
-	$ModulateFade.fade_out()
-	await $ModulateFade.on_finished
+	GameManager.black_fade.reset(false)
+	$ColorRect.use_distortion = false
+	
+	GameManager.black_fade.fade_in()
+	await GameManager.black_fade.on_finished
+	
 	close_menu()
+	$MainMenuBG.hide()
 	$MenuMusic.stop()
+	$ModulateFade.reset(false)
 	
 	GameManager.start_game()
+	$MainMenuBG.hide()
+	$MainMenuBG2.hide()
+	$MainMenuBG3.hide()
+	
+	await GameManager.on_dream_started
+	GameManager.black_fade.fade_out()
 
 func _on_exit_pressed():
 	GameManager.exit_game()
@@ -161,3 +181,12 @@ func _on_controls_pressed():
 
 func _on_credits_pressed():
 	toggle_credits_menu()
+
+
+func _on_reset_progress_pressed():
+	$"Settings/Reset Progress".hide()
+	$"Settings/Reset Progress2".show()
+
+func _on_reset_progress_2_pressed():
+	PlayerSettings.clear_progress()
+	GameManager.exit_game()

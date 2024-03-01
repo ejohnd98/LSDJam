@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://brfmnv4rr7jjs"]
+[gd_scene load_steps=20 format=3 uid="uid://brfmnv4rr7jjs"]
 
 [ext_resource type="AudioStream" uid="uid://cma6v5txnqoq5" path="res://sounds/herald_slow.ogg" id="2_uc10x"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="3_ddunl"]
@@ -59,6 +59,9 @@ uv2_triplanar = true
 uv2_world_triplanar = true
 texture_filter = 2
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_wl7rq"]
+radius = 2.1
+
 [sub_resource type="PrismMesh" id="PrismMesh_q2s46"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kc32w"]
@@ -67,6 +70,9 @@ metallic_specular = 0.4
 roughness = 0.22
 rim = 0.74
 clearcoat_roughness = 0.73
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7vjhd"]
+radius = 2.5
 
 [sub_resource type="BoxMesh" id="BoxMesh_hb65b"]
 
@@ -97,7 +103,7 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
 stream = ExtResource("2_uc10x")
 attenuation_model = 3
-volume_db = -14.0
+volume_db = -10.0
 unit_size = 100.0
 autoplay = true
 panning_strength = 0.4
@@ -129,12 +135,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
 [node name="Node3D2" parent="." instance=ExtResource("7_m7i0o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 11)
 
+[node name="CollisionShape3D" parent="Node3D2/ForcedArea" index="0"]
+shape = SubResource("SphereShape3D_wl7rq")
+
 [node name="MeshInstance3D" parent="Node3D2" index="1"]
 mesh = SubResource("PrismMesh_q2s46")
 surface_material_override/0 = SubResource("StandardMaterial3D_kc32w")
 
 [node name="Node3D3" parent="." instance=ExtResource("7_m7i0o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 11)
+
+[node name="CollisionShape3D" parent="Node3D3/ForcedArea" index="0"]
+shape = SubResource("SphereShape3D_7vjhd")
 
 [node name="MeshInstance3D" parent="Node3D3" index="1"]
 mesh = SubResource("BoxMesh_hb65b")

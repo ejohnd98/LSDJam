@@ -19,9 +19,9 @@
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_o0mgw")
-dreams = Array[PackedScene]([ExtResource("2_qpm1d"), ExtResource("2_7cvka"), ExtResource("2_17qwh"), ExtResource("2_5j5jn"), ExtResource("2_nbwkb"), ExtResource("2_12uwn")])
+dreams = Array[PackedScene]([ExtResource("2_5j5jn"), ExtResource("2_qpm1d"), ExtResource("2_7cvka"), ExtResource("2_nbwkb"), ExtResource("2_17qwh"), ExtResource("2_12uwn")])
 nightmares = Array[PackedScene]([ExtResource("8_1dkr5"), ExtResource("7_t8n6k"), ExtResource("8_6mjau"), ExtResource("10_wh5yi")])
-transitions = Array[PackedScene]([ExtResource("12_f028h"), ExtResource("14_imue7"), ExtResource("11_tlfdt"), ExtResource("9_kaf6a")])
+transitions = Array[PackedScene]([ExtResource("11_tlfdt"), ExtResource("12_f028h"), ExtResource("14_imue7"), ExtResource("9_kaf6a")])
 dream_transition = ExtResource("2_m3dlw")
 
 [node name="SceneChangeTimer" type="Timer" parent="."]

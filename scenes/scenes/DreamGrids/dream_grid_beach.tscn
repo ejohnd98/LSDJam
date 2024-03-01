@@ -43,6 +43,7 @@ allow_up = true
 allow_right = true
 allow_down = true
 allow_left = true
+key_key = "boatKey"
 
 [node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_fcki6")]
 layout_mode = 2
@@ -88,3 +89,4 @@ allow_up = true
 allow_right = true
 allow_down = true
 allow_left = true
+key_key = "tikiIngredients"

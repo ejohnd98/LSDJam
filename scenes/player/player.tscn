@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dqc85l4su56s4" path="res://sounds/bike_loop.ogg" id="8_kkpb4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2l4ng"]
+custom_solver_bias = 1.0
 radius = 0.25
 height = 1.25
 
@@ -142,11 +143,17 @@ albedo_texture = ExtResource("6_ujy4m")
 [node name="Player" type="RigidBody3D" groups=["player"]]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
+mass = 20.0
 gravity_scale = 0.0
+can_sleep = false
+lock_rotation = true
+custom_integrator = true
+continuous_cd = true
 script = ExtResource("1_v6pu0")
 ground_collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 shape = SubResource("CapsuleShape3D_2l4ng")
 

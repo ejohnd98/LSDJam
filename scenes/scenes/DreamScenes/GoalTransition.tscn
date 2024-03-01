@@ -178,6 +178,7 @@ volume_db = -30.0
 unit_size = 100.0
 autoplay = true
 panning_strength = 0.36
+bus = &"SFX"
 
 [node name="AmbientRight" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 25)
@@ -186,6 +187,7 @@ volume_db = -30.0
 unit_size = 100.0
 autoplay = true
 panning_strength = 0.36
+bus = &"SFX"
 script = ExtResource("11_esmy1")
 
 [node name="CompletedDreams" type="Node3D" parent="."]

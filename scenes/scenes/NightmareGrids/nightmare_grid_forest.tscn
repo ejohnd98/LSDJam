@@ -35,6 +35,28 @@ allow_right = true
 allow_down = true
 allow_left = true
 
+[node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_64iko")]
+layout_mode = 2
+scene_name = "NightmareScenes/ForestNightmare"
+is_goal = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_64iko")]
+layout_mode = 2
+scene_name = "NightmareScenes/ForestNightmare"
+is_goal = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
 [node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_64iko")]
 layout_mode = 2
 scene_name = "NightmareScenes/ForestNightmare"

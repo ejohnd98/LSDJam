@@ -13,6 +13,8 @@ const SCENE_PATH = "res://scenes/scenes/"
 
 @export var dream_transition: PackedScene #goal transition
 
+signal on_dream_started
+
 var current_dream : Control = null
 var dream_index = -1
 
@@ -26,6 +28,7 @@ var transition_index = -1
 @onready var main_menu : MainMenu = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/MainMenu")
 @onready var transition_node : transition = get_tree().get_root().get_node("SubViewportContainer/SubViewport2/CanvasLayer/transition")
 @onready var prompt_controller : prompt_controller = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/ControlText")
+@onready var black_fade = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/blackFade/ModulateFade")
 
 var current_scene_node = null
 var next_scene_path = ""
@@ -72,6 +75,7 @@ func set_game_focus(on_player : bool):
 	set_cursor_state(on_player)
 
 func _ready():
+	canvas_layer.get_node("WinScreen").get_child(0).reset(false)
 	set_cursor_state(false)
 	#TODO: separate game and menu UI into two different scenes and hide/show those
 	canvas_layer.get_node("UIParent/Compass").hide()
@@ -84,7 +88,7 @@ func start_game():
 	player.interactable_changed.connect(on_interactable_change)
 	canvas_layer.get_node("UIParent/Compass").show()
 	canvas_layer.get_node("Crosshair").show()
-	canvas_layer.get_node("NightmareBar").show()
+	#canvas_layer.get_node("NightmareBar").show()
 	
 	if PlayerSettings.current_dream_array != null:
 		dreams = PlayerSettings.current_dream_array
@@ -135,7 +139,7 @@ func move_in_direction(direction: Vector2i):
 		if not dream_grid.is_nightmare:
 			dreams.remove_at(dream_index)
 			PlayerSettings.add_completed_dream(dream_grid.dream_name)
-			change_dreams(-1)
+			change_dreams(dream_index, false, true)
 		else:
 			pick_random_dream()
 		return
@@ -146,10 +150,19 @@ func move_in_direction(direction: Vector2i):
 		
 	load_new_scene(dream_grid.get_scene_from_position(), direction)
 
+func win_game():
+	can_pause = false
+	set_cursor_state(false)
+	TransitionVolume.fade_out()
+	canvas_layer.get_node("WinSound").play()
+	black_fade.fade_in()
+	await black_fade.on_finished
+	canvas_layer.get_node("WinScreen").get_child(0).fade_in()
+
 func advance_dream():
 	var next_index = dream_index
 	if next_index + 1 == dreams.size():
-		canvas_layer.get_node("WinScreen").visible = true
+		win_game()
 		player.set_frozen(true)
 		return
 	next_index += 1
@@ -158,7 +171,7 @@ func advance_dream():
 func pick_random_dream(allow_transition_dreams : bool = true):
 	var new_index = dream_index
 	
-	if (not in_transition_dream and allow_transition_dreams and (randf() > 0.70)):# or debug_force_transition)):
+	if (not in_transition_dream and allow_transition_dreams and (randf() > 0.65)):# or debug_force_transition)):
 		in_transition_dream = true
 		debug_force_transition = false
 	else:
@@ -170,7 +183,7 @@ func pick_random_dream(allow_transition_dreams : bool = true):
 		
 	# this (hopefully) ensures when going to a transition, we don't return to the same dream afterwards
 	if not in_transition_dream:
-		new_index = dream_index + rng.randi_range (1, dreams.size()-1) #pick random dream 	
+		new_index = dream_index + 1#rng.randi_range (1, dreams.size()-1) #pick random dream 	
 		new_index = wrapi(new_index, 0, dreams.size())
 	
 	change_dreams(new_index)
@@ -186,12 +199,13 @@ func get_next_transition_dream() -> PackedScene:
  
 var change_dreams_called = false
 
-func change_dreams(index : int, is_nightmare : bool = false):
+func change_dreams(index : int, is_nightmare : bool = false, is_transition : bool = false):
 	if change_dreams_called:
 		return
 	
 	change_dreams_called = true
-	dream_index = index
+	if not is_nightmare:
+		dream_index = index
 	
 	#remove old dream grid
 	if dream_grid:
@@ -200,17 +214,17 @@ func change_dreams(index : int, is_nightmare : bool = false):
 	
 	var new_dream
 	#add new dream grid
-	if (dream_index == -1):
+	if is_transition:
 		new_dream = dream_transition.instantiate()
 	elif is_nightmare and nightmares.size() > 0:
-		new_dream = nightmares[dream_index].instantiate()
+		new_dream = nightmares[nightmare_index].instantiate()
 	elif in_transition_dream:
 		new_dream = get_next_transition_dream().instantiate()
 	elif dreams.size() > 0:
 		new_dream = dreams[dream_index].instantiate()
 	else:
 		player.set_frozen(true)
-		canvas_layer.get_node("WinScreen").visible = true
+		win_game()
 		return
 		
 	get_tree().get_root().get_node("SubViewportContainer/CanvasLayer").add_child(new_dream)
@@ -249,9 +263,9 @@ func get_spawn_node(incoming_direction) -> Node3D:
 	
 	return new_spawn
 
-#INCOMING DIRECTION IS SOMETIMES NULL (forced?)
 func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vector2i.UP, changing_dreams = false):
 	if not $SceneChangeTimer.is_stopped():
+		change_dreams_called = false
 		return
 	
 	if is_loading_dream:
@@ -263,6 +277,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	is_loading_dream = true
 	
 	player.set_frozen(true)
+	TransitionVolume.fade_out()
 	can_pause = false
 	canvas_layer.get_node("UIParent/Compass").set_frozen(true)
 	
@@ -278,6 +293,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	var new_scene_resource = ResourceLoader.load_threaded_get(next_scene_path)
 	var new_scene = new_scene_resource.instantiate()
 	
+	if TransitionVolume.is_playing:
+		await TransitionVolume.on_finished
 	# Remove old scene
 	if current_scene_node:
 		current_scene_node.queue_free()
@@ -312,8 +329,8 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	
 	nightmare_progress *= 0.5
 	if shifting_to_nightmare:
-		canvas_layer.get_node("NightmareBar/ProgressBar").value = nightmare_progress * 100
-		canvas_layer.get_node("NightmareBar").show()
+		set_nightmare_visual_progress(nightmare_progress)
+		#canvas_layer.get_node("NightmareBar").show()
 	
 	if changing_dreams:
 		pass
@@ -344,9 +361,11 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 		player.reset_footstep_sounds()
 	
 	player.set_frozen(false)
+	on_dream_started.emit()
 	player.limit_controls(1.0)
 	shifting_to_nightmare = false
 	can_pause = true
+	TransitionVolume.fade_in()
 	canvas_layer.get_node("UIParent/Compass").set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
 	is_loading_dream = false
@@ -424,13 +443,17 @@ func adjust_nightmare_progress(delta : float):
 	if nightmare_progress < 0:
 		nightmare_progress = 0.0
 	
-	canvas_layer.get_node("NightmareOverlay").modulate.a = nightmare_progress
+	
 	
 	if nightmare_progress > 1.0:
-		canvas_layer.get_node("NightmareBar/ProgressBar").value = 100
+		set_nightmare_visual_progress(1.0)
 		shifting_to_nightmare = true
 		pick_nightmare()
-		canvas_layer.get_node("NightmareBar").hide()
+		#canvas_layer.get_node("NightmareBar").hide()
 		return
 	
-	canvas_layer.get_node("NightmareBar/ProgressBar").value = nightmare_progress * 100
+	set_nightmare_visual_progress(nightmare_progress)
+
+func set_nightmare_visual_progress(value : float):
+	canvas_layer.get_node("NightmareBar/ProgressBar").value = value * 100
+	canvas_layer.get_node("NightmareOverlay").modulate.a = value
