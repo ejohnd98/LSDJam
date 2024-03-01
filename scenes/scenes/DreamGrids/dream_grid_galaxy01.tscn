@@ -12,6 +12,7 @@ anchor_right = 1.0
 grow_horizontal = 0
 script = ExtResource("1_008ub")
 dream_name = "Galaxy Ship"
+modulate_color = Color(0.329412, 1, 1, 1)
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
@@ -21,9 +22,42 @@ anchor_right = 1.0
 offset_left = -200.0
 offset_bottom = 200.0
 grow_horizontal = 0
-columns = 2
+columns = 5
 
 [node name="DreamCell" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+
+[node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor02"
+has_key = true
+has_multiple_spawns = true
+allow_right = true
+allow_down = true
+allow_left = true
+key_key = "galaxyKey"
+
+[node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/GalaxyCorridor01"
 is_nightmare = true
@@ -35,7 +69,8 @@ allow_right = true
 allow_down = true
 allow_left = true
 
-[node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_2eq50")]
+[node name="DreamCell8" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/GalaxyCorridor01"
 is_goal = true
@@ -46,18 +81,12 @@ allow_right = true
 allow_down = true
 allow_left = true
 
-[node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_2eq50")]
+[node name="DreamCell9" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/GalaxyCorridor01"
-has_key = true
-has_multiple_spawns = true
-allow_up = true
-allow_right = true
-allow_left = true
-
-[node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_2eq50")]
-layout_mode = 2
-scene_name = "DreamScenes/GalaxyCorridor01"
+is_nightmare = true
+is_dream_transition = true
 has_key = false
 has_multiple_spawns = true
 allow_up = true
@@ -65,21 +94,224 @@ allow_right = true
 allow_down = true
 allow_left = true
 
-[node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_2eq50")]
+[node name="DreamCell10" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/GalaxyCorridor01"
-is_start = true
+is_nightmare = true
+is_dream_transition = true
 has_key = false
 has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_left = true
+
+[node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
 allow_right = true
 allow_down = true
 allow_left = true
 
 [node name="DreamCell7" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+is_nightmare = true
+is_dream_transition = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell11" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor02"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell12" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/GalaxyCorridor01"
 has_key = false
 has_multiple_spawns = true
 allow_up = true
 allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell14" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+is_start = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell13" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell15" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+
+[node name="DreamCell16" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell17" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell19" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+is_nightmare = true
+is_dream_transition = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell18" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell20" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell21" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+is_nightmare = true
+is_dream_transition = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell22" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell23" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+is_nightmare = true
+is_dream_transition = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell24" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+is_nightmare = true
+is_dream_transition = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell25" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+is_nightmare = true
+is_dream_transition = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
+allow_left = true
+
+[node name="DreamCell26" parent="GridContainer" instance=ExtResource("2_2eq50")]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 2
+scene_name = "DreamScenes/GalaxyCorridor01"
+is_nightmare = true
+is_dream_transition = true
+has_key = false
+has_multiple_spawns = true
+allow_up = true
+allow_right = true
+allow_down = true
 allow_left = true

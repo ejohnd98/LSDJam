@@ -52,7 +52,7 @@ panning_strength = 0.2
 bus = &"SFX"
 
 [node name="PlayerSpawn" type="Node3D" parent="."]
-transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, 160.42, 0)
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, 292.132, 0)
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("3_u02vn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 98.0987, 0.269625)

@@ -17,6 +17,7 @@ extends Control
 @export var start_texture : Texture2D
 @export var goal_texture : Texture2D
 @export var key_texture : Texture2D
+@export var modulate_color : Color = Color.WHITE
 
 var grid_size = Vector2i.ZERO
 var grid = []

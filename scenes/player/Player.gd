@@ -159,7 +159,8 @@ func _physics_process(delta):
 	
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
 	
-	if (current_item_node != null and current_item_node.item_name == "bike"):
+	var is_biking = current_item_node != null and current_item_node.item_name == "bike"
+	if is_biking:
 		move_speed = BIKE_MOD * WALK_SPEED * control_modifier
 		input_dir = Vector2i.UP
 	
@@ -184,11 +185,15 @@ func _physics_process(delta):
 			head_bob_anim.play("bob")
 			head_bob_anim.get_animation("bob").loop_mode = 1
 		head_bob_anim.speed_scale = (1.1 * move_speed / WALK_SPEED) + 0.1
+		if is_biking:
+			head_bob_anim.speed_scale = 0.5
 		var footstep_volume = default_footstep_volume
 		var footstep_pitch = default_footstep_pitch
 		if (is_sprinting):
 			footstep_volume += 4.0
 			footstep_pitch += 0.2
+		if is_biking:
+			footstep_volume = -80.0
 		$AudioStreamPlayer.volume_db = footstep_volume
 		$AudioStreamPlayer.pitch_scale = footstep_pitch
 	elif head_bob_anim.is_playing():
@@ -216,6 +221,7 @@ func add_found_item(item_name : String, also_equip : bool = true):
 	if PlayerSettings.found_items.has(item_name):
 		return
 	PlayerSettings.found_items.append(item_name)
+	PlayerSettings.save_settings()
 	if also_equip:
 		set_current_item(item_name)
 

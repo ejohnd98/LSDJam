@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c7y23appditp6"]
+[gd_scene load_steps=29 format=3 uid="uid://c7y23appditp6"]
 
 [ext_resource type="Script" path="res://scenes/ui/inventory.gd" id="1_onii4"]
 [ext_resource type="FontFile" uid="uid://vd80c5wwb0pb" path="res://textures/fonts/atwriter.ttf" id="4_4j222"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://bfdeo6go0trwe" path="res://textures/dream_snapshots/galaxy.png" id="11_gn86a"]
 [ext_resource type="Texture2D" uid="uid://dm5p5vc5hwon5" path="res://textures/billboard_items/bike_item.png" id="15_ihv0u"]
 [ext_resource type="Texture2D" uid="uid://ceu5ohr5bmu3f" path="res://textures/billboard_items/generic_key_2.png" id="18_5g8l5"]
+[ext_resource type="Texture2D" uid="uid://d2hxyubrrmcye" path="res://textures/billboard_items/Keycard.png" id="20_giaho"]
 
 [sub_resource type="Theme" id="Theme_8t71l"]
 default_font = ExtResource("4_4j222")
@@ -225,8 +226,8 @@ custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("4_vofxu")
 script = ExtResource("5_yn0jp")
-required_key = "Museum"
-dream_name = "Museum"
+required_key = "Untitled (2)"
+dream_name = "Untitled (2)"
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Dreams/DreamIcon4"]
 layout_mode = 1
@@ -470,6 +471,29 @@ offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("18_5g8l5")
+expand_mode = 4
+
+[node name="ItemIcon8" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("4_vofxu")
+script = ExtResource("5_67m40")
+required_key = "galaxyKey"
+item_name = "Access Card"
+description = "Grants access to certain parts of the Galaxy ship"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon8"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_giaho")
 expand_mode = 4
 
 [node name="Nothing" type="Label" parent="VBoxContainer/VBoxContainer/Items"]

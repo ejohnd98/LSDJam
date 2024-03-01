@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://d2ihn5j58j4dg"]
+[gd_scene load_steps=53 format=3 uid="uid://d2ihn5j58j4dg"]
 
 [ext_resource type="Texture2D" uid="uid://02s6p0rkwn3j" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ColdNight_Equirect.png" id="1_f6mkx"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_rev4g"]
@@ -24,6 +24,8 @@
 [ext_resource type="Texture2D" uid="uid://bo0nqyacm4qtc" path="res://sourceModels/beach/barTextureNormal.png" id="20_4j6yw"]
 [ext_resource type="Texture2D" uid="uid://ctr6rgfvgeqk1" path="res://sourceModels/beach/Beach_shrubs.png" id="21_1wytl"]
 [ext_resource type="PackedScene" uid="uid://c2faw0c6i42xo" path="res://scenes/props/bar_spot.tscn" id="22_b8ool"]
+[ext_resource type="Texture2D" uid="uid://d2t6ld0o1x0tn" path="res://textures/beach_grid.png" id="24_vembb"]
+[ext_resource type="PackedScene" uid="uid://c2lbmlrdtg1r" path="res://sourceModels/Archway.glb" id="26_tn3wo"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xgm4g"]
 panorama = ExtResource("1_f6mkx")
@@ -51,27 +53,6 @@ adjustment_enabled = true
 adjustment_brightness = 0.9
 adjustment_contrast = 1.25
 adjustment_saturation = 1.64
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ujr4y"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohmkj"]
-noise = SubResource("FastNoiseLite_ujr4y")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0d0y"]
-albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
-albedo_texture = SubResource("NoiseTexture2D_ohmkj")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e7q65"]
-albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
-albedo_texture = SubResource("NoiseTexture2D_ohmkj")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtsqx"]
-albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
-albedo_texture = SubResource("NoiseTexture2D_ohmkj")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckpgi"]
-albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
-albedo_texture = SubResource("NoiseTexture2D_ohmkj")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ee70u"]
 size = Vector3(220, 5, 220)
@@ -171,6 +152,38 @@ uv1_scale = Vector3(3, 2, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_v40yy"]
 size = Vector3(2, 4, 4)
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0h1qj"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1n2gg"]
+noise = SubResource("FastNoiseLite_0h1qj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l7ug0"]
+albedo_color = Color(0.631373, 0.564706, 0.509804, 1)
+albedo_texture = SubResource("NoiseTexture2D_1n2gg")
+uv1_scale = Vector3(2, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0dok"]
+albedo_color = Color(0.631373, 0.564706, 0.509804, 1)
+albedo_texture = SubResource("NoiseTexture2D_1n2gg")
+uv1_scale = Vector3(2, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i6ifl"]
+albedo_color = Color(0.631373, 0.564706, 0.509804, 1)
+albedo_texture = SubResource("NoiseTexture2D_1n2gg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rs2je"]
+albedo_color = Color(0.631373, 0.564706, 0.509804, 1)
+albedo_texture = SubResource("NoiseTexture2D_1n2gg")
+
+[sub_resource type="QuadMesh" id="QuadMesh_5v7t3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bujhd"]
+albedo_texture = ExtResource("24_vembb")
+texture_filter = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vrd63"]
+size = Vector3(2, 3, 0.25)
+
 [node name="BeachNight" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -183,40 +196,16 @@ shadow_enabled = true
 environment = SubResource("Environment_20yqv")
 
 [node name="PlayerSpawnUp" type="Node3D" parent="."]
-transform = Transform3D(0.999837, 0, 0.0180807, 0, 1, 0, -0.0180807, 0, 0.999837, 19.3621, 1.41266, -35.8031)
+transform = Transform3D(0.999837, 0, 0.0180807, 0, 1, 0, -0.0180807, 0, 0.999837, 24.4517, 1.41266, -30.8943)
 
 [node name="PlayerSpawnDown" type="Node3D" parent="."]
-transform = Transform3D(-0.99278, 0, 0.119946, 0, 1, 0, -0.119946, 0, -0.99278, 20.3155, 0.462534, 27.0726)
+transform = Transform3D(-0.99278, 0, 0.119946, 0, 1, 0, -0.119946, 0, -0.99278, 27.4716, 0.462534, 17.8645)
 
 [node name="PlayerSpawnRight" type="Node3D" parent="."]
 transform = Transform3D(-0.0463045, 0, 0.998927, 0, 1, 0, -0.998927, 0, -0.0463045, -4.63522, 0.760593, -15.0431)
 
 [node name="PlayerSpawnLeft" type="Node3D" parent="."]
 transform = Transform3D(0.024554, 0, 0.999699, 0, 1, 0, -0.999699, 0, 0.024554, -7.18805, 0.824792, -15.1443)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 15.7301, 1.617, -11.7602)
-size = Vector3(1.1, 1.1, 0.15)
-material = SubResource("StandardMaterial3D_m0d0y")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
-operation = 2
-size = Vector3(1, 1, 0.45)
-material = SubResource("StandardMaterial3D_e7q65")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.525, -1, 0)
-size = Vector3(0.05, 1.1, 0.15)
-material = SubResource("StandardMaterial3D_xtsqx")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.525, -1, 0)
-size = Vector3(0.05, 1.1, 0.15)
-material = SubResource("StandardMaterial3D_ckpgi")
-
-[node name="DreamGridRepresentation" parent="." instance=ExtResource("2_rev4g")]
-transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 15.7301, 1.637, -11.7879)
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1.13373)
@@ -825,8 +814,9 @@ omni_range = 4.0
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="DreamConditionBar2/BeachBarNightOn"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7887, 1.61392, 0.0975342)
 stream = ExtResource("12_siyoy")
-volume_db = -5.0
+volume_db = -9.0
 autoplay = true
+bus = &"SFX"
 
 [node name="BarSpot" parent="DreamConditionBar2" instance=ExtResource("22_b8ool")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.593338, -0.412081, 1.08608)
@@ -850,7 +840,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.4943, 0.200976, -9.61333)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.5164, 0.206091, 1.03615)
 
 [node name="Torch6" parent="." instance=ExtResource("16_kkyxm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4696, 0.189815, -12.2886)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4696, 0.189815, -13.064)
 
 [node name="Torch7" parent="." instance=ExtResource("16_kkyxm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0499, 0.875535, -14.1687)
@@ -907,6 +897,62 @@ surface_material_override/0 = SubResource("StandardMaterial3D_c1pgf")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.510632, 0, 0)
 shape = SubResource("BoxShape3D_v40yy")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 15.9005, 1.94529, -12.1428)
+use_collision = true
+size = Vector3(1.1, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_l7ug0")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+operation = 2
+size = Vector3(1, 1, 0.45)
+material = SubResource("StandardMaterial3D_o0dok")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_i6ifl")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_rs2je")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CSGBox3D"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2.98023e-08, 0, -0.000365019)
+mesh = SubResource("QuadMesh_5v7t3")
+surface_material_override/0 = SubResource("StandardMaterial3D_bujhd")
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("2_rev4g")]
+transform = Transform3D(1.4, 0, 0, 0, 1.18699, 0, 0, 0, 1.4, 16.0596, 1.79702, -12.1112)
+
+[node name="Archway" parent="." instance=ExtResource("26_tn3wo")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 28.2324, 0.192569, 20.7167)
+
+[node name="ForcedTransitionArea5" type="Area3D" parent="Archway"]
+script = ExtResource("9_dnoul")
+force_direction = true
+direction = Vector2i(0, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Archway/ForcedTransitionArea5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17058, 0.0733013)
+shape = SubResource("BoxShape3D_vrd63")
+script = ExtResource("10_yp0mu")
+
+[node name="Archway2" parent="." instance=ExtResource("26_tn3wo")]
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, 24.6222, 0.192569, -36.1214)
+
+[node name="ForcedTransitionArea5" type="Area3D" parent="Archway2"]
+script = ExtResource("9_dnoul")
+force_direction = true
+direction = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Archway2/ForcedTransitionArea5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17058, 0.0733013)
+shape = SubResource("BoxShape3D_vrd63")
+script = ExtResource("10_yp0mu")
 
 [connection signal="on_pick_up" from="DreamCondition3/KeyObject" to="Node3D/BoatSpot" method="_refresh_condition"]
 

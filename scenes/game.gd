@@ -116,8 +116,9 @@ func on_interactable_change(interactable):
 
 
 func move_in_direction(direction: Vector2i):
+	print("CHECKPOINT: move_in_direction: " + str(direction))
 	#messy hack to prevent this being called twice at once
-	if not $MoveCooldownTimer.is_stopped():
+	if not $MoveCooldownTimer.is_stopped() or change_dreams_called:
 		return
 	
 	$MoveCooldownTimer.start()
@@ -161,6 +162,7 @@ func win_game():
 	canvas_layer.get_node("WinScreen").get_child(0).fade_in()
 
 func advance_dream():
+	print("CHECKPOINT: advance_dream")
 	var next_index = dream_index
 	if next_index + 1 == dreams.size():
 		win_game()
@@ -174,10 +176,12 @@ func pick_random_dream(allow_transition_dreams : bool = true):
 	
 	if (not in_transition_dream and allow_transition_dreams and (randf() > 0.6)):# or debug_force_transition)):
 		in_transition_dream = true
+		print("CHECKPOINT: pick_random_dream: setting in_transition_dream to true")
 		debug_force_transition = false
 	else:
 		if allow_transition_dreams and not in_transition_dream and not get_dream_grid().is_nightmare and randf() > 0.5:
 			in_transition_dream = false
+			print("CHECKPOINT: pick_random_dream: picking nightmare")
 			pick_nightmare()
 			return
 		in_transition_dream = false
@@ -187,6 +191,7 @@ func pick_random_dream(allow_transition_dreams : bool = true):
 		new_index = dream_index + 1#rng.randi_range (1, dreams.size()-1) #pick random dream 	
 		new_index = wrapi(new_index, 0, dreams.size())
 	
+	print("CHECKPOINT: pick_random_dream: index change from " + str(dream_index) + " to " + str(new_index))
 	change_dreams(new_index)
 
 func pick_nightmare():
@@ -201,6 +206,7 @@ func get_next_transition_dream() -> PackedScene:
 var change_dreams_called = false
 
 func change_dreams(index : int, is_nightmare : bool = false, is_transition : bool = false):
+	print("CHECKPOINT: change_dreams: " + str(index) + ", nightmate: " + str(is_nightmare) + ", transition: " + str(is_transition))
 	if change_dreams_called:
 		return
 	
@@ -271,6 +277,7 @@ func get_spawn_node(incoming_direction) -> Node3D:
 	return new_spawn
 
 func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vector2i.UP, changing_dreams = false):
+	print("CHECKPOINT: load_new_scene: " + new_scene_name)
 	if not $SceneChangeTimer.is_stopped():
 		change_dreams_called = false
 		return
@@ -355,6 +362,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	DreamGridViewer.refresh_dream_grid(dream_grid)
 	
 	clear_control_prompts()
+	player.unequip_item()
 	
 	transition_node.finish_transition()
 	GameManager.set_crosshair(true)

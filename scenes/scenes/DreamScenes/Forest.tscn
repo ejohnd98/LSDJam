@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bvge3g0uemu4"]
+[gd_scene load_steps=48 format=3 uid="uid://bvge3g0uemu4"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_fluer"]
 [ext_resource type="Texture2D" uid="uid://bgrxkyvd3cqx0" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicBlueSunset_Equirect.png" id="1_qc3ga"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="20_5mdem"]
 [ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="21_ia11n"]
 [ext_resource type="PackedScene" uid="uid://oemojq2461ft" path="res://scenes/chasing_enemy_final.tscn" id="22_ev3d3"]
+[ext_resource type="Texture2D" uid="uid://cty2wd6bh0p2a" path="res://textures/forest_grid.png" id="23_vjx0x"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ho3ki"]
 panorama = ExtResource("1_qc3ga")
@@ -49,27 +50,6 @@ adjustment_enabled = true
 adjustment_brightness = 1.1
 adjustment_contrast = 1.2
 adjustment_saturation = 1.1
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ujr4y"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohmkj"]
-noise = SubResource("FastNoiseLite_ujr4y")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0d0y"]
-albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
-albedo_texture = SubResource("NoiseTexture2D_ohmkj")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e7q65"]
-albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
-albedo_texture = SubResource("NoiseTexture2D_ohmkj")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtsqx"]
-albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
-albedo_texture = SubResource("NoiseTexture2D_ohmkj")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckpgi"]
-albedo_color = Color(0.364706, 0.32549, 0.294118, 1)
-albedo_texture = SubResource("NoiseTexture2D_ohmkj")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
 noise_type = 3
@@ -164,6 +144,35 @@ shader_parameter/noiseVertex = SubResource("NoiseTexture2D_3dcqk")
 [sub_resource type="SphereShape3D" id="SphereShape3D_qg7ex"]
 radius = 10.0
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o71nd"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohmkj"]
+noise = SubResource("FastNoiseLite_o71nd")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmwyb"]
+albedo_color = Color(0.631373, 0.564706, 0.509804, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+uv1_scale = Vector3(2, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1t837"]
+albedo_color = Color(0.631373, 0.564706, 0.509804, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+uv1_scale = Vector3(2, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ranlv"]
+albedo_color = Color(0.631373, 0.564706, 0.509804, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bs4ar"]
+albedo_color = Color(0.631373, 0.564706, 0.509804, 1)
+albedo_texture = SubResource("NoiseTexture2D_ohmkj")
+
+[sub_resource type="QuadMesh" id="QuadMesh_wh0gd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flhp6"]
+albedo_texture = ExtResource("23_vjx0x")
+texture_filter = 2
+
 [node name="Forest" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -184,31 +193,6 @@ transform = Transform3D(0.782097, 0, -0.623156, 0, 1, 0, 0.623156, 0, 0.782097, 
 
 [node name="PlayerSpawnLeft" type="Node3D" parent="."]
 transform = Transform3D(-0.566536, 0, 0.824037, 0, 1, 0, -0.824037, 0, -0.566536, -52.747, 2.92876, 12.0053)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1, 1.617, 5.26963)
-size = Vector3(1.1, 1.1, 0.15)
-material = SubResource("StandardMaterial3D_m0d0y")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
-operation = 2
-size = Vector3(1, 1, 0.45)
-material = SubResource("StandardMaterial3D_e7q65")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.525, -1, 0)
-size = Vector3(0.05, 1.1, 0.15)
-material = SubResource("StandardMaterial3D_xtsqx")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.525, -1, 0)
-size = Vector3(0.05, 1.1, 0.15)
-material = SubResource("StandardMaterial3D_ckpgi")
-
-[node name="DreamGridRepresentation" parent="." instance=ExtResource("2_28p3k")]
-transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 1, 1.637, 5.26963)
-grid_scale = Vector2(1, 1)
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
@@ -586,6 +570,36 @@ check_los = false
 [node name="ChasingEnemy7" parent="." instance=ExtResource("22_ev3d3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5236, -4.52809, 56.2812)
 check_los = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1, 1.617, 5.26963)
+use_collision = true
+size = Vector3(1.1, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_fmwyb")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+operation = 2
+size = Vector3(1, 1, 0.45)
+material = SubResource("StandardMaterial3D_1t837")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_ranlv")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.525, -1, 0)
+size = Vector3(0.05, 1.1, 0.15)
+material = SubResource("StandardMaterial3D_bs4ar")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CSGBox3D"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2.98023e-08, 0, -0.000365019)
+mesh = SubResource("QuadMesh_wh0gd")
+surface_material_override/0 = SubResource("StandardMaterial3D_flhp6")
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("2_28p3k")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 1.15907, 1.46873, 5.30117)
 
 [editable path="SceneTrigger/DistortionBubble2"]
 [editable path="DreamCondition3/KeyObject"]

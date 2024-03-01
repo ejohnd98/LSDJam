@@ -29,7 +29,11 @@ func create_dream_grid_visuals(dream_grid : DreamGrid):
 			var dream_cell : DreamCell = dream_grid.grid[x][y]
 			var chosen_texture = null
 			
+			var cell_bg = TextureRect.new()
+			var cell = TextureRect.new()
+			
 			if dream_grid.use_custom_textures:
+				cell_bg.texture = dream_grid.dream_texture
 				if dream_cell.is_nightmare or dream_cell.is_dream_transition:
 					chosen_texture = dream_grid.nightmare_texture
 				if dream_cell.is_goal:
@@ -41,6 +45,7 @@ func create_dream_grid_visuals(dream_grid : DreamGrid):
 				if dream_grid.player_position == Vector2i(x,y):
 					chosen_texture = dream_grid.player_texture
 			else:
+				cell_bg.texture = dream_texture
 				if dream_cell.is_nightmare or dream_cell.is_dream_transition:
 					chosen_texture = nightmare_texture
 				if dream_cell.is_goal:
@@ -52,10 +57,10 @@ func create_dream_grid_visuals(dream_grid : DreamGrid):
 				if dream_grid.player_position == Vector2i(x,y):
 					chosen_texture = player_texture
 			
-			var cell_bg = TextureRect.new()
-			var cell = TextureRect.new()
+			cell_bg.self_modulate = dream_grid.modulate_color
+			cell.self_modulate = dream_grid.modulate_color
 			
-			cell_bg.texture = dream_texture
+			
 			cell.texture = chosen_texture
 			
 			cell_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE

@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://1il5btkm7phy" path="res://sourceModels/firTreeDowned.glb" id="19_jmb7t"]
 [ext_resource type="PackedScene" uid="uid://bh34qkxql6bh" path="res://sourceModels/Forest/ForestBench2.glb" id="19_whrx3"]
 [ext_resource type="Texture2D" uid="uid://y5mapwqofa5p" path="res://textures/flashlight_light.png" id="20_q42hj"]
+[ext_resource type="PackedScene" uid="uid://flsh1apt2wu1" path="res://sourceModels/flashlight.glb" id="21_t72y5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mjkut"]
 panorama = ExtResource("1_etvu2")
@@ -170,15 +171,15 @@ shader_parameter/noiseVertex = SubResource("NoiseTexture2D_tdym4")
 [sub_resource type="BoxShape3D" id="BoxShape3D_wqjmr"]
 size = Vector3(4, 4, 20)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_u72sg"]
-top_radius = 0.045
-bottom_radius = 0.045
-height = 0.4
+[sub_resource type="GDScript" id="GDScript_1405s"]
+script/source = "extends SpotLight3D
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_s4xcg"]
-top_radius = 0.07
-bottom_radius = 0.03
-height = 0.1
+func adjust_brightness():
+	if GameManager.get_dream_grid().name == \"Dark Forest\":
+		light_energy = 7.0
+	else:
+		light_energy = 2.0
+"
 
 [node name="Forest" type="Node3D"]
 
@@ -531,22 +532,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6993, 2.2181, -43.6332)
 item_name = "flashlight"
 pickup_prompt = "pick up flashlight"
 
-[node name="Flashlight" type="MeshInstance3D" parent="Pickup"]
-transform = Transform3D(-1, 8.69216e-08, -9.34755e-09, 3.55271e-15, 0.106924, 0.994267, 8.74228e-08, 0.994267, -0.106924, 0.116009, 0.0507073, 0.00532913)
-mesh = SubResource("CylinderMesh_u72sg")
-
-[node name="Flashlight2" type="MeshInstance3D" parent="Pickup/Flashlight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.151749, 6.63316e-09)
-mesh = SubResource("CylinderMesh_s4xcg")
-skeleton = NodePath("../..")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="Pickup/Flashlight"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.206933, 9.04534e-09)
+[node name="SpotLight3D" type="SpotLight3D" parent="Pickup"]
+transform = Transform3D(-1, 0, 8.74228e-08, -1.06542e-08, 0.992546, -0.121869, -8.67711e-08, -0.121869, -0.992546, 0.130194, 0.0915148, 0.277447)
 light_energy = 7.0
 light_projector = ExtResource("20_q42hj")
 shadow_enabled = true
 spot_range = 24.0
 spot_angle = 60.0
+script = SubResource("GDScript_1405s")
+
+[node name="flashlight" parent="Pickup" instance=ExtResource("21_t72y5")]
+transform = Transform3D(-0.456921, -2.32831e-10, 4.08766e-08, -4.7546e-09, 0.453515, -0.0556846, -3.87231e-08, -0.0556846, -0.453515, 0.130194, 0.0586407, 0.00971222)
 
 [editable path="SceneTrigger/DistortionBubble2"]
 [editable path="ChasingEnemy"]

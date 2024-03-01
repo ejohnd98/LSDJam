@@ -19,6 +19,7 @@ func set_usable(can_use : bool):
 
 func _on_interaction_object_on_interact():
 	if can_be_used:
+		await get_tree().create_timer(1.5).timeout
 		GameManager.move_in_direction(direction)
 
 

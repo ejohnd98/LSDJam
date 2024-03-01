@@ -114,11 +114,11 @@ noise = SubResource("FastNoiseLite_hodyl")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vl41d"]
 render_priority = 0
 shader = ExtResource("4_1u12b")
-shader_parameter/distortionView = 0.07
+shader_parameter/distortionView = 0.23
 shader_parameter/speedView = 0.014
-shader_parameter/static_intensity = 0.0
+shader_parameter/static_intensity = 0.8
 shader_parameter/tintColor = Color(1, 1, 1, 1)
-shader_parameter/fesnelAmount = 0.92
+shader_parameter/fesnelAmount = 1.16
 shader_parameter/fresnelTintOffset = -1.0
 shader_parameter/distortionVertex = 0.0
 shader_parameter/speedVertex = 0.1
@@ -401,6 +401,15 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Distortion2"]
 transform = Transform3D(8.54605, 0, 0, 0, 2.03808, 0, 0, 0, 1, 0, 99.645, -182.775)
+mesh = SubResource("QuadMesh_4d3el")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_vl41d")
+
+[node name="Distortion6" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Distortion6"]
+transform = Transform3D(8.54605, 0, 0, 0, -4.10309, 8.74228e-08, 0, -3.58704e-07, -1, 0, -0.601014, -182.775)
 mesh = SubResource("QuadMesh_4d3el")
 skeleton = NodePath("../../DistortionPlane2")
 surface_material_override/0 = SubResource("ShaderMaterial_vl41d")

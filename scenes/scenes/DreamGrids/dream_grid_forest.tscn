@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvg57vh1pq5pu"]
+[gd_scene load_steps=9 format=3 uid="uid://cvg57vh1pq5pu"]
 
 [ext_resource type="Script" path="res://scenes/scenes/DreamGrids/DreamGrid.gd" id="1_7t02i"]
+[ext_resource type="Texture2D" uid="uid://u6fqj5k5f3hn" path="res://textures/DreamGrid/empty_dream_icon_forest.png" id="2_0ctni"]
 [ext_resource type="PackedScene" uid="uid://cyndvm76up426" path="res://scenes/scenes/DreamGrids/dream_cell.tscn" id="2_0x1k8"]
+[ext_resource type="Texture2D" uid="uid://dijsu4p6p1keb" path="res://textures/DreamGrid/skull_icon_forest.png" id="3_hym6f"]
+[ext_resource type="Texture2D" uid="uid://dnj78hkcwbgox" path="res://textures/DreamGrid/you_icon_forest.png" id="4_8dkab"]
+[ext_resource type="Texture2D" uid="uid://bw4x4kcsaw4v8" path="res://textures/DreamGrid/starting_icon_forest.png" id="5_y1v1q"]
+[ext_resource type="Texture2D" uid="uid://ct0gjiws4rc6e" path="res://textures/DreamGrid/goal_icon_forest.png" id="6_j1ohx"]
+[ext_resource type="Texture2D" uid="uid://cgh5f0ao1ccq2" path="res://textures/DreamGrid/key_icon_forest.png" id="7_in36n"]
 
 [node name="DreamGrid" type="Control"]
 custom_minimum_size = Vector2(300, 300)
@@ -12,6 +18,13 @@ anchor_right = 1.0
 grow_horizontal = 0
 script = ExtResource("1_7t02i")
 dream_name = "Forest"
+use_custom_textures = true
+dream_texture = ExtResource("2_0ctni")
+nightmare_texture = ExtResource("3_hym6f")
+player_texture = ExtResource("4_8dkab")
+start_texture = ExtResource("5_y1v1q")
+goal_texture = ExtResource("6_j1ohx")
+key_texture = ExtResource("7_in36n")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1

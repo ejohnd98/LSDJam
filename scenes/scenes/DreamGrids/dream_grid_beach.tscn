@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cryhc7oytigkb"]
+[gd_scene load_steps=9 format=3 uid="uid://cryhc7oytigkb"]
 
 [ext_resource type="Script" path="res://scenes/scenes/DreamGrids/DreamGrid.gd" id="1_pdtv1"]
 [ext_resource type="PackedScene" uid="uid://cyndvm76up426" path="res://scenes/scenes/DreamGrids/dream_cell.tscn" id="2_fcki6"]
+[ext_resource type="Texture2D" uid="uid://cflgoq7vysrev" path="res://textures/DreamGrid/empty_dream_icon2.png" id="2_ilrjt"]
+[ext_resource type="Texture2D" uid="uid://pc548j40i0vh" path="res://textures/DreamGrid/skull_icon.png" id="3_krcaf"]
+[ext_resource type="Texture2D" uid="uid://c2o3p7u3ca4vr" path="res://textures/DreamGrid/you_icon.png" id="4_2iwm2"]
+[ext_resource type="Texture2D" uid="uid://ov3u6kw6cpsf" path="res://textures/DreamGrid/starting_icon.png" id="5_yotit"]
+[ext_resource type="Texture2D" uid="uid://jngrgcbevtrx" path="res://textures/DreamGrid/goal_icon.png" id="6_2pqlk"]
+[ext_resource type="Texture2D" uid="uid://fa0q78lyvgi5" path="res://textures/DreamGrid/key_icon.png" id="7_v8tbb"]
 
 [node name="DreamGrid" type="Control"]
 custom_minimum_size = Vector2(300, 300)
@@ -12,6 +18,14 @@ anchor_right = 1.0
 grow_horizontal = 0
 script = ExtResource("1_pdtv1")
 dream_name = "Beach"
+use_custom_textures = true
+dream_texture = ExtResource("2_ilrjt")
+nightmare_texture = ExtResource("3_krcaf")
+player_texture = ExtResource("4_2iwm2")
+start_texture = ExtResource("5_yotit")
+goal_texture = ExtResource("6_2pqlk")
+key_texture = ExtResource("7_v8tbb")
+modulate_color = Color(0.321569, 0.960784, 0.968627, 0.678431)
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1

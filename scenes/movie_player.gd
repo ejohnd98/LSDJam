@@ -4,11 +4,11 @@ class_name MoviePlayer extends Area3D
 
 var player_in_theater = false
 
-var unit_size_inside = 40
+var unit_size_inside = 46
 var unit_size_outside = 9
 
-var db_inside = -22
-var db_outside = -30
+var db_inside = -26
+var db_outside = -33
 
 var counter = 0.0
 

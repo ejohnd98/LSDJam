@@ -31,8 +31,10 @@ func _process(delta):
 		UpdateTexture()
 		if dream_keys.size() > 0:
 			set_self_modulate(Color.AQUA)
+			self_modulate.a = 0.5
 		else:
 			set_self_modulate(Color.WHITE)
+			self_modulate.a = 0.5
 
 func _ready():
 	is_dream_transition = is_nightmare

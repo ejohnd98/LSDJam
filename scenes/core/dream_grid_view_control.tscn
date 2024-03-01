@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://4hdb8ccc1g8l"]
 
 [ext_resource type="Script" path="res://scenes/core/dream_grid_view_control.gd" id="1_gssvq"]
-[ext_resource type="Texture2D" uid="uid://bmpm1p8n03oc6" path="res://textures/DreamGrid/empty_dream_icon.png" id="2_by5cb"]
+[ext_resource type="Texture2D" uid="uid://cflgoq7vysrev" path="res://textures/DreamGrid/empty_dream_icon2.png" id="2_1uqna"]
 [ext_resource type="Texture2D" uid="uid://pc548j40i0vh" path="res://textures/DreamGrid/skull_icon.png" id="3_ns5bk"]
 [ext_resource type="Texture2D" uid="uid://c2o3p7u3ca4vr" path="res://textures/DreamGrid/you_icon.png" id="4_rxoka"]
 [ext_resource type="Texture2D" uid="uid://ov3u6kw6cpsf" path="res://textures/DreamGrid/starting_icon.png" id="5_d4vos"]
@@ -15,7 +15,7 @@ anchors_preset = 0
 offset_right = 256.0
 offset_bottom = 256.0
 script = ExtResource("1_gssvq")
-dream_texture = ExtResource("2_by5cb")
+dream_texture = ExtResource("2_1uqna")
 nightmare_texture = ExtResource("3_ns5bk")
 player_texture = ExtResource("4_rxoka")
 start_texture = ExtResource("5_d4vos")

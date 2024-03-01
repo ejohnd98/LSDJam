@@ -136,6 +136,7 @@ shape = SubResource("BoxShape3D_tbc1i")
 
 [node name="ClickInteraction" parent="." instance=ExtResource("2_leu1g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18315, 0)
+interact_prompt = ""
 
 [node name="CollisionShape3D" parent="ClickInteraction" index="0"]
 shape = SubResource("BoxShape3D_so2xl")

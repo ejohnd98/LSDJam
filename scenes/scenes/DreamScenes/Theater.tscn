@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://ctf3xb7to4085"]
+[gd_scene load_steps=53 format=3 uid="uid://ctf3xb7to4085"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_wi6lw"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_6ifvt"]
@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://df1jen7b8p2w1" path="res://sourceModels/cinema/movie_poster_left.png" id="23_gxm8m"]
 [ext_resource type="Texture2D" uid="uid://b5q66f3op80ly" path="res://sourceModels/cinema/movie_poster_down.png" id="24_ti7hj"]
 [ext_resource type="Texture2D" uid="uid://dsu25n7kd4tiq" path="res://sourceModels/cinema/movie_poster_alien.png" id="24_u2eba"]
+[ext_resource type="AudioStream" uid="uid://7lyg2bnjus86" path="res://sounds/arcade_music.ogg" id="27_x6nn2"]
 [ext_resource type="Texture2D" uid="uid://bi41c1wjlbl6j" path="res://sourceModels/cinema/theater_poster.png" id="31_qe14e"]
 
 [sub_resource type="Environment" id="Environment_7qkrs"]
@@ -884,6 +885,14 @@ direction = Vector2i(1, 0)
 [node name="DreamCondition" parent="ArcadeMachine" instance=ExtResource("6_28od4")]
 required_key = "cinemaCoin"
 require_right = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="ArcadeMachine"]
+stream = ExtResource("27_x6nn2")
+attenuation_model = 1
+volume_db = -16.0
+unit_size = 5.5
+autoplay = true
+bus = &"SFX"
 
 [node name="MoviePoster" parent="." instance=ExtResource("20_ljv87")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.30753, 1.50544, -2.55)

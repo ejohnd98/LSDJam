@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cpdu035ysckgf"]
+[gd_scene load_steps=31 format=3 uid="uid://cpdu035ysckgf"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_ryeu4"]
 [ext_resource type="PackedScene" uid="uid://btmldfxcfpybj" path="res://scenes/props/distortion_bubble.tscn" id="2_306l3"]
@@ -9,6 +9,15 @@
 [ext_resource type="PackedScene" uid="uid://cb2k6fym5cxi0" path="res://models/galaxy_corridor_end_door.tscn" id="6_kbrq5"]
 [ext_resource type="PackedScene" uid="uid://cvkxassvtxb7i" path="res://models/galaxy_corridor_end.tscn" id="7_4wc0h"]
 [ext_resource type="AudioStream" uid="uid://dr5nl104i3h2y" path="res://sounds/warpcore.ogg" id="8_grb8p"]
+[ext_resource type="PackedScene" uid="uid://dv2mfrpn0x5md" path="res://scenes/dream_condition.tscn" id="9_8odpo"]
+[ext_resource type="Texture2D" uid="uid://c7mi80qg8soa3" path="res://textures/forcefield.png" id="9_i7fp1"]
+[ext_resource type="PackedScene" uid="uid://bj0nwgohekod0" path="res://sourceModels/galaxy/galaxyTerminalSmall.glb" id="10_vhhfu"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="11_htssw"]
+[ext_resource type="PackedScene" uid="uid://cikt2vicc06wx" path="res://scenes/interactables/prompt_without_interaction.tscn" id="11_y17w7"]
+[ext_resource type="AudioStream" uid="uid://cpe6eouhlbt0y" path="res://sounds/generic/cant_interact.ogg" id="12_nhepg"]
+[ext_resource type="PackedScene" uid="uid://cm5srrepm42b4" path="res://scenes/interactables/key_object.tscn" id="13_ly31s"]
+[ext_resource type="AudioStream" uid="uid://dhykcra4dhrfv" path="res://sounds/forcefieldLoop.ogg" id="13_w50tc"]
+[ext_resource type="Texture2D" uid="uid://d2hxyubrrmcye" path="res://textures/billboard_items/Keycard.png" id="16_4l6ld"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxgel"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -40,6 +49,50 @@ _data = {
 energy = 2.0
 propagation = 0.95
 interior = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_5ok52"]
+size = Vector2(3, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_becft"]
+transparency = 1
+blend_mode = 1
+albedo_texture = ExtResource("9_i7fp1")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+fractal_lacunarity = 1.0
+fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_iorx3")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_843hp"]
+seamless = true
+noise = SubResource("FastNoiseLite_iorx3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xg1ms"]
+render_priority = 0
+shader = ExtResource("11_htssw")
+shader_parameter/distortionView = 0.01
+shader_parameter/speedView = 0.1434
+shader_parameter/static_intensity = 1.0
+shader_parameter/tintColor = Color(1, 1, 1, 1)
+shader_parameter/fesnelAmount = 0.61
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.0
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_843hp")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ryb4j"]
+size = Vector3(3, 5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dcj8u"]
+size = Vector3(0.4, 3, 3)
 
 [node name="GalaxyCorridor01" type="Node3D"]
 
@@ -86,7 +139,7 @@ show_arrow = false
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 6, 0, -0.240483, -5.76582)
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_eek8x")]
-transform = Transform3D(0.565685, -0.0493027, 0.563533, 0, 0.796956, 0.0697246, -0.565685, -0.0493027, 0.563533, 1.53306, 1.82745, 1.53306)
+transform = Transform3D(0.417656, 0, 0, 0, 0.216767, -0.389453, 0, 0.389453, 0.216767, -0.00428353, 1.04056, -0.0556117)
 
 [node name="VoxelGI" type="VoxelGI" parent="."]
 subdiv = 0
@@ -214,6 +267,43 @@ require_up = true
 [node name="galaxyCorridorMiddle2" parent="VoxelGI/Corridors/Corridor4 - UP" instance=ExtResource("5_e8ty6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
+[node name="DreamCondition" parent="VoxelGI/Corridors/Corridor4 - UP" instance=ExtResource("9_8odpo")]
+required_position = Vector2i(4, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VoxelGI/Corridors/Corridor4 - UP/DreamCondition"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.454389)
+mesh = SubResource("QuadMesh_5ok52")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_becft")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="VoxelGI/Corridors/Corridor4 - UP/DreamCondition/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0960207)
+mesh = SubResource("QuadMesh_5ok52")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("ShaderMaterial_xg1ms")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="VoxelGI/Corridors/Corridor4 - UP/DreamCondition/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VoxelGI/Corridors/Corridor4 - UP/DreamCondition/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_ryb4j")
+
+[node name="InvalidInteraction" parent="VoxelGI/Corridors/Corridor4 - UP/DreamCondition" instance=ExtResource("11_y17w7")]
+transform = Transform3D(1, 0, -1.49012e-08, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+interact_prompt = "insufficient access card"
+interact_sound = ExtResource("12_nhepg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VoxelGI/Corridors/Corridor4 - UP/DreamCondition/InvalidInteraction"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.00443602, 1.38483, 0.449513)
+shape = SubResource("BoxShape3D_dcj8u")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="VoxelGI/Corridors/Corridor4 - UP/DreamCondition"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.848559, 0)
+stream = ExtResource("13_w50tc")
+volume_db = -15.0
+unit_size = 2.0
+pitch_scale = 1.43
+autoplay = true
+
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
 stream = ExtResource("8_grb8p")
@@ -236,7 +326,25 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.86
 [node name="PlayerSpawnRight" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.862, 0.1, 0)
 
+[node name="galaxyTerminalSmall" parent="." instance=ExtResource("10_vhhfu")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.31134e-08, 0, -0.3)
+
+[node name="DreamCondition3" parent="." instance=ExtResource("9_8odpo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.247, 0)
+required_key = "galaxyKey"
+destroy_on_pass = true
+required_position = Vector2i(1, 0)
+
+[node name="KeyObject" parent="DreamCondition3" instance=ExtResource("13_ly31s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-07, -0.0493599, 0.155874)
+key = "galaxyKey"
+pickup_prompt = "pick up access card"
+
+[node name="Sprite3D" parent="DreamCondition3/KeyObject" index="3"]
+texture = ExtResource("16_4l6ld")
+
 [editable path="VoxelGI/Corridors/Corridor1 - DOWN/galaxyCorridorEndDoor"]
 [editable path="VoxelGI/Corridors/Corridor2 - LEFT/galaxyCorridorEndDoor"]
 [editable path="VoxelGI/Corridors/Corridor3 - RIGHT/galaxyCorridorEndDoor"]
 [editable path="VoxelGI/Corridors/Corridor4 - UP/galaxyCorridorEndDoor"]
+[editable path="DreamCondition3/KeyObject"]

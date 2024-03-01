@@ -1,11 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://bevrc41yhbsif"]
+[gd_scene load_steps=14 format=3 uid="uid://bevrc41yhbsif"]
 
 [ext_resource type="PackedScene" uid="uid://crv0wrsfw0c6q" path="res://sourceModels/cinema/ArcadeMachine.glb" id="1_jgpf3"]
 [ext_resource type="PackedScene" uid="uid://dsik30if3a23x" path="res://scenes/interactables/interactable_object.tscn" id="2_iwv61"]
 [ext_resource type="Script" path="res://scenes/props/arcade_machine.gd" id="2_o3ur4"]
-[ext_resource type="AudioStream" uid="uid://b2vjuc8llm1d0" path="res://sounds/generic/generic_interact.ogg" id="3_3gb5g"]
 [ext_resource type="Texture2D" uid="uid://1ttxt51644ij" path="res://sourceModels/cinema/arcade_machine.png" id="3_7b2ks"]
 [ext_resource type="Texture2D" uid="uid://sofemtl4kux6" path="res://sourceModels/cinema/arcade_machine_light.png" id="4_alwf6"]
+[ext_resource type="Texture2D" uid="uid://ckhkunays1gw7" path="res://textures/arcade_screen.png" id="5_0uf55"]
+[ext_resource type="AudioStream" uid="uid://547nh7imsvyc" path="res://sounds/play_arcade_machine.ogg" id="6_hrsv8"]
 [ext_resource type="PackedScene" uid="uid://cikt2vicc06wx" path="res://scenes/interactables/prompt_without_interaction.tscn" id="7_dyg1p"]
 [ext_resource type="AudioStream" uid="uid://cpe6eouhlbt0y" path="res://sounds/generic/cant_interact.ogg" id="8_1orf3"]
 
@@ -14,6 +15,12 @@ albedo_texture = ExtResource("3_7b2ks")
 emission_enabled = true
 emission_energy_multiplier = 1.2
 emission_texture = ExtResource("4_alwf6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yfpat"]
+albedo_texture = ExtResource("5_0uf55")
+emission_enabled = true
+emission_texture = ExtResource("5_0uf55")
+texture_filter = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g0owc"]
 size = Vector3(0.75, 1, 0.6)
@@ -27,10 +34,13 @@ script = ExtResource("2_o3ur4")
 [node name="ArcadeMachine" parent="." index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_j002e")
 
+[node name="Screen" parent="ArcadeMachine" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_yfpat")
+
 [node name="InteractionObject" parent="." index="1" instance=ExtResource("2_iwv61")]
 interact_prompt = "Play"
 show_distorted_text = true
-interact_sound = ExtResource("3_3gb5g")
+interact_sound = ExtResource("6_hrsv8")
 
 [node name="Collider" type="CollisionShape3D" parent="InteractionObject" index="2" groups=["interactable"]]
 transform = Transform3D(1, 0, 0, 0, 0.976258, 0.21661, 0, -0.21661, 0.976258, 0, 1.21961, 0.336721)

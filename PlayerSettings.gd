@@ -14,7 +14,7 @@ var found_items : PackedStringArray = [""]
 
 var misc_items : PackedStringArray = []
 
-var save_completed_dreams = true
+var save_completed_dreams = false
 
 #setters
 func set_overall_volume(new_volume : float):
@@ -65,7 +65,7 @@ func save_settings(force_clear = false):
 	set_vsync_on()
 	config.set_value("Player", "is_fullscreen", is_fullscreen)
 	config.set_value("Player", "auto_run", auto_run)
-	if save_completed_dreams and not force_clear:
+	if (save_completed_dreams or not OS.has_feature("editor")) and not force_clear:
 		config.set_value("Player", "completed_dreams", completed_dreams)
 		config.set_value("Player", "current_dream_array", GameManager.dreams)
 		config.set_value("Player", "found_items", found_items)
@@ -102,7 +102,7 @@ func load_settings():
 		if config.has_section_key(section, "auto_run"):
 			auto_run = config.get_value(section, "auto_run")
 			
-		if save_completed_dreams:
+		if (save_completed_dreams or not OS.has_feature("editor")):
 			if config.has_section_key(section, "completed_dreams"):
 				completed_dreams = config.get_value(section, "completed_dreams")
 			if config.has_section_key(section, "current_dream_array"):

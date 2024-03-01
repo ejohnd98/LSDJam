@@ -17,6 +17,8 @@ texture_filter = 2
 [sub_resource type="QuadMesh" id="QuadMesh_i7acs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ebwhm"]
+transparency = 1
+texture_filter = 2
 
 [node name="DreamGridRepresentation" type="Node3D"]
 script = ExtResource("1_qiind")
