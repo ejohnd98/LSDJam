@@ -8,6 +8,7 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):
+		print("body enetered: " + str(body.name))
 		trigger_transition()
 
 func trigger_transition():

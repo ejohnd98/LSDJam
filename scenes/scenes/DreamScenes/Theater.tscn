@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://ctf3xb7to4085"]
+[gd_scene load_steps=52 format=3 uid="uid://ctf3xb7to4085"]
 
 [ext_resource type="PackedScene" uid="uid://bhs0hsqqfyrkg" path="res://scenes/interactables/direction_trigger.tscn" id="1_wi6lw"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_6ifvt"]
@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://df1jen7b8p2w1" path="res://sourceModels/cinema/movie_poster_left.png" id="23_gxm8m"]
 [ext_resource type="Texture2D" uid="uid://b5q66f3op80ly" path="res://sourceModels/cinema/movie_poster_down.png" id="24_ti7hj"]
 [ext_resource type="Texture2D" uid="uid://dsu25n7kd4tiq" path="res://sourceModels/cinema/movie_poster_alien.png" id="24_u2eba"]
+[ext_resource type="Texture2D" uid="uid://bi41c1wjlbl6j" path="res://sourceModels/cinema/theater_poster.png" id="31_qe14e"]
 
 [sub_resource type="Environment" id="Environment_7qkrs"]
 reflected_light_source = 1
@@ -174,6 +175,10 @@ emission_energy_multiplier = 0.25
 emission_texture = ExtResource("24_u2eba")
 texture_filter = 2
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7owfh"]
+albedo_texture = ExtResource("31_qe14e")
+texture_filter = 2
+
 [node name="Theater" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -213,7 +218,7 @@ mesh = SubResource("BoxMesh_x6tlp")
 surface_material_override/0 = ExtResource("2_6xt0h")
 
 [node name="DreamGridRepresentation" parent="." instance=ExtResource("2_6ifvt")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 3.51337, 2.36717, 19.8478)
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 3.42946, 2.1646, 19.404)
 
 [node name="Blockout" type="Node3D" parent="."]
 transform = Transform3D(-0.8, 0, -1.20797e-07, 0, 1, 0, 1.20797e-07, 0, -0.8, -122.879, 0, 0)
@@ -916,6 +921,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2841, 1.50544, 20.403)
 [node name="Frame" parent="MoviePoster4" index="0"]
 surface_material_override/1 = SubResource("StandardMaterial3D_gdr2y")
 
+[node name="MoviePoster7" parent="." instance=ExtResource("20_ljv87")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.40776, 2.50544, 19.403)
+
+[node name="Frame" parent="MoviePoster7" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_7owfh")
+
 [connection signal="on_condition_check" from="CinemaProjector/DreamCondition" to="Movie" method="set_playing"]
 [connection signal="on_condition_check" from="CinemaProjector/DreamCondition" to="CinemaProjector" method="set_spinning"]
 [connection signal="on_condition_check" from="CinemaProjector/DreamCondition2" to="Movie" method="set_playing"]
@@ -938,3 +949,4 @@ surface_material_override/1 = SubResource("StandardMaterial3D_gdr2y")
 [editable path="MoviePoster6"]
 [editable path="MoviePoster3"]
 [editable path="MoviePoster4"]
+[editable path="MoviePoster7"]

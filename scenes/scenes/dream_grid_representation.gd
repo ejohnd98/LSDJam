@@ -1,6 +1,7 @@
 extends Node3D
 
 @onready var render_quad : MeshInstance3D = $RenderQuad
+@onready var hide_mesh = false
 
 func _ready():
 	DreamGridViewer.on_grid_updated.connect(update_texture)

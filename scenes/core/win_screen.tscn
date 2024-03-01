@@ -63,6 +63,7 @@ expand_mode = 2
 length = 1.5
 
 [node name="MainMenuButtons" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 44.0
 offset_top = 60.0
 offset_right = 309.0

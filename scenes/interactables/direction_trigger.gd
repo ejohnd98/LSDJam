@@ -52,10 +52,6 @@ func _process(delta):
 	if (dist < start_dist):
 		var alpha : float = clampf(1.0 - (dist/start_dist), 0.0, 1.0)
 		GameManager.set_transition_alpha(alpha)
-		
-		if (alpha >= 0.9):
-			pass
-			trigger_direction()
 
 func trigger_direction():
 	if has_triggered or not can_trigger:
@@ -84,6 +80,7 @@ func _on_area_3d_body_exited(body):
 
 func _on_proximity_trigger_body_entered(body):
 	if proximity_trigger and body.is_in_group("player"):
+		print("body enetered: " + str(body.name))
 		set_transition_amount = true;
 		player_body = body
 		trigger_direction()

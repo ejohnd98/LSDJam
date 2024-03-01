@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvgoeg7qy8u5j"]
+[gd_scene load_steps=5 format=3 uid="uid://bvgoeg7qy8u5j"]
 
 [ext_resource type="Script" path="res://scenes/core/dream_grid_view.gd" id="1_xs0ms"]
 [ext_resource type="PackedScene" uid="uid://4hdb8ccc1g8l" path="res://scenes/core/dream_grid_view_control.tscn" id="2_xjcec"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sbp0e"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_165ck"]
 viewport_path = NodePath("SubViewport")
@@ -17,8 +19,10 @@ size = Vector2i(256, 256)
 [node name="Control" parent="SubViewport" instance=ExtResource("2_xjcec")]
 
 [node name="SubViewport2" type="SubViewport" parent="."]
+transparent_bg = true
 
 [node name="TextureRect" type="TextureRect" parent="SubViewport2"]
+material = SubResource("CanvasItemMaterial_sbp0e")
 offset_right = 256.0
 offset_bottom = 256.0
 texture = SubResource("ViewportTexture_165ck")
