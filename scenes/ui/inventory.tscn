@@ -339,7 +339,7 @@ texture = ExtResource("4_vofxu")
 script = ExtResource("5_67m40")
 required_key = "flashlight"
 item_name = "Flashlight"
-description = "A tool against the darkness."
+description = "\"The world is filled with dark places, but sometimes our dreams and aspirations can fall victim to these same shadows. Only through light can we hope to escape.\" - A Writer"
 equippable = true
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon2"]
@@ -363,7 +363,7 @@ texture = ExtResource("4_vofxu")
 script = ExtResource("5_67m40")
 required_key = "bike"
 item_name = "Bike"
-description = "Slightly rusty"
+description = "Slightly rusty, but is faster than walking."
 equippable = true
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon7"]
@@ -388,7 +388,7 @@ texture = ExtResource("4_vofxu")
 script = ExtResource("5_67m40")
 required_key = "cinemaFilm"
 item_name = "Film Reel"
-description = "Aliens."
+description = "\"Never before seen footage of the governments greatest secrets. THE TRUTH IS IN HERE.\""
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon3"]
 layout_mode = 1
@@ -411,7 +411,7 @@ texture = ExtResource("4_vofxu")
 script = ExtResource("5_67m40")
 required_key = "cinemaCoin"
 item_name = "Arcade Token"
-description = "Allows you to play the video games."
+description = "Allows the use of an arcade machine when inserted into the coin slot. There is a date on the coin but it is too worn out to read."
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon4"]
 layout_mode = 1
@@ -434,7 +434,7 @@ texture = ExtResource("4_vofxu")
 script = ExtResource("5_67m40")
 required_key = "boatKey"
 item_name = "Boat Key"
-description = "Used to operate a boat."
+description = "Used to start the motor on a boat. "
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon5"]
 layout_mode = 1
@@ -457,7 +457,7 @@ texture = ExtResource("4_vofxu")
 script = ExtResource("5_67m40")
 required_key = "forestKey"
 item_name = "Tunnel Key"
-description = "Unlocks the forest tunnel."
+description = "Unlocks the forest tunnel, granting passageway beyond."
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon6"]
 layout_mode = 1
@@ -480,7 +480,7 @@ texture = ExtResource("4_vofxu")
 script = ExtResource("5_67m40")
 required_key = "galaxyKey"
 item_name = "Access Card"
-description = "Grants access to certain parts of the Galaxy ship"
+description = "Grants access to certain parts of the Galaxy ship. 173467321476C32789777643T732V73117888732476789764376"
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/Items/ItemIcon8"]
 layout_mode = 1

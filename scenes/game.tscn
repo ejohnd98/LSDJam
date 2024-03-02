@@ -276,7 +276,7 @@ libraries = {
 
 [node name="TypewriterSound" type="AudioStreamPlayer" parent="SubViewport/CanvasLayer/LevelText"]
 stream = SubResource("AudioStreamRandomizer_1negh")
-volume_db = -9.0
+volume_db = -11.0
 pitch_scale = 0.95
 max_polyphony = 4
 
@@ -414,8 +414,43 @@ color = Color(0, 0, 0, 1)
 [node name="ModulateFade" parent="SubViewport/CanvasLayer/blackFade" instance=ExtResource("17_kfd0p")]
 length = 1.0
 
+[node name="introFade" type="ColorRect" parent="SubViewport/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="ModulateFade" parent="SubViewport/CanvasLayer/introFade" instance=ExtResource("17_kfd0p")]
+length = 1.0
+
+[node name="Label" type="Label" parent="SubViewport/CanvasLayer/introFade"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -10.5
+offset_right = 50.0
+offset_bottom = 10.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_g7nr7")
+theme_override_font_sizes/font_size = 30
+text = "All possessions are kept from dream to dream.
+These items and the dreams they complete are saved.
+Peruse the options menu for a fresh start."
+label_settings = ExtResource("10_hoxra")
+horizontal_alignment = 1
+
 [node name="WinSound" type="AudioStreamPlayer" parent="SubViewport/CanvasLayer"]
 stream = ExtResource("20_w8hlq")
+volume_db = -6.0
 bus = &"Transition"
 
 [node name="SubViewport2" type="SubViewport" parent="."]

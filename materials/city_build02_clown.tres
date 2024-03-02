@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cwv8lxj1mlo3w"]
+
+[ext_resource type="Texture2D" uid="uid://bhni7cwrrxveo" path="res://sourceModels/misc/strawbr.png" id="1_fbj52"]
+[ext_resource type="Texture2D" uid="uid://blphhpp5b4o6n" path="res://sourceModels/City/BUILD059_NORMAL.png" id="2_4h6g1"]
+
+[resource]
+albedo_texture = ExtResource("1_fbj52")
+metallic = 0.22
+roughness = 0.78
+normal_enabled = true
+normal_scale = 0.5
+normal_texture = ExtResource("2_4h6g1")
+texture_filter = 2

@@ -5,6 +5,8 @@ extends Control
 @export var dream_name = "Dream"
 
 @export var is_nightmare = false
+@export var is_transition = false
+@export var show_coordinate_in_text = true
 
 @export_group("Keys")
 @export var dream_keys: Array[String] = []
@@ -79,6 +81,6 @@ func get_scene_from_position ():
 
 func get_current_cell_name (include_coordinate : bool = true) -> String:
 	var coord_string = ""
-	if (include_coordinate and not is_nightmare):
+	if (include_coordinate and show_coordinate_in_text and not is_nightmare):
 		coord_string = str(letter_array[player_position.x]).to_upper() + str(grid_size.y - player_position.y)
 	return dream_name + " " + coord_string

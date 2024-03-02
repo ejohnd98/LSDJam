@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c4c7pqo1eqfrh"
+path="res://.godot/imported/ambient march2.ogg-29b0166f1febcfbe6fb736be6c3f18ea.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/ambient march2.ogg"
+dest_files=["res://.godot/imported/ambient march2.ogg-29b0166f1febcfbe6fb736be6c3f18ea.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

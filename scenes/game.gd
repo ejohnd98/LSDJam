@@ -19,8 +19,8 @@ var current_dream : Control = null
 var dream_index = -1
 
 #TODO: make these more random than just a linear wrap around
-var nightmare_index = -1
-var transition_index = -1
+var nightmare_index = 0
+var transition_index = 0
 
 @onready var dream_grid : DreamGrid = get_tree().get_root().get_node("SubViewportContainer/CanvasLayer/DreamGrid")
 @onready var canvas_layer = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer")
@@ -29,6 +29,7 @@ var transition_index = -1
 @onready var transition_node : transition = get_tree().get_root().get_node("SubViewportContainer/SubViewport2/CanvasLayer/transition")
 @onready var prompt_controller : prompt_controller = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/ControlText")
 @onready var black_fade = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/blackFade/ModulateFade")
+@onready var intro_fade = get_tree().get_root().get_node("SubViewportContainer/SubViewport/CanvasLayer/introFade/ModulateFade")
 
 var current_scene_node = null
 var next_scene_path = ""
@@ -60,10 +61,8 @@ func _unhandled_input(event):
 			set_cursor_state(false)
 		else:
 			set_cursor_state(true)
-	if event.is_action_pressed("DebugNightmare"):
+	if event.is_action_pressed("DebugNightmare") and OS.has_feature("editor"):
 		pick_nightmare()
-	if event.is_action_pressed("ForceTransition"):
-		debug_force_transition = true
 
 func set_cursor_state(is_captured : bool):
 	if is_captured:
@@ -75,6 +74,7 @@ func set_game_focus(on_player : bool):
 	set_cursor_state(on_player)
 
 func _ready():
+	
 	canvas_layer.get_node("WinScreen").get_child(0).reset(false)
 	set_cursor_state(false)
 	#TODO: separate game and menu UI into two different scenes and hide/show those
@@ -93,9 +93,7 @@ func start_game():
 	if PlayerSettings.current_dream_array != null:
 		dreams = PlayerSettings.current_dream_array
 	
-	#todo: possibly make this random, but keep like this for development
-	# alternatively keep this if there will be an intro level
-	advance_dream()
+	change_dreams(dream_index)
 
 func exit_game():
 	get_tree().quit()
@@ -115,10 +113,12 @@ func on_interactable_change(interactable):
 		hide_interact_text()
 
 
-func move_in_direction(direction: Vector2i):
+func move_in_direction(direction: Vector2i, direction_trigger = null):
 	print("CHECKPOINT: move_in_direction: " + str(direction))
 	#messy hack to prevent this being called twice at once
 	if not $MoveCooldownTimer.is_stopped() or change_dreams_called:
+		if direction_trigger != null:
+			direction_trigger.has_triggered = false
 		return
 	
 	$MoveCooldownTimer.start()
@@ -130,7 +130,7 @@ func move_in_direction(direction: Vector2i):
 		
 	var current_cell = dream_grid.get_current_cell()
 	
-	if dream_index == -1: #in dream goal transition
+	if dream_grid.dream_name == "Transition": #in dream goal transition
 		pick_random_dream(false)
 		return
 	
@@ -161,45 +161,39 @@ func win_game():
 	await black_fade.on_finished
 	canvas_layer.get_node("WinScreen").get_child(0).fade_in()
 
-func advance_dream():
-	print("CHECKPOINT: advance_dream")
-	var next_index = dream_index
-	if next_index + 1 == dreams.size():
-		win_game()
-		player.set_frozen(true)
-		return
-	next_index += 1
-	change_dreams(next_index)
+var nightmare_count = 0
+var transition_count = 0
 
 func pick_random_dream(allow_transition_dreams : bool = true):
-	var new_index = dream_index
 	
-	if (not in_transition_dream and allow_transition_dreams and (randf() > 0.6)):# or debug_force_transition)):
-		in_transition_dream = true
-		print("CHECKPOINT: pick_random_dream: setting in_transition_dream to true")
-		debug_force_transition = false
-	else:
-		if allow_transition_dreams and not in_transition_dream and not get_dream_grid().is_nightmare and randf() > 0.5:
+	if (not in_transition_dream and not in_nightmare and allow_transition_dreams and not get_dream_grid().is_nightmare):
+		var bias = 0.0
+		if nightmare_count < transition_count:
+			bias = 0.40
+		
+		if randf() > (0.4 + bias):
+			in_transition_dream = true
+			debug_force_transition = false
+		else:
 			in_transition_dream = false
-			print("CHECKPOINT: pick_random_dream: picking nightmare")
 			pick_nightmare()
 			return
+	else:
 		in_transition_dream = false
-		
-	# this (hopefully) ensures when going to a transition, we don't return to the same dream afterwards
-	if not in_transition_dream:
-		new_index = dream_index + 1#rng.randi_range (1, dreams.size()-1) #pick random dream 	
-		new_index = wrapi(new_index, 0, dreams.size())
 	
-	print("CHECKPOINT: pick_random_dream: index change from " + str(dream_index) + " to " + str(new_index))
-	change_dreams(new_index)
+	change_dreams(dream_index)
 
 func pick_nightmare():
-	nightmare_index = wrapi(nightmare_index + 1, 0, nightmares.size())
+	#if not dream_grid.is_nightmare and not dream_grid.is_transition:
+		#var new_index = dream_index + 1#rng.randi_range (1, dreams.size()-1) #pick random dream 	
+		#new_index = wrapi(new_index, 0, dreams.size())
+		#dream_index = new_index
+	
+	#nightmare_index = wrapi(nightmare_index + 1, 0, nightmares.size())
 	change_dreams(nightmare_index, true)
 
 func get_next_transition_dream() -> PackedScene:
-	transition_index = wrapi(transition_index + 1, 0, transitions.size())
+	#transition_index = wrapi(transition_index + 1, 0, transitions.size())
 	return transitions[transition_index]
 	
  
@@ -211,17 +205,27 @@ func change_dreams(index : int, is_nightmare : bool = false, is_transition : boo
 		return
 	
 	change_dreams_called = true
-	if not is_nightmare:
-		dream_index = index
+	#if not is_nightmare:
+		#dream_index = index
+	
+	if dreams.size() == 0 and dream_grid.dream_name == "Transition":
+		win_game()
+		return
+		
+	#increment indicies
+	if dream_grid.is_nightmare:
+		nightmare_index = wrapi(nightmare_index + 1, 0, nightmares.size())
+		nightmare_count += 1
+	elif dream_grid.is_transition:
+		transition_count += 1
+		transition_index = wrapi(transition_index + 1, 0, transitions.size())
+	elif not dream_grid.dream_name == "Transition":
+		dream_index = wrapi(dream_index + 1, 0, dreams.size())
 	
 	#remove old dream grid
 	if dream_grid:
 		dream_grid.queue_free()
 		await dream_grid.tree_exited
-	
-	if dreams.size() == 0:
-		win_game()
-		return
 	
 	var new_dream
 	#add new dream grid
@@ -363,6 +367,9 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	
 	clear_control_prompts()
 	player.unequip_item()
+	player.flashlight_light.adjust_brightness()
+	
+	player.refresh_flashlight_hack()
 	
 	transition_node.finish_transition()
 	GameManager.set_crosshair(true)
@@ -381,6 +388,7 @@ func load_new_scene(new_scene_name: String, incoming_direction : Vector2i = Vect
 	shifting_to_nightmare = false
 	can_pause = true
 	TransitionVolume.fade_in()
+	
 	canvas_layer.get_node("UIParent/Compass").set_frozen(false)
 	print("Player Grid Position: " + str(dream_grid.player_position))
 	is_loading_dream = false
@@ -441,7 +449,8 @@ func add_control_prompt(text : String):
 func clear_control_prompts():
 	prompt_controller.clear_control_info()
 	prompt_controller.add_prompt("Inventory - Tab")
-	prompt_controller.add_prompt("Pause Menu - Esc")
+	if player.has_items_equipped():
+		prompt_controller.add_prompt("Change Item - Scroll Wheel")
 	return
 	#todo: instead, list these in pause menu
 	prompt_controller.add_prompt("Interact - Click/E")

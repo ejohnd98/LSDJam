@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://bre61jmijpbpb"]
+[gd_scene load_steps=9 format=3 uid="uid://bre61jmijpbpb"]
 
 [ext_resource type="Script" path="res://scenes/scenes/DreamGrids/DreamGrid.gd" id="1_1jv33"]
+[ext_resource type="Texture2D" uid="uid://cflgoq7vysrev" path="res://textures/DreamGrid/empty_dream_icon2.png" id="2_6cqe5"]
 [ext_resource type="PackedScene" uid="uid://cyndvm76up426" path="res://scenes/scenes/DreamGrids/dream_cell.tscn" id="2_yf7w0"]
+[ext_resource type="Texture2D" uid="uid://b5h4gckmjj44x" path="res://textures/DreamGrid/skull_icon_wip.png" id="3_ovqw1"]
+[ext_resource type="Texture2D" uid="uid://bf7agv22koxab" path="res://textures/DreamGrid/you_icon_wip.png" id="4_2c8i7"]
+[ext_resource type="Texture2D" uid="uid://2qyitpn23vve" path="res://textures/DreamGrid/starting_icon_wip.png" id="5_lx6ma"]
+[ext_resource type="Texture2D" uid="uid://x082xg0w1p3u" path="res://textures/DreamGrid/goal_icon_wip.png" id="6_e1ndi"]
+[ext_resource type="Texture2D" uid="uid://fa0q78lyvgi5" path="res://textures/DreamGrid/key_icon.png" id="7_qlten"]
 
 [node name="DreamGrid" type="Control"]
 custom_minimum_size = Vector2(300, 300)
@@ -12,6 +18,13 @@ anchor_right = 1.0
 grow_horizontal = 0
 script = ExtResource("1_1jv33")
 dream_name = "Untitled (2)"
+use_custom_textures = true
+dream_texture = ExtResource("2_6cqe5")
+nightmare_texture = ExtResource("3_ovqw1")
+player_texture = ExtResource("4_2c8i7")
+start_texture = ExtResource("5_lx6ma")
+goal_texture = ExtResource("6_e1ndi")
+key_texture = ExtResource("7_qlten")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
@@ -24,6 +37,7 @@ grow_horizontal = 0
 columns = 3
 
 [node name="DreamCell" parent="GridContainer" instance=ExtResource("2_yf7w0")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/Museum"
 has_key = false
@@ -34,6 +48,7 @@ allow_down = true
 allow_left = true
 
 [node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_yf7w0")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/Museum"
 has_key = false
@@ -44,6 +59,7 @@ allow_down = true
 allow_left = true
 
 [node name="DreamCell3" parent="GridContainer" instance=ExtResource("2_yf7w0")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/Museum"
 is_nightmare = true
@@ -56,6 +72,7 @@ allow_down = true
 allow_left = true
 
 [node name="DreamCell4" parent="GridContainer" instance=ExtResource("2_yf7w0")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/Museum"
 is_nightmare = true
@@ -68,6 +85,7 @@ allow_down = true
 allow_left = true
 
 [node name="DreamCell5" parent="GridContainer" instance=ExtResource("2_yf7w0")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/Museum"
 is_start = true
@@ -79,6 +97,7 @@ allow_down = true
 allow_left = true
 
 [node name="DreamCell6" parent="GridContainer" instance=ExtResource("2_yf7w0")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/Museum"
 has_key = false
@@ -88,6 +107,7 @@ allow_right = true
 allow_left = true
 
 [node name="DreamCell7" parent="GridContainer" instance=ExtResource("2_yf7w0")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/Museum"
 has_key = false
@@ -98,6 +118,7 @@ allow_down = true
 allow_left = true
 
 [node name="DreamCell8" parent="GridContainer" instance=ExtResource("2_yf7w0")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/Museum"
 is_nightmare = true
@@ -110,6 +131,7 @@ allow_down = true
 allow_left = true
 
 [node name="DreamCell9" parent="GridContainer" instance=ExtResource("2_yf7w0")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/Museum"
 is_goal = true

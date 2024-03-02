@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dwmh3iwhe52wi"
+path="res://.godot/imported/guitar thing industrial.ogg-a8c10c1b7fad24785361176a87d14e5a.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/misc/guitar thing industrial.ogg"
+dest_files=["res://.godot/imported/guitar thing industrial.ogg-a8c10c1b7fad24785361176a87d14e5a.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

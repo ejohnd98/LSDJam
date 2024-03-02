@@ -719,8 +719,9 @@ required_position = Vector2i(2, 1)
 
 [node name="ChasingEnemy" parent="CinemaProjector/DreamCondition2" instance=ExtResource("17_v12gu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.666, -0.368636, 0)
-chase_speed = 0.5
-activation_direction_threshold = 0.9
+chase_speed = 0.59
+direction_threshold = 0.3
+activation_direction_threshold = 0.8
 snap_to_ground = false
 hide_before_showing = true
 check_los = false
@@ -936,6 +937,15 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.4077
 [node name="Frame" parent="MoviePoster7" index="0"]
 surface_material_override/1 = SubResource("StandardMaterial3D_7owfh")
 
+[node name="DreamGridRepresentation2" parent="." instance=ExtResource("2_6ifvt")]
+transform = Transform3D(1, 0, 1.74845e-07, 6.11407e-08, 0.936868, -0.349684, -1.63807e-07, 0.349684, 0.936868, 17.9419, 0.636476, 8.85343)
+
+[node name="MoviePoster8" parent="." instance=ExtResource("20_ljv87")]
+transform = Transform3D(-1, 0, -8.74228e-08, -3.05704e-08, 0.936868, 0.349684, 8.19036e-08, 0.349684, -0.936868, 17.9409, 0.948209, 8.99295)
+
+[node name="Frame" parent="MoviePoster8" index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_7owfh")
+
 [connection signal="on_condition_check" from="CinemaProjector/DreamCondition" to="Movie" method="set_playing"]
 [connection signal="on_condition_check" from="CinemaProjector/DreamCondition" to="CinemaProjector" method="set_spinning"]
 [connection signal="on_condition_check" from="CinemaProjector/DreamCondition2" to="Movie" method="set_playing"]
@@ -959,3 +969,4 @@ surface_material_override/1 = SubResource("StandardMaterial3D_7owfh")
 [editable path="MoviePoster3"]
 [editable path="MoviePoster4"]
 [editable path="MoviePoster7"]
+[editable path="MoviePoster8"]

@@ -1,0 +1,563 @@
+[gd_scene load_steps=42 format=3 uid="uid://dayeh7vn3165g"]
+
+[ext_resource type="Texture2D" uid="uid://bqbp4jbf6cjex" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="1_32yaa"]
+[ext_resource type="AudioStream" uid="uid://bjfamxyfveppm" path="res://sounds/misc/clown_city.ogg" id="2_2h8n1"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="3_mvmyr"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="4_106ah"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="5_17eav"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="6_fdc2s"]
+[ext_resource type="PackedScene" uid="uid://d27k6ytplbw5k" path="res://models/water_plane.tscn" id="7_5rqis"]
+[ext_resource type="PackedScene" uid="uid://cqb5y27tjykkv" path="res://sourceModels/Mini City.glb" id="8_gr6un"]
+[ext_resource type="Texture2D" uid="uid://ic82h6t7agb" path="res://sourceModels/city_billboard.png" id="9_mfi8b"]
+[ext_resource type="Texture2D" uid="uid://c5la6utnx1u62" path="res://materials/pasta1.jpg" id="9_q8y4t"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortionFog.gdshader" id="10_a3tpu"]
+[ext_resource type="Material" uid="uid://dn6e44nmk124p" path="res://materials/city_build01_clown.tres" id="10_nfdcx"]
+[ext_resource type="Material" uid="uid://cwv8lxj1mlo3w" path="res://materials/city_build02_clown.tres" id="11_onx5r"]
+[ext_resource type="PackedScene" uid="uid://h1jho51tfsqo" path="res://scenes/items/ItemPickup.tscn" id="11_u4u7j"]
+[ext_resource type="Texture2D" uid="uid://y5mapwqofa5p" path="res://textures/flashlight_light.png" id="12_50b5e"]
+[ext_resource type="Material" uid="uid://byumokhpif1gc" path="res://materials/city_build03_clown.tres" id="12_xur8y"]
+[ext_resource type="Texture2D" uid="uid://dm5p5vc5hwon5" path="res://textures/billboard_items/bike_item.png" id="13_cn1s7"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7jlnm"]
+panorama = ExtResource("1_32yaa")
+
+[sub_resource type="Sky" id="Sky_ddl3o"]
+sky_material = SubResource("PanoramaSkyMaterial_7jlnm")
+
+[sub_resource type="Environment" id="Environment_5hwpb"]
+background_mode = 2
+sky = SubResource("Sky_ddl3o")
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0, 0.827451, 0, 1)
+fog_light_energy = 0.42
+fog_density = 0.0011
+fog_aerial_perspective = 0.481
+fog_sky_affect = 0.0
+fog_height = 48.77
+fog_height_density = -0.01
+adjustment_enabled = true
+adjustment_contrast = 1.19
+adjustment_saturation = 1.44
+
+[sub_resource type="SphereMesh" id="SphereMesh_oi5rx"]
+flip_faces = true
+radius = 200.0
+height = 200.0
+radial_segments = 128
+rings = 128
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iorx3"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_iorx3")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8oso0"]
+noise_type = 0
+offset = Vector3(240, 0, 0)
+fractal_type = 3
+fractal_octaves = 1
+fractal_ping_pong_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pio0u"]
+seamless = true
+noise = SubResource("FastNoiseLite_8oso0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kyll7"]
+render_priority = 0
+shader = ExtResource("4_106ah")
+shader_parameter/distortionView = 0.025
+shader_parameter/speedView = 0.0413
+shader_parameter/static_intensity = 0.0
+shader_parameter/tintColor = Color(1, 1, 1, 1)
+shader_parameter/fesnelAmount = 0.78
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.0
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_pio0u")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_232gj"]
+size = Vector3(220, 5, 220)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nuogf"]
+top_radius = 200.0
+bottom_radius = 200.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_stwn1"]
+albedo_texture = ExtResource("9_q8y4t")
+uv1_scale = Vector3(5, 5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4t3j2"]
+size = Vector3(70, 10, 0.5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_4lt3n"]
+size = Vector2(150, 100)
+center_offset = Vector3(0, 50, 0)
+orientation = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ejufs"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("9_mfi8b")
+uv1_scale = Vector3(0.9, 1, 1)
+uv1_offset = Vector3(0.05, 0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_4d3el"]
+size = Vector2(50, 100)
+subdivide_width = 10
+subdivide_depth = 4
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hodyl"]
+noise_type = 3
+frequency = 0.0105
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1y30t"]
+seamless = true
+noise = SubResource("FastNoiseLite_hodyl")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ioepr"]
+render_priority = 0
+shader = ExtResource("10_a3tpu")
+shader_parameter/distortionView = 0.09
+shader_parameter/speedView = 0.0178
+shader_parameter/static_intensity = 0.85
+shader_parameter/tintColor = Color(1, 1, 1, 1)
+shader_parameter/fesnelAmount = 0.76
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_1y30t")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_1y30t")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_1y30t")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ui1mv"]
+top_radius = 0.045
+bottom_radius = 0.045
+height = 0.4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_aon72"]
+top_radius = 0.07
+bottom_radius = 0.03
+height = 0.1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uj7ba"]
+size = Vector2(2, 1)
+orientation = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c46y5"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("13_cn1s7")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_n1h0c"]
+flip_faces = true
+size = Vector2(2, 1)
+orientation = 2
+
+[node name="TransitionTemp" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5hwpb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.903337, -0.421955, -0.0770483, -0.102162, 0.037196, 0.994072, -0.416588, 0.905853, -0.0767083, 0.297547, 4.81422, -0.452033)
+light_color = Color(0.729412, 0.745098, 0.521569, 1)
+light_energy = 3.051
+shadow_enabled = true
+shadow_opacity = 0.71
+shadow_blur = 8.372
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("2_2h8n1")
+attenuation_model = 3
+volume_db = -10.0
+unit_size = 800.0
+autoplay = true
+panning_strength = 0.1
+bus = &"SFX"
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.405097, 0)
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("3_mvmyr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.417, 0.269625)
+visible = false
+
+[node name="Distortion" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_oi5rx")
+surface_material_override/0 = SubResource("ShaderMaterial_kyll7")
+
+[node name="ForcedTransitionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.91438, 0)
+script = ExtResource("5_17eav")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
+shape = SubResource("BoxShape3D_232gj")
+script = ExtResource("6_fdc2s")
+
+[node name="WaterPlane" parent="." instance=ExtResource("7_5rqis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.94106, 0)
+visible = false
+mesh = SubResource("CylinderMesh_nuogf")
+
+[node name="Mini City" parent="." instance=ExtResource("8_gr6un")]
+
+[node name="City_LOD0" parent="Mini City" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_stwn1")
+surface_material_override/1 = ExtResource("10_nfdcx")
+surface_material_override/2 = ExtResource("11_onx5r")
+surface_material_override/3 = ExtResource("12_xur8y")
+
+[node name="Mini City2" parent="." instance=ExtResource("8_gr6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 140)
+
+[node name="City_LOD0" parent="Mini City2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_stwn1")
+surface_material_override/1 = ExtResource("10_nfdcx")
+surface_material_override/2 = ExtResource("11_onx5r")
+surface_material_override/3 = ExtResource("12_xur8y")
+
+[node name="Mini City8" parent="." instance=ExtResource("8_gr6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140, 0, 140)
+
+[node name="City_LOD0" parent="Mini City8" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_stwn1")
+surface_material_override/1 = ExtResource("10_nfdcx")
+surface_material_override/2 = ExtResource("11_onx5r")
+surface_material_override/3 = ExtResource("12_xur8y")
+
+[node name="Mini City3" parent="." instance=ExtResource("8_gr6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140, 0, 0)
+
+[node name="City_LOD0" parent="Mini City3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_stwn1")
+surface_material_override/1 = ExtResource("10_nfdcx")
+surface_material_override/2 = ExtResource("11_onx5r")
+surface_material_override/3 = ExtResource("12_xur8y")
+
+[node name="Mini City9" parent="." instance=ExtResource("8_gr6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140, 0, -140)
+
+[node name="City_LOD0" parent="Mini City9" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_stwn1")
+surface_material_override/1 = ExtResource("10_nfdcx")
+surface_material_override/2 = ExtResource("11_onx5r")
+surface_material_override/3 = ExtResource("12_xur8y")
+
+[node name="Mini City5" parent="." instance=ExtResource("8_gr6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140, 0, -140)
+
+[node name="City_LOD0" parent="Mini City5" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_stwn1")
+surface_material_override/1 = ExtResource("10_nfdcx")
+surface_material_override/2 = ExtResource("11_onx5r")
+surface_material_override/3 = ExtResource("12_xur8y")
+
+[node name="Mini City6" parent="." instance=ExtResource("8_gr6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140, 0, 0)
+
+[node name="City_LOD0" parent="Mini City6" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_stwn1")
+surface_material_override/1 = ExtResource("10_nfdcx")
+surface_material_override/2 = ExtResource("11_onx5r")
+surface_material_override/3 = ExtResource("12_xur8y")
+
+[node name="Mini City7" parent="." instance=ExtResource("8_gr6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -140)
+
+[node name="City_LOD0" parent="Mini City7" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_stwn1")
+surface_material_override/1 = ExtResource("10_nfdcx")
+surface_material_override/2 = ExtResource("11_onx5r")
+surface_material_override/3 = ExtResource("12_xur8y")
+
+[node name="Mini City4" parent="." instance=ExtResource("8_gr6un")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140, 0, 140)
+
+[node name="City_LOD0" parent="Mini City4" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_stwn1")
+surface_material_override/1 = ExtResource("10_nfdcx")
+surface_material_override/2 = ExtResource("11_onx5r")
+surface_material_override/3 = ExtResource("12_xur8y")
+
+[node name="ForcedTransitionArea2" type="Area3D" parent="."]
+transform = Transform3D(6.12, 0, 0, 0, 6.12, 0, 0, 0, 6.12, 0, 0, 0)
+script = ExtResource("5_17eav")
+direction = Vector2i(0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+shape = SubResource("BoxShape3D_4t3j2")
+script = ExtResource("6_fdc2s")
+
+[node name="ForcedTransitionArea3" type="Area3D" parent="."]
+transform = Transform3D(-2.67514e-07, 0, -6.12, 0, 6.12, 0, 6.12, 0, -2.67514e-07, 0, 0, 0)
+script = ExtResource("5_17eav")
+direction = Vector2i(-1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+shape = SubResource("BoxShape3D_4t3j2")
+script = ExtResource("6_fdc2s")
+
+[node name="ForcedTransitionArea5" type="Area3D" parent="."]
+transform = Transform3D(4.62047e-07, 0, 6.12, 0, 6.12, 0, -6.12, 0, 4.62047e-07, 0, 0, 0)
+script = ExtResource("5_17eav")
+direction = Vector2i(1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+shape = SubResource("BoxShape3D_4t3j2")
+script = ExtResource("6_fdc2s")
+
+[node name="ForcedTransitionArea4" type="Area3D" parent="."]
+transform = Transform3D(-6.12, 0, 9.24094e-07, 0, 6.12, 0, -9.24094e-07, 0, -6.12, 0, 0, 0)
+script = ExtResource("5_17eav")
+direction = Vector2i(0, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+shape = SubResource("BoxShape3D_4t3j2")
+script = ExtResource("6_fdc2s")
+
+[node name="City_billboard" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -210, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.154652, 0, -210)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard2"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 210, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard3"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -210, 0, 140)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard5"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard6" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 210, 0, -140)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard6"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -210, 0, -140)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard7"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard8" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 210, 0, 140)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard8"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 210)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard4"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard9" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -140.155, 0, -210)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard9"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard10" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -140, 0, 210)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard10"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard11" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 139.79, 0.284058, -210.548)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard11"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="City_billboard12" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 139.945, 0.284058, 209.452)
+mesh = SubResource("QuadMesh_4lt3n")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="City_billboard12"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -109, 0, 0)
+mesh = SubResource("QuadMesh_4lt3n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
+
+[node name="Distortion2" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Distortion2"]
+transform = Transform3D(8.54605, 0, 0, 0, 2.03808, 0, 0, 0, 1, 0, 99.645, -182.775)
+mesh = SubResource("QuadMesh_4d3el")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
+
+[node name="Distortion6" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Distortion6"]
+transform = Transform3D(8.54605, 0, 0, 0, -4.10309, 8.74228e-08, 0, -3.58704e-07, -1, 0, -0.601014, -182.775)
+mesh = SubResource("QuadMesh_4d3el")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
+
+[node name="Distortion3" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Distortion3"]
+transform = Transform3D(8.54605, 0, 0, 0, 2.03808, 0, 0, 0, 1, 0, 99.645, -182.775)
+mesh = SubResource("QuadMesh_4d3el")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
+
+[node name="Distortion4" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Distortion4"]
+transform = Transform3D(8.54605, 0, 0, 0, 2.03808, 0, 0, 0, 1, 0, 99.645, -182.775)
+mesh = SubResource("QuadMesh_4d3el")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
+
+[node name="Distortion5" type="Node3D" parent="."]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Distortion5"]
+transform = Transform3D(8.54605, 0, 0, 0, 2.03808, 0, 0, 0, 1, 0, 99.645, -182.775)
+mesh = SubResource("QuadMesh_4d3el")
+skeleton = NodePath("../../DistortionPlane2")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
+
+[node name="Pickup" parent="." instance=ExtResource("11_u4u7j")]
+transform = Transform3D(1.10946, -0.195146, 0.990458, -1.27189e-09, 1.47171, 0.289965, -1.0095, -0.21447, 1.08854, -8.30955, 0.714319, -8.50981)
+item_name = "bike"
+pickup_prompt = "take bike"
+
+[node name="Flashlight" type="MeshInstance3D" parent="Pickup"]
+transform = Transform3D(-1, 8.69216e-08, -9.34755e-09, 3.55271e-15, 0.106924, 0.994267, 8.74228e-08, 0.994267, -0.106924, 0.116009, 0.0507073, 0.00532913)
+visible = false
+mesh = SubResource("CylinderMesh_ui1mv")
+
+[node name="Flashlight2" type="MeshInstance3D" parent="Pickup/Flashlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.151749, 6.63316e-09)
+visible = false
+mesh = SubResource("CylinderMesh_aon72")
+skeleton = NodePath("../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Pickup/Flashlight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.206933, 9.04534e-09)
+visible = false
+light_energy = 7.0
+light_projector = ExtResource("12_50b5e")
+shadow_enabled = true
+spot_range = 24.0
+spot_angle = 60.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pickup"]
+mesh = SubResource("PlaneMesh_uj7ba")
+surface_material_override/0 = SubResource("StandardMaterial3D_c46y5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Pickup"]
+transform = Transform3D(1, 7.45058e-09, -2.98023e-08, -7.45058e-09, 1, -1.49012e-08, -2.98023e-08, 7.45058e-09, 1, 2.38419e-07, 0, -0.00942278)
+mesh = SubResource("PlaneMesh_n1h0c")
+surface_material_override/0 = SubResource("StandardMaterial3D_c46y5")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Pickup"]
+transform = Transform3D(1, 2.23517e-08, -2.98023e-08, -7.45058e-09, 1, -2.98023e-08, -2.98023e-08, 2.23517e-08, 1, 0, -2.38419e-07, -0.020422)
+mesh = SubResource("PlaneMesh_n1h0c")
+surface_material_override/0 = SubResource("StandardMaterial3D_c46y5")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Pickup"]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, -1.49012e-08, 0.999999, -2.98023e-08, 0, 4.47035e-08, 1, 0, -4.76837e-07, -0.0313945)
+mesh = SubResource("PlaneMesh_uj7ba")
+surface_material_override/0 = SubResource("StandardMaterial3D_c46y5")
+
+[editable path="Mini City"]
+[editable path="Mini City2"]
+[editable path="Mini City8"]
+[editable path="Mini City3"]
+[editable path="Mini City9"]
+[editable path="Mini City5"]
+[editable path="Mini City6"]
+[editable path="Mini City7"]
+[editable path="Mini City4"]

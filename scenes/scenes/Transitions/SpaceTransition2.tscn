@@ -1,0 +1,178 @@
+[gd_scene load_steps=23 format=3 uid="uid://dhb4mwco0r451"]
+
+[ext_resource type="Texture2D" uid="uid://02s6p0rkwn3j" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ColdNight_Equirect.png" id="1_10gpi"]
+[ext_resource type="AudioStream" uid="uid://cngnqd2wwoae2" path="res://sounds/misc/void.ogg" id="2_0go1i"]
+[ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="3_tlbql"]
+[ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="4_suc80"]
+[ext_resource type="Script" path="res://scenes/scenes/DreamScenes/CollisionVisuals.gd" id="5_py5e1"]
+[ext_resource type="PackedScene" uid="uid://crefejrw6fpo5" path="res://textures/earth.glb" id="6_qpdyj"]
+[ext_resource type="Script" path="res://scenes/interactables/HoverItem.gd" id="7_kxnxp"]
+[ext_resource type="Texture2D" uid="uid://j2d6r27h52qb" path="res://textures/hell.png" id="7_pth1n"]
+[ext_resource type="Texture2D" uid="uid://cpoq7vg4g7t4" path="res://textures/eye.png" id="8_2p7l2"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortion.gdshader" id="10_5lfyw"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0kuiq"]
+panorama = ExtResource("1_10gpi")
+
+[sub_resource type="Sky" id="Sky_8x3a2"]
+sky_material = SubResource("PanoramaSkyMaterial_0kuiq")
+
+[sub_resource type="Environment" id="Environment_68f4i"]
+background_mode = 2
+sky = SubResource("Sky_8x3a2")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.529412, 0.0823529, 0.164706, 1)
+fog_density = 0.0
+fog_sky_affect = 0.775
+fog_height = -13.42
+fog_height_density = 0.0063
+adjustment_enabled = true
+adjustment_brightness = 1.69
+adjustment_contrast = 1.42
+adjustment_saturation = 0.79
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fktx3"]
+size = Vector3(300, 5, 300)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5m83"]
+cull_mode = 1
+albedo_texture = ExtResource("7_pth1n")
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2kr5t"]
+albedo_texture = ExtResource("8_2p7l2")
+
+[sub_resource type="SphereMesh" id="SphereMesh_tj48o"]
+flip_faces = true
+radius = 200.0
+height = 200.0
+radial_segments = 128
+rings = 128
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w8b80"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_w8b80")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_clflv"]
+noise_type = 0
+offset = Vector3(240, 0, 0)
+fractal_type = 3
+fractal_octaves = 1
+fractal_ping_pong_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pio0u"]
+seamless = true
+noise = SubResource("FastNoiseLite_clflv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oe454"]
+render_priority = 0
+shader = ExtResource("10_5lfyw")
+shader_parameter/distortionView = 0.03
+shader_parameter/speedView = 0.0375
+shader_parameter/static_intensity = 1.0
+shader_parameter/tintColor = Color(1, 0, 0, 1)
+shader_parameter/fesnelAmount = 1.35
+shader_parameter/fresnelTintOffset = -1.0
+shader_parameter/distortionVertex = 0.0
+shader_parameter/speedVertex = 0.0
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_pio0u")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+
+[node name="SpaceTransition" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_68f4i")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0.346238, -0.158631, 0.924638, -0.360725, 0.887318, 0.287305, 0, 0, 0)
+visible = false
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.806989, -0.433016, -0.40158, -0.506785, -0.158631, -0.847352, 0.303214, 0.887318, -0.347459, 0, 0, 0)
+visible = false
+shadow_enabled = true
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+stream = ExtResource("2_0go1i")
+attenuation_model = 3
+volume_db = -9.0
+unit_size = 800.0
+pitch_scale = 1.99
+autoplay = true
+panning_strength = 0.2
+bus = &"SFX"
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, 767.365, 0)
+
+[node name="DreamGridRepresentation" parent="." instance=ExtResource("3_tlbql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 98.0987, 0.269625)
+visible = false
+
+[node name="ForcedTransitionArea" type="Area3D" parent="."]
+transform = Transform3D(2.25434, 0, 0, 0, 2.25434, 0, 0, 0, 2.25434, -0.0329895, 117.783, 0.00255775)
+script = ExtResource("4_suc80")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -115.786, 0)
+shape = SubResource("BoxShape3D_fktx3")
+script = ExtResource("5_py5e1")
+
+[node name="earth" parent="." instance=ExtResource("6_qpdyj")]
+transform = Transform3D(60, 0, 0, 0, -224.347, 0, 0, 0, 60, 0, 307.324, 0)
+script = ExtResource("7_kxnxp")
+bob_amount = 0.0
+rotate_speed = 0.05
+rotate = true
+
+[node name="Sphere" parent="earth" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_o5m83")
+
+[node name="CollisionShape3D" parent="earth/Sphere/StaticBody3D" index="0"]
+disabled = true
+
+[node name="earth2" parent="." instance=ExtResource("6_qpdyj")]
+transform = Transform3D(-60, 1.69377e-05, 0, 9.05975e-06, 112.173, 0, 0, 0, 60, -3.32822e-05, 651.654, 0)
+script = ExtResource("7_kxnxp")
+bob_amount = 0.0
+rotate_speed = 0.05
+rotate = true
+
+[node name="Sphere" parent="earth2" index="0"]
+transform = Transform3D(5.43773, -2.84217e-14, 0, -1.13687e-13, 2.00352, 0, 0, 0, 5.43773, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_o5m83")
+
+[node name="CollisionShape3D" parent="earth2/Sphere/StaticBody3D" index="0"]
+transform = Transform3D(1, -4.44089e-16, 0, 1.13687e-13, 1, 0, 0, 0, 1, 0, 0, 0)
+disabled = true
+
+[node name="moon" parent="." instance=ExtResource("6_qpdyj")]
+transform = Transform3D(16.8858, 0, 0, 0, -7.38101e-07, -16.8858, 0, 16.8858, -7.38101e-07, 0, 416.909, -897.436)
+
+[node name="Sphere" parent="moon" index="0"]
+transform = Transform3D(6.52803, 0, 0, 0, 2.40524, -5.68434e-14, 0, 3.55271e-14, 6.52803, 0, -56.9057, 7.62939e-06)
+surface_material_override/0 = SubResource("StandardMaterial3D_2kr5t")
+
+[node name="CollisionShape3D" parent="moon/Sphere/StaticBody3D" index="0"]
+disabled = true
+
+[node name="Distortion" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.66808, 0, 0, 0, 5.59944, 0, 0, 0, 2.66808, 0, 350.69, 0)
+mesh = SubResource("SphereMesh_tj48o")
+surface_material_override/0 = SubResource("ShaderMaterial_oe454")
+
+[editable path="earth"]
+[editable path="earth2"]
+[editable path="moon"]

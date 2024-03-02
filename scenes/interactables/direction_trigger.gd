@@ -61,7 +61,7 @@ func trigger_direction():
 	if force_new_dream:
 		GameManager.pick_random_dream()
 	else:
-		GameManager.move_in_direction(grid_direction)
+		GameManager.move_in_direction(grid_direction, self)
 
 var set_transition_amount = false
 var player_body

@@ -12,6 +12,7 @@ anchor_right = 1.0
 grow_horizontal = 0
 script = ExtResource("1_p4u5w")
 dream_name = "Transition"
+show_coordinate_in_text = false
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
@@ -23,6 +24,7 @@ offset_bottom = 200.0
 grow_horizontal = 0
 
 [node name="DreamCell" parent="GridContainer" instance=ExtResource("2_psikf")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/GoalTransition"
 is_goal = true
@@ -34,6 +36,7 @@ allow_down = true
 allow_left = true
 
 [node name="DreamCell2" parent="GridContainer" instance=ExtResource("2_psikf")]
+self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
 scene_name = "DreamScenes/GoalTransition"
 is_start = true

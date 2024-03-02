@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://vv3cnb03urre"]
 
 [ext_resource type="Script" path="res://scenes/movie_player.gd" id="1_0tr4c"]
-[ext_resource type="AudioStream" uid="uid://bdlbxb3tefwpy" path="res://video/Alien Autopsy.ogg" id="1_iokqt"]
+[ext_resource type="AudioStream" uid="uid://dd1da431f6fsd" path="res://sounds/misc/Alien Autopsy.ogg" id="2_kesu3"]
 [ext_resource type="VideoStream" path="res://video/alien.mp4" id="2_w4bfi"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_nmu3q"]
@@ -19,7 +19,7 @@ region_rect = Rect2(11.8881, 12.1333, 37.8365, 40.2689)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="UI"]
 transform = Transform3D(-1, -9.74038e-09, -8.68785e-08, 0, 0.993774, -0.111417, 8.74228e-08, -0.111417, -0.993774, 4.55557e-08, -1.86237, 0.521096)
-stream = ExtResource("1_iokqt")
+stream = ExtResource("2_kesu3")
 volume_db = -12.222
 autoplay = true
 emission_angle_enabled = true

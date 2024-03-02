@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ce72vvam3nlxa"]
+[gd_scene load_steps=37 format=3 uid="uid://ce72vvam3nlxa"]
 
 [ext_resource type="Texture2D" uid="uid://datsn6enyqjhr" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_OvercastLow_Equirect.png" id="1_i8gpi"]
 [ext_resource type="AudioStream" uid="uid://sb618iqt7rsd" path="res://sounds/music/slowtropolis.ogg" id="2_tq3a1"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ic82h6t7agb" path="res://sourceModels/city_billboard.png" id="9_683jm"]
 [ext_resource type="PackedScene" uid="uid://d27k6ytplbw5k" path="res://models/water_plane.tscn" id="9_wj5uh"]
 [ext_resource type="PackedScene" uid="uid://h1jho51tfsqo" path="res://scenes/items/ItemPickup.tscn" id="10_8v7nj"]
+[ext_resource type="Shader" path="res://shaders/bubbleDistortionFog.gdshader" id="10_jjscl"]
 [ext_resource type="Texture2D" uid="uid://y5mapwqofa5p" path="res://textures/flashlight_light.png" id="11_fcbo8"]
 [ext_resource type="Texture2D" uid="uid://dm5p5vc5hwon5" path="res://textures/billboard_items/bike_item.png" id="12_shub5"]
 
@@ -111,14 +112,14 @@ fractal_type = 2
 seamless = true
 noise = SubResource("FastNoiseLite_hodyl")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vl41d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ioepr"]
 render_priority = 0
-shader = ExtResource("4_1u12b")
-shader_parameter/distortionView = 0.23
-shader_parameter/speedView = 0.014
-shader_parameter/static_intensity = 0.8
+shader = ExtResource("10_jjscl")
+shader_parameter/distortionView = 0.09
+shader_parameter/speedView = 0.0178
+shader_parameter/static_intensity = 0.85
 shader_parameter/tintColor = Color(1, 1, 1, 1)
-shader_parameter/fesnelAmount = 1.16
+shader_parameter/fesnelAmount = 0.76
 shader_parameter/fresnelTintOffset = -1.0
 shader_parameter/distortionVertex = 0.0
 shader_parameter/speedVertex = 0.1
@@ -403,7 +404,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ejufs")
 transform = Transform3D(8.54605, 0, 0, 0, 2.03808, 0, 0, 0, 1, 0, 99.645, -182.775)
 mesh = SubResource("QuadMesh_4d3el")
 skeleton = NodePath("../../DistortionPlane2")
-surface_material_override/0 = SubResource("ShaderMaterial_vl41d")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
 
 [node name="Distortion6" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
@@ -412,7 +413,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 transform = Transform3D(8.54605, 0, 0, 0, -4.10309, 8.74228e-08, 0, -3.58704e-07, -1, 0, -0.601014, -182.775)
 mesh = SubResource("QuadMesh_4d3el")
 skeleton = NodePath("../../DistortionPlane2")
-surface_material_override/0 = SubResource("ShaderMaterial_vl41d")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
 
 [node name="Distortion3" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -421,7 +422,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 transform = Transform3D(8.54605, 0, 0, 0, 2.03808, 0, 0, 0, 1, 0, 99.645, -182.775)
 mesh = SubResource("QuadMesh_4d3el")
 skeleton = NodePath("../../DistortionPlane2")
-surface_material_override/0 = SubResource("ShaderMaterial_vl41d")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
 
 [node name="Distortion4" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
@@ -430,7 +431,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 
 transform = Transform3D(8.54605, 0, 0, 0, 2.03808, 0, 0, 0, 1, 0, 99.645, -182.775)
 mesh = SubResource("QuadMesh_4d3el")
 skeleton = NodePath("../../DistortionPlane2")
-surface_material_override/0 = SubResource("ShaderMaterial_vl41d")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
 
 [node name="Distortion5" type="Node3D" parent="."]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
@@ -439,7 +440,7 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
 transform = Transform3D(8.54605, 0, 0, 0, 2.03808, 0, 0, 0, 1, 0, 99.645, -182.775)
 mesh = SubResource("QuadMesh_4d3el")
 skeleton = NodePath("../../DistortionPlane2")
-surface_material_override/0 = SubResource("ShaderMaterial_vl41d")
+surface_material_override/0 = SubResource("ShaderMaterial_ioepr")
 
 [node name="Pickup" parent="." instance=ExtResource("10_8v7nj")]
 transform = Transform3D(1.10946, -0.195146, 0.990458, -1.27189e-09, 1.47171, 0.289965, -1.0095, -0.21447, 1.08854, -8.30955, 0.714319, -8.50981)

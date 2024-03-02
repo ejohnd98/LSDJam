@@ -10,13 +10,14 @@ config_version=5
 
 [application]
 
-config/name="LSDJam"
+config/name="Somnicoda"
+config/version="0.1"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-run/max_fps=60
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://textures/UI/splash.png"
-config/icon="res://icon.svg"
+config/icon="res://textures/UI/icon.png"
+config/windows_native_icon="res://textures/UI/icon.ico"
 
 [autoload]
 

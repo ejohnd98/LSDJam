@@ -212,7 +212,7 @@ texture = ExtResource("14_bl4hp")
 
 [node name="Museum" parent="CompletedDreams" instance=ExtResource("12_as7td")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -5, 2, 24)
-dream_name = "Museum"
+dream_name = "Untitled (2)"
 
 [node name="Texture" parent="CompletedDreams/Museum" index="0"]
 texture = ExtResource("15_bjwo0")

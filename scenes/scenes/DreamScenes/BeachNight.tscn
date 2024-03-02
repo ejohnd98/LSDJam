@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://d2ihn5j58j4dg"]
+[gd_scene load_steps=59 format=3 uid="uid://d2ihn5j58j4dg"]
 
 [ext_resource type="Texture2D" uid="uid://02s6p0rkwn3j" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_ColdNight_Equirect.png" id="1_f6mkx"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="2_rev4g"]
@@ -26,6 +26,11 @@
 [ext_resource type="PackedScene" uid="uid://c2faw0c6i42xo" path="res://scenes/props/bar_spot.tscn" id="22_b8ool"]
 [ext_resource type="Texture2D" uid="uid://d2t6ld0o1x0tn" path="res://textures/beach_grid.png" id="24_vembb"]
 [ext_resource type="PackedScene" uid="uid://c2lbmlrdtg1r" path="res://sourceModels/Archway.glb" id="26_tn3wo"]
+[ext_resource type="AudioStream" uid="uid://cv8o3ta22dtff" path="res://sounds/golf/footstep_grass_01.ogg" id="27_u7yvc"]
+[ext_resource type="AudioStream" uid="uid://mxaga43iiwsv" path="res://sounds/golf/footstep_grass_02.ogg" id="28_aw3us"]
+[ext_resource type="AudioStream" uid="uid://doa6sytqwkdmb" path="res://sounds/golf/footstep_grass_03.ogg" id="29_qkouf"]
+[ext_resource type="AudioStream" uid="uid://dnab7ao2krlq5" path="res://sounds/golf/footstep_grass_04.ogg" id="30_oa5oe"]
+[ext_resource type="AudioStream" uid="uid://bjuac7bs5s228" path="res://sounds/golf/footstep_grass_05.ogg" id="31_jb81h"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xgm4g"]
 panorama = ExtResource("1_f6mkx")
@@ -184,6 +189,19 @@ texture_filter = 2
 [sub_resource type="BoxShape3D" id="BoxShape3D_vrd63"]
 size = Vector3(2, 3, 0.25)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_u5236"]
+streams_count = 5
+stream_0/stream = ExtResource("27_u7yvc")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("28_aw3us")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("29_qkouf")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("30_oa5oe")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("31_jb81h")
+stream_4/weight = 1.0
+
 [node name="BeachNight" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -211,7 +229,7 @@ transform = Transform3D(0.024554, 0, 0.999699, 0, 1, 0, -0.999699, 0, 0.024554, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1.13373)
 stream = ExtResource("3_w4bfi")
 attenuation_model = 3
-volume_db = -6.0
+volume_db = -9.0
 unit_size = 100.0
 autoplay = true
 panning_strength = 0.4
@@ -814,7 +832,7 @@ omni_range = 4.0
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="DreamConditionBar2/BeachBarNightOn"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7887, 1.61392, 0.0975342)
 stream = ExtResource("12_siyoy")
-volume_db = -9.0
+volume_db = -12.0
 autoplay = true
 bus = &"SFX"
 
@@ -953,6 +971,12 @@ direction = Vector2i(0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17058, 0.0733013)
 shape = SubResource("BoxShape3D_vrd63")
 script = ExtResource("10_yp0mu")
+
+[node name="FootstepOverride" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_u5236")
+volume_db = -35.0
+pitch_scale = 0.85
+bus = &"SFX"
 
 [connection signal="on_pick_up" from="DreamCondition3/KeyObject" to="Node3D/BoatSpot" method="_refresh_condition"]
 

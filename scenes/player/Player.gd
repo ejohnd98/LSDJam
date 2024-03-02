@@ -37,10 +37,17 @@ var cam : Camera3D
 var current_interactable : Area3D = null
 signal interactable_changed(interactable)
 
+var flashlight_light
+
+func has_items_equipped() -> bool:
+	return PlayerSettings.found_items.size() > 1
+
 func _ready():
 	default_footstep_sounds = $AudioStreamPlayer.stream
 	default_footstep_volume = $AudioStreamPlayer.volume_db
 	default_footstep_pitch = $AudioStreamPlayer.pitch_scale
+	
+	flashlight_light = $HeldItemPivot/HeldItem/HeldItemDetachedParent/Flashlight/SpotLight3D
 	
 	cam = $CameraPivot/CameraParent/CameraDetachedParent/Camera3D
 	cam_parent = $CameraPivot/CameraParent/CameraDetachedParent
@@ -217,9 +224,19 @@ func init_items():
 		print(item.item_name)
 		item_name_dict[item.item_name] = item
 
+@onready var flashlight_temp = $HeldItemPivot/HeldItem/HeldItemDetachedParent/Flashlight
+
+func refresh_flashlight_hack():
+	flashlight_temp.show()
+	await get_tree().create_timer(0.1)
+	flashlight_temp.hide()
+
 func add_found_item(item_name : String, also_equip : bool = true):
 	if PlayerSettings.found_items.has(item_name):
 		return
+	
+	GameManager.clear_control_prompts()
+	
 	PlayerSettings.found_items.append(item_name)
 	PlayerSettings.save_settings()
 	if also_equip:

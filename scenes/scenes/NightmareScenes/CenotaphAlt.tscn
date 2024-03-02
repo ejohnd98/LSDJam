@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/scenes/NightmareScenes/Cenotaph.gd" id="1_deybj"]
 [ext_resource type="Texture2D" uid="uid://cb6u528xt4ix6" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_DeepDusk_Equirect.png" id="2_at2rq"]
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="3_kq58e"]
-[ext_resource type="AudioStream" uid="uid://b1deh0dl4ijcp" path="res://sounds/various_ambiences/digital sacrifice.ogg" id="4_eakpw"]
+[ext_resource type="AudioStream" uid="uid://cni8rkfwniwsq" path="res://sounds/various_ambiences/demon static.ogg" id="4_gbpwb"]
 [ext_resource type="PackedScene" uid="uid://ba33w0otpqhup" path="res://models/grave_cell.tscn" id="5_c2kxl"]
 [ext_resource type="PackedScene" uid="uid://c2x7do8qakb2b" path="res://scenes/props/fence_pivot.tscn" id="6_6gjkp"]
 [ext_resource type="Script" path="res://scenes/interactables/forced_transition_trigger.gd" id="7_y5qgt"]
@@ -101,10 +101,11 @@ visible = false
 
 [node name="AmbientSound2" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
-stream = ExtResource("4_eakpw")
+stream = ExtResource("4_gbpwb")
 attenuation_model = 3
-volume_db = -18.0
+volume_db = -9.0
 unit_size = 100.0
+pitch_scale = 0.57
 autoplay = true
 panning_strength = 0.4
 bus = &"SFX"

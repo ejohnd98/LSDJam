@@ -17,6 +17,8 @@ func _on_body_entered(body):
 func trigger_transition():
 	if triggered:
 		return
+	if $AudioStreamPlayer != null:
+		$AudioStreamPlayer.play()
 	triggered = true
 	if force_direction:
 		GameManager.move_in_direction(direction)

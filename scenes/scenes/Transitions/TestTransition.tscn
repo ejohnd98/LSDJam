@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ds7yevp3762kl"]
+[gd_scene load_steps=27 format=3 uid="uid://ds7yevp3762kl"]
 
 [ext_resource type="PackedScene" uid="uid://u1oag7kvh8se" path="res://scenes/dream_grid_representation.tscn" id="1_bocch"]
 [ext_resource type="Texture2D" uid="uid://cb6u528xt4ix6" path="res://AllSkyFree/Skyboxes/AllSkyFree_Sky_DeepDusk_Equirect.png" id="1_xglxs"]
@@ -44,7 +44,7 @@ noise_type = 3
 frequency = 0.0072
 fractal_type = 2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6m1cf"]
 seamless = true
 noise = SubResource("FastNoiseLite_iorx3")
 
@@ -55,7 +55,7 @@ fractal_type = 3
 fractal_octaves = 1
 fractal_ping_pong_strength = 1.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pio0u"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qcmtg"]
 seamless = true
 noise = SubResource("FastNoiseLite_8oso0")
 
@@ -70,9 +70,15 @@ shader_parameter/fesnelAmount = 0.78
 shader_parameter/fresnelTintOffset = -1.0
 shader_parameter/distortionVertex = 0.0
 shader_parameter/speedVertex = 0.0
-shader_parameter/noiseViewX = SubResource("NoiseTexture2D_pio0u")
-shader_parameter/noiseViewY = SubResource("NoiseTexture2D_7mi23")
-shader_parameter/noiseVertex = SubResource("NoiseTexture2D_7mi23")
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_qcmtg")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_6m1cf")
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_6m1cf")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kyhdu"]
+size = Vector3(400, 5, 400)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7omkg"]
+size = Vector3(600, 5, 600)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7wqi8"]
 size = Vector3(220, 5, 220)
@@ -97,6 +103,15 @@ size = Vector2(2, 400)
 subdivide_width = 10
 subdivide_depth = 100
 orientation = 1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w8b80"]
+noise_type = 3
+frequency = 0.0072
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mi23"]
+seamless = true
+noise = SubResource("FastNoiseLite_w8b80")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hl2hr"]
 render_priority = 0
@@ -152,7 +167,16 @@ script = ExtResource("3_6jljp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3166, -70.1944, 11.7142)
-shape = SubResource("BoxShape3D_7wqi8")
+shape = SubResource("BoxShape3D_kyhdu")
+script = ExtResource("4_jm6is")
+
+[node name="ForcedTransitionArea4" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0329895, -32.2031, 0.00255775)
+script = ExtResource("3_6jljp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcedTransitionArea4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3166, -70.1944, 11.7142)
+shape = SubResource("BoxShape3D_7omkg")
 script = ExtResource("4_jm6is")
 
 [node name="ForcedTransitionArea2" type="Area3D" parent="."]

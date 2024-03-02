@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dn6e44nmk124p"]
+
+[ext_resource type="Texture2D" uid="uid://dqh4t2x4xbxdl" path="res://sourceModels/misc/candy.png" id="1_cto32"]
+[ext_resource type="Texture2D" uid="uid://b1q121venwstd" path="res://sourceModels/City/BUILD058_NORMAL.png" id="2_lnykm"]
+
+[resource]
+albedo_texture = ExtResource("1_cto32")
+metallic = 0.22
+roughness = 0.78
+normal_enabled = true
+normal_scale = 0.5
+normal_texture = ExtResource("2_lnykm")
+texture_filter = 2

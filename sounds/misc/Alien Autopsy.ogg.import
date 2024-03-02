@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dd1da431f6fsd"
+path="res://.godot/imported/Alien Autopsy.ogg-6791d199b8a8186eb0b98bd5784fc988.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/misc/Alien Autopsy.ogg"
+dest_files=["res://.godot/imported/Alien Autopsy.ogg-6791d199b8a8186eb0b98bd5784fc988.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

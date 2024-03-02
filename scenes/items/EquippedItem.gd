@@ -7,12 +7,12 @@ signal on_unequipped
 
 func equip_item():
 	on_equipped.emit()
-	if $AudioStreamPlayer != null:
+	if get_node_or_null("AudioStreamPlayer") != null:
 		$AudioStreamPlayer.play()
-	if $LoopingAudio != null:
+	if get_node_or_null("LoopingAudio") != null:
 		$LoopingAudio.play()
 
 func unequip_item():
 	on_unequipped.emit()
-	if $LoopingAudio != null:
+	if get_node_or_null("LoopingAudio") != null:
 		$LoopingAudio.stop()

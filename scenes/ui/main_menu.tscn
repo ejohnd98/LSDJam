@@ -678,8 +678,13 @@ text = "\"Secret of Tiki Island\" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0
 http://creativecommons.org/licenses/by/3.0/
 
-Assets by Kenney (www.kenney.nl)
-"
+Alien Autopsy Hoax - Ray Santilli (1995)
+Licensed under Public Domain Mark 1.0
+https://creativecommons.org/publicdomain/mark/1.0/
+
+Some textures from Texture Town (https://textures.neocities.org/)
+
+Assets by Kenney (www.kenney.nl)"
 horizontal_alignment = 1
 
 [node name="Back" type="Button" parent="Credits"]
@@ -701,7 +706,8 @@ length = 0.25
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_ontdd")
-volume_db = -8.0
+volume_db = -11.0
+bus = &"SFX"
 
 [node name="ModulateFade" parent="." instance=ExtResource("5_5q8g0")]
 
