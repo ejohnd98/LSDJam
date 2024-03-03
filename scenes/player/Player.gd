@@ -57,6 +57,8 @@ func _ready():
 	item_parent.start_following($HeldItemPivot/HeldItem)
 	
 	init_items()
+	
+	#add_found_item("flashlight")
 
 func get_forward_vector():
 	return -$CameraPivot.global_transform.basis.z
@@ -227,9 +229,10 @@ func init_items():
 @onready var flashlight_temp = $HeldItemPivot/HeldItem/HeldItemDetachedParent/Flashlight
 
 func refresh_flashlight_hack():
-	flashlight_temp.show()
-	await get_tree().create_timer(0.1)
-	flashlight_temp.hide()
+	pass
+	#flashlight_temp.show()
+	#await get_tree().create_timer(0.1)
+	#flashlight_temp.hide()
 
 func add_found_item(item_name : String, also_equip : bool = true):
 	if PlayerSettings.found_items.has(item_name):
@@ -244,8 +247,13 @@ func add_found_item(item_name : String, also_equip : bool = true):
 
 func set_current_item(item_name : String):
 	if current_item_node != null:
+		if current_item_node.is_flashlight:
+			current_item_node.rotation.y = -180.0
+			current_item_node.position.z = 1.0
+			pass
+		else:
+			current_item_node.hide()
 		current_item_node.unequip_item()
-		current_item_node.hide()
 		current_item_node = null
 	
 	if item_name.is_empty():
@@ -253,7 +261,11 @@ func set_current_item(item_name : String):
 	
 	current_item_node = item_name_dict[item_name]
 	current_item_node.equip_item()
-	current_item_node.show()
+	if not current_item_node.is_flashlight:
+		current_item_node.show()
+	else:
+		current_item_node.rotation.y = 0.0
+		current_item_node.position.z = 0.0
 	
 	equipped_item_index = PlayerSettings.found_items.find(item_name)
 	print("Current item index: " + str(equipped_item_index) + " / " + str(PlayerSettings.found_items.size()))

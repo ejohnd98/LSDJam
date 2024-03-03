@@ -4,6 +4,7 @@ signal on_equipped
 signal on_unequipped
 
 @export var item_name : String
+@export var is_flashlight = false
 
 func equip_item():
 	on_equipped.emit()
