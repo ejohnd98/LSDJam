@@ -250,6 +250,7 @@ func set_current_item(item_name : String):
 		if current_item_node.is_flashlight:
 			current_item_node.rotation.y = -180.0
 			current_item_node.position.z = 1.0
+			current_item_node.position.y = -4.0
 			pass
 		else:
 			current_item_node.hide()
@@ -266,6 +267,7 @@ func set_current_item(item_name : String):
 	else:
 		current_item_node.rotation.y = 0.0
 		current_item_node.position.z = 0.0
+		current_item_node.position.y = 0.0
 	
 	equipped_item_index = PlayerSettings.found_items.find(item_name)
 	print("Current item index: " + str(equipped_item_index) + " / " + str(PlayerSettings.found_items.size()))

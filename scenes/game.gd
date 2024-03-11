@@ -167,11 +167,8 @@ var transition_count = 0
 func pick_random_dream(allow_transition_dreams : bool = true):
 	
 	if (not in_transition_dream and not in_nightmare and allow_transition_dreams and not get_dream_grid().is_nightmare):
-		var bias = 0.0
-		if nightmare_count < transition_count:
-			bias = 0.40
 		
-		if randf() > (0.4 + bias):
+		if nightmare_count >= transition_count:
 			in_transition_dream = true
 			debug_force_transition = false
 		else:

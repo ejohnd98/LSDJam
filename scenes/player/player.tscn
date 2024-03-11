@@ -186,7 +186,7 @@ transform = Transform3D(0.999639, 0, 0.0268748, 0.00159151, 0.998245, -0.0591979
 script = ExtResource("2_qtkgy")
 
 [node name="Flashlight" type="Node3D" parent="HeldItemPivot/HeldItem/HeldItemDetachedParent"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 1)
+transform = Transform3D(-1, 1.16415e-10, 8.75443e-08, 0, 1, 3.72529e-09, -8.56817e-08, 0, -1, 0, -4, 1)
 script = ExtResource("4_7qnge")
 item_name = "flashlight"
 is_flashlight = true
